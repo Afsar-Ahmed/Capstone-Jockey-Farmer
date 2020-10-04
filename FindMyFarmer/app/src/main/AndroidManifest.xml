@@ -10,9 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".DashBoard"></activity>
-        <activity android:name=".Login"
+        <activity android:name=".Login" android:windowSoftInputMode="adjustResize"></activity>
 
-            />
         <activity android:name=".MainActivity">
 
             <intent-filter>
