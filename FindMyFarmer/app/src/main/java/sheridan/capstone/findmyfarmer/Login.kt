@@ -3,14 +3,17 @@ package sheridan.capstone.findmyfarmer
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,17 +27,44 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        var validated: Boolean
         auth = Firebase.auth
+        val btnAnimation = AnimationUtils.loadAnimation(this,R.anim.btn_click_animation)
+        val btnUpAnimation = AnimationUtils.loadAnimation(this,R.anim.btn_click_up_animation)
 
-        loginBtn.setOnClickListener{ login() }
+        //login when the login button is pressed
+        loginBtn.setOnClickListener{
+            loginBtn.startAnimation(btnAnimation)
+            loginBtn.startAnimation(btnUpAnimation)
+
+            if(loginValidation(inputEmail,inputPassword))
+                login()
+        }
 
         //Remove keyboard and focus from the element when touch outside of the EditText
         constraintLayoutLoginPage.setOnTouchListener{v: View, m: MotionEvent ->
             closeKeyboard(constraintLayoutLoginPage)
-            val focused = currentFocus
-            focused!!.clearFocus()
+            var focused = currentFocus
+            focused?.clearFocus()
             true}
+
     }
+
+    //validates the input in Email and Password fields according to the regex provided
+    private fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
+        var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
+            emailInput.setError("Ouch! Wrong email")
+        }
+        if(!passwordInput.text.matches(regexPattern)){
+            passwordInput.setError("Yikes.. Wrong Password")
+
+        }
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
+                passwordInput.text.matches(regexPattern)
+
+    }
+
 
     public override fun onStart() {
         super.onStart()
@@ -52,6 +82,7 @@ class Login : AppCompatActivity() {
                     Log.d("AUTHENTICATION", "login :success")
                     val user = auth.currentUser
                     updateUI(user)
+                    finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("AUTHENTICATION", "login :failure", task.exception)

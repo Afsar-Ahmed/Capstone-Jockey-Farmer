@@ -19,6 +19,6 @@ class DashBoard : AppCompatActivity() {
     private fun logOut(){
         Firebase.auth.signOut()
         startActivity(Intent(this,Login::class.java))
-
+        finish()
     }
 }
