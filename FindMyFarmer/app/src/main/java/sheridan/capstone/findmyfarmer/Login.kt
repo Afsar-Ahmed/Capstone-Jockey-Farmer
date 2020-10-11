@@ -7,6 +7,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -53,6 +54,12 @@ class Login : AppCompatActivity(){
 
         val btnAnimation = AnimationUtils.loadAnimation(this,R.anim.btn_click_animation)
         val btnUpAnimation = AnimationUtils.loadAnimation(this,R.anim.btn_click_up_animation)
+        //Remove keyboard and focus from the element when touch outside of the EditText
+        constraintLayoutLoginPage.setOnTouchListener{v: View, m: MotionEvent ->
+            closeKeyboard(constraintLayoutLoginPage)
+            var focused = currentFocus
+            focused?.clearFocus()
+            true}
 
 
         //login when the login button is pressed
@@ -157,12 +164,6 @@ class Login : AppCompatActivity(){
             }
         }
 
-        //Remove keyboard and focus from the element when touch outside of the EditText
-        constraintLayoutLoginPage.setOnTouchListener{v: View, m: MotionEvent ->
-            closeKeyboard(constraintLayoutLoginPage)
-            var focused = currentFocus
-            focused?.clearFocus()
-            true}
 
     }
 
