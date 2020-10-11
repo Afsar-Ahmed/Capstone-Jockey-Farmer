@@ -32,9 +32,12 @@ class DashBoard : AppCompatActivity() {
 
     private fun logOut(){
         Firebase.auth.signOut()
+
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
             startActivity(Intent(this,Login::class.java))
         }
+        finish()
+
     }
 }
