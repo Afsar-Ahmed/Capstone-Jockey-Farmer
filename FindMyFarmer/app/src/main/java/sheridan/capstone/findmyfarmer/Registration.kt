@@ -1,9 +1,13 @@
 package sheridan.capstone.findmyfarmer
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Patterns
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_regristration.*
 
 class Registration : AppCompatActivity() {
@@ -19,7 +24,7 @@ class Registration : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_regristration)
-
+        newUserEmail.requestFocus()
         //initialized firebase authentication
         auth = Firebase.auth
 
@@ -29,6 +34,10 @@ class Registration : AppCompatActivity() {
 
         }
 
+        constraint_layout_registration.setOnTouchListener{v: View, m: MotionEvent ->
+            closeKeyboard(constraint_layout_registration)
+            constraint_layout_registration.requestFocus()
+            true}
     }
     //checks if fields are valid and proceeds to authentication
     private fun signUpNewUsers(){
@@ -59,6 +68,7 @@ class Registration : AppCompatActivity() {
                 if (task.isSuccessful) {
                     //if task is successful, new users enter to the Dashboard
                     startActivity(Intent(this,DashBoard::class.java))
+                    finish()
                 } else {
                     //else they are told to try authenticating again
                     Toast.makeText(baseContext, "You have Failed!!! Try Again!",
@@ -80,7 +90,11 @@ class Registration : AppCompatActivity() {
 
     }
 
+    private fun closeKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
 
+    }
 
 
 

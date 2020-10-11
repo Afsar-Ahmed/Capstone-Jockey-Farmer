@@ -3,6 +3,7 @@
     <string name="input_email_hint">Email</string>
     <string name="input_password_hint">Password</string>
     <string name="login_btn">Log In</string>
+    <string name="register_btn"><u>Don\'t have an account?</u></string>
     <string name="forgot_password_link"><u>Forgot Password?</u></string>
     <string name="facebook_app_id">1553403721513069</string>
     <string name="fb_login_protocol_scheme">fb1553403721513069</string>

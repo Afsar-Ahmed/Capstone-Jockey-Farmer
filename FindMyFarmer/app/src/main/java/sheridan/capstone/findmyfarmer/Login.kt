@@ -3,34 +3,32 @@ package sheridan.capstone.findmyfarmer
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
-
 import android.view.View
 import android.view.animation.AnimationUtils
-
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.*
-import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FacebookAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
-import java.lang.Exception
 
 class Login : AppCompatActivity(){
     private lateinit var auth: FirebaseAuth
@@ -45,65 +43,82 @@ class Login : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        var validated: Boolean
         auth = Firebase.auth
 
         callBackManager = CallbackManager.Factory.create()
 
-        GSignIn.setOnClickListener { googleLogIn() }
 
-        val btnAnimation = AnimationUtils.loadAnimation(this,R.anim.btn_click_animation)
-        val btnUpAnimation = AnimationUtils.loadAnimation(this,R.anim.btn_click_up_animation)
+
+        val btnAnimation = AnimationUtils.loadAnimation(this, R.anim.btn_click_animation)
+        val btnUpAnimation = AnimationUtils.loadAnimation(this, R.anim.btn_click_up_animation)
+
         //Remove keyboard and focus from the element when touch outside of the EditText
-        constraintLayoutLoginPage.setOnTouchListener{v: View, m: MotionEvent ->
+        constraintLayoutLoginPage.setOnTouchListener{ v: View, m: MotionEvent ->
             closeKeyboard(constraintLayoutLoginPage)
-            var focused = currentFocus
-            focused?.clearFocus()
+            constraintLayoutLoginPage.requestFocus()
             true}
 
+        //open register form when pressed register button
+        registerAccount.setOnClickListener{
+            register()
+        }
 
         //login when the login button is pressed
         loginBtn.setOnClickListener{
             loginBtn.startAnimation(btnAnimation)
             loginBtn.startAnimation(btnUpAnimation)
 
-            if(loginValidation(inputEmail,inputPassword))
+            if(loginValidation(inputEmail, inputPassword))
                 login()
         }
 
+        //press button to login with google
+        GSignIn.setOnClickListener { googleLogIn() }
+
+        //press FBSign button in to login with faceBook
         FBSignIn.setPermissions("email")
         FBSignIn.registerCallback(callBackManager,
-                object : FacebookCallback<LoginResult>{
-                    override fun onSuccess(result: LoginResult?) {
-                        if (result != null) {
-                            firebaseAuthWithFacebook(result.accessToken)
-                        }
-                        else{
-                            Toast.makeText(applicationContext,"Error getting Facebook Account",Toast.LENGTH_SHORT).show()
-                        }
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult?) {
+                    if (result != null) {
+                        firebaseAuthWithFacebook(result.accessToken)
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            "Error getting Facebook Account",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                }
 
-                    override fun onCancel() {
-                        TODO("Not yet implemented")
-                    }
+                override fun onCancel() {
+                }
 
-                    override fun onError(error: FacebookException?) {
-                        Log.e("FacebookERROR",error.toString())
-                    }
+                override fun onError(error: FacebookException?) {
+                    Log.e("FacebookERROR", error.toString())
+                }
 
-                })
+            })
     }
 
     private fun firebaseAuthWithFacebook(token: AccessToken){
         val cred =  FacebookAuthProvider.getCredential(token.token)
 
-        auth.signInWithCredential(cred).addOnCompleteListener(this){task ->
+        auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
             if(task.isSuccessful){
-                Toast.makeText(applicationContext,"Successfully logged in with Facebook",Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Successfully logged in with Facebook",
+                    Toast.LENGTH_SHORT
+                ).show()
                 updateUI(auth.currentUser)
             }
             else{
-                Toast.makeText(applicationContext,"Unable to log in with Facebook",Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Unable to log in with Facebook",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -115,9 +130,9 @@ class Login : AppCompatActivity(){
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        sic = GoogleSignIn.getClient(this,gso)
+        sic = GoogleSignIn.getClient(this, gso)
         var signInGoogle = sic.signInIntent
-        startActivityForResult(signInGoogle,RC_SIGN_IN)
+        startActivityForResult(signInGoogle, RC_SIGN_IN)
     }
 
     //After the user chooses the account (Facebook or google), this handles the user data returned
@@ -134,33 +149,41 @@ class Login : AppCompatActivity(){
                     val acc = googleAcc.getResult(ApiException::class.java)!!
                     firebaseAuthWithGoogle(acc.idToken!!, acc)
                 }
-                catch (e : Exception){
-                    Toast.makeText(applicationContext,"Error Logging into google account",Toast.LENGTH_SHORT).show()
-                    Log.w("GOOGLE SIGN IN FAILED",e)
+                catch (e: Exception){
+                    Toast.makeText(
+                        applicationContext,
+                        "Error Logging into google account",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.w("GOOGLE SIGN IN FAILED", e)
                 }
             }
             else{
-                Toast.makeText(applicationContext,"Sign In Not Successful",Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "Sign In Not Successful", Toast.LENGTH_LONG).show()
             }
         }
         else{
-            callBackManager.onActivityResult(requestCode,resultCode,data)
+            callBackManager.onActivityResult(requestCode, resultCode, data)
         }
 
     }
 
     //Registers the google Sign in as a authenticated user in Firebase, lasts only within a session
-    private fun firebaseAuthWithGoogle(idToken: String, acc : GoogleSignInAccount){
-        val cred = GoogleAuthProvider.getCredential(idToken,null)
+    private fun firebaseAuthWithGoogle(idToken: String, acc: GoogleSignInAccount){
+        val cred = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
             if(task.isSuccessful){
-                Toast.makeText(applicationContext,"Logged in successfully to firebase",Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Logged in successfully to firebase",
+                    Toast.LENGTH_SHORT
+                ).show()
                 updateUI(auth.currentUser){
-                    putString("FullName",acc.displayName.toString())
+                    putString("FullName", acc.displayName.toString())
                 }
             }
             else{
-                Toast.makeText(applicationContext,"Was not able to log in!",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Was not able to log in!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -172,7 +195,7 @@ class Login : AppCompatActivity(){
 
     //validates the input in Email and Password fields according to the regex provided
     private fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
-        var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
+        var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
             emailInput.setError("Ouch! Wrong email")
         }
@@ -207,8 +230,10 @@ class Login : AppCompatActivity(){
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("AUTHENTICATION", "login :failure", task.exception)
-                    Toast.makeText(baseContext, "Incorrect email/password!",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, "Incorrect email/password!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     updateUI(null)
 
                 }
@@ -218,10 +243,15 @@ class Login : AppCompatActivity(){
     //Opens next activity if the user signed in successfully
     private fun updateUI(user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
         if(user != null){
-            var loggedIn = Intent(this,DashBoard::class.java)
+            var loggedIn = Intent(this, DashBoard::class.java)
             loggedIn.putExtras(Bundle().apply(extras))
             startActivity(loggedIn)
         }
+    }
+
+    private fun register(){
+        var registration = Intent(this, Registration::class.java)
+        startActivity(registration)
     }
 
     //close keyboard on touch of the particular view
@@ -229,6 +259,9 @@ class Login : AppCompatActivity(){
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
 
+    }
+    override fun onBackPressed() {
+        moveTaskToBack(true)
     }
 }
 

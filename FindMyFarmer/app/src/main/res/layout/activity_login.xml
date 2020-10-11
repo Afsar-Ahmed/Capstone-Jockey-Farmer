@@ -30,9 +30,10 @@
             <Space
                 android:layout_width="209dp"
                 android:layout_height="67dp"
-                app:layout_constraintEnd_toEndOf="@+id/FBSignIn"
-                app:layout_constraintStart_toStartOf="@+id/FBSignIn"
-                app:layout_constraintTop_toBottomOf="@+id/FBSignIn" />
+                app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/loginBtn"
+                app:layout_constraintTop_toBottomOf="@+id/GSignIn" />
 
             <EditText
                 android:id="@+id/inputPassword"
@@ -79,7 +80,7 @@
                 android:id="@+id/loginBtn"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:background="#11EF82"
                 android:fontFamily="sans-serif-medium"
                 android:hapticFeedbackEnabled="true"
@@ -89,9 +90,9 @@
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="@+id/inputPassword"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/inputPassword"
-                app:layout_constraintTop_toBottomOf="@+id/forgotPswrdLink" />
+                app:layout_constraintTop_toBottomOf="@+id/registerAccount" />
 
             <TextView
                 android:id="@+id/forgotPswrdLink"
@@ -106,27 +107,41 @@
                 app:layout_constraintStart_toStartOf="@+id/inputPassword"
                 app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
+            <TextView
+                android:id="@+id/registerAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:clickable="true"
+                android:text="@string/register_btn"
+                android:textColor="#FF5252"
+                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/inputPassword"
+                app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/GSignIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-                app:layout_constraintHorizontal_bias="0.506"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/loginBtn"
-                app:layout_constraintTop_toBottomOf="@+id/loginBtn" >
+                app:layout_constraintTop_toBottomOf="@+id/loginBtn">
 
             </com.google.android.gms.common.SignInButton>
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/FBSignIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="33dp"
+                android:layout_height="27dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/GSignIn"
-                app:layout_constraintStart_toStartOf="@+id/GSignIn"
-                app:layout_constraintTop_toBottomOf="@+id/GSignIn" />
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+                app:layout_constraintHorizontal_bias="0.76"
+                app:layout_constraintStart_toEndOf="@+id/GSignIn"
+                app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
