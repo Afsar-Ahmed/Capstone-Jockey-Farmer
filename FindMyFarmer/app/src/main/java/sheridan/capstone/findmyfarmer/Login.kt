@@ -7,33 +7,140 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
-import android.view.MotionEvent
 import android.view.View
 
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.*
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
+import java.lang.Exception
 
-class Login : AppCompatActivity() {
+class Login : AppCompatActivity(){
     private lateinit var auth: FirebaseAuth
+
+    private var RC_SIGN_IN  = 9001
+    private lateinit var sic : GoogleSignInClient
+
+    private lateinit var callBackManager: CallbackManager
+    private lateinit var fbCallBack : FacebookCallback<LoginResult>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         auth = Firebase.auth
+        callBackManager = CallbackManager.Factory.create()
+
+        GSignIn.setOnClickListener { googleLogIn() }
 
         loginBtn.setOnClickListener{ login() }
 
-        //Remove keyboard and focus from the element when touch outside of the EditText
-        constraintLayoutLoginPage.setOnTouchListener{v: View, m: MotionEvent ->
-            closeKeyboard(constraintLayoutLoginPage)
-            val focused = currentFocus
-            focused!!.clearFocus()
-            true}
+        FBSignIn.setPermissions("email")
+        FBSignIn.registerCallback(callBackManager,
+                object : FacebookCallback<LoginResult>{
+                    override fun onSuccess(result: LoginResult?) {
+                        if (result != null) {
+                            firebaseAuthWithFacebook(result.accessToken)
+                        }
+                        else{
+                            Toast.makeText(applicationContext,"Error getting Facebook Account",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onCancel() {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onError(error: FacebookException?) {
+                        Log.e("FacebookERROR",error.toString())
+                    }
+
+                })
+    }
+
+    private fun firebaseAuthWithFacebook(token: AccessToken){
+        val cred =  FacebookAuthProvider.getCredential(token.token)
+
+        auth.signInWithCredential(cred).addOnCompleteListener(this){task ->
+            if(task.isSuccessful){
+                Toast.makeText(applicationContext,"Successfully logged in with Facebook",Toast.LENGTH_SHORT).show()
+                updateUI(auth.currentUser)
+            }
+            else{
+                Toast.makeText(applicationContext,"Unable to log in with Facebook",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    //starts the google login pop-up, allowing the user to choose the google account for log in
+    private fun googleLogIn(){
+        //initializing google services for login
+        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        sic = GoogleSignIn.getClient(this,gso)
+        var signInGoogle = sic.signInIntent
+        startActivityForResult(signInGoogle,RC_SIGN_IN)
+    }
+
+    //After the user chooses the account (Facebook or google), this handles the user data returned
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        //Tries to Log in into google first to check if the credentials are approved by google or not
+        if(requestCode == RC_SIGN_IN){
+            //if all is good then the account object is returned back
+            var googleAcc = GoogleSignIn.getSignedInAccountFromIntent(data)
+            if (googleAcc != null) {
+                try{
+                    //breaking down the account object to retrieve the basic data from the account, like name, email, id etc
+                    val acc = googleAcc.getResult(ApiException::class.java)!!
+                    firebaseAuthWithGoogle(acc.idToken!!, acc)
+                }
+                catch (e : Exception){
+                    Toast.makeText(applicationContext,"Error Logging into google account",Toast.LENGTH_SHORT).show()
+                    Log.w("GOOGLE SIGN IN FAILED",e)
+                }
+            }
+            else{
+                Toast.makeText(applicationContext,"Sign In Not Successful",Toast.LENGTH_LONG).show()
+            }
+        }
+        else{
+            callBackManager.onActivityResult(requestCode,resultCode,data)
+        }
+
+    }
+
+    //Registers the google Sign in as a authenticated user in Firebase, lasts only within a session
+    private fun firebaseAuthWithGoogle(idToken: String, acc : GoogleSignInAccount){
+        val cred = GoogleAuthProvider.getCredential(idToken,null)
+        auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
+            if(task.isSuccessful){
+                Toast.makeText(applicationContext,"Logged in successfully to firebase",Toast.LENGTH_SHORT).show()
+                updateUI(auth.currentUser){
+                    putString("FullName",acc.displayName.toString())
+                }
+            }
+            else{
+                Toast.makeText(applicationContext,"Was not able to log in!",Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     public override fun onStart() {
@@ -61,16 +168,15 @@ class Login : AppCompatActivity() {
 
                 }
             }
-
     }
 
     //Opens next activity if the user signed in successfully
-    private fun updateUI(user: FirebaseUser?){
+    private fun updateUI(user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
         if(user != null){
-            startActivity(Intent(this,DashBoard::class.java))
-
+            var loggedIn = Intent(this,DashBoard::class.java)
+            loggedIn.putExtras(Bundle().apply(extras))
+            startActivity(loggedIn)
         }
-
     }
 
     //close keyboard on touch of the particular view
