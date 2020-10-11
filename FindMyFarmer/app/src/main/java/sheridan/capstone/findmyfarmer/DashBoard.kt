@@ -25,6 +25,8 @@ class DashBoard : AppCompatActivity() {
 
         logintext.text = Firebase.auth.currentUser?.email + " " + Firebase.auth.currentUser?.displayName
 
+        //LoginText.text = Firebase.auth.currentUser?.email + " " + Firebase.auth.currentUser?.displayName
+
         logOutBtn.setOnClickListener{
             logOut()
         }
