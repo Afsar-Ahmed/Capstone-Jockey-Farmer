@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">FindMyFarmer</string>
+    <string name="app_name">Find My Farmer</string>
+    <string name="input_email_hint">Email</string>
+    <string name="input_password_hint">Password</string>
+    <string name="login_btn">Log In</string>
+    <string name="forgot_password_link"><u>Forgot Password?</u></string>
 </resources>
