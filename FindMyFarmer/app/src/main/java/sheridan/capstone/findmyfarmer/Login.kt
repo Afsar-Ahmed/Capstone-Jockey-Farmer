@@ -165,6 +165,9 @@ class Login : AppCompatActivity(){
         }
 
 
+        forgotPswrdLink.setOnClickListener{
+            startActivity(Intent(this, Registration::class.java))
+        }
     }
 
     //validates the input in Email and Password fields according to the regex provided
