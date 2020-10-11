@@ -15,6 +15,27 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/GSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="@+id/loginBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/FBSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/GSignIn"
+        app:layout_constraintStart_toStartOf="@+id/GSignIn"
+        app:layout_constraintTop_toBottomOf="@+id/GSignIn"
+        app:layout_constraintVertical_bias="0.267" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutLoginPage"
             android:layout_width="match_parent"
@@ -112,3 +133,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </ScrollView>
+
