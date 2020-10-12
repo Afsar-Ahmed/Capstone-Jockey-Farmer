@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "778040863221-kgvi3cl95pchqhc61b8ahrectshujld3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "sheridan.capstone.findmyfarmer",
-            "certificate_hash": "2de4b92edc0b1c811f9f6e016cd301021b0401d6"
-          }
-        },
-        {
           "client_id": "778040863221-tsosk0u6ubajptm338peqo1ck43v2b8d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
