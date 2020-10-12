@@ -25,6 +25,8 @@ class DashBoard : AppCompatActivity() {
 
         logintext.text = Firebase.auth.currentUser?.email + " " + Firebase.auth.currentUser?.displayName
 
+        //LoginText.text = Firebase.auth.currentUser?.email + " " + Firebase.auth.currentUser?.displayName
+
         logOutBtn.setOnClickListener{
             logOut()
         }
@@ -32,9 +34,12 @@ class DashBoard : AppCompatActivity() {
 
     private fun logOut(){
         Firebase.auth.signOut()
+
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
             startActivity(Intent(this,Login::class.java))
         }
+        finish()
+
     }
 }
