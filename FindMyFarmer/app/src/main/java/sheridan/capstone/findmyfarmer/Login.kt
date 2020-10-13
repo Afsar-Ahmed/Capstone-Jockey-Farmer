@@ -39,7 +39,7 @@ class Login : AppCompatActivity(){
     private lateinit var callBackManager: CallbackManager
     private lateinit var fbCallBack : FacebookCallback<LoginResult>
 
-    override fun onCreate(savedInstanceState: Bundle?) { 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
