@@ -23,7 +23,7 @@ class FarmerData {
 
  fun GenerateList(size: Int): List<FarmerListing> {
   val list = ArrayList<FarmerListing>()
-  for (i in 0 until size) {
+  for (i in 0 until size) { 
    val drawable = when (i % 3) {
     0 -> R.drawable.test1
     1 -> R.drawable.test3
