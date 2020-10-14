@@ -24,9 +24,6 @@ class Registration : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_regristration)
-        
-        TODO("Remove the focus")
-        newUserEmail.requestFocus()
         //initialized firebase authentication
         auth = Firebase.auth
 
