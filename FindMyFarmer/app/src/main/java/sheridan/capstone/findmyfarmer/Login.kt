@@ -243,7 +243,7 @@ class Login : AppCompatActivity(){
     //Opens next activity if the user signed in successfully
     private fun updateUI(user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
         if(user != null){
-            var loggedIn = Intent(this, DashBoard::class.java)
+            var loggedIn = Intent(this, FarmerPage::class.java)
             loggedIn.putExtras(Bundle().apply(extras))
             startActivity(loggedIn)
         }
