@@ -57,7 +57,7 @@ class Registration : AppCompatActivity() {
             password.requestFocus()
 
         }
-        if(password.text.length <= 6){
+        if(password.text.length >= 6){
             password.error="Passwords must be 6 or more characters"
             password.requestFocus()
         }
