@@ -40,26 +40,28 @@ class Registration : AppCompatActivity() {
     }
     //checks if fields are valid and proceeds to authentication
     private fun signUpNewUsers(){
+        var email = Regex("( /w+[+.w-]*@)(([w-]+.)*w+[w-]*.)(([a-z]{2,4}|d+)/i)")
+        //if email is empty or not
+        if (newUserEmail.text.toString().isEmpty()){
+            newUserEmail.error="Please Enter your email"
+            newUserEmail.requestFocus()
+        }
+        else if(!newUserEmail.text.matches(email)){
+            newUserEmail.error="Oi! That ain't right! Why you faking?"
+            newUserEmail.requestFocus()
+        }
 
-            //if email is empty or not
-            if (newUserEmail.text.toString().isEmpty()){
-                newUserEmail.error="Please Enter your email"
-                newUserEmail.requestFocus()
-                //returns if there is an error
-                return
+        //if password or RePassword(which is dependant on password) is empty or not
+        if(password.text.toString().isEmpty() || RePassword.text.toString().isEmpty()){
+            password.error="Please enter your password"
+            password.requestFocus()
 
-            }
-            //if password or RePassword(which is dependant on password) is empty or not
-            if(password.text.toString().isEmpty() || RePassword.text.toString().isEmpty()){
-                password.error="Please enter your password"
-                password.requestFocus()
-                return
-            }
-            if(password.text.length < 6){
-                password.error="Passwords must be 6 or more characters"
-                password.requestFocus()
-                return
-            }
+        }
+        if(password.text.length <= 6){
+            password.error="Passwords must be 6 or more characters"
+            password.requestFocus()
+        }
+
 
         //authenticates new users
         auth.createUserWithEmailAndPassword(newUserEmail.text.toString(), password.text.toString())
