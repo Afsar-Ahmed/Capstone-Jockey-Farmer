@@ -38,8 +38,8 @@ class Registration : AppCompatActivity() {
                 newUserEmail.error="Please Enter your email"
                 newUserEmail.requestFocus()
             }
-            else if(!newUserEmail.text.matches(email)){
-                newUserEmail.error="Oi! That ain't right! Why you faking?"
+            else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(newUserEmail.text).matches()){
+                newUserEmail.error="Ouch! Wrong email"
                 newUserEmail.requestFocus()
             }
 
@@ -47,7 +47,6 @@ class Registration : AppCompatActivity() {
             if(password.text.toString().isEmpty() || RePassword.text.toString().isEmpty()){
                 password.error="Please enter your password"
                 password.requestFocus()
-
             }
             if(password.text.length <= 6){
                 password.error="Passwords must be 6 or more characters"
