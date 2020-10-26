@@ -1,6 +1,7 @@
 package sheridan.capstone.findmyfarmer
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -41,6 +42,7 @@ class Login : AppCompatActivity(){
     private lateinit var callBackManager: CallbackManager
     private lateinit var fbCallBack : FacebookCallback<LoginResult>
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -57,7 +59,7 @@ class Login : AppCompatActivity(){
         //Remove keyboard and focus from the element when touch outside of the EditText
         constraintLayoutLoginPage.setOnTouchListener{v: View, m: MotionEvent ->
             closeKeyboard(constraintLayoutLoginPage)
-            var focused = currentFocus
+            val focused = currentFocus
             focused?.clearFocus()
             true}
 
