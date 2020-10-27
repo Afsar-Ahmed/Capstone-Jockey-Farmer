@@ -63,11 +63,6 @@ class Registration : AppCompatActivity() {
             }
     }
 
-    override fun onStart(){
-        super.onStart()
-
-
-    }
 
 
 
