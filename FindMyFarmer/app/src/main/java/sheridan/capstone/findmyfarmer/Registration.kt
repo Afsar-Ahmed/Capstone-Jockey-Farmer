@@ -30,7 +30,7 @@ class Registration : AppCompatActivity() {
     }
     //checks if fields are valid and proceeds to authentication
     private fun signUpNewUsers(){
-        val pat = Regex("( /w+[+.w-]*@)(([w-]+.)*w+[w-]*.)(([a-z]{2,4}|d+)/i)")
+        val pat = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}\$")
             //if email is empty or not
             if (newUserEmail.text.toString().isEmpty()){
                 newUserEmail.error="Please Enter your email"
@@ -68,10 +68,11 @@ class Registration : AppCompatActivity() {
         super.onStart()
 
         val currentUser = auth.currentUser
-        updateUI(currentUser)
+       // updateUI(currentUser)
 
     }
 
+    //once the db is added, user is checked with the current list to make sure there are no copy accounts
     fun updateUI(currentUser:FirebaseUser?){
 
     }
