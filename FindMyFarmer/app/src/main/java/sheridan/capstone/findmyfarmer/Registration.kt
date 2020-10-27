@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_regristration.*
 
 class Registration : AppCompatActivity() {
    private lateinit var  auth:FirebaseAuth
+     lateinit var a:FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,6 @@ class Registration : AppCompatActivity() {
 
         //initialized firebase authentication
         auth = Firebase.auth
-
 
         signUp.setOnClickListener{
             signUpNewUsers()
@@ -51,7 +51,6 @@ class Registration : AppCompatActivity() {
                 password.requestFocus()
         }
 
-
         //authenticates new users
         auth.createUserWithEmailAndPassword(newUserEmail.text.toString(), password.text.toString())
             .addOnCompleteListener(this) { task ->
@@ -67,15 +66,9 @@ class Registration : AppCompatActivity() {
     override fun onStart(){
         super.onStart()
 
-        val currentUser = auth.currentUser
-       // updateUI(currentUser)
 
     }
 
-    //once the db is added, user is checked with the current list to make sure there are no copy accounts
-    fun updateUI(currentUser:FirebaseUser?){
-
-    }
 
 
 
