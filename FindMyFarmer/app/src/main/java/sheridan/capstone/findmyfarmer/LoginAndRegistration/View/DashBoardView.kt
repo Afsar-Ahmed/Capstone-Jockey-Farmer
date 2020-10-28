@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.LoginAndRegistration
+package sheridan.capstone.findmyfarmer.LoginAndRegistration.View
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +9,10 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_dash_board.*
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.Login
 import sheridan.capstone.findmyfarmer.R
 
-class DashBoard : AppCompatActivity() {
+class DashBoardView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)

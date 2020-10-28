@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.DashBoard
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Login
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.Login
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         if (user != null) {
             startActivity(Intent(this,
-                DashBoard::class.java))
+                DashBoardView::class.java))
 
         } else {
             startActivity(Intent(this, Login::class.java))
