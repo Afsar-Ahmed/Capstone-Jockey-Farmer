@@ -3,11 +3,10 @@ package sheridan.capstone.findmyfarmer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.WindowManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_main.*
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.DashBoard
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Login
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         val user = Firebase.auth.currentUser
         if (user != null) {
-            startActivity(Intent(this,DashBoard::class.java))
+            startActivity(Intent(this,
+                DashBoard::class.java))
 
         } else {
             startActivity(Intent(this, Login::class.java))

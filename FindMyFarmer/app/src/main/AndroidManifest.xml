@@ -12,13 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FarmerPage">
+        <activity android:name=".FarmerListing.View.FarmerPage">
 
         </activity>
-        <activity android:name=".Registration"></activity>
-        <activity android:name=".DashBoard" />
+        <activity android:name=".LoginAndRegistration.Registration"></activity>
+        <activity android:name=".LoginAndRegistration.DashBoard" />
         <activity
-            android:name=".Login"
+            android:name=".LoginAndRegistration.Login"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity">
             <intent-filter>

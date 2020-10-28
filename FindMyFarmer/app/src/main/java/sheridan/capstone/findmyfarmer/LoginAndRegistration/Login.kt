@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer
+package sheridan.capstone.findmyfarmer.LoginAndRegistration
 
 
 import android.content.Context
@@ -29,8 +29,13 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
+import sheridan.capstone.findmyfarmer.FarmerListing.Presenter.Contract
+import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
+import sheridan.capstone.findmyfarmer.R
 
-class Login : AppCompatActivity(){
+class Login : AppCompatActivity(), Contract.View{
+
+
     private lateinit var auth: FirebaseAuth
 
     private var RC_SIGN_IN  = 9001
@@ -49,8 +54,12 @@ class Login : AppCompatActivity(){
 
 
 
-        val btnAnimation = AnimationUtils.loadAnimation(this, R.anim.btn_click_animation)
-        val btnUpAnimation = AnimationUtils.loadAnimation(this, R.anim.btn_click_up_animation)
+        val btnAnimation = AnimationUtils.loadAnimation(this,
+            R.anim.btn_click_animation
+        )
+        val btnUpAnimation = AnimationUtils.loadAnimation(this,
+            R.anim.btn_click_up_animation
+        )
 
         //Remove keyboard and focus from the element when touch outside of the EditText
         constraintLayoutLoginPage.setOnTouchListener{ v: View, m: MotionEvent ->
