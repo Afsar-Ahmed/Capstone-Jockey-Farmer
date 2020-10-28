@@ -1,22 +1,19 @@
-package sheridan.capstone.findmyfarmer
+package sheridan.capstone.findmyfarmer.LoginAndRegistration
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Patterns
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_regristration.*
+import sheridan.capstone.findmyfarmer.R
 
 class Registration : AppCompatActivity() {
    private lateinit var  auth:FirebaseAuth
@@ -67,7 +64,8 @@ class Registration : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     //if task is successful, new users enter to the Dashboard
-                    startActivity(Intent(this,DashBoard::class.java))
+                    startActivity(Intent(this,
+                        DashBoard::class.java))
                     finish()
                 } else {
                     //else they are told to try authenticating again
