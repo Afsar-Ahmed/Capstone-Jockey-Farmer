@@ -8,14 +8,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_farmer_page.*
 import androidx.appcompat.widget.Toolbar
-import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerListingView
-import sheridan.capstone.findmyfarmer.FarmerListing.Presenter.Contract
-import sheridan.capstone.findmyfarmer.FarmerListing.Presenter.Presenter
+import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmerGenerateList
+import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmerListToView
 import sheridan.capstone.findmyfarmer.R
 
-class FarmerPage : AppCompatActivity(),Contract.View{
+class FarmerPage : AppCompatActivity(){
 
-    var Presenter : Presenter = Presenter()
+
+
+    var FarmerController :FarmerGenerateList = FarmerGenerateList()
 
 
 
@@ -23,12 +24,12 @@ class FarmerPage : AppCompatActivity(),Contract.View{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_farmer_page)
 
-        val List = Presenter.GenerateList(4)
+        val List = FarmerController.GenerateList(4)
 
         val toolbarView: Toolbar = findViewById(R.id.toolbar1)
 
         recycleView.adapter =
-            FarmerListingView(
+            FarmerListToView(
                 List
             )
         recycleView.layoutManager = LinearLayoutManager(this)

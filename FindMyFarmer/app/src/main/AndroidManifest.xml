@@ -15,10 +15,10 @@
         <activity android:name=".FarmerListing.View.FarmerPage">
 
         </activity>
-        <activity android:name=".LoginAndRegistration.Registration"></activity>
-        <activity android:name=".LoginAndRegistration.DashBoard" />
+        <activity android:name=".LoginAndRegistration.View.RegistrationView"></activity>
+        <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
-            android:name=".LoginAndRegistration.Login"
+            android:name=".LoginAndRegistration.Model.Login"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.FarmerListing.Model
+package sheridan.capstone.findmyfarmer.FarmerListing.Controller
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.farmer_listing.view.*
+import sheridan.capstone.findmyfarmer.FarmerListing.Model.ListData
 import sheridan.capstone.findmyfarmer.R
 
-class FarmerListingView (private val FarmerList: List<FarmerListing>): RecyclerView.Adapter<FarmerListingView.MyViewHolder>() {
+class FarmerListToView (private val FarmerList: List<ListData>): RecyclerView.Adapter<FarmerListToView.MyViewHolder>() {
+
+
+
+
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -33,6 +39,8 @@ class FarmerListingView (private val FarmerList: List<FarmerListing>): RecyclerV
         holder.Rating.text = currentItem.Farmer_Rating
         holder.Distance_Away.text = currentItem.Farmer_Distance
 
+
+
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,4 +52,5 @@ class FarmerListingView (private val FarmerList: List<FarmerListing>): RecyclerV
 
 
     }
+
 }

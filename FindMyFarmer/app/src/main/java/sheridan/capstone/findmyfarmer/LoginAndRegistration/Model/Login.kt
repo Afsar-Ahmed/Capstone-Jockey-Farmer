@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.LoginAndRegistration
+package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
 
 
 import android.content.Context
@@ -24,17 +24,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
-import sheridan.capstone.findmyfarmer.FarmerListing.Presenter.Contract
-import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.Controller
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView
 import sheridan.capstone.findmyfarmer.R
 
-class Login : AppCompatActivity(), Contract.View{
+class Login : AppCompatActivity(){
 
+
+    val Controller: Controller = Controller()
 
     private lateinit var auth: FirebaseAuth
 
@@ -69,7 +70,7 @@ class Login : AppCompatActivity(), Contract.View{
 
         //open register form when pressed register button
         registerAccount.setOnClickListener{
-            register()
+            Controller.register(this)
         }
 
         //login when the login button is pressed
@@ -78,7 +79,7 @@ class Login : AppCompatActivity(), Contract.View{
             loginBtn.startAnimation(btnUpAnimation)
 
             if(loginValidation(inputEmail, inputPassword))
-                login()
+                login(savedInstanceState)
         }
 
         //press button to login with google
@@ -90,7 +91,7 @@ class Login : AppCompatActivity(), Contract.View{
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult?) {
                     if (result != null) {
-                        firebaseAuthWithFacebook(result.accessToken)
+                        firebaseAuthWithFacebook(result.accessToken,savedInstanceState)
                     } else {
                         Toast.makeText(
                             applicationContext,
@@ -110,7 +111,7 @@ class Login : AppCompatActivity(), Contract.View{
             })
     }
 
-    private fun firebaseAuthWithFacebook(token: AccessToken){
+    private fun firebaseAuthWithFacebook(token: AccessToken,bundle :Bundle?){
         val cred =  FacebookAuthProvider.getCredential(token.token)
 
         auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
@@ -120,7 +121,7 @@ class Login : AppCompatActivity(), Contract.View{
                     "Successfully logged in with Facebook",
                     Toast.LENGTH_SHORT
                 ).show()
-                updateUI(auth.currentUser)
+                Controller.updateUI(this,auth.currentUser)
             }
             else{
                 Toast.makeText(
@@ -156,7 +157,7 @@ class Login : AppCompatActivity(), Contract.View{
                 try{
                     //breaking down the account object to retrieve the basic data from the account, like name, email, id etc
                     val acc = googleAcc.getResult(ApiException::class.java)!!
-                    firebaseAuthWithGoogle(acc.idToken!!, acc)
+                    firebaseAuthWithGoogle(acc.idToken!!, acc,bundle=null)
                 }
                 catch (e: Exception){
                     Toast.makeText(
@@ -178,7 +179,7 @@ class Login : AppCompatActivity(), Contract.View{
     }
 
     //Registers the google Sign in as a authenticated user in Firebase, lasts only within a session
-    private fun firebaseAuthWithGoogle(idToken: String, acc: GoogleSignInAccount){
+    private fun firebaseAuthWithGoogle(idToken: String, acc: GoogleSignInAccount,bundle: Bundle?){
         val cred = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
             if(task.isSuccessful){
@@ -187,7 +188,7 @@ class Login : AppCompatActivity(), Contract.View{
                     "Logged in successfully to firebase",
                     Toast.LENGTH_SHORT
                 ).show()
-                updateUI(auth.currentUser){
+                Controller.updateUI(this,auth.currentUser){
                     putString("FullName", acc.displayName.toString())
                 }
             }
@@ -198,7 +199,7 @@ class Login : AppCompatActivity(), Contract.View{
 
 
         forgotPswrdLink.setOnClickListener{
-            startActivity(Intent(this, Registration::class.java))
+            startActivity(Intent(this, RegistrationView::class.java))
         }
     }
 
@@ -223,18 +224,18 @@ class Login : AppCompatActivity(), Contract.View{
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        updateUI(currentUser)
+        Controller.updateUI(this,currentUser)
     }
 
     //logs in user with the right credentials
-    private fun login(){
+    private fun login(bundle: Bundle?){
         auth.signInWithEmailAndPassword(inputEmail.text.toString(), inputPassword.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("AUTHENTICATION", "login :success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    Controller.updateUI(this,user)
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
@@ -243,14 +244,14 @@ class Login : AppCompatActivity(), Contract.View{
                         baseContext, "Incorrect email/password!",
                         Toast.LENGTH_SHORT
                     ).show()
-                    updateUI(null)
+                    Controller.updateUI(this,null)
 
                 }
             }
     }
 
     //Opens next activity if the user signed in successfully
-    private fun updateUI(user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
+   /* private fun updateUI(user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
         if(user != null){
             var loggedIn = Intent(this, FarmerPage::class.java)
             loggedIn.putExtras(Bundle().apply(extras))
@@ -258,10 +259,14 @@ class Login : AppCompatActivity(), Contract.View{
         }
     }
 
-    private fun register(){
+    */
+
+   /* private fun register(){
         var registration = Intent(this, Registration::class.java)
         startActivity(registration)
     }
+
+    */
 
     //close keyboard on touch of the particular view
     private fun closeKeyboard(view: View) {

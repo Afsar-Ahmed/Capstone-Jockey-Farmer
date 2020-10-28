@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context=".LoginAndRegistration.Registration">
+    tools:context=".LoginAndRegistration.View.RegistrationView">
 
   <EditText
       android:id="@+id/password"
