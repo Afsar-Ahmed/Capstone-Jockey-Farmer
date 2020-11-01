@@ -27,7 +27,8 @@ class FarmerGenerateList {
                         FarmerData.getFarmerName()[i],
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
-                        FarmerData.getFarmerDist()[i]
+                        FarmerData.getFarmerCity()[i],
+                        FarmerData.getisSelected()[i]
                     )
                 list += item
 
@@ -38,7 +39,8 @@ class FarmerGenerateList {
                         FarmerData.getFarmerName()[i],
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
-                        FarmerData.getFarmerDist()[i]
+                        FarmerData.getFarmerCity()[i],
+                        FarmerData.getisSelected()[i]
                     )
                 list += item
 
@@ -49,7 +51,8 @@ class FarmerGenerateList {
                         FarmerData.getFarmerName()[i],
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
-                        FarmerData.getFarmerDist()[i]
+                        FarmerData.getFarmerCity()[i],
+                        FarmerData.getisSelected()[i]
                     )
                 list += item
 
@@ -60,7 +63,8 @@ class FarmerGenerateList {
                         FarmerData.getFarmerName()[i],
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
-                        FarmerData.getFarmerDist()[i]
+                        FarmerData.getFarmerCity()[i],
+                        FarmerData.getisSelected()[i]
                     )
                 list += item
 
@@ -71,7 +75,9 @@ class FarmerGenerateList {
                         FarmerData.getFarmerName()[i],
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
-                        FarmerData.getFarmerDist()[i]
+                        FarmerData.getFarmerCity()[i],
+                        FarmerData.getisSelected()[i]
+
                     )
                 list += item
 

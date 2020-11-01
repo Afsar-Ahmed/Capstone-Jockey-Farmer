@@ -15,9 +15,11 @@ class FarmerData {
         "We are Toronto's most popular farmers market"
     )
 
-    private  var Farmer_Rating = arrayOf("3/5", "4/5", "2.4/5", "4/5", "5/5")
+    private  var Farmer_Rating = arrayOf(5f,4.5f,1.4f,4f,3f)
 
-    private var Farmer_Dist = arrayOf("3km", "4km", "10km", "50km", "3km")
+    private var Farmer_City = arrayOf("Brampton","Mississauga","Toronto","Ajax","Brampton")
+
+    private var isSelected =  arrayOf(true,true,true,true,true)
 
 
     fun getFarmerName() : Array<String>{
@@ -26,10 +28,13 @@ class FarmerData {
     fun getFarmerDesc(): Array<String>{
         return Farmer_Desc
     }
-    fun getFarmerRating() : Array<String>{
+    fun getFarmerRating() : Array<Float>{
         return Farmer_Rating
     }
-    fun getFarmerDist() : Array<String>{
-        return Farmer_Dist
+    fun getFarmerCity() : Array<String>{
+        return Farmer_City
+    }
+    fun getisSelected() : Array<Boolean>{
+        return isSelected
     }
 }
