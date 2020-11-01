@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.farmer_listing.view.*
 import sheridan.capstone.findmyfarmer.R
 
 class ListData (val imageResouce: Int, val Farmer_Name: String, val Farmer_Desc:String,
-                val Farmer_Rating:String, val Farmer_Distance:String) {
+                val Farmer_Rating:Float, val Farmer_City:String,var isSelected:Boolean) {
 
 
 }
