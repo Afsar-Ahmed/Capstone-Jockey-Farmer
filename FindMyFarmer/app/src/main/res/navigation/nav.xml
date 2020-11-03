@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="sheridan.capstone.findmyfarmer.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_farmerListing"
+            app:destination="@id/farmerListing" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="sheridan.capstone.findmyfarmer.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_farmerListing"
+            app:destination="@id/farmerListing" />
+    </fragment>
+    <fragment
+        android:id="@+id/farmerListing"
+        android:name="sheridan.capstone.findmyfarmer.fragments.FarmerPageFragment"
+        android:label="fragment_farmer_listing"
+        tools:layout="@layout/fragment_farmer_listing" >
+        <action
+            android:id="@+id/action_farmerListing_to_loginFragment2"
+            app:destination="@id/loginFragment" />
+    </fragment>
+</navigation>

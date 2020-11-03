@@ -218,7 +218,7 @@ class Login : AppCompatActivity(){
     }
 
     //logs in user with the right credentials
-    private fun login(){
+    fun login(){
         auth.signInWithEmailAndPassword(inputEmail.text.toString(), inputPassword.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

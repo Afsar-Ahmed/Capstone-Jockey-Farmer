@@ -8,6 +8,7 @@ import android.view.WindowManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import sheridan.capstone.findmyfarmer.fragments.LoginFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //startActivity(Intent(this, Login::class.java))
         //Log.d("Switched Activity", "Switched to the Login")
-        checkIfSignedInAccount()
+       // checkIfSignedInAccount()
     }
 
     //Checks if the user in signed in the account
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this,DashBoard::class.java))
 
         } else {
-            startActivity(Intent(this, Login::class.java))
+            //startActivity(Intent(this, Login::class.java))
 
         }
     }
