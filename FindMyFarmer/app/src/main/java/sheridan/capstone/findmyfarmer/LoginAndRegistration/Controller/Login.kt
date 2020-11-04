@@ -63,6 +63,8 @@ class Login : AppCompatActivity(){
                 ).show()
             }
         }
+
+        //observe when user value has been changed in the LoginModel
         model.user.observe(this, authObserver)
 
         val btnAnimation = AnimationUtils.loadAnimation(this,
@@ -94,7 +96,6 @@ class Login : AppCompatActivity(){
             if(model.loginValidation(inputEmail, inputPassword)) {
                 model.login(savedInstanceState, auth, this, inputEmail.text.toString(), inputPassword.text.toString())
 
-                //observe when user value has been changed in the LoginModel
 
             }
                   /* startActivity(Intent(this, DashBoardView::class.java))
@@ -129,6 +130,13 @@ class Login : AppCompatActivity(){
                 }
 
             })
+    }
+
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        updateUI(this,currentUser)
     }
 
     /*private fun firebaseAuthWithFacebook(token: AccessToken,bundle :Bundle?){
@@ -198,92 +206,8 @@ class Login : AppCompatActivity(){
 
     }
 
-    //Registers the google Sign in as a authenticated user in Firebase, lasts only within a session
-   /* private fun firebaseAuthWithGoogle(idToken: String, acc: GoogleSignInAccount,bundle: Bundle?){
-        val cred = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
-            if(task.isSuccessful){
-                Toast.makeText(
-                    applicationContext,
-                    "Logged in successfully to firebase",
-                    Toast.LENGTH_SHORT
-                ).show()
-                Controller.updateUI(this,auth.currentUser){
-                    putString("FullName", acc.displayName.toString())
-                }
-            }
-            else{
-                Toast.makeText(applicationContext, "Was not able to log in!", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }*/
 
-    //validates the input in Email and Password fields according to the regex provided
-    /*private fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
-        var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
-            emailInput.setError("Ouch! Wrong email")
-        }
-        if(!passwordInput.text.matches(regexPattern)){
-            passwordInput.setError("Yikes.. Wrong Password")
-
-        }
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
-                passwordInput.text.matches(regexPattern)
-
-
-    }*/
-
-
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        Controller.updateUI(this,currentUser)
-    }
-
-    //logs in user with the right credentials
-
-   /* private fun login(bundle: Bundle?){
-        auth.signInWithEmailAndPassword(inputEmail.text.toString(), inputPassword.text.toString())
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("AUTHENTICATION", "login :success")
-                    val user = auth.currentUser
-                    Controller.updateUI(this,user)
-                    finish()
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.d("AUTHENTICATION", "login :failure", task.exception)
-                    Toast.makeText(
-                        baseContext, "Incorrect email/password!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    Controller.updateUI(this,null)
-
-                }
-            }
-    }*/
-
-    //Opens next activity if the user signed in successfully
-   /* private fun updateUI(user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
-        if(user != null){
-            var loggedIn = Intent(this, FarmerPage::class.java)
-            loggedIn.putExtras(Bundle().apply(extras))
-            startActivity(loggedIn)
-        }
-    }
-
-    */
-
-   /* private fun register(){
-        var registration = Intent(this, Registration::class.java)
-        startActivity(registration)
-    }
-
-    */
-
+   //Opens next activity if the user signed in successfully
     private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
         if(user != null){
             var loggedIn = Intent(context, FarmerPage::class.java)
