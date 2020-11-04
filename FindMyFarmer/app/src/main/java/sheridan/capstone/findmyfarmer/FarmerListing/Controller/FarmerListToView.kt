@@ -15,8 +15,7 @@ import sheridan.capstone.findmyfarmer.FarmerListing.Model.ListData
 import sheridan.capstone.findmyfarmer.R
 
 
-class FarmerListToView (private val FarmerList: List<ListData>, private val listener:OnItemClickListener
-)
+class FarmerListToView (private val FarmerList: List<ListData>, private val listener:OnItemClickListener)
     : RecyclerView.Adapter<FarmerListToView.MyViewHolder>() {
 
     var Name : String = String()
