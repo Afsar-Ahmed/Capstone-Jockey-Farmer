@@ -56,4 +56,12 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+  <fragment
+      android:id="@+id/fragment"
+      android:name="com.facebook.login.LoginFragment"
+      android:layout_width="283dp"
+      android:layout_height="204dp"
+      tools:layout_editor_absoluteX="66dp"
+      tools:layout_editor_absoluteY="482dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
