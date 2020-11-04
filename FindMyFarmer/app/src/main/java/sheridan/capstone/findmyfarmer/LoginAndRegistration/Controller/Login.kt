@@ -9,49 +9,40 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView
 import sheridan.capstone.findmyfarmer.R
 
 class Login : AppCompatActivity(){
 
-
     val Controller: Controller = Controller()
-    //val loginModel: LoginModel = LoginModel()
     private lateinit var auth: FirebaseAuth
-
     private var RC_SIGN_IN  = 9001
     private lateinit var sic : GoogleSignInClient
-
     private lateinit var callBackManager: CallbackManager
     private lateinit var fbCallBack : FacebookCallback<LoginResult>
     private val model: LoginModel by viewModels()
     private var user: FirebaseUser? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -72,7 +63,7 @@ class Login : AppCompatActivity(){
                 ).show()
             }
         }
-
+        model.user.observe(this, authObserver)
 
         val btnAnimation = AnimationUtils.loadAnimation(this,
             R.anim.btn_click_animation
@@ -87,6 +78,9 @@ class Login : AppCompatActivity(){
             constraintLayoutLoginPage.requestFocus()
             true}
 
+        forgotPswrdLink.setOnClickListener{
+            startActivity(Intent(this, RegistrationView::class.java))
+        }
         //open register form when pressed register button
         registerAccount.setOnClickListener{
             Controller.register(this)
@@ -97,11 +91,12 @@ class Login : AppCompatActivity(){
             loginBtn.startAnimation(btnAnimation)
             loginBtn.startAnimation(btnUpAnimation)
 
-            if(loginValidation(inputEmail, inputPassword))
-              model.login(savedInstanceState,auth,this,inputEmail.text.toString(),inputPassword.text.toString())
+            if(model.loginValidation(inputEmail, inputPassword)) {
+                model.login(savedInstanceState, auth, this, inputEmail.text.toString(), inputPassword.text.toString())
 
-              //observe when user value has been changed in the LoginModel
-              model.user.observe(this,authObserver)
+                //observe when user value has been changed in the LoginModel
+
+            }
                   /* startActivity(Intent(this, DashBoardView::class.java))
                else
                    Toast.makeText(applicationContext, "Sign In Not Successful", Toast.LENGTH_LONG).show()*/
@@ -116,7 +111,7 @@ class Login : AppCompatActivity(){
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult?) {
                     if (result != null) {
-                        firebaseAuthWithFacebook(result.accessToken,savedInstanceState)
+                        model.firebaseAuthWithFacebook(this@Login, auth,result.accessToken,savedInstanceState)
                     } else {
                         Toast.makeText(
                             applicationContext,
@@ -136,7 +131,7 @@ class Login : AppCompatActivity(){
             })
     }
 
-    private fun firebaseAuthWithFacebook(token: AccessToken,bundle :Bundle?){
+    /*private fun firebaseAuthWithFacebook(token: AccessToken,bundle :Bundle?){
         val cred =  FacebookAuthProvider.getCredential(token.token)
 
         auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
@@ -156,7 +151,7 @@ class Login : AppCompatActivity(){
                 ).show()
             }
         }
-    }
+    }*/
 
     //starts the google login pop-up, allowing the user to choose the google account for log in
     private fun googleLogIn(){
@@ -182,7 +177,7 @@ class Login : AppCompatActivity(){
                 try{
                     //breaking down the account object to retrieve the basic data from the account, like name, email, id etc
                     val acc = googleAcc.getResult(ApiException::class.java)!!
-                    firebaseAuthWithGoogle(acc.idToken!!, acc,bundle=null)
+                    model.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)
                 }
                 catch (e: Exception){
                     Toast.makeText(
@@ -204,7 +199,7 @@ class Login : AppCompatActivity(){
     }
 
     //Registers the google Sign in as a authenticated user in Firebase, lasts only within a session
-    private fun firebaseAuthWithGoogle(idToken: String, acc: GoogleSignInAccount,bundle: Bundle?){
+   /* private fun firebaseAuthWithGoogle(idToken: String, acc: GoogleSignInAccount,bundle: Bundle?){
         val cred = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
             if(task.isSuccessful){
@@ -221,15 +216,10 @@ class Login : AppCompatActivity(){
                 Toast.makeText(applicationContext, "Was not able to log in!", Toast.LENGTH_SHORT).show()
             }
         }
-
-
-        forgotPswrdLink.setOnClickListener{
-            startActivity(Intent(this, RegistrationView::class.java))
-        }
-    }
+    }*/
 
     //validates the input in Email and Password fields according to the regex provided
-    private fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
+    /*private fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
         var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
             emailInput.setError("Ouch! Wrong email")
@@ -242,7 +232,7 @@ class Login : AppCompatActivity(){
                 passwordInput.text.matches(regexPattern)
 
 
-    }
+    }*/
 
 
     public override fun onStart() {
