@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.Login
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.Login
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 
 class MainActivity : AppCompatActivity() {

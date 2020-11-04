@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
+package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller
 
 
 import android.content.Context
@@ -11,7 +11,10 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -24,11 +27,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.Controller
+import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView
 import sheridan.capstone.findmyfarmer.R
 
@@ -36,7 +42,7 @@ class Login : AppCompatActivity(){
 
 
     val Controller: Controller = Controller()
-
+    //val loginModel: LoginModel = LoginModel()
     private lateinit var auth: FirebaseAuth
 
     private var RC_SIGN_IN  = 9001
@@ -44,7 +50,8 @@ class Login : AppCompatActivity(){
 
     private lateinit var callBackManager: CallbackManager
     private lateinit var fbCallBack : FacebookCallback<LoginResult>
-
+    private val model: LoginModel by viewModels()
+    private var user: FirebaseUser? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -53,6 +60,18 @@ class Login : AppCompatActivity(){
 
         callBackManager = CallbackManager.Factory.create()
 
+        //observer for the user value in the LoginModel Class
+        val authObserver = Observer<FirebaseUser?>{
+            newAuth -> user = newAuth
+            if(user != null){
+                startActivity(Intent(this, FarmerPage::class.java))
+            }else{
+                Toast.makeText(
+                    applicationContext, "Incorrect email/password!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
 
         val btnAnimation = AnimationUtils.loadAnimation(this,
@@ -79,7 +98,13 @@ class Login : AppCompatActivity(){
             loginBtn.startAnimation(btnUpAnimation)
 
             if(loginValidation(inputEmail, inputPassword))
-                login(savedInstanceState)
+              model.login(savedInstanceState,auth,this,inputEmail.text.toString(),inputPassword.text.toString())
+
+              //observe when user value has been changed in the LoginModel
+              model.user.observe(this,authObserver)
+                  /* startActivity(Intent(this, DashBoardView::class.java))
+               else
+                   Toast.makeText(applicationContext, "Sign In Not Successful", Toast.LENGTH_LONG).show()*/
         }
 
         //press button to login with google
@@ -228,7 +253,8 @@ class Login : AppCompatActivity(){
     }
 
     //logs in user with the right credentials
-    private fun login(bundle: Bundle?){
+
+   /* private fun login(bundle: Bundle?){
         auth.signInWithEmailAndPassword(inputEmail.text.toString(), inputPassword.text.toString())
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -248,7 +274,7 @@ class Login : AppCompatActivity(){
 
                 }
             }
-    }
+    }*/
 
     //Opens next activity if the user signed in successfully
    /* private fun updateUI(user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
@@ -267,6 +293,19 @@ class Login : AppCompatActivity(){
     }
 
     */
+
+    private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
+        if(user != null){
+            var loggedIn = Intent(context, FarmerPage::class.java)
+            loggedIn.putExtras(Bundle().apply(extras))
+            ContextCompat.startActivity(context, loggedIn, null)
+        }
+    }
+
+    private fun register(ApplicationContext: Context){
+        var registration = Intent(ApplicationContext, RegistrationView::class.java)
+        ContextCompat.startActivity(ApplicationContext, registration, null)
+    }
 
     //close keyboard on touch of the particular view
     private fun closeKeyboard(view: View) {

@@ -18,7 +18,7 @@
         <activity android:name=".LoginAndRegistration.View.RegistrationView"></activity>
         <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
-            android:name=".LoginAndRegistration.Model.Login"
+            android:name=".LoginAndRegistration.Controller.Login"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity">
             <intent-filter>
