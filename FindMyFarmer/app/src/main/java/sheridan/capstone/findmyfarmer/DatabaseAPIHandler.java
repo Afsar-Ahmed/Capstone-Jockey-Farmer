@@ -35,9 +35,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     private static final String API_BASE_URL = "http://farmerdb.us-east-2.elasticbeanstalk.com";
     private Context context;
 
-    DatabaseAPIHandler(Context context){
-        this.context = context;
-    }
+    DatabaseAPIHandler(Context context){ this.context = context; }
 
     //Adding Single instance of Customer, Product or Farmer
     private JSONObject AddCustomer(Customer customer){
@@ -68,6 +66,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         return new JSONObject(params);
     }
 
+    //Updating
     private JSONObject UpdateCustomer(Customer customer){
         Map<String, String> params = new HashMap();
 
@@ -229,6 +228,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
     }
 
+    //API calls for a simgle get request
     private String SendPlainGetRequest(int method,String url){
         try {
             RequestQueue rq = Volley.newRequestQueue(context);
@@ -244,8 +244,6 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             return null;
         }
     }
-
-
 
     //Api Call function
     //Params[0] = URL , Params[1] = requirement of the URL or null otherwise
