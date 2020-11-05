@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -215,18 +216,10 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         moveTaskToBack(true)
     }
 
+    //Run validation and login function whith input provided by the user
     override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
-        loginBtn.setOnClickListener{
-            //loginBtn.startAnimation(btnAnimation)
-            //loginBtn.startAnimation(btnUpAnimation)
-
             if(model.loginValidation(email, password)) {
                 model.login( auth, this, email.text.toString(), password.text.toString())
-
-            }
-            // startActivity(Intent(this, DashBoardView::class.java))
-//            else
-//                Toast.makeText(applicationContext, "Sign In Not Successful", Toast.LENGTH_LONG).show()
         }
     }
 }

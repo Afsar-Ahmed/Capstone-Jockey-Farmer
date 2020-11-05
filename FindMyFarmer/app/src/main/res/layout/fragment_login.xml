@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginAndRegistration.View.LoginFragment">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/ScrollView"
+<ScrollView
+    android:id="@+id/ScrollView"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="#FFFFFF"
@@ -36,8 +35,8 @@ android:scrollbarSize="0dp">
         <Space
             android:layout_width="209dp"
             android:layout_height="67dp"
+            android:layout_marginEnd="1dp"
             app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/loginBtn"
             app:layout_constraintTop_toBottomOf="@+id/GSignIn" />
 
@@ -45,13 +44,13 @@ android:scrollbarSize="0dp">
             android:id="@+id/inputPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="@string/input_password_hint"
             android:inputType="textPassword"
             android:textColor="#2B2B2B"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
 
@@ -74,31 +73,13 @@ android:scrollbarSize="0dp">
             android:id="@+id/loginPageLogo"
             android:layout_width="186dp"
             android:layout_height="144dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="48dp"
             android:focusableInTouchMode="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/farm" />
-
-        <Button
-            android:id="@+id/loginBtn"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:background="#11EF82"
-            android:fontFamily="sans-serif-medium"
-            android:hapticFeedbackEnabled="true"
-            android:stateListAnimator="@null"
-            android:text="@string/login_btn"
-            android:textAllCaps="false"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/inputPassword"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/inputPassword"
-            app:layout_constraintTop_toBottomOf="@+id/registerAccount" />
 
         <TextView
             android:id="@+id/forgotPswrdLink"
@@ -130,9 +111,7 @@ android:scrollbarSize="0dp">
             android:id="@+id/GSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="13dp"
             app:layout_constraintStart_toStartOf="@+id/loginBtn"
             app:layout_constraintTop_toBottomOf="@+id/loginBtn">
 
@@ -143,11 +122,26 @@ android:scrollbarSize="0dp">
             android:layout_width="33dp"
             android:layout_height="27dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-            app:layout_constraintHorizontal_bias="0.76"
-            app:layout_constraintStart_toEndOf="@+id/GSignIn"
-            app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+            android:layout_marginStart="36dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/GSignIn"
+            app:layout_constraintStart_toEndOf="@+id/GSignIn" />
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@color/design_default_color_secondary"
+            android:backgroundTint="#11EF82"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/login_btn"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+            app:layout_constraintStart_toStartOf="@+id/inputPassword"
+            app:layout_constraintTop_toBottomOf="@+id/registerAccount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
