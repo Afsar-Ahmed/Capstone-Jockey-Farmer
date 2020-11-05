@@ -9,7 +9,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_dash_board.*
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.Login
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.R
 
 class DashBoardView : AppCompatActivity() {
@@ -34,7 +34,7 @@ class DashBoardView : AppCompatActivity() {
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
             startActivity(Intent(this,
-                Login::class.java))
+                LoginRegistrationController::class.java))
         }
         finish()
 

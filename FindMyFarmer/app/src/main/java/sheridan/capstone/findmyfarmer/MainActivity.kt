@@ -3,22 +3,28 @@ package sheridan.capstone.findmyfarmer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.Entities.Product
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.Login
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //startActivity(Intent(this, Login::class.java))
-        //Log.d("Switched Activity", "Switched to the Login")
+
+        //startActivity(Intent(this, LoginRegistrationController::class.java))
+        //Log.d("Switched Activity", "Switched to the LoginRegistrationController")
         checkIfSignedInAccount()
+
     }
 
     //Checks if the user in signed in the account
@@ -31,8 +37,7 @@ class MainActivity : AppCompatActivity() {
                 DashBoardView::class.java))
 
         } else {
-            startActivity(Intent(this, Login::class.java))
-
+            startActivity(Intent(this, LoginRegistrationController::class.java))
         }
 
         val c = DatabaseAPIHandler(this)
