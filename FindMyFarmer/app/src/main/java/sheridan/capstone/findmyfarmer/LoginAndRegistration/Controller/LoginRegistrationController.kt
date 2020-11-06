@@ -1,19 +1,29 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
+import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -27,12 +37,16 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_registration.*
 import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.LoginFragment
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView
 import sheridan.capstone.findmyfarmer.R
 
-class Login : AppCompatActivity(){
+class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface{
 
     val Controller: Controller = Controller()
     private lateinit var auth: FirebaseAuth
@@ -41,95 +55,58 @@ class Login : AppCompatActivity(){
     private lateinit var callBackManager: CallbackManager
     private lateinit var fbCallBack : FacebookCallback<LoginResult>
     private val model: LoginModel by viewModels()
+    private val registerModel: RegistrationModel by viewModels()
     private var user: FirebaseUser? = null
+    private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
         auth = Firebase.auth
 
         callBackManager = CallbackManager.Factory.create()
 
         //observer for the user value in the LoginModel Class
+        //if changed - log in to the farmerListing
         val authObserver = Observer<FirebaseUser?>{
             newAuth -> user = newAuth
             if(user != null){
                 startActivity(Intent(this, FarmerPage::class.java))
+                finish()
             }else{
-                Toast.makeText(
-                    applicationContext, "Incorrect email/password!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(applicationContext, "Incorrect email/password!",
+                    Toast.LENGTH_SHORT).show()
             }
         }
 
+        registerModel.user.observe(this,authObserver)
         //observe when user value has been changed in the LoginModel
         model.user.observe(this, authObserver)
 
-        val btnAnimation = AnimationUtils.loadAnimation(this,
+       /* val btnAnimation = AnimationUtils.loadAnimation(this,
             R.anim.btn_click_animation
         )
         val btnUpAnimation = AnimationUtils.loadAnimation(this,
             R.anim.btn_click_up_animation
-        )
+        )*/
 
-        //Remove keyboard and focus from the element when touch outside of the EditText
-        constraintLayoutLoginPage.setOnTouchListener{ v: View, m: MotionEvent ->
-            closeKeyboard(constraintLayoutLoginPage)
-            constraintLayoutLoginPage.requestFocus()
-            true}
 
-        forgotPswrdLink.setOnClickListener{
-            startActivity(Intent(this, RegistrationView::class.java))
-        }
+            /*forgotPswrdLink.setOnClickListener{
+                startActivity(Intent(this, RegistrationView::class.java))
+            }*/
+
+        /*
         //open register form when pressed register button
         registerAccount.setOnClickListener{
             Controller.register(this)
         }
-
-        //login when the login button is pressed
-        loginBtn.setOnClickListener{
-            loginBtn.startAnimation(btnAnimation)
-            loginBtn.startAnimation(btnUpAnimation)
-
-            if(model.loginValidation(inputEmail, inputPassword)) {
-                model.login(savedInstanceState, auth, this, inputEmail.text.toString(), inputPassword.text.toString())
+        */
 
 
-            }
-                  /* startActivity(Intent(this, DashBoardView::class.java))
-               else
-                   Toast.makeText(applicationContext, "Sign In Not Successful", Toast.LENGTH_LONG).show()*/
-        }
 
-        //press button to login with google
-        GSignIn.setOnClickListener { googleLogIn() }
-
+        /*
         //press FBSign button in to login with faceBook
-        FBSignIn.setPermissions("email")
-        FBSignIn.registerCallback(callBackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult?) {
-                    if (result != null) {
-                        model.firebaseAuthWithFacebook(this@Login, auth,result.accessToken,savedInstanceState)
-                    } else {
-                        Toast.makeText(
-                            applicationContext,
-                            "Error getting Facebook Account",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                override fun onCancel() {
-                }
-
-                override fun onError(error: FacebookException?) {
-                    Log.e("FacebookERROR", error.toString())
-                }
-
-            })
+        */
     }
 
     public override fun onStart() {
@@ -138,28 +115,6 @@ class Login : AppCompatActivity(){
         val currentUser = auth.currentUser
         updateUI(this,currentUser)
     }
-
-    /*private fun firebaseAuthWithFacebook(token: AccessToken,bundle :Bundle?){
-        val cred =  FacebookAuthProvider.getCredential(token.token)
-
-        auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->
-            if(task.isSuccessful){
-                Toast.makeText(
-                    applicationContext,
-                    "Successfully logged in with Facebook",
-                    Toast.LENGTH_SHORT
-                ).show()
-                Controller.updateUI(this,auth.currentUser)
-            }
-            else{
-                Toast.makeText(
-                    applicationContext,
-                    "Unable to log in with Facebook",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }*/
 
     //starts the google login pop-up, allowing the user to choose the google account for log in
     private fun googleLogIn(){
@@ -221,14 +176,48 @@ class Login : AppCompatActivity(){
         ContextCompat.startActivity(ApplicationContext, registration, null)
     }
 
-    //close keyboard on touch of the particular view
-    private fun closeKeyboard(view: View) {
-        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    //Run validation and login function with input provided by the user
+    override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
+            if(model.loginValidation(email, password)) {
+                model.login( auth, this, email.text.toString(), password.text.toString())
+        }
+    }
 
+    //When sign up button is clicked - parse the information to the input validation and then signUp
+    override fun OnSignUpButtonClickListener(email: EditText, password: EditText, repeatPassword: EditText) {
+        if(registerModel.registerValidation(email,password,repeatPassword))
+            registerModel.register(auth,this,email.text.toString(),password.text.toString())
     }
-    override fun onBackPressed() {
-        moveTaskToBack(true)
+
+    //Open registration fragment on link click
+    override fun OnRegisterLinkClickListener() {
+        registerAccount.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
     }
+
+    //When google Sign In button is pressed - call googleLogIn
+    override fun OnGoogleButtonClickListener() {
+        googleLogIn()
+    }
+
+    //When facebook Sign In button is pressed - call facebook log in
+    override fun OnFBLogInButtonClickListener() {
+        FBSignIn.setPermissions("email")
+        FBSignIn.registerCallback(callBackManager,
+            object : FacebookCallback<LoginResult> { override fun onSuccess(result: LoginResult?) {
+                    if (result != null) {
+                        model.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken)
+                    } else {
+                        Toast.makeText(applicationContext, "Error getting Facebook Account",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onCancel() {
+                }
+                override fun onError(error: FacebookException?) {
+                    Log.e("FacebookERROR", error.toString())
+                }
+            })
+    }
+
 }
 

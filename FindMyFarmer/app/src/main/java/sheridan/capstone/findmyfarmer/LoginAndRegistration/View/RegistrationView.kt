@@ -26,7 +26,7 @@ class RegistrationView : AppCompatActivity() {
         auth = Firebase.auth
 
 
-        signUp.setOnClickListener{
+        signUpButton.setOnClickListener{
             signUpNewUsers()
 
         }
