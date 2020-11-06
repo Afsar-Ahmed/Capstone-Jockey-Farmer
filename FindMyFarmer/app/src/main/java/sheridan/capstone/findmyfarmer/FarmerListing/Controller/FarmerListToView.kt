@@ -88,5 +88,6 @@ class FarmerListToView (private val FarmerList: List<ListData>, private val list
             fun onItemClick(position: Int)
         }
 
+
     }
 

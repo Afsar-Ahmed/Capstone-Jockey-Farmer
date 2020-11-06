@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
@@ -29,10 +28,20 @@ class LoginFragment : Fragment() {
             Log.d("AUTHENTICATE", "ButtonPressed")
             login_interface.OnLoginButtonClickListener(view.inputEmail,view.inputPassword)
         }
+
+        view.GSignIn.setOnClickListener{
+            login_interface.OnGoogleButtonClickListener()
+        }
+
+        view.FBSignIn.setOnClickListener{
+            login_interface.OnFBLogInButtonClickListener()
+        }
+
+        view.registerAccount.setOnClickListener{
+            login_interface.OnRegisterLinkClickListener()
+        }
         return view
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

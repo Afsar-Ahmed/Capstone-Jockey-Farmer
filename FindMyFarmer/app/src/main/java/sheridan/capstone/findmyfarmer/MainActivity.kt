@@ -12,6 +12,7 @@ import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.Entities.Product
+import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 
@@ -24,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         //startActivity(Intent(this, LoginRegistrationController::class.java))
         //Log.d("Switched Activity", "Switched to the LoginRegistrationController")
         checkIfSignedInAccount()
-
     }
 
     //Checks if the user in signed in the account
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         if (user != null) {
             startActivity(Intent(this,
-                DashBoardView::class.java))
+                FarmerPage::class.java))
 
         } else {
             startActivity(Intent(this, LoginRegistrationController::class.java))

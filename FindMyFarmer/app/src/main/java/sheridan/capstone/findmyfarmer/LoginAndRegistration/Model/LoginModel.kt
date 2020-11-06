@@ -41,7 +41,7 @@ class LoginModel:ViewModel() {
     }
 
     //Registers the facebook Sign in as an authenticated user in Firebase, lasts only within a session
-    public fun firebaseAuthWithFacebook(activity: Activity, auth: FirebaseAuth, token: AccessToken, bundle:Bundle?){
+    public fun firebaseAuthWithFacebook(activity: Activity, auth: FirebaseAuth, token: AccessToken){
         val cred =  FacebookAuthProvider.getCredential(token.token)
         signInWithCredential(activity,cred,auth,"facebook")
     }
@@ -65,10 +65,11 @@ class LoginModel:ViewModel() {
     public  fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
         var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
-            emailInput.setError("Ouch! Wrong email")
+            emailInput.setError("Wrong email")
         }
         if(!passwordInput.text.matches(regexPattern)){
-            passwordInput.setError("Yikes.. Wrong Password")
+            passwordInput.setError("Password must be 6 to 20 characters." +
+                    " Password must include letters and numbers")
 
         }
         return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
