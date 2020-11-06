@@ -1,24 +1,23 @@
 package sheridan.capstone.findmyfarmer.FarmerListing.View
 
 import android.content.Intent
-import android.media.Image
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_farmer_page.*
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.farmer_listing.*
 import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmerGenerateList
 import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmerListToView
-import sheridan.capstone.findmyfarmer.FarmerListing.Model.ListData
+import com.facebook.login.LoginManager
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.R
 
 class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
@@ -96,7 +95,10 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
                 true
             }
             R.id.Logout -> {
-                Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_LONG).show()
+                logOut()
+
+
+                finish()
                 return true
             }
 
@@ -104,6 +106,18 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
 
         }
 
+    }
+    private fun logOut(){
+        Firebase.auth.signOut()
+
+        LoginManager.getInstance().logOut()
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(){
+            startActivity(
+                Intent(this,
+                LoginRegistrationController::class.java)
+            )
+        }
+        Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_LONG).show()
     }
 
 }
