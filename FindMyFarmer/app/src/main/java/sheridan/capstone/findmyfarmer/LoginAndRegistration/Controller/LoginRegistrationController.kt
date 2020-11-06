@@ -48,7 +48,6 @@ import sheridan.capstone.findmyfarmer.R
 
 class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface{
 
-    val Controller: Controller = Controller()
     private lateinit var auth: FirebaseAuth
     private var RC_SIGN_IN  = 9001
     private lateinit var sic : GoogleSignInClient
@@ -57,7 +56,6 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     private val model: LoginModel by viewModels()
     private val registerModel: RegistrationModel by viewModels()
     private var user: FirebaseUser? = null
-    private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
