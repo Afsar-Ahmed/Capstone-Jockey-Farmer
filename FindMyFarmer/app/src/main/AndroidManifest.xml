@@ -11,14 +11,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".FarmerPage">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".FarmerListing.View.FarmerPage">
 
         </activity>
-        <activity android:name=".Registration"></activity>
-        <activity android:name=".DashBoard" />
+        <activity android:name=".LoginAndRegistration.View.RegistrationView"></activity>
+        <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
-            android:name=".Login"
+            android:name=".LoginAndRegistration.Controller.Login"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity">
             <intent-filter>
