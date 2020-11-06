@@ -18,8 +18,7 @@ import sheridan.capstone.findmyfarmer.R
 class FarmerListToView (private val FarmerList: List<ListData>, private val listener:OnItemClickListener)
     : RecyclerView.Adapter<FarmerListToView.MyViewHolder>() {
 
-    var Name : String = String()
-    var selection : Boolean = false
+
 
 
     override fun onCreateViewHolder(
@@ -53,9 +52,7 @@ class FarmerListToView (private val FarmerList: List<ListData>, private val list
 
     }
 
- fun getSelections() : Boolean {
-     return selection
- }
+
 
 
 

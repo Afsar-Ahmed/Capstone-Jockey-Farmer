@@ -11,4 +11,8 @@
         <item name="colorControlActivated">@color/colorRatingActive</item>
         <item name ="colorControlNormal">@color/colorRatingInactive</item>
     </style>
+    <style name ="Rating2" parent="AppTheme">
+        <item name ="colorControlActivated">@color/WhiteColor</item>
+        <item name ="colorControlNormal">@color/colorRatingInactive</item>
+    </style>
 </resources>

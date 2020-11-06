@@ -13,10 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FarmerListing.View.FarmerPage">
-
-        </activity>
-        <activity android:name=".LoginAndRegistration.View.RegistrationView"></activity>
+        <activity android:name=".FarmerListing.View.FarmerInfo"></activity>
+        <activity android:name=".FarmerListing.View.FarmerPage"></activity>
+        <activity android:name=".LoginAndRegistration.View.RegistrationView" />
         <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"
@@ -27,7 +26,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
