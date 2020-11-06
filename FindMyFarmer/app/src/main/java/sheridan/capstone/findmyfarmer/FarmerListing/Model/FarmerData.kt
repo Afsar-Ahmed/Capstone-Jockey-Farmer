@@ -2,6 +2,12 @@ package sheridan.capstone.findmyfarmer.FarmerListing.Model
 
 class FarmerData {
 
+
+
+    private var Fruit_Name= arrayOf("Apples","Strawberries")
+    private var Fruit_Cat = arrayOf("fruit","fruit")
+
+
     private var Farmer_Name = arrayOf(
         "WestSide Farmers Market", "EastSide Cherry Market",
         "Bobs Fresh Vegetables", "Toms Market", "Toronto's Biggest Farmers Market"
@@ -37,4 +43,11 @@ class FarmerData {
     fun getisSelected() : Array<Boolean>{
         return isSelected
     }
+    fun getFruitName(): Array<String>{
+        return Fruit_Name
+    }
+    fun getFruitCat(): Array<String>{
+        return Fruit_Cat
+    }
+
 }

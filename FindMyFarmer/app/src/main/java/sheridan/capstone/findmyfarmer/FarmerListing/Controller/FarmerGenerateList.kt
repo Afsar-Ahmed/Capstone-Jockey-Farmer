@@ -1,12 +1,48 @@
 package sheridan.capstone.findmyfarmer.FarmerListing.Controller
 
 import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerData
+import sheridan.capstone.findmyfarmer.FarmerListing.Model.FruitData
 import sheridan.capstone.findmyfarmer.FarmerListing.Model.ListData
 import sheridan.capstone.findmyfarmer.R
 
 class FarmerGenerateList {
 
     val FarmerData : FarmerData = FarmerData()
+
+    fun GenerateFruit(size:Int) : List<FruitData> {
+
+        val list = ArrayList<FruitData>()
+        for (i in 0 until size) {
+            val drawable = when (i % 3) {
+                0 -> R.drawable.apples
+                1 -> R.drawable.straw
+
+
+                else -> R.drawable.apples
+            }
+            if (i == 0) {
+                val item =
+                    FruitData(
+                        drawable,
+                        FarmerData.getFruitName()[i],
+                        FarmerData.getFruitCat()[i],
+
+                        )
+                list += item
+
+            } else if (i == 1) {
+                val item =
+                    FruitData(
+                        drawable,
+                        FarmerData.getFruitName()[i],
+                        FarmerData.getFruitCat()[i]
+
+                    )
+                list += item
+            }
+        }
+        return list
+    }
 
     fun GenerateList(size: Int): List<ListData> {
         val list = ArrayList<ListData>()
