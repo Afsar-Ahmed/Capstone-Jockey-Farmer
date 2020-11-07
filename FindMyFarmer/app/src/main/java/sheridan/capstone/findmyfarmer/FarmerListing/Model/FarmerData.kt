@@ -4,8 +4,8 @@ class FarmerData {
 
 
 
-    private var Fruit_Name= arrayOf("Apples","Strawberries")
-    private var Fruit_Cat = arrayOf("fruit","fruit")
+    private var Fruit_Name= arrayOf("Apples","Strawberries","Bananas","Watermelons")
+    private var Fruit_Cat = arrayOf("Fruit","Berry","Fruit","Berry")
 
 
     private var Farmer_Name = arrayOf(
@@ -14,7 +14,8 @@ class FarmerData {
     )
 
     private var Farmer_Desc = arrayOf(
-        "WestSide has the best fresh fruits and vegetables",
+        "WestSide has the best fresh fruits and vegetables." +
+                "We grow the freshest vegetables in the season",
         "At EastSide, we have the best cherries and all home grown during the season",
         "Here at Bobs Fresh Vegetable market, we grow the freshest vegetables in the season ",
         "We offer some of the best prices for our produce, and our strawberries are our staple",

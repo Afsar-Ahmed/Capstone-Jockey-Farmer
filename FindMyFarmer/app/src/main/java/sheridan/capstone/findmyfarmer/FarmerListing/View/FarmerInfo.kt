@@ -21,7 +21,7 @@ import sheridan.capstone.findmyfarmer.R
 class FarmerInfo : AppCompatActivity() {
     var FarmerController : FarmerGenerateList = FarmerGenerateList()
 
-    val List = FarmerController.GenerateFruit(2)
+    val List = FarmerController.GenerateFruit(4)
 
 
 
@@ -29,6 +29,9 @@ class FarmerInfo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_farmer_info)
 
+        backButton.setOnClickListener{
+            onBackPressed()
+        }
         val Rating :RatingBar = findViewById(R.id.Ratings)
 
         val NameS : TextView = findViewById(R.id.Name)
