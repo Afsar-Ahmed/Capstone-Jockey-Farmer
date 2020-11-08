@@ -9,6 +9,7 @@
     <color name = "colorRatingActive">#FDA14F</color>
     <color name = "colorRatingInactive">#C9C9D1</color>
     <color name = "colorBackground">#EEEEEE</color>
+    <color name = "WhiteColor">#FFFFFF</color>
 
 
 </resources>
