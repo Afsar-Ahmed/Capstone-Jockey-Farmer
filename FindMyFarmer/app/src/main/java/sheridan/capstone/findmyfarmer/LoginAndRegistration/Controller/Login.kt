@@ -34,7 +34,6 @@ import sheridan.capstone.findmyfarmer.R
 
 class Login : AppCompatActivity(){
 
-    val Controller: Controller = Controller()
     private lateinit var auth: FirebaseAuth
     private var RC_SIGN_IN  = 9001
     private lateinit var sic : GoogleSignInClient
