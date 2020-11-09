@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:background="#ECFFFFFF"
+                android:background="#ACFFCCFF"
 
                 android:clickable="true"
                 android:focusable="true"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:clickable="true"
-                    android:text="@string/register_link"
+                    android:text="@string/register_btn"
                     android:textColor="#FF5252"
                     app:layout_constraintEnd_toEndOf="@+id/inputPassword"
                     app:layout_constraintHorizontal_bias="0.0"

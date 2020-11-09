@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="#cec1e7"
     tools:context=".FarmerListing.View.FarmerInfo">
 
     <ImageView
@@ -71,7 +71,7 @@
         android:layout_width="412dp"
         android:layout_height="86dp"
         android:layout_marginTop="289dp"
-        android:background="@color/WhiteColor"
+        android:background="#FCD299"
          android:textColor="#000000"
         android:text="Description"
         android:textAlignment="center"
@@ -110,6 +110,8 @@
     <TextView
         android:id="@+id/SampleProducts"
         android:textColor="#000000"
+        android:textStyle="bold"
+        android:textSize="18dp"
         android:layout_width="411dp"
         android:layout_height="0dp"
         android:layout_marginTop="95dp"
