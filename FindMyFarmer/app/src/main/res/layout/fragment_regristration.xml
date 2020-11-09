@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="569dp"
         android:layout_marginTop="90dp"
-        android:background="#BCFFFFFF"
+        android:background="#ACFFCCFF"
         android:focusableInTouchMode="true"
         tools:context=".LoginAndRegistration.View.RegistrationView">
 
