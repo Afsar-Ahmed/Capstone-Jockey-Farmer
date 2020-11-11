@@ -21,10 +21,7 @@ class FarmerListToView (private val FarmerList: List<ListData>, private val list
 
 
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.farmer_listing,
             parent, false

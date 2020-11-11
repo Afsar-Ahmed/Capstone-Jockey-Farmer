@@ -1,29 +1,17 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller
 
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Debug
-import android.util.AttributeSet
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
-import android.view.animation.AnimationUtils
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -36,14 +24,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_registration.*
 import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.LoginFragment
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView
 import sheridan.capstone.findmyfarmer.R
 
 class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface{
@@ -81,30 +65,12 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         //observe when user value has been changed in the LoginModel
         model.user.observe(this, authObserver)
 
-       /* val btnAnimation = AnimationUtils.loadAnimation(this,
-            R.anim.btn_click_animation
-        )
-        val btnUpAnimation = AnimationUtils.loadAnimation(this,
-            R.anim.btn_click_up_animation
-        )*/
+
 
 
             /*forgotPswrdLink.setOnClickListener{
-                startActivity(Intent(this, RegistrationView::class.java))
+                startActivity(Intent(this, RegistrationFragmentView::class.java))
             }*/
-
-        /*
-        //open register form when pressed register button
-        registerAccount.setOnClickListener{
-            Controller.register(this)
-        }
-        */
-
-
-
-        /*
-        //press FBSign button in to login with faceBook
-        */
     }
 
     public override fun onStart() {
@@ -169,10 +135,6 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         }
     }
 
-    private fun register(ApplicationContext: Context){
-        var registration = Intent(ApplicationContext, RegistrationView::class.java)
-        ContextCompat.startActivity(ApplicationContext, registration, null)
-    }
 
     //Run validation and login function with input provided by the user
     override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
