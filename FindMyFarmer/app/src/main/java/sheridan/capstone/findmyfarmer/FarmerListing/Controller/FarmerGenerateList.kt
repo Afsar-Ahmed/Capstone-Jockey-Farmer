@@ -13,10 +13,11 @@ class FarmerGenerateList {
 
         val list = ArrayList<FruitData>()
         for (i in 0 until size) {
-            val drawable = when (i % 3) {
+            val drawable = when (i) {
                 0 -> R.drawable.apples
                 1 -> R.drawable.straw
-
+                2 -> R.drawable.banana
+                3 -> R.drawable.water_melon
 
                 else -> R.drawable.apples
             }
@@ -31,6 +32,26 @@ class FarmerGenerateList {
                 list += item
 
             } else if (i == 1) {
+                val item =
+                    FruitData(
+                        drawable,
+                        FarmerData.getFruitName()[i],
+                        FarmerData.getFruitCat()[i]
+
+                    )
+                list += item
+            }
+            else if (i == 2) {
+                val item =
+                    FruitData(
+                        drawable,
+                        FarmerData.getFruitName()[i],
+                        FarmerData.getFruitCat()[i]
+
+                    )
+                list += item
+            }
+            else if (i == 3) {
                 val item =
                     FruitData(
                         drawable,
