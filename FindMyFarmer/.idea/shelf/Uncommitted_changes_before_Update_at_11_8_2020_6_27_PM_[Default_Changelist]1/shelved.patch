@@ -1,0 +1,459 @@
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Find My Farmer</string>\r\n    <string name=\"input_email_hint\">Email</string>\r\n    <string name=\"input_password_hint\">Password</string>\r\n    <string name=\"login_btn\">Log In</string>\r\n    <string name=\"register_btn\"><u>Don\\'t have an account?</u></string>\r\n    <string name=\"forgot_password_link\"><u>Forgot Password?</u></string>\r\n    <string name=\"facebook_app_id\">1553403721513069</string>\r\n    <string name=\"fb_login_protocol_scheme\">fb1553403721513069</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 22d44a6b802dd4a2ad8f491f86986ba038a2b8b7)
++++ app/src/main/res/values/strings.xml	(date 1604878031084)
+@@ -3,7 +3,8 @@
+     <string name="input_email_hint">Email</string>
+     <string name="input_password_hint">Password</string>
+     <string name="login_btn">Log In</string>
+-    <string name="register_btn"><u>Don\'t have an account?</u></string>
++    <string name="register_link"><u>Don\'t have an account?</u></string>
++    <string name="register_btn">Sign Up</string>
+     <string name="forgot_password_link"><u>Forgot Password?</u></string>
+     <string name="facebook_app_id">1553403721513069</string>
+     <string name="fb_login_protocol_scheme">fb1553403721513069</string>
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Presenter.kt
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Presenter.kt	(date 0)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Presenter.kt	(date 0)
+@@ -0,0 +1,108 @@
++package sheridan.capstone.findmyfarmer.FarmerListing.Presenter
++
++import android.content.Context
++import android.view.View
++import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerListing
++import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
++import sheridan.capstone.findmyfarmer.R
++
++ class Presenter : Contract.Action {
++
++
++
++
++
++    private var Farmer_Name = arrayOf(
++        "WestSide Farmers Market", "EastSide Cherry Market",
++        "Bobs Fresh Vegetables", "Toms Market", "Toronto's Biggest Farmers Market"
++    )
++
++    private var Farmer_Desc = arrayOf(
++        "WestSide has the best fresh fruits and vegetables",
++        "At EastSide, we have the best cherries and all home grown during the season",
++        "Here at Bobs Fresh Vegetable market, we grow the freshest vegetables in the season ",
++        "We offer some of the best prices for our produce, and our strawberries are our staple",
++        "We are Toronto's most popular farmers market"
++    )
++
++    private  var Farmer_Rating = arrayOf("3/5", "4/5", "2.4/5", "4/5", "5/5")
++
++    private var Farmer_Dist = arrayOf("3km", "4km", "10km", "50km", "3km")
++
++
++
++    override fun GenerateList(size: Int): List<FarmerListing> {
++        val list = ArrayList<FarmerListing>()
++        for (i in 0 until size) {
++            val drawable = when (i % 3) {
++                0 -> R.drawable.test1
++                1 -> R.drawable.test3
++                2 -> R.drawable.test3
++                3 -> R.drawable.test3
++                4 -> R.drawable.test3
++
++                else -> R.drawable.test1
++            }
++            if (i == 0) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 1) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 2) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 3) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 4) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            }
++        }
++        return list
++    }
++
++}
++
++
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/Login.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller\r\n\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.MotionEvent\r\nimport android.view.View\r\nimport android.view.animation.AnimationUtils\r\nimport android.view.inputmethod.InputMethodManager\r\nimport android.widget.Toast\r\nimport androidx.activity.viewModels\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.lifecycle.Observer\r\nimport com.facebook.CallbackManager\r\nimport com.facebook.FacebookCallback\r\nimport com.facebook.FacebookException\r\nimport com.facebook.login.LoginResult\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInClient\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions\r\nimport com.google.android.gms.common.api.ApiException\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.FirebaseUser\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport kotlinx.android.synthetic.main.activity_login.*\r\nimport sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass Login : AppCompatActivity(){\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private var RC_SIGN_IN  = 9001\r\n    private lateinit var sic : GoogleSignInClient\r\n    private lateinit var callBackManager: CallbackManager\r\n    private lateinit var fbCallBack : FacebookCallback<LoginResult>\r\n    private val model: LoginModel by viewModels()\r\n    private var user: FirebaseUser? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n\r\n        auth = Firebase.auth\r\n\r\n        callBackManager = CallbackManager.Factory.create()\r\n\r\n        //observer for the user value in the LoginModel Class\r\n        val authObserver = Observer<FirebaseUser?>{\r\n            newAuth -> user = newAuth\r\n            if(user != null){\r\n                startActivity(Intent(this, FarmerPage::class.java))\r\n            }else{\r\n                Toast.makeText(\r\n                    applicationContext, \"Incorrect email/password!\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n            }\r\n        }\r\n\r\n        //observe when user value has been changed in the LoginModel\r\n        model.user.observe(this, authObserver)\r\n\r\n        val btnAnimation = AnimationUtils.loadAnimation(this,\r\n            R.anim.btn_click_animation\r\n        )\r\n        val btnUpAnimation = AnimationUtils.loadAnimation(this,\r\n            R.anim.btn_click_up_animation\r\n        )\r\n\r\n        //Remove keyboard and focus from the element when touch outside of the EditText\r\n        constraintLayoutLoginPage.setOnTouchListener{ v: View, m: MotionEvent ->\r\n            closeKeyboard(constraintLayoutLoginPage)\r\n            constraintLayoutLoginPage.requestFocus()\r\n            true}\r\n\r\n        forgotPswrdLink.setOnClickListener{\r\n            startActivity(Intent(this, RegistrationView::class.java))\r\n        }\r\n        //open register form when pressed register button\r\n        registerAccount.setOnClickListener{\r\n            Controller.register(this)\r\n        }\r\n\r\n        //login when the login button is pressed\r\n        loginBtn.setOnClickListener{\r\n            loginBtn.startAnimation(btnAnimation)\r\n            loginBtn.startAnimation(btnUpAnimation)\r\n\r\n            if(model.loginValidation(inputEmail, inputPassword)) {\r\n                model.login(savedInstanceState, auth, this, inputEmail.text.toString(), inputPassword.text.toString())\r\n\r\n\r\n            }\r\n                  /* startActivity(Intent(this, DashBoardView::class.java))\r\n               else\r\n                   Toast.makeText(applicationContext, \"Sign In Not Successful\", Toast.LENGTH_LONG).show()*/\r\n        }\r\n\r\n        //press button to login with google\r\n        GSignIn.setOnClickListener { googleLogIn() }\r\n\r\n        //press FBSign button in to login with faceBook\r\n        FBSignIn.setPermissions(\"email\")\r\n        FBSignIn.registerCallback(callBackManager,\r\n            object : FacebookCallback<LoginResult> {\r\n                override fun onSuccess(result: LoginResult?) {\r\n                    if (result != null) {\r\n                        model.firebaseAuthWithFacebook(this@Login, auth,result.accessToken,savedInstanceState)\r\n                    } else {\r\n                        Toast.makeText(\r\n                            applicationContext,\r\n                            \"Error getting Facebook Account\",\r\n                            Toast.LENGTH_SHORT\r\n                        ).show()\r\n                    }\r\n                }\r\n\r\n                override fun onCancel() {\r\n                }\r\n\r\n                override fun onError(error: FacebookException?) {\r\n                    Log.e(\"FacebookERROR\", error.toString())\r\n                }\r\n\r\n            })\r\n    }\r\n\r\n    public override fun onStart() {\r\n        super.onStart()\r\n        // Check if user is signed in (non-null) and update UI accordingly.\r\n        val currentUser = auth.currentUser\r\n        updateUI(this,currentUser)\r\n    }\r\n\r\n    /*private fun firebaseAuthWithFacebook(token: AccessToken,bundle :Bundle?){\r\n        val cred =  FacebookAuthProvider.getCredential(token.token)\r\n\r\n        auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->\r\n            if(task.isSuccessful){\r\n                Toast.makeText(\r\n                    applicationContext,\r\n                    \"Successfully logged in with Facebook\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n                Controller.updateUI(this,auth.currentUser)\r\n            }\r\n            else{\r\n                Toast.makeText(\r\n                    applicationContext,\r\n                    \"Unable to log in with Facebook\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n            }\r\n        }\r\n    }*/\r\n\r\n    //starts the google login pop-up, allowing the user to choose the google account for log in\r\n    private fun googleLogIn(){\r\n        //initializing google services for login\r\n        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)\r\n            .requestIdToken(getString(R.string.default_web_client_id))\r\n            .requestEmail()\r\n            .build()\r\n        sic = GoogleSignIn.getClient(this, gso)\r\n        var signInGoogle = sic.signInIntent\r\n        startActivityForResult(signInGoogle, RC_SIGN_IN)\r\n    }\r\n\r\n    //After the user chooses the account (Facebook or google), this handles the user data returned\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n\r\n        //Tries to Log in into google first to check if the credentials are approved by google or not\r\n        if(requestCode == RC_SIGN_IN){\r\n            //if all is good then the account object is returned back\r\n            var googleAcc = GoogleSignIn.getSignedInAccountFromIntent(data)\r\n            if (googleAcc != null) {\r\n                try{\r\n                    //breaking down the account object to retrieve the basic data from the account, like name, email, id etc\r\n                    val acc = googleAcc.getResult(ApiException::class.java)!!\r\n                    model.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)\r\n                }\r\n                catch (e: Exception){\r\n                    Toast.makeText(\r\n                        applicationContext,\r\n                        \"Error Logging into google account\",\r\n                        Toast.LENGTH_SHORT\r\n                    ).show()\r\n                    Log.w(\"GOOGLE SIGN IN FAILED\", e)\r\n                }\r\n            }\r\n            else{\r\n                Toast.makeText(applicationContext, \"Sign In Not Successful\", Toast.LENGTH_LONG).show()\r\n            }\r\n        }\r\n        else{\r\n            callBackManager.onActivityResult(requestCode, resultCode, data)\r\n        }\r\n\r\n    }\r\n\r\n\r\n   //Opens next activity if the user signed in successfully\r\n    private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){\r\n        if(user != null){\r\n            var loggedIn = Intent(context, FarmerPage::class.java)\r\n            loggedIn.putExtras(Bundle().apply(extras))\r\n            ContextCompat.startActivity(context, loggedIn, null)\r\n        }\r\n    }\r\n\r\n    private fun register(ApplicationContext: Context){\r\n        var registration = Intent(ApplicationContext, RegistrationView::class.java)\r\n        ContextCompat.startActivity(ApplicationContext, registration, null)\r\n    }\r\n\r\n    //close keyboard on touch of the particular view\r\n    private fun closeKeyboard(view: View) {\r\n        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager\r\n        imm.hideSoftInputFromWindow(view.windowToken, 0)\r\n\r\n    }\r\n    override fun onBackPressed() {\r\n        moveTaskToBack(true)\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/Login.kt	(revision 7484ccec83b03848a42d106371290af2a987419b)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/Login.kt	(date 1604878031080)
+@@ -26,7 +26,7 @@
+ import com.google.firebase.auth.FirebaseUser
+ import com.google.firebase.auth.ktx.auth
+ import com.google.firebase.ktx.Firebase
+-import kotlinx.android.synthetic.main.activity_login.*
++import kotlinx.android.synthetic.main.fragment_login.*
+ import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView
+@@ -72,6 +72,7 @@
+         val btnUpAnimation = AnimationUtils.loadAnimation(this,
+             R.anim.btn_click_up_animation
+         )
++        constraint
+ 
+         //Remove keyboard and focus from the element when touch outside of the EditText
+         constraintLayoutLoginPage.setOnTouchListener{ v: View, m: MotionEvent ->
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_1.xml	(date 0)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_1.xml	(date 0)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]1" date="1604530921594" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]1/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/4/2020 6:01 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_.xml	(date 0)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_.xml	(date 0)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]" date="1604530887785" recycled="false" toDelete="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/4/2020 6:01 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch	(date 0)
++++ .idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch	(date 0)
+@@ -0,0 +1,37 @@
++Index: app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/View/RegistrationFragment.kt
++===================================================================
++--- app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/View/RegistrationFragment.kt	(revision e015f9028052b8a8f3312b399d52e8b458995029)
+++++ app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/View/RegistrationFragment.kt	(revision e015f9028052b8a8f3312b399d52e8b458995029)
++@@ -1,31 +0,0 @@
++-package sheridan.capstone.findmyfarmer.LoginAndRegistration.View
++-
++-import android.os.Bundle
++-import androidx.fragment.app.Fragment
++-import android.view.LayoutInflater
++-import android.view.View
++-import android.view.ViewGroup
++-import kotlinx.android.synthetic.main.fragment_registration.view.*
++-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationInterface
++-import sheridan.capstone.findmyfarmer.R
++-
++-
++-private lateinit var registration_interface: LoginRegistrationInterface
++-
++-class RegistrationFragment : Fragment() {
++-
++-
++-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
++-        savedInstanceState: Bundle?): View? {
++-        // Inflate the layout for this fragment
++-
++-        val view = inflater.inflate(R.layout.fragment_registration, container, false)
++-        registration_interface = activity as LoginRegistrationInterface
++-
++-        view.signUpButton.setOnClickListener{
++-            registration_interface.OnSignUpButtonClickListener(view.newUserEmail,view.password,view.RePassword)
++-        }
++-        return view
++-    }
++-
++-}
++\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Model/RegistrationModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Model/RegistrationModel.kt	(date 0)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Model/RegistrationModel.kt	(date 0)
+@@ -0,0 +1,63 @@
++package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
++
++import android.app.Activity
++import android.content.Intent
++import android.util.Log
++import android.widget.EditText
++import android.widget.Toast
++import androidx.lifecycle.MutableLiveData
++import androidx.lifecycle.ViewModel
++import com.google.firebase.auth.FirebaseAuth
++import com.google.firebase.auth.FirebaseUser
++import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
++
++class RegistrationModel:ViewModel() {
++
++    val user : MutableLiveData<FirebaseUser?> by lazy{
++        MutableLiveData<FirebaseUser?>()
++    }
++    public fun register(auth: FirebaseAuth, activity: Activity, email: String, password: String) {
++        auth.createUserWithEmailAndPassword(email, password)
++            .addOnCompleteListener(activity) { task ->
++                if (task.isSuccessful) {
++                    //if task is successful new user is added to the Firebase
++                    user.value = auth.currentUser
++                    Log.d("REGISTRATION", "registration :success $user"
++                    )
++                } else {
++                    // If registration fails show log
++                    user.value = null
++                    Log.d("REGISTRATION", "registration :failure")
++                }
++            }
++    }
++    public  fun registerValidation(emailInput: EditText, passwordInput: EditText, repeatPasswordInput: EditText) : Boolean{
++        var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
++        var emailInputVerification: Boolean = false
++        var passwordInputVerification: Boolean = false
++        var repeatPasswordInputVerification: Boolean = false
++
++        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
++            emailInput.setError("Wrong email")
++            emailInputVerification = false
++        }else{
++            emailInputVerification = true
++        }
++        if(!passwordInput.text.matches(regexPattern)){
++            passwordInput.setError("Password must be 6 to 20 characters. Password must include letters and numbers")
++            passwordInputVerification = false
++        }else{
++            passwordInputVerification = true
++            if(!passwordInput.text.toString().equals(repeatPasswordInput.text.toString(),false)) {
++                repeatPasswordInput.setError("Password doesn't match")
++                repeatPasswordInputVerification = false
++            }else{
++                repeatPasswordInputVerification = true
++            }
++
++        }
++        /*return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
++                passwordInput.text.matches(regexPattern)*/
++        return emailInputVerification && passwordInputVerification && repeatPasswordInputVerification
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_registration.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_registration.xml	(date 0)
++++ app/src/main/res/layout/fragment_registration.xml	(date 0)
+@@ -0,0 +1,99 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@drawable/leaves"
++    tools:context=".LoginAndRegistration.View.RegistrationFragment">
++
++    <androidx.constraintlayout.widget.ConstraintLayout
++        android:id="@+id/constraint_layout_registration"
++        android:layout_width="match_parent"
++        android:layout_height="569dp"
++        android:layout_marginTop="90dp"
++        android:background="#BCFFFFFF"
++        android:focusableInTouchMode="true"
++        tools:context=".LoginAndRegistration.View.RegistrationView">
++
++        <EditText
++            android:id="@+id/password"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="60dp"
++            android:ems="10"
++            android:hint="Password"
++            android:inputType="textPassword"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.502"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/newUserEmail" />
++
++        <EditText
++            android:id="@+id/RePassword"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="52dp"
++            android:ems="10"
++            android:hint="Retype Password"
++            android:inputType="textPassword"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.497"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/password" />
++
++        <Button
++            android:id="@+id/signUpButton"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="40dp"
++            android:background="@color/design_default_color_secondary"
++            android:backgroundTint="#11EF82"
++            android:fontFamily="sans-serif-light"
++            android:text="@string/register_btn"
++            android:textAllCaps="false"
++            android:textColor="#FFFFFF"
++            android:textSize="24sp"
++            app:layout_constraintEnd_toEndOf="@+id/RePassword"
++            app:layout_constraintHorizontal_bias="0.0"
++            app:layout_constraintStart_toStartOf="@+id/RePassword"
++            app:layout_constraintTop_toBottomOf="@+id/RePassword" />
++
++        <EditText
++            android:id="@+id/newUserEmail"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="144dp"
++            android:ems="10"
++            android:hint="Email"
++            android:inputType="textEmailAddress"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.497"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <ImageView
++            android:id="@+id/imageView"
++            android:layout_width="62dp"
++            android:layout_height="51dp"
++            android:layout_marginTop="72dp"
++            android:src="@drawable/farm"
++            app:layout_constraintEnd_toStartOf="@+id/textView"
++            app:layout_constraintHorizontal_bias="0.825"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <TextView
++            android:id="@+id/textView"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="88dp"
++            android:layout_marginEnd="92dp"
++            android:text="FindMyFarmer"
++            android:textColor="#F00"
++            android:textSize="24dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++    </androidx.constraintlayout.widget.ConstraintLayout>
++
++</FrameLayout>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM__Default_Changelist_.xml	(date 0)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM__Default_Changelist_.xml	(date 0)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM_[Default_Changelist]" date="1604866070931" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/8/2020 3:07 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM__Default_Changelist_.xml	(date 0)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM__Default_Changelist_.xml	(date 0)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM_[Default_Changelist]" date="1604867138115" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/8/2020 3:25 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM__Default_Changelist_.xml	(date 0)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM__Default_Changelist_.xml	(date 0)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM_[Default_Changelist]" date="1604873142650" recycled="false" toDelete="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Update at 11/8/2020 5:05 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml	(date 0)
++++ .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml	(date 0)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_rebase_[Default_Changelist]" date="1604867223472" recycled="false" toDelete="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before rebase [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+diff --git app/src/main/res/layout/fragment_login.xml app/src/main/res/layout/fragment_login.xml
