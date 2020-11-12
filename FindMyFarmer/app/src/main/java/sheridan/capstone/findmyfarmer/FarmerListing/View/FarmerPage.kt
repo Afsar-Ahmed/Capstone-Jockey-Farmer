@@ -1,11 +1,15 @@
 package sheridan.capstone.findmyfarmer.FarmerListing.View
 
+import android.content.Context
 import android.content.Intent
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_farmer_page.*
@@ -17,6 +21,7 @@ import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_farmer_info.*
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.R
 
@@ -38,13 +43,6 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_farmer_page)
 
-
-
-
-
-
-
-
         val toolbarView: Toolbar = findViewById(R.id.toolbar1)
 
         recycleView.adapter =
@@ -58,6 +56,9 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
 
 
     }
+
+
+
 
 
     override fun onItemClick(position: Int) {
@@ -114,12 +115,10 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
             startActivity(
                 Intent(this,
-                LoginRegistrationController::class.java)
+                    LoginRegistrationController::class.java)
             )
         }
         Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_LONG).show()
     }
 
 }
-
-
