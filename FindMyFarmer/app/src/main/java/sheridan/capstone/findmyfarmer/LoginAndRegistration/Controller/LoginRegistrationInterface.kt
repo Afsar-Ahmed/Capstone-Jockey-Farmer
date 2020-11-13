@@ -12,5 +12,6 @@ interface LoginRegistrationInterface {
     fun OnRegisterLinkClickListener()
     fun OnGoogleButtonClickListener()
     fun OnFBLogInButtonClickListener()
-
+    fun OnResetPasswordButtonClickListener()
+    fun OnSendResetButtonClickListener(email: EditText)
 }

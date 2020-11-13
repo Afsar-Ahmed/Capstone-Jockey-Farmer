@@ -30,7 +30,7 @@ android:scrollbarSize="0dp">
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        tools:context=".MainActivity">
+        tools:context=".LoginAndRegistration.Controller.LoginRegistrationController">
 
         <Space
             android:layout_width="209dp"
