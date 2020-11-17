@@ -17,6 +17,7 @@ public class Customer {
     }
 
     //Setters
+    public void setCustomerID(int customerID) { CustomerID = customerID; }
     public void setCustomerEmail(String customerEmail) {
         CustomerEmail = customerEmail;
     }

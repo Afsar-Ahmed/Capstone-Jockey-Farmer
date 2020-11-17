@@ -1,6 +1,6 @@
 package sheridan.capstone.findmyfarmer.Entities;
 
-public class Farmer extends Customer {
+public class Farmer extends Customer{
     private int FarmerID;
     private String BusinessName;
     private String BusinessDescription;
@@ -8,17 +8,15 @@ public class Farmer extends Customer {
 
     public Farmer(){ }
 
-//    public Farmer(Customer customer,int FarmerID,String BusinessName,String BusinessDescription,int BusinessRating,int ProductID){
-//        super(customer.getCustomerID(),customer.getCustomerName(),customer.getCustomerEmail(),customer.getCustomerPassword());
-//        this.FarmerID = FarmerID;
-//        this.BusinessName =  BusinessName;
-//        this.BusinessDescription = BusinessDescription;
-//        this.BusinessRating = BusinessRating;
-//        this.ProductID = ProductID;
-//    }
+    public Farmer(Customer customer,int FarmerID,String BusinessName,String BusinessDescription,int BusinessRating){
+        super(customer.getCustomerID(),customer.getCustomerName(),customer.getCustomerEmail(),customer.getCustomerPassword());
+        this.FarmerID = FarmerID;
+        this.BusinessName =  BusinessName;
+        this.BusinessDescription = BusinessDescription;
+        this.BusinessRating = BusinessRating;
+    }
 
     public Farmer(int FarmerID,String BusinessName,String BusinessDescription,int BusinessRating){
-        super();
         this.FarmerID = FarmerID;
         this.BusinessName =  BusinessName;
         this.BusinessDescription = BusinessDescription;
@@ -29,6 +27,12 @@ public class Farmer extends Customer {
     public void setBusinessDescription(String businessDescription) { BusinessDescription = businessDescription; }
     public void setBusinessName(String businessName) { BusinessName = businessName; }
     public void setBusinessRating(int businessRating) { BusinessRating = businessRating; }
+    public void setCustomer(Customer customer){
+        this.setCustomerID(customer.getCustomerID());
+        this.setCustomerName(customer.getCustomerName());
+        this.setCustomerEmail(customer.getCustomerEmail());
+        this.setCustomerPassword(customer.getCustomerPassword());
+    }
 
 
     //Getters

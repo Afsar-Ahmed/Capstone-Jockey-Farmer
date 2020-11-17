@@ -28,7 +28,6 @@ class RegistrationView : AppCompatActivity() {
 
         signUpButton.setOnClickListener{
             signUpNewUsers()
-
         }
 
         constraint_layout_registration.setOnTouchListener{v: View, m: MotionEvent ->
@@ -73,7 +72,6 @@ class RegistrationView : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
-
     }
 
     override fun onStart(){

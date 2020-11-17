@@ -1,29 +1,23 @@
 package sheridan.capstone.findmyfarmer.FarmerListing.View
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.makeramen.roundedimageview.RoundedImageView
 import kotlinx.android.synthetic.main.activity_farmer_info.*
-import kotlinx.android.synthetic.main.activity_farmer_page.*
-import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmerGenerateList
-import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmerListToView
+import sheridan.capstone.findmyfarmer.Database.AsyncResponse
+import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
+import sheridan.capstone.findmyfarmer.Database.ObjectConverter
+import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FruitListToView
 import sheridan.capstone.findmyfarmer.R
 
 
 
 class FarmerInfo : AppCompatActivity() {
-    var FarmerController : FarmerGenerateList = FarmerGenerateList()
-
-    val List = FarmerController.GenerateFruit(4)
-
-
+    val ProductList = ArrayList<Product>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,42 +26,42 @@ class FarmerInfo : AppCompatActivity() {
         backButton.setOnClickListener{
             onBackPressed()
         }
-        val Rating :RatingBar = findViewById(R.id.Ratings)
-
-        val NameS : TextView = findViewById(R.id.Name)
-
-        val Description : TextView = findViewById(R.id.Desc)
-
-        val Images : ImageView = findViewById(R.id.icon)
-
-        val Address : TextView = findViewById(R.id.Address)
+        val Rating = findViewById<RatingBar>(R.id.Ratings)
+        val NameS = findViewById<TextView>(R.id.Name)
+        val Description = findViewById<TextView>(R.id.Desc)
+        val Images = findViewById<ImageView>(R.id.icon)
+        val Address = findViewById<TextView>(R.id.Address)
 
         val Name = intent.getStringExtra("Name")
         val Desc = intent.getStringExtra("Des")
         val Ratings = intent.getFloatExtra("Rating",1f)
-        val Img = intent.getIntExtra("Image",1)
+        //val Img = intent.getIntExtra("Image",1)
         val Add = intent.getStringExtra("City")
+        val farmerid = intent.getIntExtra("FarmerID",-1);
 
-
-
-
-
-        recyclerView.adapter =
-            FruitListToView(
-                List
-            )
-
+        //setting adapter to fruit list
+        val adap = FruitListToView(ProductList)
+        recyclerView.adapter = adap
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
-
-
+        //setting values for Farmer info
         Rating.rating = Ratings
         NameS.text = Name.toString()
         Description.text = Desc.toString()
-        Images.setImageResource(Img)
+        //Images.setImageResource(Img)
         Address.text = Add.toString()
 
+
+
+
+        val c = DatabaseAPIHandler(this, AsyncResponse {
+            var products =  ObjectConverter.convertStringToObject(it,Product::class.java,true) as List<Object>
+            if(products.size > 0){
+                ProductList.addAll(products as List<Product>)
+                adap.notifyDataSetChanged()
+            }
+        }).execute("/ProductsByFarmerID/${farmerid}")
 
     }
 }

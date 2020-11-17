@@ -90,7 +90,6 @@ android:scrollbarSize="0dp">
             android:text="@string/forgot_password_link"
             android:textColor="#FF5252"
             app:layout_constraintEnd_toEndOf="@+id/inputPassword"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/inputPassword"
             app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
@@ -103,7 +102,6 @@ android:scrollbarSize="0dp">
             android:text="@string/register_link"
             android:textColor="#FF5252"
             app:layout_constraintEnd_toEndOf="@+id/inputPassword"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/inputPassword"
             app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
@@ -111,20 +109,22 @@ android:scrollbarSize="0dp">
             android:id="@+id/GSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            app:layout_constraintStart_toStartOf="@+id/loginBtn"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginBtn">
 
         </com.google.android.gms.common.SignInButton>
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/FBSignIn"
-            android:layout_width="33dp"
+            android:layout_width="wrap_content"
             android:layout_height="27dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/GSignIn"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/GSignIn" />
 
         <Button

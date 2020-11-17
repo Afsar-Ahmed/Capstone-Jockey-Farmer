@@ -1,5 +1,6 @@
 package sheridan.capstone.findmyfarmer.Database;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -28,8 +29,14 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
     private static final String API_BASE_URL = "http://farmerdb.us-east-2.elasticbeanstalk.com";
     private Context context;
+    public AsyncResponse del = null;
+    private ProgressDialog dialog;
 
-    public DatabaseAPIHandler(Context context){ this.context = context; }
+    public DatabaseAPIHandler(Context context,AsyncResponse asyncResponse)
+    {
+        this.context = context;
+        del = asyncResponse;
+    }
 
     //Adding Single instance of Customer, Product or Farmer
     private JSONObject AddCustomer(Customer customer){
@@ -197,8 +204,8 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, listArray, requestFuture, requestFuture);
             rq.add(request);
 
-            String response = requestFuture.get(5, TimeUnit.SECONDS).toString();
-            System.out.println(response);
+            String response = requestFuture.get().toString();
+            Thread.sleep(1000);
             return response;
         }catch (Exception ex){
             System.out.println(ex);
@@ -241,8 +248,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             JsonObjectRequest request = new JsonObjectRequest(method, url, obj, requestFuture, requestFuture);
             rq.add(request);
 
-            String response = requestFuture.get(5, TimeUnit.SECONDS).toString();
-            System.out.println(response);
+            String response = requestFuture.get().toString();
             return response;
         }catch (Exception ex){
             System.out.println(ex);
@@ -250,16 +256,15 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
     }
 
-    //API calls for a simgle get request
-    private String SendPlainGetRequest(int method,String url){
+    //API calls for a simple get request
+    private String SendPlainGetRequest(int method, String url){
         try {
             RequestQueue rq = Volley.newRequestQueue(context);
             RequestFuture<String> requestFuture = RequestFuture.newFuture();
             StringRequest request = new StringRequest(method, url, requestFuture, requestFuture);
             rq.add(request);
 
-            String response = requestFuture.get(5, TimeUnit.SECONDS);
-            System.out.println(response);
+            String response = requestFuture.get(5,TimeUnit.SECONDS);
             return response;
         }catch (Exception ex){
             System.out.println(ex);
@@ -273,6 +278,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     protected String doInBackground(Object... objects) {
         String paramtype = "";
         List<?> list = null;
+        String response = "";
         try{
             String url = API_BASE_URL + objects[0].toString();
 
@@ -286,32 +292,36 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
                 //if it is a list
                 if(paramtype.compareToIgnoreCase("list")==0){
-                    SendListRequest(url,list);
+                   response = SendListRequest(url,list);
                 }
                 else{
-                    if(objects[0].toString().contains("update")){
-                        SendSingleObjectRequest(Request.Method.PUT,url,objects[1]);
+                    if(objects[0].toString().toLowerCase().contains("update")){
+                        response = SendSingleObjectRequest(Request.Method.PUT,url,objects[1]);
                     }
-                    else if(objects[0].toString().contains("add") || objects[0].toString().contains("Add")){
-                        SendSingleObjectRequest(Request.Method.POST,url,objects[1]);
+                    else if(objects[0].toString().toLowerCase().contains("add")){
+                        response = SendSingleObjectRequest(Request.Method.POST,url,objects[1]);
                     }
                 }
             }
             else{
                 //Function for only url calls GET
-                if(!(objects[0].toString().contains("delete"))){
-                    SendPlainGetRequest(Request.Method.GET,url);
+                if(!(objects[0].toString().toLowerCase().contains("delete"))){
+                    response = SendPlainGetRequest(Request.Method.GET,url);
                 }
                 else{
-                    SendPlainGetRequest(Request.Method.PUT,url);
+                    response = SendPlainGetRequest(Request.Method.PUT,url);
                 }
-
             }
-
-            return "";
+            return response;
         }catch (Exception ex){
             System.out.println(ex);
             return null;
         }
     }
+
+    @Override
+    protected void onPostExecute(String s) {
+        del.processFinish(s);
+    }
 }
+
