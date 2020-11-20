@@ -92,7 +92,7 @@
                 android:textStyle="normal" />
 
             <TextView
-                android:id="@+id/Address"
+                android:id="@+id/CityInput"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
