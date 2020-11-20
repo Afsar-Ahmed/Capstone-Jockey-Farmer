@@ -8,11 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
 import kotlinx.android.synthetic.main.farmer_listing.view.*
+import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerListData
 import sheridan.capstone.findmyfarmer.R
 
 
-class FarmerListToView (private val FarmerList: List<FarmerListData>, private val listener:OnItemClickListener)
+class FarmerListToView (private val FarmerList: List<Farm>, private val listener:OnItemClickListener)
     : RecyclerView.Adapter<FarmerListToView.MyViewHolder>() {
 
 
@@ -34,10 +35,10 @@ class FarmerListToView (private val FarmerList: List<FarmerListData>, private va
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = FarmerList[position]
         //holder.imageView.setImageURI("")
-        holder.Farmer_Name.text = currentItem.farmer.customerName
-        holder.Farmers_Desc.text = currentItem.farmer.businessDescription
-        holder.Rating.rating = currentItem.farmer.businessRating.toFloat()
-        holder.Farmer_City.text = currentItem.address.city
+        holder.Farmer_Name.text = currentItem.businessName
+        holder.Farmers_Desc.text = currentItem.businessDescription
+        holder.Rating.rating = currentItem.businessRating.toFloat()
+        holder.Farmer_City.text = currentItem.city
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {

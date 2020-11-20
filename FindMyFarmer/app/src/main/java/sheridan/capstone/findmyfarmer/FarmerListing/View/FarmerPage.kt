@@ -4,11 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Adapter
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.activity_farmer_page.*
 import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.Database.ObjectConverter
-import sheridan.capstone.findmyfarmer.Entities.Address
 import sheridan.capstone.findmyfarmer.Entities.Customer
+import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmerListToView
 import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerListData
@@ -31,7 +31,7 @@ import sheridan.capstone.findmyfarmer.R
 class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
 
 
-    private var farmerlist = ArrayList<FarmerListData>()
+    private var farmlist = ArrayList<Farm>()
     private val Bundle : Bundle = Bundle()
     private lateinit var adap: FarmerListToView
     private lateinit var progressbar :ProgressBar
@@ -47,7 +47,7 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
 
 
         //uploading List to the RecycleView
-        adap = FarmerListToView(farmerlist,this)
+        adap = FarmerListToView(farmlist,this)
         recycleView.adapter = adap
         recycleView.layoutManager = LinearLayoutManager(this)
         recycleView.setHasFixedSize(true)
@@ -55,55 +55,47 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
 
         //first run to get all the farmers from the database
         swipeResfreshLayout.isRefreshing = true
-        GetAllFarmersFromDatabase()
+        GetAllFarmsFromDatabase()
 
 
         //checks if the swipe refresh is called and gets all the farmers from the database again
         swipeResfreshLayout.setOnRefreshListener {
+            swipeResfreshLayout.setProgressBackgroundColorSchemeColor(Color.Red.hashCode())
             //accessing all farmers data from database
-            GetAllFarmersFromDatabase()
+            GetAllFarmsFromDatabase()
         }
 
     }
 
-    private fun GetAllFarmersFromDatabase(){
-        farmerlist.clear()
-        val c = DatabaseAPIHandler(this, AsyncResponse {
-            var Allfarmers = ObjectConverter.convertStringToObject(it, Farmer::class.java,true) as List<Object>
-            for (farmer in Allfarmers){
-                var retFarmer = farmer as Farmer
-                val c2  = DatabaseAPIHandler(this, AsyncResponse {it2 ->
-                    var FarmerCustomer = ObjectConverter.convertStringToObject(it2, Customer::class.java,false) as Customer
-                    retFarmer.setCustomer(FarmerCustomer);
-                    val c3  = DatabaseAPIHandler(this, AsyncResponse {it3 ->
-                        var FarmerAddress = ObjectConverter.convertStringToObject(it3,Address::class.java,false) as Address
-                        var farmerlistdata = FarmerListData(retFarmer,FarmerAddress)
-                        farmerlist.add(farmerlistdata)
-                        //notifying change on list
-                        adap.notifyDataSetChanged()
-                        swipeResfreshLayout.isRefreshing = false
-                    }).execute("/AddressByCustomerID/${retFarmer.customerID}")
-
-                }).execute("/CustomerByFarmerID/${retFarmer.farmerID}")
+    private fun GetAllFarmsFromDatabase(){
+        farmlist.clear()
+        DatabaseAPIHandler(this, AsyncResponse {
+            var AllFarms = ObjectConverter.convertStringToObject(it, Farm::class.java,true) as List<Object>
+            for (farm in AllFarms){
+                var farmlistdata = farm as Farm
+                farmlist.add(farmlistdata)
+                //notifying change on list
+                adap.notifyDataSetChanged()
+                swipeResfreshLayout.isRefreshing = false
             }
-        }).execute("/Farmers")
+        }).execute("/Farms")
     }
 
     override fun onItemClick(position: Int) {
 
         var loggedIn = Intent(this, FarmerInfo::class.java)
         //val Image = null
-        val Farmer_Name = farmerlist[position].farmer.customerName
-        val Farmer_Desc = farmerlist[position].farmer.businessDescription
-        val Farmer_Rat = farmerlist[position].farmer.businessRating.toFloat()
-        val Farmer_City = farmerlist[position].address.city
+        val Farm_Name = farmlist[position].businessName
+        val Farm_Desc = farmlist[position].businessDescription
+        val Farm_Rat = farmlist[position].businessRating.toFloat()
+        val Farm_City = farmlist[position].city
 
         //Bundle.putInt("Image",null)
-        Bundle.putInt("FarmerID",farmerlist[position].farmer.farmerID)
-        Bundle.putString("Name",Farmer_Name)
-        Bundle.putString("Des",Farmer_Desc)
-        Bundle.putFloat("Rating",Farmer_Rat)
-        Bundle.putString("City",Farmer_City)
+        Bundle.putInt("FarmID",farmlist[position].farmID)
+        Bundle.putString("Name",Farm_Name)
+        Bundle.putString("Des",Farm_Desc)
+        Bundle.putFloat("Rating",Farm_Rat)
+        Bundle.putString("City",Farm_City)
 
         loggedIn.putExtras(Bundle)
 
@@ -148,7 +140,6 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
         }
         Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_LONG).show()
     }
-
 }
 
 

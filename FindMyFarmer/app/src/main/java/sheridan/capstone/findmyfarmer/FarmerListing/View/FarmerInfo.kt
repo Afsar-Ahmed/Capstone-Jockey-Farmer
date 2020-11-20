@@ -37,7 +37,7 @@ class FarmerInfo : AppCompatActivity() {
         val Ratings = intent.getFloatExtra("Rating",1f)
         //val Img = intent.getIntExtra("Image",1)
         val Add = intent.getStringExtra("City")
-        val farmerid = intent.getIntExtra("FarmerID",-1);
+        val farmid = intent.getIntExtra("FarmID",-1);
 
         //setting adapter to fruit list
         val adap = FruitListToView(ProductList)
@@ -53,15 +53,13 @@ class FarmerInfo : AppCompatActivity() {
         Address.text = Add.toString()
 
 
-
-
         val c = DatabaseAPIHandler(this, AsyncResponse {
             var products =  ObjectConverter.convertStringToObject(it,Product::class.java,true) as List<Object>
             if(products.size > 0){
                 ProductList.addAll(products as List<Product>)
                 adap.notifyDataSetChanged()
             }
-        }).execute("/ProductsByFarmerID/${farmerid}")
+        }).execute("/ProductsByFarmID/${farmid}")
 
     }
 }

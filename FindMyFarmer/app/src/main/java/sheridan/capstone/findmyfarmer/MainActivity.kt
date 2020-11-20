@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import sheridan.capstone.findmyfarmer.Database.AsyncResponse
-import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
-import sheridan.capstone.findmyfarmer.Database.ObjectConverter
-import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 
@@ -21,6 +17,8 @@ class MainActivity : AppCompatActivity(){
         //startActivity(Intent(this, LoginRegistrationController::class.java))
         //Log.d("Switched Activity", "Switched to the LoginRegistrationController")
         checkIfSignedInAccount()
+
+
     }
 
     //Checks if the user in signed in the account
@@ -35,13 +33,6 @@ class MainActivity : AppCompatActivity(){
         } else {
             startActivity(Intent(this, LoginRegistrationController::class.java))
         }
-
-        //example
-        //This how to call the API
-        val c = DatabaseAPIHandler(this, AsyncResponse {
-            System.err.println(it)
-        }).execute("/storage/GetImagesForCustomer/22")
-
     }
 
 }

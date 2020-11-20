@@ -3,16 +3,15 @@ package sheridan.capstone.findmyfarmer.Database;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import sheridan.capstone.findmyfarmer.Entities.Address;
 import sheridan.capstone.findmyfarmer.Entities.Customer;
+import sheridan.capstone.findmyfarmer.Entities.Farm;
 import sheridan.capstone.findmyfarmer.Entities.Farmer;
-import sheridan.capstone.findmyfarmer.Entities.FarmerProduct;
+import sheridan.capstone.findmyfarmer.Entities.FarmProduct;
 import sheridan.capstone.findmyfarmer.Entities.Product;
 
 public class ObjectConverter {
@@ -47,12 +46,12 @@ public class ObjectConverter {
                 } else if (cls == Product.class) {
                     Product product = new Gson().fromJson(response, cls);
                     object = product;
-                } else if (cls == FarmerProduct.class) {
-                    FarmerProduct farmerProduct = new Gson().fromJson(response, cls);
-                    object = farmerProduct;
-                } else if (cls == Address.class) {
-                    Address address = new Gson().fromJson(response, cls);
-                    object = address;
+                } else if (cls == FarmProduct.class) {
+                    FarmProduct farmProduct = new Gson().fromJson(response, cls);
+                    object = farmProduct;
+                } else if (cls == Farm.class) {
+                    Farm farm = new Gson().fromJson(response, cls);
+                    object = farm;
                 }
 
                 return object;
