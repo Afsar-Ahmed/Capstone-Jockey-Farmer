@@ -1,0 +1,436 @@
+Index: app/src/main/res/layout/activity_regristration.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/constraint_layout_registration\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:focusableInTouchMode=\"true\"\r\n    tools:context=\".LoginAndRegistration.View.RegistrationView\">\r\n\r\n  <EditText\r\n      android:id=\"@+id/password\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"60dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Password\"\r\n      android:inputType=\"textPassword\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintHorizontal_bias=\"0.502\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/newUserEmail\" />\r\n\r\n  <EditText\r\n      android:id=\"@+id/RePassword\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"52dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Retype Password\"\r\n      android:inputType=\"textPassword\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintHorizontal_bias=\"0.497\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/password\" />\r\n\r\n  <Button\r\n      android:id=\"@+id/signUpButton\"\r\n      android:layout_width=\"151dp\"\r\n      android:layout_height=\"82dp\"\r\n      android:layout_marginTop=\"36dp\"\r\n      android:text=\"Sign Up\"\r\n      android:textSize=\"24sp\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/RePassword\" />\r\n\r\n  <EditText\r\n      android:id=\"@+id/newUserEmail\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"52dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Email\"\r\n      android:inputType=\"textEmailAddress\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toTopOf=\"parent\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_regristration.xml	(revision 2f4ad71345b29307452273e910957e7eae1e39af)
++++ app/src/main/res/layout/activity_regristration.xml	(date 1604960726570)
+@@ -1,59 +1,89 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:id="@+id/constraint_layout_registration"
++    android:id="@+id/farmerListing"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:focusableInTouchMode="true"
+-    tools:context=".LoginAndRegistration.View.RegistrationView">
+-
+-  <EditText
+-      android:id="@+id/password"
+-      android:layout_width="wrap_content"
+-      android:layout_height="wrap_content"
+-      android:layout_marginTop="60dp"
+-      android:ems="10"
+-      android:hint="Password"
+-      android:inputType="textPassword"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintHorizontal_bias="0.502"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toBottomOf="@+id/newUserEmail" />
++    android:layout_height="wrap_content"
++    android:layout_margin="4dp"
++    android:elevation="30dp"
++    >
+ 
+-  <EditText
+-      android:id="@+id/RePassword"
+-      android:layout_width="wrap_content"
++  <androidx.constraintlayout.widget.ConstraintLayout
++      android:layout_width="407dp"
+       android:layout_height="wrap_content"
+-      android:layout_marginTop="52dp"
+-      android:ems="10"
+-      android:hint="Retype Password"
+-      android:inputType="textPassword"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintHorizontal_bias="0.497"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toBottomOf="@+id/password" />
++
++      android:paddingTop="15dp"
++      android:paddingBottom="15dp">
++
++
++    <com.makeramen.roundedimageview.RoundedImageView
++        android:id="@+id/ImageView"
++        android:layout_width="150dp"
++        android:layout_height="150dp"
++        android:layout_marginStart="10dp"
++        android:contentDescription="@string/app_name"
++        android:scaleType="centerCrop"
++        android:src="@drawable/test1"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:riv_corner_radius="15dp" />
+ 
+-  <Button
+-      android:id="@+id/signUpButton"
+-      android:layout_width="151dp"
+-      android:layout_height="82dp"
+-      android:layout_marginTop="36dp"
+-      android:text="Sign Up"
+-      android:textSize="24sp"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toBottomOf="@+id/RePassword" />
++    <TextView
++        android:id="@+id/Name"
++        style="bold"
++        android:layout_width="124dp"
++        android:layout_height="33dp"
++        android:layout_marginStart="10dp"
++        android:layout_marginTop="28dp"
++        android:layout_marginEnd="10dp"
++        android:paddingTop="15dp"
++        android:text="Name"
++        android:textColor="@color/colorPrimary"
++        android:textSize="16sp"
++        android:textStyle="bold"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toEndOf="@id/ImageView"
++        app:layout_constraintTop_toTopOf="@id/ImageView" />
+ 
+-  <EditText
+-      android:id="@+id/newUserEmail"
+-      android:layout_width="wrap_content"
+-      android:layout_height="wrap_content"
+-      android:layout_marginTop="52dp"
+-      android:ems="10"
+-      android:hint="Email"
+-      android:inputType="textEmailAddress"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toTopOf="parent" />
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++    <RatingBar
++        android:id="@+id/rating"
++        style="@style/Widget.AppCompat.RatingBar.Small"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:isIndicator="true"
++        android:numStars="5"
++        android:theme="@style/Rating"
++        app:layout_constraintStart_toStartOf="@id/Name"
++        app:layout_constraintTop_toBottomOf="@id/Name" />
++
++    <TextView
++        android:id="@+id/City"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++
++        android:ellipsize="end"
++        android:maxLines="1"
++        android:textColor="@color/colorTextSecondar"
++        android:textSize="15sp"
++        app:layout_constraintEnd_toEndOf="@id/Name"
++        app:layout_constraintStart_toStartOf="@id/Name"
++        app:layout_constraintTop_toBottomOf="@id/rating" />
++
++    <TextView
++        android:id="@+id/Desc"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="2dp"
++        android:ellipsize="end"
++        android:maxLines="2"
++        android:textColor="@color/colorTextSecondar"
++        android:textSize="13sp"
++        app:layout_constraintEnd_toEndOf="@id/Name"
++        app:layout_constraintStart_toStartOf="@id/Name"
++        app:layout_constraintTop_toBottomOf="@id/City" />
++
++
++  </androidx.constraintlayout.widget.ConstraintLayout>
++
++</androidx.cardview.widget.CardView>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_farmer_info.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/colorBackground\"\r\n    tools:context=\".FarmerListing.View.FarmerInfo\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/icon\"\r\n        android:layout_width=\"421dp\"\r\n        android:layout_height=\"289dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n\r\n        android:contentDescription=\"TODO\"\r\n        android:src=\"@drawable/test1\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Name\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"105dp\"\r\n        android:gravity=\"center_vertical\"\r\n        android:text=\"Name\"\r\n\r\n        android:textAlignment=\"center\"\r\n\r\n        android:textColor=\"@color/WhiteColor\"\r\n\r\n        android:textSize=\"18dp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        tools:layout_editor_absoluteX=\"-2dp\" />\r\n\r\n\r\n    <TextView\r\n        android:id=\"@+id/Address\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"41dp\"\r\n        android:text=\"Address\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/WhiteColor\"\r\n        android:textSize=\"18dp\"\r\n\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Name\" />\r\n\r\n    <RatingBar\r\n        android:id=\"@+id/Ratings\"\r\n        style=\"@style/Widget.AppCompat.RatingBar.Small\"\r\n        android:layout_width=\"83dp\"\r\n        android:layout_height=\"25dp\"\r\n\r\n        android:layout_marginTop=\"179dp\"\r\n        android:isIndicator=\"true\"\r\n        android:numStars=\"5\"\r\n        android:textAlignment=\"center\"\r\n        android:theme=\"@style/Rating2\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/icon\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Desc\"\r\n        android:layout_width=\"412dp\"\r\n        android:layout_height=\"86dp\"\r\n        android:layout_marginTop=\"289dp\"\r\n        android:background=\"@color/WhiteColor\"\r\n         android:textColor=\"#000000\"\r\n        android:text=\"Description\"\r\n        android:textAlignment=\"center\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/icon\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/Maps\"\r\n        android:layout_width=\"125dp\"\r\n        android:layout_height=\"40dp\"\r\n        android:layout_marginTop=\"225dp\"\r\n        android:text=\"Open In Maps\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/recyclerView\" />\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recyclerView\"\r\n        android:layout_width=\"414dp\"\r\n        android:layout_height=\"201dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_centerInParent=\"true\"\r\n        android:layout_marginStart=\"-1dp\"\r\n        android:layout_marginTop=\"114dp\"\r\n        android:layout_marginEnd=\"2dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.125\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Desc\"\r\n        tools:listitem=\"@layout/farmer_info_card\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/SampleProducts\"\r\n        android:textColor=\"#000000\"\r\n        android:layout_width=\"411dp\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_marginTop=\"95dp\"\r\n        android:text=\"Products\"\r\n        android:textAlignment=\"center\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Desc\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_farmer_info.xml	(revision 2f4ad71345b29307452273e910957e7eae1e39af)
++++ app/src/main/res/layout/activity_farmer_info.xml	(date 1604960873996)
+@@ -2,122 +2,167 @@
+ <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/ConstraintLayoutFarmerInfo"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@color/colorBackground"
++    android:background="@color/WhiteColor"
++    android:scrollbarSize="2dp"
++    android:scrollbarStyle="insideOverlay"
++    android:scrollbars="none"
+     tools:context=".FarmerListing.View.FarmerInfo">
+ 
+-    <ImageView
+-        android:id="@+id/icon"
+-        android:layout_width="421dp"
+-        android:layout_height="289dp"
+-        android:layout_alignParentTop="true"
++    <androidx.appcompat.widget.Toolbar
++        android:id="@+id/toolbar"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:background="?attr/colorPrimary"
++        android:minHeight="?attr/actionBarSize"
++        android:theme="?attr/actionBarTheme"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <ScrollView
++        android:id="@+id/scrollView"
++        android:layout_width="0dp"
++        android:layout_height="0dp"
++        android:overScrollMode="never"
++        android:scrollbarSize="4dp"
++        android:scrollbars="none"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.0"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/toolbar">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:orientation="vertical">
++
++            <androidx.cardview.widget.CardView
++                android:id="@+id/cardView"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_gravity="center_horizontal"
++                android:layout_marginLeft="20dp"
++                android:layout_marginTop="20dp"
++                android:layout_marginRight="20dp"
++                app:cardCornerRadius="30dp">
++
++                <ImageView
++                    android:id="@+id/icon"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:layout_alignParentTop="true"
+ 
+-        android:contentDescription="TODO"
+-        android:src="@drawable/test1"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++                    android:layout_gravity="center"
++                    android:contentDescription="TODO"
++                    android:scaleType="centerCrop"
++                    android:src="@drawable/test1" />
++
++            </androidx.cardview.widget.CardView>
++
++            <RatingBar
++                android:id="@+id/Ratings"
++                style="@android:style/Widget.Material.RatingBar.Indicator"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++
++                android:layout_gravity="center"
++                android:layout_marginTop="15dp"
++                android:isIndicator="true"
++                android:numStars="5"
++                android:textAlignment="center"
++                android:theme="@style/Rating2" />
+ 
+-    <TextView
+-        android:id="@+id/Name"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="105dp"
+-        android:gravity="center_vertical"
+-        android:text="Name"
+-
+-        android:textAlignment="center"
+-
+-        android:textColor="@color/WhiteColor"
+-
+-        android:textSize="18dp"
+-        android:textStyle="bold"
+-        app:layout_constraintTop_toTopOf="parent"
+-        tools:layout_editor_absoluteX="-2dp" />
+-
++            <TextView
++                android:id="@+id/Name"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="25dp"
++                android:layout_marginTop="8dp"
++
++                android:layout_marginRight="25dp"
++
++                android:gravity="center_vertical"
++
++                android:text="Name"
++                android:textAlignment="center"
++                android:textColor="@color/colorTextPrimary"
++                android:textSize="24sp"
++                android:textStyle="normal"
++                tools:ignore="RtlCompat" />
+ 
+-    <TextView
+-        android:id="@+id/Address"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="41dp"
+-        android:text="Address"
+-        android:textAlignment="center"
+-        android:textColor="@color/WhiteColor"
+-        android:textSize="18dp"
+-
+-        android:textStyle="bold"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="@+id/Name" />
+-
+-    <RatingBar
+-        android:id="@+id/Ratings"
+-        style="@style/Widget.AppCompat.RatingBar.Small"
+-        android:layout_width="83dp"
+-        android:layout_height="25dp"
+-
+-        android:layout_marginTop="179dp"
+-        android:isIndicator="true"
+-        android:numStars="5"
+-        android:textAlignment="center"
+-        android:theme="@style/Rating2"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="@+id/icon" />
++            <TextView
++                android:id="@+id/Address"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="25dp"
++                android:layout_marginTop="4dp"
++                android:layout_marginRight="25dp"
++                android:text="Address"
++                android:textAlignment="center"
++
++                android:textColor="@color/colorTextPrimary"
++                android:textSize="24sp"
++                android:textStyle="normal" />
+ 
+-    <TextView
+-        android:id="@+id/Desc"
+-        android:layout_width="412dp"
+-        android:layout_height="86dp"
+-        android:layout_marginTop="289dp"
+-        android:background="@color/WhiteColor"
+-         android:textColor="#000000"
+-        android:text="Description"
+-        android:textAlignment="center"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.0"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="@+id/icon" />
++            <TextView
++                android:id="@+id/Desc"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="25dp"
++                android:layout_marginRight="25dp"
++                android:background="@color/WhiteColor"
++                android:text="Description"
++                android:textAlignment="center"
++                android:textColor="@color/colorTextSecondar"
++                android:textSize="18sp" />
+ 
+-    <Button
+-        android:id="@+id/Maps"
+-        android:layout_width="125dp"
+-        android:layout_height="40dp"
+-        android:layout_marginTop="225dp"
+-        android:text="Open In Maps"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="@+id/recyclerView" />
++            <TextView
++                android:id="@+id/SampleProducts"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_gravity="center"
++                android:layout_marginTop="10dp"
++                android:text="Products"
++                android:textAlignment="center"
++                android:textColor="#000000"
++                android:textSize="18sp" />
+ 
+-    <androidx.recyclerview.widget.RecyclerView
+-        android:id="@+id/recyclerView"
+-        android:layout_width="414dp"
+-        android:layout_height="201dp"
+-        android:layout_alignParentStart="true"
+-        android:layout_alignParentEnd="true"
+-        android:layout_alignParentBottom="true"
+-        android:layout_centerInParent="true"
+-        android:layout_marginStart="-1dp"
+-        android:layout_marginTop="114dp"
+-        android:layout_marginEnd="2dp"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.125"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="@+id/Desc"
+-        tools:listitem="@layout/farmer_info_card" />
++            <androidx.recyclerview.widget.RecyclerView
++                android:id="@+id/recyclerView"
++                android:layout_width="wrap_content"
++                android:layout_height="215dp"
++                android:layout_alignParentStart="true"
++                android:layout_alignParentEnd="true"
++                android:layout_alignParentBottom="true"
++                android:layout_centerInParent="true"
++                android:layout_gravity="center"
++                android:backgroundTint="#FFFFFF"
++                android:overScrollMode="never"
++                tools:listitem="@layout/farmer_info_card" />
+ 
+-    <TextView
+-        android:id="@+id/SampleProducts"
+-        android:textColor="#000000"
+-        android:layout_width="411dp"
+-        android:layout_height="0dp"
+-        android:layout_marginTop="95dp"
+-        android:text="Products"
+-        android:textAlignment="center"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.498"
++            <Button
++                android:id="@+id/Maps"
++                android:layout_width="wrap_content"
++                android:layout_height="40dp"
++                android:layout_gravity="center"
++                android:layout_marginTop="15dp"
++                android:layout_marginBottom="15dp"
++                android:text="Open In Maps" />
++        </LinearLayout>
++    </ScrollView>
++
++    <ImageButton
++        android:id="@+id/backButton"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="12dp"
++        android:layout_marginTop="12dp"
++        android:background="#00FFFFFF"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="@+id/Desc" />
++        app:layout_constraintTop_toTopOf="@+id/toolbar"
++        app:srcCompat="@drawable/left_arrow32" />
++
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file

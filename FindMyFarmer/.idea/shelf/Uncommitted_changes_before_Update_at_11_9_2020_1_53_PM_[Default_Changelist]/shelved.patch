@@ -1,0 +1,61 @@
+Index: app/src/main/res/layout/fragment_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".LoginAndRegistration.View.LoginFragment\"/>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_login.xml	(revision 7484ccec83b03848a42d106371290af2a987419b)
++++ app/src/main/res/layout/fragment_login.xml	(date 1604948024064)
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing.kt
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing.kt	(revision f66b81c9c9953c0c860f8600bc392ca0d25e3143)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing.kt	(revision f66b81c9c9953c0c860f8600bc392ca0d25e3143)
+@@ -1,8 +0,0 @@
+-package sheridan.capstone.findmyfarmer
+-
+-data class FarmerListing (val imageResouce: Int, val Farmer_Name: String, val Farmer_Desc:String,
+-val Farmer_Rating:String, val Farmer_Distance:String)
+-
+-{
+-
+-}
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/FarmerPage.kt
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/FarmerPage.kt	(revision f66b81c9c9953c0c860f8600bc392ca0d25e3143)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/FarmerPage.kt	(revision f66b81c9c9953c0c860f8600bc392ca0d25e3143)
+@@ -1,25 +0,0 @@
+-package sheridan.capstone.findmyfarmer
+-
+-import androidx.appcompat.app.AppCompatActivity
+-import android.os.Bundle
+-import androidx.recyclerview.widget.LinearLayoutManager
+-import androidx.recyclerview.widget.RecyclerView
+-import kotlinx.android.synthetic.main.activity_farmer_page.*
+-
+-
+-class FarmerPage : AppCompatActivity() {
+-
+-
+-    override fun onCreate(savedInstanceState: Bundle?) {
+-        super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_farmer_page)
+-        val data = FarmerData()
+-
+-       val List = data.GenerateList(4)
+-
+-        recycleView.adapter = FarmerListingView(List)
+-        recycleView.layoutManager = LinearLayoutManager(this)
+-        recycleView.setHasFixedSize(true)
+-
+-    }
+-}
+\ No newline at end of file

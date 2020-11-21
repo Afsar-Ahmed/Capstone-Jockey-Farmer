@@ -1,0 +1,425 @@
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/ScrollViewLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#FFFFFF\"\r\n    android:backgroundTint=\"#FFFFFF\"\r\n    android:scrollbarSize=\"0dp\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:id=\"@+id/constraintLayoutLoginPage\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"50dp\"\r\n            android:background=\"#FFFFFF\"\r\n            android:backgroundTint=\"#FFFFFF\"\r\n            android:clickable=\"true\"\r\n            android:focusable=\"true\"\r\n            android:focusableInTouchMode=\"true\"\r\n            tools:context=\".MainActivity\">\r\n\r\n            <Space\r\n                android:layout_width=\"209dp\"\r\n                android:layout_height=\"67dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/loginBtn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/GSignIn\" />\r\n\r\n            <EditText\r\n                android:id=\"@+id/inputPassword\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"28dp\"\r\n                android:ems=\"10\"\r\n                android:hint=\"@string/input_password_hint\"\r\n                android:inputType=\"textPassword\"\r\n                android:textColor=\"#2B2B2B\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.497\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputEmail\" />\r\n\r\n            <EditText\r\n                android:id=\"@+id/inputEmail\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"18dp\"\r\n                android:ems=\"10\"\r\n                android:hint=\"@string/input_email_hint\"\r\n\r\n                android:inputType=\"textEmailAddress\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.5\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginPageLogo\" />\r\n\r\n\r\n            <ImageView\r\n                android:id=\"@+id/loginPageLogo\"\r\n                android:layout_width=\"186dp\"\r\n                android:layout_height=\"144dp\"\r\n                android:layout_marginTop=\"4dp\"\r\n                android:focusableInTouchMode=\"false\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.497\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:srcCompat=\"@drawable/farm\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/loginBtn\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"45dp\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:background=\"#11EF82\"\r\n                android:fontFamily=\"sans-serif-medium\"\r\n                android:hapticFeedbackEnabled=\"true\"\r\n                android:stateListAnimator=\"@null\"\r\n                android:text=\"@string/login_btn\"\r\n                android:textAllCaps=\"false\"\r\n                android:textColor=\"#FFFFFF\"\r\n                android:textSize=\"24sp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/registerAccount\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/forgotPswrdLink\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"12dp\"\r\n                android:clickable=\"true\"\r\n                android:text=\"@string/forgot_password_link\"\r\n                android:textColor=\"#FF5252\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputPassword\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/registerAccount\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:clickable=\"true\"\r\n                android:text=\"@string/register_btn\"\r\n                android:textColor=\"#FF5252\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputPassword\" />\r\n\r\n            <com.google.android.gms.common.SignInButton\r\n                android:id=\"@+id/GSignIn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"8dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/loginBtn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginBtn\">\r\n\r\n            </com.google.android.gms.common.SignInButton>\r\n\r\n            <com.facebook.login.widget.LoginButton\r\n                android:id=\"@+id/FBSignIn\"\r\n                android:layout_width=\"33dp\"\r\n                android:layout_height=\"27dp\"\r\n                android:layout_gravity=\"center_horizontal\"\r\n                android:layout_marginTop=\"20dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.76\"\r\n                app:layout_constraintStart_toEndOf=\"@+id/GSignIn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginBtn\" />\r\n\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n    </LinearLayout>\r\n</ScrollView>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_login.xml	(revision a99cbe9c399d449b9ff5c36078f1ba8a4720f51a)
++++ app/src/main/res/layout/activity_login.xml	(date 1604827352595)
+@@ -5,8 +5,7 @@
+     android:id="@+id/ScrollViewLayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#FFFFFF"
+-    android:backgroundTint="#FFFFFF"
++    android:background="@drawable/leaves"
+     android:scrollbarSize="0dp">
+ 
+     <LinearLayout
+@@ -21,17 +20,16 @@
+             android:layout_height="wrap_content"
+             android:layout_marginTop="50dp"
+             android:background="#FFFFFF"
+-            android:backgroundTint="#FFFFFF"
++            android:backgroundTint="#acFFFFFF"
+             android:clickable="true"
+             android:focusable="true"
+             android:focusableInTouchMode="true"
+             tools:context=".MainActivity">
+ 
+             <Space
+-                android:layout_width="209dp"
+-                android:layout_height="67dp"
++                android:layout_width="281dp"
++                android:layout_height="45dp"
+                 app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+-                app:layout_constraintHorizontal_bias="0.0"
+                 app:layout_constraintStart_toStartOf="@+id/loginBtn"
+                 app:layout_constraintTop_toBottomOf="@+id/GSignIn" />
+ 
+@@ -56,6 +54,7 @@
+                 android:layout_marginTop="18dp"
+                 android:ems="10"
+                 android:hint="@string/input_email_hint"
++                android:backgroundTint="#000000"
+ 
+                 android:inputType="textEmailAddress"
+                 app:layout_constraintEnd_toEndOf="parent"
+@@ -78,16 +77,16 @@
+ 
+             <Button
+                 android:id="@+id/loginBtn"
+-                android:layout_width="0dp"
+-                android:layout_height="45dp"
+-                android:layout_marginTop="20dp"
+-                android:background="#11EF82"
++                android:layout_width="218dp"
++                android:layout_height="51dp"
++                android:layout_marginTop="8dp"
++                android:backgroundTint="#FFFFFF"
+                 android:fontFamily="sans-serif-medium"
+                 android:hapticFeedbackEnabled="true"
+                 android:stateListAnimator="@null"
+                 android:text="@string/login_btn"
+                 android:textAllCaps="false"
+-                android:textColor="#FFFFFF"
++
+                 android:textSize="24sp"
+                 app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+                 app:layout_constraintHorizontal_bias="0.0"
+@@ -101,6 +100,8 @@
+                 android:layout_marginTop="12dp"
+                 android:clickable="true"
+                 android:text="@string/forgot_password_link"
++                android:backgroundTint="#FFFFFF"
++
+                 android:textColor="#FF5252"
+                 app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+                 app:layout_constraintHorizontal_bias="0.0"
+@@ -122,27 +123,33 @@
+ 
+             <com.google.android.gms.common.SignInButton
+                 android:id="@+id/GSignIn"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="8dp"
+-                app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+-                app:layout_constraintHorizontal_bias="0.0"
+-                app:layout_constraintStart_toStartOf="@+id/loginBtn"
+-                app:layout_constraintTop_toBottomOf="@+id/loginBtn">
++                android:layout_width="202dp"
++                android:layout_height="39dp"
++                android:layout_marginTop="4dp"
++
++                android:text="@string/fui_sign_in_with_google"
++
++                app:layout_constraintEnd_toEndOf="@+id/FBSignIn"
++                app:layout_constraintHorizontal_bias="0.488"
++                app:layout_constraintStart_toStartOf="@+id/FBSignIn"
++                app:layout_constraintTop_toBottomOf="@+id/FBSignIn">
+ 
+             </com.google.android.gms.common.SignInButton>
+ 
+             <com.facebook.login.widget.LoginButton
+                 android:id="@+id/FBSignIn"
+-                android:layout_width="33dp"
+-                android:layout_height="27dp"
++                android:layout_width="207dp"
++                android:layout_height="37dp"
+                 android:layout_gravity="center_horizontal"
+-                android:layout_marginTop="20dp"
++                android:layout_marginTop="12dp"
++
++                android:layout_marginEnd="8dp"
++
++                android:padding="10dp"
+                 app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+-                app:layout_constraintHorizontal_bias="0.76"
+-                app:layout_constraintStart_toEndOf="@+id/GSignIn"
+                 app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+ 
++
+         </androidx.constraintlayout.widget.ConstraintLayout>
+ 
+     </LinearLayout>
+Index: app/src/main/res/layout/activity_regristration.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/constraint_layout_registration\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:focusableInTouchMode=\"true\"\r\n    tools:context=\".LoginAndRegistration.View.RegistrationView\">\r\n\r\n  <EditText\r\n      android:id=\"@+id/password\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"60dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Password\"\r\n      android:inputType=\"textPassword\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintHorizontal_bias=\"0.502\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/newUserEmail\" />\r\n\r\n  <EditText\r\n      android:id=\"@+id/RePassword\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"52dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Retype Password\"\r\n      android:inputType=\"textPassword\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintHorizontal_bias=\"0.497\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/password\" />\r\n\r\n  <Button\r\n      android:id=\"@+id/signUp\"\r\n      android:layout_width=\"151dp\"\r\n      android:layout_height=\"82dp\"\r\n      android:layout_marginTop=\"36dp\"\r\n      android:text=\"Sign Up\"\r\n      android:textSize=\"24sp\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/RePassword\" />\r\n\r\n  <EditText\r\n      android:id=\"@+id/newUserEmail\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"52dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Email\"\r\n      android:inputType=\"textEmailAddress\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n  <fragment\r\n      android:id=\"@+id/fragment\"\r\n      android:name=\"com.facebook.login.LoginFragment\"\r\n      android:layout_width=\"283dp\"\r\n      android:layout_height=\"204dp\"\r\n      tools:layout_editor_absoluteX=\"66dp\"\r\n      tools:layout_editor_absoluteY=\"482dp\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_regristration.xml	(revision a99cbe9c399d449b9ff5c36078f1ba8a4720f51a)
++++ app/src/main/res/layout/activity_regristration.xml	(date 1604827352595)
+@@ -6,62 +6,73 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:focusableInTouchMode="true"
++    android:background="@drawable/leaves"
+     tools:context=".LoginAndRegistration.View.RegistrationView">
+ 
+-  <EditText
+-      android:id="@+id/password"
+-      android:layout_width="wrap_content"
+-      android:layout_height="wrap_content"
+-      android:layout_marginTop="60dp"
+-      android:ems="10"
+-      android:hint="Password"
+-      android:inputType="textPassword"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintHorizontal_bias="0.502"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toBottomOf="@+id/newUserEmail" />
++  <androidx.constraintlayout.widget.ConstraintLayout
++      android:id="@+id/constraintLayoutLoginPage"
++      android:layout_width="398dp"
++      android:layout_height="720dp"
++      android:layout_marginStart="4dp"
++      android:layout_marginTop="4dp"
++      android:background="#FFFFFF"
++      android:backgroundTint="#acFFFFFF"
++      android:clickable="true"
++      android:focusable="true"
++      android:focusableInTouchMode="true"
++      app:layout_constraintStart_toStartOf="parent"
++      app:layout_constraintTop_toTopOf="parent"
++      tools:context=".MainActivity">
++
++    <EditText
++        android:id="@+id/password"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="56dp"
++        android:ems="10"
++        android:hint="Password"
++        android:inputType="textPassword"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.505"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/newUserEmail" />
+ 
+-  <EditText
+-      android:id="@+id/RePassword"
+-      android:layout_width="wrap_content"
+-      android:layout_height="wrap_content"
+-      android:layout_marginTop="52dp"
+-      android:ems="10"
+-      android:hint="Retype Password"
+-      android:inputType="textPassword"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintHorizontal_bias="0.497"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toBottomOf="@+id/password" />
++    <EditText
++        android:id="@+id/RePassword"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="104dp"
++        android:ems="10"
++        android:hint="Retype Password"
++        android:inputType="textPassword"
++        app:layout_constraintEnd_toEndOf="@+id/password"
++        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintStart_toStartOf="@+id/password"
++        app:layout_constraintTop_toBottomOf="@+id/password" />
+ 
+-  <Button
+-      android:id="@+id/signUp"
+-      android:layout_width="151dp"
+-      android:layout_height="82dp"
+-      android:layout_marginTop="36dp"
+-      android:text="Sign Up"
+-      android:textSize="24sp"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toBottomOf="@+id/RePassword" />
++    <Button
++        android:id="@+id/signUp"
++        android:layout_width="208dp"
++        android:layout_height="79dp"
++        android:layout_marginTop="92dp"
++        android:text="Sign Up"
++        android:textSize="24sp"
++        app:layout_constraintEnd_toEndOf="@+id/RePassword"
++        app:layout_constraintHorizontal_bias="0.505"
++        app:layout_constraintStart_toStartOf="@+id/RePassword"
++        app:layout_constraintTop_toBottomOf="@+id/RePassword" />
+ 
+-  <EditText
+-      android:id="@+id/newUserEmail"
+-      android:layout_width="wrap_content"
+-      android:layout_height="wrap_content"
+-      android:layout_marginTop="52dp"
+-      android:ems="10"
+-      android:hint="Email"
+-      android:inputType="textEmailAddress"
+-      app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintStart_toStartOf="parent"
+-      app:layout_constraintTop_toTopOf="parent" />
+-
+-  <fragment
+-      android:id="@+id/fragment"
+-      android:name="com.facebook.login.LoginFragment"
+-      android:layout_width="283dp"
+-      android:layout_height="204dp"
+-      tools:layout_editor_absoluteX="66dp"
+-      tools:layout_editor_absoluteY="482dp" />
++    <EditText
++        android:id="@+id/newUserEmail"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="144dp"
++        android:ems="10"
++        android:hint="Email"
++        android:inputType="textEmailAddress"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.505"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++  </androidx.constraintlayout.widget.ConstraintLayout>
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/farmer_listing.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/farmerListing\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:layout_margin=\"4dp\"\r\n    android:elevation=\"10dp\">\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"407dp\"\r\n        android:layout_height=\"wrap_content\">\r\n\r\n        <View\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"15dp\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/ImageView\" />\r\n\r\n\r\n        <com.makeramen.roundedimageview.RoundedImageView\r\n            android:id=\"@+id/ImageView\"\r\n            android:layout_width=\"110dp\"\r\n            android:layout_height=\"152dp\"\r\n            android:layout_marginStart=\"15dp\"\r\n            android:contentDescription=\"@string/app_name\"\r\n            android:scaleType=\"centerCrop\"\r\n            android:src=\"@drawable/test1\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/Name\"\r\n            style=\"bold\"\r\n            android:layout_width=\"124dp\"\r\n            android:layout_height=\"33dp\"\r\n            android:layout_marginStart=\"10dp\"\r\n            android:layout_marginTop=\"28dp\"\r\n            android:layout_marginEnd=\"10dp\"\r\n            android:paddingTop=\"15dp\"\r\n            android:text=\"Name\"\r\n            android:textColor=\"@color/colorPrimary\"\r\n            android:textSize=\"16sp\"\r\n            android:textStyle=\"bold\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:layout_constraintHorizontal_bias=\"0.0\"\r\n            app:layout_constraintStart_toEndOf=\"@id/ImageView\"\r\n            app:layout_constraintTop_toTopOf=\"@id/ImageView\" />\r\n\r\n        <RatingBar\r\n            android:id=\"@+id/rating\"\r\n            style=\"@style/Widget.AppCompat.RatingBar.Small\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:isIndicator=\"true\"\r\n            android:numStars=\"5\"\r\n            android:theme=\"@style/Rating\"\r\n            app:layout_constraintStart_toStartOf=\"@id/Name\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/Name\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/City\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n\r\n            android:ellipsize=\"end\"\r\n            android:maxLines=\"1\"\r\n            android:textColor=\"@color/colorTextSecondar\"\r\n            android:textSize=\"15sp\"\r\n            app:layout_constraintEnd_toEndOf=\"@id/Name\"\r\n            app:layout_constraintStart_toStartOf=\"@id/Name\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/rating\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/Desc\"\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"2dp\"\r\n            android:ellipsize=\"end\"\r\n            android:maxLines=\"2\"\r\n            android:textColor=\"@color/colorTextSecondar\"\r\n            android:textSize=\"13sp\"\r\n            app:layout_constraintEnd_toEndOf=\"@id/Name\"\r\n            app:layout_constraintStart_toStartOf=\"@id/Name\"\r\n            app:layout_constraintTop_toBottomOf=\"@id/City\" />\r\n\r\n\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n</androidx.cardview.widget.CardView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/farmer_listing.xml	(revision a99cbe9c399d449b9ff5c36078f1ba8a4720f51a)
++++ app/src/main/res/layout/farmer_listing.xml	(date 1604827694491)
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:id="@+id/farmerListing"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+@@ -9,19 +10,16 @@
+ 
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="407dp"
+-        android:layout_height="wrap_content">
+-
+-        <View
+-            android:layout_width="match_parent"
+-            android:layout_height="15dp"
+-            app:layout_constraintTop_toBottomOf="@id/ImageView" />
++        android:layout_height="729dp"
++        android:background="#e7ffd4">
+ 
+ 
+         <com.makeramen.roundedimageview.RoundedImageView
+             android:id="@+id/ImageView"
+-            android:layout_width="110dp"
+-            android:layout_height="152dp"
+-            android:layout_marginStart="15dp"
++            android:layout_width="398dp"
++            android:layout_height="263dp"
++            android:layout_marginStart="4dp"
++            android:layout_marginTop="4dp"
+             android:contentDescription="@string/app_name"
+             android:scaleType="centerCrop"
+             android:src="@drawable/test1"
+@@ -31,55 +29,61 @@
+         <TextView
+             android:id="@+id/Name"
+             style="bold"
+-            android:layout_width="124dp"
+-            android:layout_height="33dp"
+-            android:layout_marginStart="10dp"
+-            android:layout_marginTop="28dp"
+-            android:layout_marginEnd="10dp"
++            android:layout_width="91dp"
++            android:layout_height="53dp"
++            android:layout_marginTop="4dp"
++            android:layout_marginEnd="156dp"
+             android:paddingTop="15dp"
+             android:text="Name"
+-            android:textColor="@color/colorPrimary"
+-            android:textSize="16sp"
++            android:textAlignment="center"
++            android:textColor="#000"
++            android:textSize="24sp"
+             android:textStyle="bold"
+             app:layout_constraintEnd_toEndOf="parent"
+-            app:layout_constraintHorizontal_bias="0.0"
+-            app:layout_constraintStart_toEndOf="@id/ImageView"
+-            app:layout_constraintTop_toTopOf="@id/ImageView" />
++            app:layout_constraintTop_toBottomOf="@+id/ImageView" />
+ 
+         <RatingBar
+             android:id="@+id/rating"
+-            style="@style/Widget.AppCompat.RatingBar.Small"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
++            android:layout_width="236dp"
++            android:layout_height="49dp"
++            android:layout_marginTop="8dp"
+             android:isIndicator="true"
+             android:numStars="5"
+             android:theme="@style/Rating"
+-            app:layout_constraintStart_toStartOf="@id/Name"
++            app:layout_constraintEnd_toEndOf="@+id/Name"
++            app:layout_constraintHorizontal_bias="0.516"
++            app:layout_constraintStart_toStartOf="@+id/Name"
+             app:layout_constraintTop_toBottomOf="@id/Name" />
+ 
+         <TextView
+             android:id="@+id/City"
+-            android:layout_width="0dp"
+-            android:layout_height="wrap_content"
++            android:layout_width="285dp"
++            android:layout_height="106dp"
+ 
++            android:layout_marginTop="92dp"
+             android:ellipsize="end"
+             android:maxLines="1"
+             android:textColor="@color/colorTextSecondar"
++            android:text="Carousel view"
+             android:textSize="15sp"
+             app:layout_constraintEnd_toEndOf="@id/Name"
++            app:layout_constraintHorizontal_bias="0.52"
+             app:layout_constraintStart_toStartOf="@id/Name"
+             app:layout_constraintTop_toBottomOf="@id/rating" />
+ 
+         <TextView
+             android:id="@+id/Desc"
+-            android:layout_width="0dp"
+-            android:layout_height="wrap_content"
+-            android:layout_marginTop="2dp"
++            android:layout_width="335dp"
++            android:layout_height="79dp"
++            android:layout_marginTop="28dp"
+             android:ellipsize="end"
+             android:maxLines="2"
++            android:text="Lorem epidum jfkabskfbdsakjfbjdskabfjkbaskfjbdska bfjkdsba jfbj djsbjfb jsdjafj jsjaf jsdajfj sda"
++            android:textAlignment="center"
+             android:textColor="@color/colorTextSecondar"
+             android:textSize="13sp"
+             app:layout_constraintEnd_toEndOf="@id/Name"
++            app:layout_constraintHorizontal_bias="0.508"
+             app:layout_constraintStart_toStartOf="@id/Name"
+             app:layout_constraintTop_toBottomOf="@id/City" />
+ 
+Index: app/src/main/res/layout/activity_dash_board.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".LoginAndRegistration.View.DashBoardView\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/LoginText\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"304dp\"\r\n        android:text=\"Logged In!\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/logOutBtn\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"64dp\"\r\n        android:text=\"Log Out\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/LoginText\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/LoginText\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/LoginText\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_dash_board.xml	(revision a99cbe9c399d449b9ff5c36078f1ba8a4720f51a)
++++ app/src/main/res/layout/activity_dash_board.xml	(date 1604827352611)
+@@ -4,26 +4,4 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".LoginAndRegistration.View.DashBoardView">
+-
+-    <TextView
+-        android:id="@+id/LoginText"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="304dp"
+-        android:text="Logged In!"
+-        android:textSize="18sp"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
+-
+-    <Button
+-        android:id="@+id/logOutBtn"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="64dp"
+-        android:text="Log Out"
+-        app:layout_constraintEnd_toEndOf="@+id/LoginText"
+-        app:layout_constraintStart_toStartOf="@+id/LoginText"
+-        app:layout_constraintTop_toBottomOf="@+id/LoginText" />
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++    tools:context=".LoginAndRegistration.View.DashBoardView"/>
+\ No newline at end of file

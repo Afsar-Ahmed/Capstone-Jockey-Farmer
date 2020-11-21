@@ -1,0 +1,45 @@
+Index: app/src/main/res/layout/activity_farmer_page.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".FarmerListing.View.FarmerPage\">\r\n\r\n\r\n<include layout=\"@layout/toolbar\"\r\n    android:id=\"@+id/toolbar1\"/>\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recycleView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"624dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_centerInParent=\"true\"\r\n        android:layout_marginStart=\"-1dp\"\r\n        android:layout_marginEnd=\"2dp\"\r\n        android:layout_marginBottom=\"53dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        tools:layout_editor_absoluteY=\"56dp\"\r\n        tools:listitem=\"@layout/farmer_listing\" />\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_farmer_page.xml	(revision a99cbe9c399d449b9ff5c36078f1ba8a4720f51a)
++++ app/src/main/res/layout/activity_farmer_page.xml	(date 1604873093051)
+@@ -13,14 +13,12 @@
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/recycleView"
+         android:layout_width="wrap_content"
+-        android:layout_height="624dp"
++        android:layout_height="599dp"
+         android:layout_alignParentStart="true"
+-        android:layout_alignParentEnd="true"
+         android:layout_alignParentBottom="true"
+         android:layout_centerInParent="true"
+-        android:layout_marginStart="-1dp"
+-        android:layout_marginEnd="2dp"
+-        android:layout_marginBottom="53dp"
++        android:layout_marginStart="1dp"
++        android:layout_marginBottom="76dp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         tools:layout_editor_absoluteY="56dp"
+Index: app/src/main/res/layout/activity_dash_board.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".LoginAndRegistration.View.DashBoardView\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/LoginText\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"304dp\"\r\n        android:text=\"Logged In!\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/logOutBtn\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"64dp\"\r\n        android:text=\"Log Out\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/LoginText\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/LoginText\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/LoginText\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_dash_board.xml	(revision a99cbe9c399d449b9ff5c36078f1ba8a4720f51a)
++++ app/src/main/res/layout/activity_dash_board.xml	(date 1604873093050)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".LoginAndRegistration.View.DashBoardView">
++    tools:context=".LoginAndRegistration.DashBoard">
+ 
+     <TextView
+         android:id="@+id/LoginText"

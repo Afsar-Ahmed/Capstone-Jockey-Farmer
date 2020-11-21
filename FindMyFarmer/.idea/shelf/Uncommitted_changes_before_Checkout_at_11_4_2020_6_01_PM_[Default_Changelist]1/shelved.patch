@@ -1,0 +1,204 @@
+Index: app/src/main/res/layout/activity_farmer_page.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".FarmerPage\">\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id =\"@+id/recycleView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        tools:layout_editor_absoluteX=\"1dp\"\r\n        tools:layout_editor_absoluteY=\"1dp\"\r\n        tools:listitem =\"@layout/farmer_listing\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_farmer_page.xml	(revision ed902045bdec8da34d99f2ddb095173fc03fa4ba)
++++ app/src/main/res/layout/activity_farmer_page.xml	(date 1604515911323)
+@@ -7,10 +7,11 @@
+     tools:context=".FarmerPage">
+ 
+     <androidx.recyclerview.widget.RecyclerView
+-        android:id ="@+id/recycleView"
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        tools:layout_editor_absoluteX="1dp"
+-        tools:layout_editor_absoluteY="1dp"
+-        tools:listitem ="@layout/farmer_listing" />
++        android:id="@+id/recycleView"
++        android:layout_width="408dp"
++        android:layout_height="726dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        tools:listitem="@layout/farmer_listing" />
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision ed902045bdec8da34d99f2ddb095173fc03fa4ba)
++++ .idea/gradle.xml	(date 1604482192832)
+@@ -14,6 +14,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/ScrollViewLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#FFFFFF\"\r\n    android:backgroundTint=\"#FFFFFF\"\r\n    android:scrollbarSize=\"0dp\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:id=\"@+id/constraintLayoutLoginPage\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"50dp\"\r\n            android:background=\"#FFFFFF\"\r\n            android:backgroundTint=\"#FFFFFF\"\r\n            android:clickable=\"true\"\r\n            android:focusable=\"true\"\r\n            android:focusableInTouchMode=\"true\"\r\n            tools:context=\".MainActivity\">\r\n\r\n            <Space\r\n                android:layout_width=\"209dp\"\r\n                android:layout_height=\"67dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/loginBtn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/GSignIn\" />\r\n\r\n            <EditText\r\n                android:id=\"@+id/inputPassword\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"28dp\"\r\n                android:ems=\"10\"\r\n                android:hint=\"@string/input_password_hint\"\r\n                android:inputType=\"textPassword\"\r\n                android:textColor=\"#2B2B2B\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.497\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputEmail\" />\r\n\r\n            <EditText\r\n                android:id=\"@+id/inputEmail\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"18dp\"\r\n                android:ems=\"10\"\r\n                android:hint=\"@string/input_email_hint\"\r\n\r\n                android:inputType=\"textEmailAddress\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.5\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginPageLogo\" />\r\n\r\n\r\n            <ImageView\r\n                android:id=\"@+id/loginPageLogo\"\r\n                android:layout_width=\"186dp\"\r\n                android:layout_height=\"144dp\"\r\n                android:layout_marginTop=\"4dp\"\r\n                android:focusableInTouchMode=\"false\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.497\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:srcCompat=\"@drawable/farm\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/loginBtn\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"45dp\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:background=\"#11EF82\"\r\n                android:fontFamily=\"sans-serif-medium\"\r\n                android:hapticFeedbackEnabled=\"true\"\r\n                android:stateListAnimator=\"@null\"\r\n                android:text=\"@string/login_btn\"\r\n                android:textAllCaps=\"false\"\r\n                android:textColor=\"#FFFFFF\"\r\n                android:textSize=\"24sp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/registerAccount\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/forgotPswrdLink\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"12dp\"\r\n                android:clickable=\"true\"\r\n                android:text=\"@string/forgot_password_link\"\r\n                android:textColor=\"#FF5252\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputPassword\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/registerAccount\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:clickable=\"true\"\r\n                android:text=\"@string/register_btn\"\r\n                android:textColor=\"#FF5252\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputPassword\" />\r\n\r\n            <com.google.android.gms.common.SignInButton\r\n                android:id=\"@+id/GSignIn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"8dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/loginBtn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginBtn\">\r\n\r\n            </com.google.android.gms.common.SignInButton>\r\n\r\n            <com.facebook.login.widget.LoginButton\r\n                android:id=\"@+id/FBSignIn\"\r\n                android:layout_width=\"33dp\"\r\n                android:layout_height=\"27dp\"\r\n                android:layout_gravity=\"center_horizontal\"\r\n                android:layout_marginTop=\"20dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.76\"\r\n                app:layout_constraintStart_toEndOf=\"@+id/GSignIn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginBtn\" />\r\n\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n    </LinearLayout>\r\n</ScrollView>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_login.xml	(revision ed902045bdec8da34d99f2ddb095173fc03fa4ba)
++++ app/src/main/res/layout/activity_login.xml	(date 1604515655959)
+@@ -5,8 +5,7 @@
+     android:id="@+id/ScrollViewLayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="#FFFFFF"
+-    android:backgroundTint="#FFFFFF"
++    android:background="@drawable/leaves"
+     android:scrollbarSize="0dp">
+ 
+     <LinearLayout
+@@ -20,8 +19,6 @@
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="50dp"
+-            android:background="#FFFFFF"
+-            android:backgroundTint="#FFFFFF"
+             android:clickable="true"
+             android:focusable="true"
+             android:focusableInTouchMode="true"
+@@ -43,7 +40,7 @@
+                 android:ems="10"
+                 android:hint="@string/input_password_hint"
+                 android:inputType="textPassword"
+-                android:textColor="#2B2B2B"
++                android:textColor="#4CAF50"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintHorizontal_bias="0.497"
+                 app:layout_constraintStart_toStartOf="parent"
+@@ -58,6 +55,7 @@
+                 android:hint="@string/input_email_hint"
+ 
+                 android:inputType="textEmailAddress"
++                android:textColor="#4CAF50"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintHorizontal_bias="0.5"
+                 app:layout_constraintStart_toStartOf="parent"
+Index: app/src/main/res/layout/activity_regristration.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/constraint_layout_registration\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:focusableInTouchMode=\"true\"\r\n    tools:context=\".Registration\">\r\n\r\n  <EditText\r\n      android:id=\"@+id/password\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"60dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Password\"\r\n      android:inputType=\"textPassword\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintHorizontal_bias=\"0.502\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/newUserEmail\" />\r\n\r\n  <EditText\r\n      android:id=\"@+id/RePassword\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"52dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Retype Password\"\r\n      android:inputType=\"textPassword\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintHorizontal_bias=\"0.497\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/password\" />\r\n\r\n  <Button\r\n      android:id=\"@+id/signUp\"\r\n      android:layout_width=\"151dp\"\r\n      android:layout_height=\"82dp\"\r\n      android:layout_marginTop=\"36dp\"\r\n      android:text=\"Sign Up\"\r\n      android:textSize=\"24sp\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toBottomOf=\"@+id/RePassword\" />\r\n\r\n  <EditText\r\n      android:id=\"@+id/newUserEmail\"\r\n      android:layout_width=\"wrap_content\"\r\n      android:layout_height=\"wrap_content\"\r\n      android:layout_marginTop=\"52dp\"\r\n      android:ems=\"10\"\r\n      android:hint=\"Email\"\r\n      android:inputType=\"textEmailAddress\"\r\n      app:layout_constraintEnd_toEndOf=\"parent\"\r\n      app:layout_constraintStart_toStartOf=\"parent\"\r\n      app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n  <fragment\r\n      android:id=\"@+id/fragment\"\r\n      android:name=\"com.facebook.login.LoginFragment\"\r\n      android:layout_width=\"283dp\"\r\n      android:layout_height=\"204dp\"\r\n      tools:layout_editor_absoluteX=\"66dp\"\r\n      tools:layout_editor_absoluteY=\"482dp\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_regristration.xml	(revision ed902045bdec8da34d99f2ddb095173fc03fa4ba)
++++ app/src/main/res/layout/activity_regristration.xml	(date 1604515655959)
+@@ -5,6 +5,7 @@
+     android:id="@+id/constraint_layout_registration"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++    android:background="@drawable/leaves"
+     android:focusableInTouchMode="true"
+     tools:context=".Registration">
+ 
+@@ -12,10 +13,11 @@
+       android:id="@+id/password"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+-      android:layout_marginTop="60dp"
++      android:layout_marginTop="28dp"
+       android:ems="10"
+       android:hint="Password"
+       android:inputType="textPassword"
++      android:textColor="#4CAF50"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.502"
+       app:layout_constraintStart_toStartOf="parent"
+@@ -25,23 +27,26 @@
+       android:id="@+id/RePassword"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+-      android:layout_marginTop="52dp"
++      android:layout_marginTop="24dp"
+       android:ems="10"
+       android:hint="Retype Password"
+       android:inputType="textPassword"
++      android:textColor="#4CAF50"
+       app:layout_constraintEnd_toEndOf="parent"
+-      app:layout_constraintHorizontal_bias="0.497"
++      app:layout_constraintHorizontal_bias="0.502"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/password" />
+ 
+   <Button
+       android:id="@+id/signUp"
+-      android:layout_width="151dp"
+-      android:layout_height="82dp"
+-      android:layout_marginTop="36dp"
++      android:layout_width="178dp"
++      android:layout_height="49dp"
++      android:layout_marginTop="44dp"
++      android:background="#11EF82"
+       android:text="Sign Up"
+       android:textSize="24sp"
+       app:layout_constraintEnd_toEndOf="parent"
++      app:layout_constraintHorizontal_bias="0.497"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/RePassword" />
+ 
+@@ -49,11 +54,13 @@
+       android:id="@+id/newUserEmail"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+-      android:layout_marginTop="52dp"
++      android:layout_marginTop="136dp"
+       android:ems="10"
+       android:hint="Email"
+       android:inputType="textEmailAddress"
++      android:textColor="#4CAF50"
+       app:layout_constraintEnd_toEndOf="parent"
++      app:layout_constraintHorizontal_bias="0.497"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent" />
+ 
+@@ -62,6 +69,33 @@
+       android:name="com.facebook.login.LoginFragment"
+       android:layout_width="283dp"
+       android:layout_height="204dp"
+-      tools:layout_editor_absoluteX="66dp"
+-      tools:layout_editor_absoluteY="482dp" />
++      android:layout_marginBottom="64dp"
++      app:layout_constraintBottom_toBottomOf="parent"
++      app:layout_constraintEnd_toEndOf="parent"
++      app:layout_constraintStart_toStartOf="parent" />
++
++  <TextView
++      android:id="@+id/textView"
++      android:layout_width="wrap_content"
++      android:layout_height="wrap_content"
++      android:text="FarmerFinder"
++      android:textColor="#D8CDCD"
++      android:textSize="30sp"
++      app:layout_constraintBottom_toTopOf="@+id/newUserEmail"
++      app:layout_constraintTop_toTopOf="parent"
++      app:layout_constraintVertical_bias="0.75"
++      tools:layout_editor_absoluteX="130dp" />
++
++  <ImageView
++      android:id="@+id/imageView2"
++      android:layout_width="33dp"
++      android:layout_height="30dp"
++      app:layout_constraintBottom_toTopOf="@+id/fragment"
++      app:layout_constraintEnd_toStartOf="@+id/textView"
++      app:layout_constraintHorizontal_bias="1.0"
++      app:layout_constraintStart_toStartOf="parent"
++      app:layout_constraintTop_toTopOf="parent"
++      app:layout_constraintVertical_bias="0.181"
++      app:srcCompat="@drawable/Capture" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file

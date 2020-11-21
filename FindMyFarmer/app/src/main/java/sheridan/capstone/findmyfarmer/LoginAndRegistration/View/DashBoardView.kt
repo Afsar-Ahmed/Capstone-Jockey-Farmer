@@ -16,7 +16,7 @@ class DashBoardView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
-        
+
         var logintext = findViewById<TextView>(R.id.LoginText)
 
         logintext.text = Firebase.auth.currentUser?.email + " " + Firebase.auth.currentUser?.displayName
