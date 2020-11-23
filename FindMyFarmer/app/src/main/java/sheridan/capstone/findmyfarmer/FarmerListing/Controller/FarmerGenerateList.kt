@@ -1,5 +1,6 @@
 package sheridan.capstone.findmyfarmer.FarmerListing.Controller
 
+import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerData
 import sheridan.capstone.findmyfarmer.FarmerListing.Model.FruitData
 import sheridan.capstone.findmyfarmer.FarmerListing.Model.ListData
@@ -12,56 +13,64 @@ class FarmerGenerateList {
     fun GenerateFruit(size:Int) : List<FruitData> {
 
         val list = ArrayList<FruitData>()
-        for (i in 0 until size) {
-            val drawable = when (i) {
-                0 -> R.drawable.apples
-                1 -> R.drawable.straw
-                2 -> R.drawable.banana
-                3 -> R.drawable.water_melon
+        val produceList = FarmerData.getFruitList()
+        for (i in 1 until produceList.length()) {
+        val produce = produceList.getJSONObject(i)
+            val item = FruitData(produce.getString("image"),
+            produce.getString("name"),
+                FarmerData.getFruitCat()[i])
+            list += item
 
-                else -> R.drawable.apples
-            }
-            if (i == 0) {
-                val item =
-                    FruitData(
-                        drawable,
-                        FarmerData.getFruitName()[i],
-                        FarmerData.getFruitCat()[i],
-
-                        )
-                list += item
-
-            } else if (i == 1) {
-                val item =
-                    FruitData(
-                        drawable,
-                        FarmerData.getFruitName()[i],
-                        FarmerData.getFruitCat()[i]
-
-                    )
-                list += item
-            }
-            else if (i == 2) {
-                val item =
-                    FruitData(
-                        drawable,
-                        FarmerData.getFruitName()[i],
-                        FarmerData.getFruitCat()[i]
-
-                    )
-                list += item
-            }
-            else if (i == 3) {
-                val item =
-                    FruitData(
-                        drawable,
-                        FarmerData.getFruitName()[i],
-                        FarmerData.getFruitCat()[i]
-
-                    )
-                list += item
-            }
         }
+//            val drawable = when (i) {
+//                0 -> R.drawable.apples
+//                1 -> R.drawable.straw
+//                2 -> R.drawable.banana
+//                3 -> R.drawable.water_melon
+//
+//                else -> R.drawable.apples
+//            }
+//            if (i == 0) {
+//                val item =
+//                    FruitData(
+//                        drawable,
+//                        FarmerData.getFruitName()[i],
+//                        FarmerData.getFruitCat()[i],
+//
+//                        )
+//                list += item
+//
+//            } else if (i == 1) {
+//                val item =
+//                    FruitData(
+//                        drawable,
+//                        FarmerData.getFruitName()[i],
+//                        FarmerData.getFruitCat()[i]
+//
+//                    )
+//                list += item
+//            }
+//            else if (i == 2) {
+//                val item =
+//                    FruitData(
+//                        drawable,
+//                        FarmerData.getFruitName()[i],
+//                        FarmerData.getFruitCat()[i]
+//
+//                    )
+//                list += item
+//            }
+//            else if (i == 3) {
+//                val item =
+//                    FruitData(
+//                        drawable,
+//                        FarmerData.getFruitName()[i],
+//                        FarmerData.getFruitCat()[i]
+//
+//                    )
+//                list += item
+//            }
+//        }
         return list
     }
 
