@@ -1,15 +1,12 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
 
 import android.app.Activity
-import android.content.Intent
 import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 
 class RegistrationModel:ViewModel() {
 
@@ -31,6 +28,18 @@ class RegistrationModel:ViewModel() {
                 }
             }
     }
+
+    public fun registerNameValidation(name: EditText):Boolean{
+        var regexPattern= Regex("\\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+")
+        var nameValidated = false
+        if(name.text.matches(regexPattern)){
+            nameValidated = true
+        }else{
+            name.setError("Please enter properly formatted name")
+        }
+        return nameValidated
+
+    }
     public  fun registerValidation(emailInput: EditText, passwordInput: EditText, repeatPasswordInput: EditText) : Boolean{
         var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         var emailInputVerification: Boolean = false
@@ -48,16 +57,17 @@ class RegistrationModel:ViewModel() {
             passwordInputVerification = false
         }else{
             passwordInputVerification = true
-            if(!passwordInput.text.toString().equals(repeatPasswordInput.text.toString(),false)) {
+            if(repeatPasswordInput.text.toString().equals(passwordInput.text.toString(),false)) {
+                repeatPasswordInputVerification = true
+            }else{
                 repeatPasswordInput.setError("Password doesn't match")
                 repeatPasswordInputVerification = false
-            }else{
-                repeatPasswordInputVerification = true
             }
 
         }
         /*return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
                 passwordInput.text.matches(regexPattern)*/
+        //Log.d("VERIFICATION","$emailInputVerification $passwordInputVerification $repeatPasswordInputVerification")
         return emailInputVerification && passwordInputVerification && repeatPasswordInputVerification
     }
 }

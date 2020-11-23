@@ -15,8 +15,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".FarmerListing.View.FarmerInfo"></activity>
         <activity android:name=".FarmerListing.View.FarmerPage"></activity>
-        <activity android:name=".LoginAndRegistration.View.RegistrationFragmentView" />
-        <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"
             android:windowSoftInputMode="adjustResize" />
