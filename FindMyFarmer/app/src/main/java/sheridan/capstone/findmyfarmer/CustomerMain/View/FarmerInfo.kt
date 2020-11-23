@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import sheridan.capstone.findmyfarmer.CustomerMain.Model.FollowingDialog
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.RateItDialogue
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.R
@@ -30,6 +31,13 @@ private lateinit var To_Products : Button
 private lateinit var To_Map: Button
 private lateinit var RateIt: ImageView
 
+private lateinit var FarmerInfo : ImageView
+
+var ImageInt : Int =0
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +54,9 @@ private lateinit var RateIt: ImageView
         To_Products = view.findViewById(R.id.Products)
         To_Map = view.findViewById(R.id.Maps)
         RateIt = view.findViewById(R.id.RateIt)
+        FarmerInfo = view.findViewById(R.id.FollowIcon)
+
+
 
         To_Map.setOnClickListener {
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
@@ -72,6 +83,8 @@ private lateinit var RateIt: ImageView
         }
 
 
+
+
         return view
     }
 
@@ -82,12 +95,14 @@ private lateinit var RateIt: ImageView
         if (FragmentManager != null) {
             exampleDialog.show(FragmentManager,"Rate it")
         }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel.getFarmer_Name().observe(viewLifecycleOwner, Observer {
+
            FarmerName.text = it
 
         })
@@ -100,7 +115,8 @@ private lateinit var RateIt: ImageView
 
         })
         viewModel.getImage().observe(viewLifecycleOwner, Observer {
-           FarmerImage.setImageResource(it)
+            ImageInt = it
+        FarmerImage.setImageResource(it)
         })
         viewModel.getFarmer_Rating().observe(viewLifecycleOwner, Observer {
 
@@ -108,6 +124,27 @@ private lateinit var RateIt: ImageView
             FarmerRating.rating = it
 
         })
+
+
+
+
+
+        FarmerInfo.setOnClickListener {
+            var Following:FollowingDialog = FollowingDialog()
+            Following.setImagage(ImageInt)
+            Following.setFarmerName(FarmerName.text.toString())
+
+            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+            if (FragmentManager != null) {
+                Following.show(FragmentManager, "Follow?")
+            }
+        }
+
+
+
     }
+
+
+
 
 }

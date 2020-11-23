@@ -49,6 +49,8 @@ class CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         val bottomnav : BottomNavigationView = findViewById(R.id.bottom_nav)
 
+
+
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container,MarketPlace()).commit()
 
 

@@ -16,6 +16,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
+import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
 
 class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
@@ -34,15 +36,17 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         Save = findViewById(R.id.Save)
         Password = findViewById(R.id.UpdatePassword)
 
+        NavigationView.setNavigationItemSelectedListener(this)
+        setSupportActionBar(toolbarView)
 
         val toggle= ActionBarDrawerToggle(this,drawerLayout,
-            toolbarView,R.string.navigation_drawer_open,R.string.navigation_drawer_close)
-
+            toolbarView, navigation_drawer_open, navigation_drawer_close
+        )
 
         drawerLayout.addDrawerListener(toggle)
 
         toggle.syncState()
-        setSupportActionBar(toolbarView)
+
 
         // Saves data into data base and passes it to the CustomerView activity which displays the marketplace fragment as default.
 
