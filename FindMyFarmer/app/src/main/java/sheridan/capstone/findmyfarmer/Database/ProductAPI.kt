@@ -47,6 +47,7 @@ class ProductAPI {
 
               var img = searchProduce.getString("image")
               var productName = searchProduce.getString("name")
+
           }
 
       }catch (e: JSONException)
