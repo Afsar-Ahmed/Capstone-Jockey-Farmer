@@ -12,7 +12,7 @@
         <item name ="colorControlNormal">@color/colorRatingInactive</item>
     </style>
     <style name ="Rating2" parent="AppTheme">
-        <item name ="colorControlActivated">@color/WhiteColor</item>
+        <item name ="colorControlActivated">@color/greenRating</item>
         <item name ="colorControlNormal">@color/colorRatingInactive</item>
     </style>
 </resources>

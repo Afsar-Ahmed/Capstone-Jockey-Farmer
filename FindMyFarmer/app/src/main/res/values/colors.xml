@@ -10,6 +10,7 @@
     <color name = "colorRatingInactive">#C9C9D1</color>
     <color name = "colorBackground">#EEEEEE</color>
     <color name = "WhiteColor">#FFFFFF</color>
+    <color name = "greenRating">#69F0AE</color>
 
 
 </resources>

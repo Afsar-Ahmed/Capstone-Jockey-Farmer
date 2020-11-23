@@ -5,13 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -28,49 +31,64 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.ResetModel
 import sheridan.capstone.findmyfarmer.R
 
-class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface{
+class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface, ViewBehaviorInterface{
 
     private lateinit var auth: FirebaseAuth
     private var RC_SIGN_IN  = 9001
     private lateinit var sic : GoogleSignInClient
     private lateinit var callBackManager: CallbackManager
     private lateinit var fbCallBack : FacebookCallback<LoginResult>
-    private val model: LoginModel by viewModels()
+    private val loginModel: LoginModel by viewModels()
     private val registerModel: RegistrationModel by viewModels()
+    private val resetModel : ResetModel by viewModels()
     private var user: FirebaseUser? = null
+    private var registeredUser: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = Firebase.auth
-
         callBackManager = CallbackManager.Factory.create()
 
         //observer for the user value in the LoginModel Class
         //if changed - log in to the farmerListing
         val authObserver = Observer<FirebaseUser?>{
-            newAuth -> user = newAuth
+                newAuth -> user = newAuth
             if(user != null){
                 startActivity(Intent(this, FarmerPage::class.java))
                 finish()
             }else{
-                Toast.makeText(applicationContext, "Incorrect email/password!",
+                Toast.makeText(applicationContext, "Incorrect email/password",
                     Toast.LENGTH_SHORT).show()
             }
         }
 
+        //if the email in reset is registered and reset password was sent - hide keyboard, show Toast
+        val resetObserver = Observer<Boolean> {
+            newEmailStatus -> registeredUser = newEmailStatus
+            var toastMessage: String = if(registeredUser){
+
+                var layout : View = findViewById(R.id.resetPasswordConstraintLayout)
+                hideKeyboard(layout)
+                layout.requestFocus()
+                "Check your E-mail. The reset password is sent"
+            }else{
+                "Something went wrong. This E-mail might not be registered"
+            }
+            Toast.makeText(applicationContext, toastMessage,
+                Toast.LENGTH_LONG).show()
+        }
+        //observe when user value has been changed in the resetModel
+        resetModel.registeredEmail.observe(this,resetObserver)
+        //observe when user value has been changed in the registerModel
         registerModel.user.observe(this,authObserver)
         //observe when user value has been changed in the LoginModel
-        model.user.observe(this, authObserver)
+        loginModel.user.observe(this, authObserver)
 
 
-
-
-            /*forgotPswrdLink.setOnClickListener{
-                startActivity(Intent(this, RegistrationFragmentView::class.java))
-            }*/
     }
 
     public override fun onStart() {
@@ -104,7 +122,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                 try{
                     //breaking down the account object to retrieve the basic data from the account, like name, email, id etc
                     val acc = googleAcc.getResult(ApiException::class.java)!!
-                    model.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)
+                    loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)
                 }
                 catch (e: Exception){
                     Toast.makeText(
@@ -138,20 +156,20 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
 
     //Run validation and login function with input provided by the user
     override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
-            if(model.loginValidation(email, password)) {
-                model.login( auth, this, email.text.toString(), password.text.toString())
+            if(loginModel.loginValidation(email, password)) {
+                loginModel.login( auth, this, email.text.toString(), password.text.toString())
         }
     }
 
     //When sign up button is clicked - parse the information to the input validation and then signUp
-    override fun OnSignUpButtonClickListener(email: EditText, password: EditText, repeatPassword: EditText) {
-        if(registerModel.registerValidation(email,password,repeatPassword))
-            registerModel.register(auth,this,email.text.toString(),password.text.toString())
+    override fun OnSignUpButtonClickListener(email: String, name: String, password: String, isFarmer: Boolean) {
+            registerModel.register(auth,this,email,password)
     }
 
     //Open registration fragment on link click
     override fun OnRegisterLinkClickListener() {
-        registerAccount.findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        var navController = Navigation.findNavController(this,R.id.fragment_host)
+        navController.navigate(R.id.action_loginFragment_to_registrationFragment)
     }
 
     //When google Sign In button is pressed - call googleLogIn
@@ -165,7 +183,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         FBSignIn.registerCallback(callBackManager,
             object : FacebookCallback<LoginResult> { override fun onSuccess(result: LoginResult?) {
                     if (result != null) {
-                        model.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken)
+                        loginModel.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken)
                     } else {
                         Toast.makeText(applicationContext, "Error getting Facebook Account",
                             Toast.LENGTH_SHORT).show()
@@ -177,6 +195,44 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                     Log.e("FacebookERROR", error.toString())
                 }
             })
+    }
+
+    //open reset password fragment
+    override fun OnResetPasswordButtonClickListener() {
+        var navController = Navigation.findNavController(this,R.id.fragment_host)
+        navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+    }
+
+    override fun OnSendResetButtonClickListener(email: EditText) {
+        if(resetModel.loginValidation(email)){
+            resetModel.sendResetPasswordEmail(email)
+        }
+    }
+
+    override fun Validation(email: EditText, name: EditText, password: EditText, repeatPassword: EditText):Boolean {
+         val validatedSensitive = registerModel.registerValidation(email,password,repeatPassword)
+         val validatedName = registerModel.registerNameValidation(name)
+        return validatedSensitive && validatedName
+    }
+
+    override fun Navigate(FragmentId: Int) {
+        var navController = Navigation.findNavController(this,R.id.fragment_host)
+        navController.navigate(FragmentId)
+    }
+
+    //hide the keyboard
+    override fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    //request focus on from all the input fields and hide a keyboard if touched outside of the current input field
+    override fun viewBehavior(view: View) {
+        view.requestFocus()
+        view.setOnTouchListener{ view, m: MotionEvent ->
+            hideKeyboard(view)
+            view.requestFocus()
+            true}
     }
 
 }

@@ -115,10 +115,12 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
             startActivity(
                 Intent(this,
-                    LoginRegistrationController::class.java)
+                LoginRegistrationController::class.java)
             )
         }
         Toast.makeText(applicationContext, "Logged out", Toast.LENGTH_LONG).show()
     }
 
 }
+
+
