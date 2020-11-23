@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.FarmerListing.Controller
+package sheridan.capstone.findmyfarmer.CustomerMain.Controller
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import com.makeramen.roundedimageview.RoundedImageView
 import kotlinx.android.synthetic.main.farmer_info_card.view.*
 
 import kotlinx.android.synthetic.main.farmer_listing.view.Name
-import sheridan.capstone.findmyfarmer.FarmerListing.Model.FruitData
+import sheridan.capstone.findmyfarmer.CustomerMain.Model.FruitData
 
 import sheridan.capstone.findmyfarmer.R
 
@@ -22,7 +22,7 @@ class FruitListToView (private val FruitList: List<FruitData>)
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ):MyViewHolder {
+    ): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.farmer_info_card,
             parent, false
@@ -36,7 +36,7 @@ class FruitListToView (private val FruitList: List<FruitData>)
 
 
 
-    override fun onBindViewHolder(holder:MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
 
         val currentItem = FruitList[position]

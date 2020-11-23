@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="sheridan.capstone.findmyfarmer.LoginAndRegistration.View.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:label="fragment_modified_login"
+        tools:layout="@layout/fragment_modified_login">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment"

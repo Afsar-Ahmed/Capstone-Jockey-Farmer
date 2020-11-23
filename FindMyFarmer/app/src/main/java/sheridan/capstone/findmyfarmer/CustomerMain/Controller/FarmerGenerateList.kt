@@ -1,13 +1,14 @@
-package sheridan.capstone.findmyfarmer.FarmerListing.Controller
+package sheridan.capstone.findmyfarmer.CustomerMain.Controller
 
-import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerData
-import sheridan.capstone.findmyfarmer.FarmerListing.Model.FruitData
-import sheridan.capstone.findmyfarmer.FarmerListing.Model.ListData
+import sheridan.capstone.findmyfarmer.CustomerMain.Model.FarmerData
+import sheridan.capstone.findmyfarmer.CustomerMain.Model.FruitData
+import sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData
 import sheridan.capstone.findmyfarmer.R
 
 class FarmerGenerateList {
 
-    val FarmerData : FarmerData = FarmerData()
+    val FarmerData : FarmerData =
+        FarmerData()
 
     fun GenerateFruit(size:Int) : List<FruitData> {
 

@@ -1,21 +1,18 @@
-package sheridan.capstone.findmyfarmer.FarmerListing.Controller
+package sheridan.capstone.findmyfarmer.CustomerMain.Controller
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
 import kotlinx.android.synthetic.main.farmer_listing.view.*
-import sheridan.capstone.findmyfarmer.FarmerListing.Model.ListData
+import sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData
 import sheridan.capstone.findmyfarmer.R
 
 
-class FarmerListToView (private val FarmerList: List<ListData>, private val listener:OnItemClickListener)
+class FarmerListToView (private val FarmerList: List<ListData>, private val listener: OnItemClickListener)
     : RecyclerView.Adapter<FarmerListToView.MyViewHolder>() {
 
 

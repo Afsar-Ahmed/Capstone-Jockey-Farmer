@@ -27,8 +27,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_login.*
-import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
+
+import kotlinx.android.synthetic.main.fragment_modified_login.*
+import sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView
+
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.ResetModel
@@ -58,7 +60,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         val authObserver = Observer<FirebaseUser?>{
                 newAuth -> user = newAuth
             if(user != null){
-                startActivity(Intent(this, FarmerPage::class.java))
+                startActivity(Intent(this, CustomerView::class.java))
                 finish()
             }else{
                 Toast.makeText(applicationContext, "Incorrect email/password!",
@@ -147,7 +149,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
    //Opens next activity if the user signed in successfully
     private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
         if(user != null){
-            var loggedIn = Intent(context, FarmerPage::class.java)
+            var loggedIn = Intent(context, CustomerView::class.java)
             loggedIn.putExtras(Bundle().apply(extras))
             ContextCompat.startActivity(context, loggedIn, null)
         }

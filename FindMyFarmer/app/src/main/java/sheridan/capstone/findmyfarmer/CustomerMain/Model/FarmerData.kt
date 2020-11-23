@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.FarmerListing.Model
+package sheridan.capstone.findmyfarmer.CustomerMain.Model
 
 class FarmerData {
 
