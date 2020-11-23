@@ -8,5 +8,9 @@
     <item android:id="@+id/Logout"
         android:title="Logout"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/imagehandler"
+        android:title="ImageHandler"
+        app:showAsAction="never" />
 
 </menu>

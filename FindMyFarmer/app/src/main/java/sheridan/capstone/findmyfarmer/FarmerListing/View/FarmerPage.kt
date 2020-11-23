@@ -116,16 +116,16 @@ class FarmerPage : AppCompatActivity(),FarmerListToView.OnItemClickListener{
             }
             R.id.Logout -> {
                 logOut()
-
-
                 finish()
                 return true
             }
-
+            R.id.imagehandler ->{
+                var i = Intent(this, sheridan.capstone.findmyfarmer.test::class.java)
+                startActivity(i)
+                true
+            }
             else -> return super.onOptionsItemSelected(item)
-
         }
-
     }
 
     private fun logOut(){

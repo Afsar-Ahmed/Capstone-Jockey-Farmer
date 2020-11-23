@@ -16,9 +16,6 @@ import sheridan.capstone.findmyfarmer.R
 class FarmerListToView (private val FarmerList: List<Farm>, private val listener:OnItemClickListener)
     : RecyclerView.Adapter<FarmerListToView.MyViewHolder>() {
 
-
-
-
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
