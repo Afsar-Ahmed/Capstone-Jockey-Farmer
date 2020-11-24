@@ -4,13 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
+
 class SharedViewModel : ViewModel() {
 // this SharedViewModel class stores data for the clicked recycleview element. This is passed and shared by the activity.
+
     private val Image : MutableLiveData<Int> = MutableLiveData()
     private val Farmer_Name:MutableLiveData<String> = MutableLiveData()
     private val Farmer_Desc: MutableLiveData<String> = MutableLiveData()
     private val Farmer_Rat : MutableLiveData<Float> = MutableLiveData()
     private val Farmer_City: MutableLiveData<String> = MutableLiveData()
+    private val SavedData : MutableLiveData<ListData> = MutableLiveData()
+
+
 
 
     fun setImage(input: Int){
@@ -32,6 +37,13 @@ class SharedViewModel : ViewModel() {
         Farmer_City.value = input
     }
 
+    fun setSavedData(List : ListData){
+        SavedData.value = List
+    }
+
+    fun getSavedData() : LiveData<ListData> {
+        return SavedData
+    }
 
 
     fun getImage() : LiveData<Int>{

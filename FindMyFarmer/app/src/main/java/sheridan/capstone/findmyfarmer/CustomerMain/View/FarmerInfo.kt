@@ -17,6 +17,7 @@ import sheridan.capstone.findmyfarmer.CustomerMain.Model.FollowingDialog
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.RateItDialogue
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SharedViews.Maps
 
 class FarmerInfo : Fragment(){
 
@@ -62,7 +63,9 @@ var ImageInt : Int =0
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
 
             val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container,Maps())
+            fragmentTransaction?.replace(R.id.fragment_container,
+                Maps()
+            )
                 ?.commit()
 
 
@@ -131,8 +134,6 @@ var ImageInt : Int =0
 
         FarmerInfo.setOnClickListener {
             var Following:FollowingDialog = FollowingDialog()
-            Following.setImagage(ImageInt)
-            Following.setFarmerName(FarmerName.text.toString())
 
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
             if (FragmentManager != null) {

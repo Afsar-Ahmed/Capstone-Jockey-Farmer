@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.CustomerMain.View
+package sheridan.capstone.findmyfarmer.SharedViews
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.CustomerMain.Controller.FarmerGenerateList
 import sheridan.capstone.findmyfarmer.CustomerMain.Controller.FarmerListToView
+import sheridan.capstone.findmyfarmer.CustomerMain.View.FarmerInfo
 import sheridan.capstone.findmyfarmer.R
 
 
@@ -63,7 +64,9 @@ class MarketPlace : Fragment(),
 
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
         val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container,sheridan.capstone.findmyfarmer.CustomerMain.View.FarmerInfo())
+        fragmentTransaction?.replace(R.id.fragment_container,
+            FarmerInfo()
+        )
             ?.commit()
 
 

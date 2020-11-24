@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.CustomerMain.View
+package sheridan.capstone.findmyfarmer.FarmerMain.View
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,22 +14,20 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import sheridan.capstone.findmyfarmer.AccountSettings
-import sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData
-import sheridan.capstone.findmyfarmer.SharedViews.Following
+import sheridan.capstone.findmyfarmer.SharedViews.MarketPlace
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SharedViews.Following
 import sheridan.capstone.findmyfarmer.SharedViews.Maps
-import sheridan.capstone.findmyfarmer.SharedViews.MarketPlace
 
-class CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class FarmerView : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener  {
+
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
-   var SavedDataList : ArrayList<ListData> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_customer_view)
+        setContentView(R.layout.activity_farmer_view)
 
 
 
@@ -51,39 +49,42 @@ class CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         toggle.syncState()
 
-        val bottomnav : BottomNavigationView = findViewById(R.id.bottom_nav)
-
-
-
-
-
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-            MarketPlace()
-        ).commit()
-
+        val bottomnav : BottomNavigationView = findViewById(R.id.bottom_farmer_nav)
 
         bottomnav.setOnNavigationItemSelectedListener{
-           when (it.itemId){
-               R.id.nav_market -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                    MarketPlace()
-                ).commit()
-               }
-               R.id.nav_following -> {
-                   supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                       Following()
-                   ).commit()
-               }
-               R.id.nav_maps -> {
-                   supportFragmentManager.beginTransaction().replace(R.id.fragment_container,
-                       Maps()
-                   ).commit()
-               }
-           }
+            when (it.itemId){
+                R.id.nav_manage_hub -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_farmer_view,
+                        FarmerHub()
+                    ).commit()
+                }
+                R.id.nav_market -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_farmer_view,
+                        MarketPlace()
+                    ).commit()
+                }
+                R.id.nav_following -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_farmer_view,
+                        Following()
+                    ).commit()
+                }
+                R.id.nav_farmer_map_view -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_farmer_view,
+                        Maps()
+                    ).commit()
+                }
+            }
 
             false
         }
+
+
+
     }
+
+
+
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_logout ->{
@@ -93,11 +94,7 @@ class CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelected
                 finish()
 
             }
-            R.id.nav_account -> {
-                val intent = Intent(this, AccountSettings::class.java)
-                // start your next activity
-                startActivity(intent)
-            }
+
 
 
 
@@ -105,6 +102,8 @@ class CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 
         return true
     }
+
+
     private fun logOut(){
         Firebase.auth.signOut()
 

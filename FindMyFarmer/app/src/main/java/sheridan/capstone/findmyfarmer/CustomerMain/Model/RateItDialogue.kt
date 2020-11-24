@@ -44,6 +44,7 @@ class RateItDialogue : AppCompatDialogFragment(){
         })
 
 SendFeedBack.setOnClickListener {
+    // add feedback desc/rating to the database in the ratings table.
     dialog?.dismiss()
 }
         return builder.create()

@@ -3,12 +3,15 @@ package sheridan.capstone.findmyfarmer.CustomerMain.Controller
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.FarmerData
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.FruitData
 import sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData
+import sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.R
 
 class FarmerGenerateList {
 
     val FarmerData : FarmerData =
         FarmerData()
+
+
 
     fun GenerateFruit(size:Int) : List<FruitData> {
 
@@ -66,6 +69,8 @@ class FarmerGenerateList {
         return list
     }
 
+
+
     fun GenerateList(size: Int): List<ListData> {
         val list = ArrayList<ListData>()
         for (i in 0 until size) {
@@ -86,7 +91,7 @@ class FarmerGenerateList {
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
                         FarmerData.getFarmerCity()[i],
-                        FarmerData.getisSelected()[i]
+
                     )
                 list += item
 
@@ -98,7 +103,7 @@ class FarmerGenerateList {
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
                         FarmerData.getFarmerCity()[i],
-                        FarmerData.getisSelected()[i]
+
                     )
                 list += item
 
@@ -110,7 +115,7 @@ class FarmerGenerateList {
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
                         FarmerData.getFarmerCity()[i],
-                        FarmerData.getisSelected()[i]
+
                     )
                 list += item
 
@@ -122,7 +127,7 @@ class FarmerGenerateList {
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
                         FarmerData.getFarmerCity()[i],
-                        FarmerData.getisSelected()[i]
+
                     )
                 list += item
 
@@ -134,7 +139,7 @@ class FarmerGenerateList {
                         FarmerData.getFarmerDesc()[i],
                         FarmerData.getFarmerRating()[i],
                         FarmerData.getFarmerCity()[i],
-                        FarmerData.getisSelected()[i]
+
 
                     )
                 list += item

@@ -1,4 +1,4 @@
-package sheridan.capstone.findmyfarmer.CustomerMain.View
+package sheridan.capstone.findmyfarmer.SharedViews
 
 import android.location.Geocoder
 import android.os.Bundle
@@ -18,10 +18,10 @@ import sheridan.capstone.findmyfarmer.R
 class Maps : Fragment(), OnMapReadyCallback {
 
 
-    private lateinit var Google: GoogleMap
+
     private lateinit var mapview : MapView
 
-    private var MAPVIEW_BUNDLE_KEY: String = "MapViewBundleKey"
+
 
 
 
