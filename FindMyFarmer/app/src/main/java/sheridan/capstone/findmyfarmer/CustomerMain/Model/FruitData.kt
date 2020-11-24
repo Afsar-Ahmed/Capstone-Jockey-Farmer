@@ -1,4 +1,4 @@
 package sheridan.capstone.findmyfarmer.CustomerMain.Model
 
-class FruitData(val imageResouce: Int, val Fruit_Name: String, val Fruit_Cat : String){
+class FruitData(val imageResouce: String, val Fruit_Name: String, val Fruit_Cat: String){
 }

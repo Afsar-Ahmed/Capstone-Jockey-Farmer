@@ -63,7 +63,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                 startActivity(Intent(this, CustomerView::class.java))
                 finish()
             }else{
-                Toast.makeText(applicationContext, "Incorrect email/password!",
+                Toast.makeText(applicationContext, "Incorrect email/password",
                     Toast.LENGTH_SHORT).show()
             }
         }
@@ -164,9 +164,8 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     }
 
     //When sign up button is clicked - parse the information to the input validation and then signUp
-    override fun OnSignUpButtonClickListener(email: EditText, password: EditText, repeatPassword: EditText) {
-        if(registerModel.registerValidation(email,password,repeatPassword))
-            registerModel.register(auth,this,email.text.toString(),password.text.toString())
+    override fun OnSignUpButtonClickListener(email: String, name: String, password: String, isFarmer: Boolean) {
+            registerModel.register(auth,this,email,password)
     }
 
     //Open registration fragment on link click
@@ -210,6 +209,17 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         if(resetModel.loginValidation(email)){
             resetModel.sendResetPasswordEmail(email)
         }
+    }
+
+    override fun Validation(email: EditText, name: EditText, password: EditText, repeatPassword: EditText):Boolean {
+         val validatedSensitive = registerModel.registerValidation(email,password,repeatPassword)
+         val validatedName = registerModel.registerNameValidation(name)
+        return validatedSensitive && validatedName
+    }
+
+    override fun Navigate(FragmentId: Int) {
+        var navController = Navigation.findNavController(this,R.id.fragment_host)
+        navController.navigate(FragmentId)
     }
 
     //hide the keyboard

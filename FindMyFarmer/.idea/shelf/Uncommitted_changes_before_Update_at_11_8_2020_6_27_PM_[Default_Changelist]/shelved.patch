@@ -1,0 +1,967 @@
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/ScrollViewLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"#FFFFFF\"\r\n    android:backgroundTint=\"#FFFFFF\"\r\n    android:scrollbarSize=\"0dp\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:orientation=\"vertical\">\r\n\r\n        <androidx.constraintlayout.widget.ConstraintLayout\r\n            android:id=\"@+id/constraintLayoutLoginPage\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"50dp\"\r\n            android:background=\"#FFFFFF\"\r\n            android:backgroundTint=\"#FFFFFF\"\r\n            android:clickable=\"true\"\r\n            android:focusable=\"true\"\r\n            android:focusableInTouchMode=\"true\"\r\n            tools:context=\".MainActivity\">\r\n\r\n            <Space\r\n                android:layout_width=\"209dp\"\r\n                android:layout_height=\"67dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/loginBtn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/GSignIn\" />\r\n\r\n            <EditText\r\n                android:id=\"@+id/inputPassword\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"28dp\"\r\n                android:ems=\"10\"\r\n                android:hint=\"@string/input_password_hint\"\r\n                android:inputType=\"textPassword\"\r\n                android:textColor=\"#2B2B2B\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.497\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputEmail\" />\r\n\r\n            <EditText\r\n                android:id=\"@+id/inputEmail\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"18dp\"\r\n                android:ems=\"10\"\r\n                android:hint=\"@string/input_email_hint\"\r\n\r\n                android:inputType=\"textEmailAddress\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.5\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginPageLogo\" />\r\n\r\n\r\n            <ImageView\r\n                android:id=\"@+id/loginPageLogo\"\r\n                android:layout_width=\"186dp\"\r\n                android:layout_height=\"144dp\"\r\n                android:layout_marginTop=\"4dp\"\r\n                android:focusableInTouchMode=\"false\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintHorizontal_bias=\"0.497\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\"\r\n                app:srcCompat=\"@drawable/farm\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/loginBtn\"\r\n                android:layout_width=\"0dp\"\r\n                android:layout_height=\"45dp\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:background=\"#11EF82\"\r\n                android:fontFamily=\"sans-serif-medium\"\r\n                android:hapticFeedbackEnabled=\"true\"\r\n                android:stateListAnimator=\"@null\"\r\n                android:text=\"@string/login_btn\"\r\n                android:textAllCaps=\"false\"\r\n                android:textColor=\"#FFFFFF\"\r\n                android:textSize=\"24sp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/registerAccount\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/forgotPswrdLink\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"12dp\"\r\n                android:clickable=\"true\"\r\n                android:text=\"@string/forgot_password_link\"\r\n                android:textColor=\"#FF5252\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputPassword\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/registerAccount\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"40dp\"\r\n                android:clickable=\"true\"\r\n                android:text=\"@string/register_btn\"\r\n                android:textColor=\"#FF5252\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/inputPassword\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/inputPassword\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/inputPassword\" />\r\n\r\n            <com.google.android.gms.common.SignInButton\r\n                android:id=\"@+id/GSignIn\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"8dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.0\"\r\n                app:layout_constraintStart_toStartOf=\"@+id/loginBtn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginBtn\">\r\n\r\n            </com.google.android.gms.common.SignInButton>\r\n\r\n            <com.facebook.login.widget.LoginButton\r\n                android:id=\"@+id/FBSignIn\"\r\n                android:layout_width=\"33dp\"\r\n                android:layout_height=\"27dp\"\r\n                android:layout_gravity=\"center_horizontal\"\r\n                android:layout_marginTop=\"20dp\"\r\n                app:layout_constraintEnd_toEndOf=\"@+id/loginBtn\"\r\n                app:layout_constraintHorizontal_bias=\"0.76\"\r\n                app:layout_constraintStart_toEndOf=\"@+id/GSignIn\"\r\n                app:layout_constraintTop_toBottomOf=\"@+id/loginBtn\" />\r\n\r\n        </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n    </LinearLayout>\r\n</ScrollView>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_login.xml	(revision 22d44a6b802dd4a2ad8f491f86986ba038a2b8b7)
++++ app/src/main/res/layout/activity_login.xml	(date 1604876286902)
+@@ -1,150 +1,20 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+-    android:id="@+id/ScrollViewLayout"
++    android:id="@+id/ConstraintLayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="#FFFFFF"
+     android:backgroundTint="#FFFFFF"
+-    android:scrollbarSize="0dp">
++    android:scrollbarSize="0dp" >
+ 
+-    <LinearLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_gravity="center"
+-        android:orientation="vertical">
+ 
+-        <androidx.constraintlayout.widget.ConstraintLayout
+-            android:id="@+id/constraintLayoutLoginPage"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:layout_marginTop="50dp"
+-            android:background="#FFFFFF"
+-            android:backgroundTint="#FFFFFF"
+-            android:clickable="true"
+-            android:focusable="true"
+-            android:focusableInTouchMode="true"
+-            tools:context=".MainActivity">
+-
+-            <Space
+-                android:layout_width="209dp"
+-                android:layout_height="67dp"
+-                app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+-                app:layout_constraintHorizontal_bias="0.0"
+-                app:layout_constraintStart_toStartOf="@+id/loginBtn"
+-                app:layout_constraintTop_toBottomOf="@+id/GSignIn" />
+-
+-            <EditText
+-                android:id="@+id/inputPassword"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="28dp"
+-                android:ems="10"
+-                android:hint="@string/input_password_hint"
+-                android:inputType="textPassword"
+-                android:textColor="#2B2B2B"
+-                app:layout_constraintEnd_toEndOf="parent"
+-                app:layout_constraintHorizontal_bias="0.497"
+-                app:layout_constraintStart_toStartOf="parent"
+-                app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+-
+-            <EditText
+-                android:id="@+id/inputEmail"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="18dp"
+-                android:ems="10"
+-                android:hint="@string/input_email_hint"
+-
+-                android:inputType="textEmailAddress"
+-                app:layout_constraintEnd_toEndOf="parent"
+-                app:layout_constraintHorizontal_bias="0.5"
+-                app:layout_constraintStart_toStartOf="parent"
+-                app:layout_constraintTop_toBottomOf="@+id/loginPageLogo" />
+-
+-
+-            <ImageView
+-                android:id="@+id/loginPageLogo"
+-                android:layout_width="186dp"
+-                android:layout_height="144dp"
+-                android:layout_marginTop="4dp"
+-                android:focusableInTouchMode="false"
+-                app:layout_constraintEnd_toEndOf="parent"
+-                app:layout_constraintHorizontal_bias="0.497"
+-                app:layout_constraintStart_toStartOf="parent"
+-                app:layout_constraintTop_toTopOf="parent"
+-                app:srcCompat="@drawable/farm" />
+-
+-            <Button
+-                android:id="@+id/loginBtn"
+-                android:layout_width="0dp"
+-                android:layout_height="45dp"
+-                android:layout_marginTop="20dp"
+-                android:background="#11EF82"
+-                android:fontFamily="sans-serif-medium"
+-                android:hapticFeedbackEnabled="true"
+-                android:stateListAnimator="@null"
+-                android:text="@string/login_btn"
+-                android:textAllCaps="false"
+-                android:textColor="#FFFFFF"
+-                android:textSize="24sp"
+-                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+-                app:layout_constraintHorizontal_bias="0.0"
+-                app:layout_constraintStart_toStartOf="@+id/inputPassword"
+-                app:layout_constraintTop_toBottomOf="@+id/registerAccount" />
+-
+-            <TextView
+-                android:id="@+id/forgotPswrdLink"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="12dp"
+-                android:clickable="true"
+-                android:text="@string/forgot_password_link"
+-                android:textColor="#FF5252"
+-                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+-                app:layout_constraintHorizontal_bias="0.0"
+-                app:layout_constraintStart_toStartOf="@+id/inputPassword"
+-                app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+-
+-            <TextView
+-                android:id="@+id/registerAccount"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="40dp"
+-                android:clickable="true"
+-                android:text="@string/register_btn"
+-                android:textColor="#FF5252"
+-                app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+-                app:layout_constraintHorizontal_bias="0.0"
+-                app:layout_constraintStart_toStartOf="@+id/inputPassword"
+-                app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+-
+-            <com.google.android.gms.common.SignInButton
+-                android:id="@+id/GSignIn"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginTop="8dp"
+-                app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+-                app:layout_constraintHorizontal_bias="0.0"
+-                app:layout_constraintStart_toStartOf="@+id/loginBtn"
+-                app:layout_constraintTop_toBottomOf="@+id/loginBtn">
+-
+-            </com.google.android.gms.common.SignInButton>
+-
+-            <com.facebook.login.widget.LoginButton
+-                android:id="@+id/FBSignIn"
+-                android:layout_width="33dp"
+-                android:layout_height="27dp"
+-                android:layout_gravity="center_horizontal"
+-                android:layout_marginTop="20dp"
+-                app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+-                app:layout_constraintHorizontal_bias="0.76"
+-                app:layout_constraintStart_toEndOf="@+id/GSignIn"
+-                app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+-
+-        </androidx.constraintlayout.widget.ConstraintLayout>
+-
+-    </LinearLayout>
+-</ScrollView>
+-
++    <androidx.fragment.app.FragmentContainerView
++        android:id="@+id/fragment_host"
++        android:name="androidx.navigation.fragment.NavHostFragment"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        app:defaultNavHost="true"
++        app:navGraph="@navigation/nav_graph" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_dash_board.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".LoginAndRegistration.View.DashBoardView\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/LoginText\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"304dp\"\r\n        android:text=\"Logged In!\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/logOutBtn\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"64dp\"\r\n        android:text=\"Log Out\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/LoginText\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/LoginText\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/LoginText\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_dash_board.xml	(revision 22d44a6b802dd4a2ad8f491f86986ba038a2b8b7)
++++ app/src/main/res/layout/activity_dash_board.xml	(date 1604877656851)
+@@ -6,24 +6,58 @@
+     android:layout_height="match_parent"
+     tools:context=".LoginAndRegistration.View.DashBoardView">
+ 
+-    <TextView
+-        android:id="@+id/LoginText"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="304dp"
+-        android:text="Logged In!"
+-        android:textSize="18sp"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
++    <androidx.constraintlayout.widget.ConstraintLayout
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        tools:layout_editor_absoluteX="153dp"
++        tools:layout_editor_absoluteY="201dp">
++
++        <LinearLayout
++            android:layout_width="401dp"
++            android:layout_height="232dp"
++            android:orientation="vertical"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="1.0"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent">
++
++            <TextView
++                android:id="@+id/textView2"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="Welcome"
++                android:textSize="34dp"
++                android:textAlignment="center"/>
+ 
+-    <Button
+-        android:id="@+id/logOutBtn"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="64dp"
+-        android:text="Log Out"
+-        app:layout_constraintEnd_toEndOf="@+id/LoginText"
+-        app:layout_constraintStart_toStartOf="@+id/LoginText"
+-        app:layout_constraintTop_toBottomOf="@+id/LoginText" />
++            <TextView
++                android:id="@+id/textView4"
++                android:layout_width="195dp"
++                android:layout_height="wrap_content"
++                android:text="Favourites"
++                android:textSize="24dp" />
++
++            <TextView
++                android:id="@+id/textView3"
++                android:layout_width="110dp"
++                android:layout_height="wrap_content"
++                android:text="TextView" />
++
++        </LinearLayout>
++
++        <Button
++            android:id="@+id/Produce"
++            android:layout_width="136dp"
++            android:layout_height="80dp"
++            android:text="Produce"
++            tools:layout_editor_absoluteX="38dp"
++            tools:layout_editor_absoluteY="548dp" />
++
++        <Button
++            android:id="@+id/Farmers"
++            android:layout_width="116dp"
++            android:layout_height="78dp"
++            android:text="Farmers"
++            tools:layout_editor_absoluteX="249dp"
++            tools:layout_editor_absoluteY="548dp" />
++    </androidx.constraintlayout.widget.ConstraintLayout>
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".LoginAndRegistration.View.LoginFragment\"/>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_login.xml	(revision 22d44a6b802dd4a2ad8f491f86986ba038a2b8b7)
++++ app/src/main/res/layout/fragment_login.xml	(date 1604877595498)
+@@ -1,6 +1,150 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".LoginAndRegistration.View.LoginFragment"/>
+\ No newline at end of file
++    tools:context=".LoginAndRegistration.View.LoginFragment">
++
++    <ScrollView
++        android:id="@+id/ScrollView"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:background="@drawable/leaves"
++
++        android:scrollbarSize="0dp">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_gravity="center"
++            android:orientation="vertical">
++
++            <androidx.constraintlayout.widget.ConstraintLayout
++                android:id="@+id/constraintLayoutLoginFragment"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_marginTop="50dp"
++                android:background="#CCB0EFA0"
++
++                android:clickable="true"
++                android:focusable="true"
++                android:focusableInTouchMode="true"
++                tools:context=".MainActivity">
++
++                <Space
++                    android:layout_width="209dp"
++                    android:layout_height="67dp"
++                    android:layout_marginEnd="1dp"
++                    app:layout_constraintEnd_toEndOf="@+id/loginBtn"
++                    app:layout_constraintStart_toStartOf="@+id/loginBtn"
++                    app:layout_constraintTop_toBottomOf="@+id/GSignIn" />
++
++                <EditText
++                    android:id="@+id/inputPassword"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginTop="16dp"
++                    android:ems="10"
++                    android:hint="@string/input_password_hint"
++                    android:inputType="textPassword"
++                    android:textColor="#2B2B2B"
++                    app:layout_constraintEnd_toEndOf="parent"
++                    app:layout_constraintHorizontal_bias="0.502"
++                    app:layout_constraintStart_toStartOf="parent"
++                    app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
++
++                <EditText
++                    android:id="@+id/inputEmail"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginTop="18dp"
++                    android:ems="10"
++                    android:hint="@string/input_email_hint"
++
++                    android:inputType="textEmailAddress"
++                    app:layout_constraintEnd_toEndOf="parent"
++                    app:layout_constraintHorizontal_bias="0.5"
++                    app:layout_constraintStart_toStartOf="parent"
++                    app:layout_constraintTop_toBottomOf="@+id/loginPageLogo" />
++
++
++                <ImageView
++                    android:id="@+id/loginPageLogo"
++                    android:layout_width="186dp"
++                    android:layout_height="144dp"
++                    android:layout_marginTop="48dp"
++                    android:focusableInTouchMode="false"
++                    app:layout_constraintEnd_toEndOf="parent"
++                    app:layout_constraintHorizontal_bias="0.497"
++                    app:layout_constraintStart_toStartOf="parent"
++                    app:layout_constraintTop_toTopOf="parent"
++                    app:srcCompat="@drawable/farm" />
++
++                <TextView
++                    android:id="@+id/forgotPswrdLink"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginTop="12dp"
++                    android:clickable="true"
++                    android:text="@string/forgot_password_link"
++                    android:textColor="#FF5252"
++                    app:layout_constraintEnd_toEndOf="@+id/inputPassword"
++                    app:layout_constraintHorizontal_bias="0.0"
++                    app:layout_constraintStart_toStartOf="@+id/inputPassword"
++                    app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
++
++                <TextView
++                    android:id="@+id/registerAccount"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginTop="40dp"
++                    android:clickable="true"
++                    android:text="@string/register_link"
++                    android:textColor="#FF5252"
++                    app:layout_constraintEnd_toEndOf="@+id/inputPassword"
++                    app:layout_constraintHorizontal_bias="0.0"
++                    app:layout_constraintStart_toStartOf="@+id/inputPassword"
++                    app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
++
++                <com.google.android.gms.common.SignInButton
++                    android:id="@+id/GSignIn"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginTop="13dp"
++                    app:layout_constraintStart_toStartOf="@+id/loginBtn"
++                    app:layout_constraintTop_toBottomOf="@+id/loginBtn">
++
++                </com.google.android.gms.common.SignInButton>
++
++                <com.facebook.login.widget.LoginButton
++                    android:id="@+id/FBSignIn"
++                    android:layout_width="33dp"
++                    android:layout_height="27dp"
++                    android:layout_gravity="center_horizontal"
++                    android:layout_marginStart="36dp"
++                    android:layout_marginBottom="16dp"
++                    app:layout_constraintBottom_toBottomOf="@+id/GSignIn"
++                    app:layout_constraintStart_toEndOf="@+id/GSignIn" />
++
++                <Button
++                    android:id="@+id/loginBtn"
++                    android:layout_width="0dp"
++                    android:layout_height="wrap_content"
++                    android:layout_marginTop="12dp"
++                    android:background="@color/design_default_color_secondary"
++                    android:backgroundTint="#11EF82"
++                    android:fontFamily="sans-serif-light"
++                    android:text="@string/login_btn"
++                    android:textAllCaps="false"
++                    android:textColor="#FFFFFF"
++                    android:textSize="24sp"
++                    app:layout_constraintEnd_toEndOf="@+id/inputPassword"
++                    app:layout_constraintStart_toStartOf="@+id/inputPassword"
++                    app:layout_constraintTop_toBottomOf="@+id/registerAccount" />
++
++            </androidx.constraintlayout.widget.ConstraintLayout>
++
++        </LinearLayout>
++    </ScrollView>
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_farmer_info.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/colorBackground\"\r\n    tools:context=\".FarmerListing.View.FarmerInfo\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/icon\"\r\n        android:layout_width=\"421dp\"\r\n        android:layout_height=\"289dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n\r\n        android:contentDescription=\"TODO\"\r\n        android:src=\"@drawable/test1\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Name\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"105dp\"\r\n        android:gravity=\"center_vertical\"\r\n        android:text=\"Name\"\r\n\r\n        android:textAlignment=\"center\"\r\n\r\n        android:textColor=\"@color/WhiteColor\"\r\n\r\n        android:textSize=\"18dp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        tools:layout_editor_absoluteX=\"-2dp\" />\r\n\r\n\r\n    <TextView\r\n        android:id=\"@+id/Address\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"41dp\"\r\n        android:text=\"Address\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/WhiteColor\"\r\n        android:textSize=\"18dp\"\r\n\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Name\" />\r\n\r\n    <RatingBar\r\n        android:id=\"@+id/Ratings\"\r\n        style=\"@style/Widget.AppCompat.RatingBar.Small\"\r\n        android:layout_width=\"83dp\"\r\n        android:layout_height=\"25dp\"\r\n\r\n        android:layout_marginTop=\"179dp\"\r\n        android:isIndicator=\"true\"\r\n        android:numStars=\"5\"\r\n        android:textAlignment=\"center\"\r\n        android:theme=\"@style/Rating2\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/icon\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Desc\"\r\n        android:layout_width=\"412dp\"\r\n        android:layout_height=\"86dp\"\r\n        android:layout_marginTop=\"289dp\"\r\n        android:background=\"@color/WhiteColor\"\r\n         android:textColor=\"#000000\"\r\n        android:text=\"Description\"\r\n        android:textAlignment=\"center\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/icon\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/Maps\"\r\n        android:layout_width=\"125dp\"\r\n        android:layout_height=\"40dp\"\r\n        android:layout_marginTop=\"225dp\"\r\n        android:text=\"Open In Maps\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/recyclerView\" />\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recyclerView\"\r\n        android:layout_width=\"414dp\"\r\n        android:layout_height=\"201dp\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_centerInParent=\"true\"\r\n        android:layout_marginStart=\"-1dp\"\r\n        android:layout_marginTop=\"114dp\"\r\n        android:layout_marginEnd=\"2dp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.125\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Desc\"\r\n        tools:listitem=\"@layout/farmer_info_card\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/SampleProducts\"\r\n        android:textColor=\"#000000\"\r\n        android:layout_width=\"411dp\"\r\n        android:layout_height=\"0dp\"\r\n        android:layout_marginTop=\"95dp\"\r\n        android:text=\"Products\"\r\n        android:textAlignment=\"center\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Desc\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_farmer_info.xml	(revision 22d44a6b802dd4a2ad8f491f86986ba038a2b8b7)
++++ app/src/main/res/layout/activity_farmer_info.xml	(date 1604876405877)
+@@ -92,8 +92,8 @@
+ 
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/recyclerView"
+-        android:layout_width="414dp"
+-        android:layout_height="201dp"
++        android:layout_width="406dp"
++        android:layout_height="210dp"
+         android:layout_alignParentStart="true"
+         android:layout_alignParentEnd="true"
+         android:layout_alignParentBottom="true"
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Find My Farmer</string>\r\n    <string name=\"input_email_hint\">Email</string>\r\n    <string name=\"input_password_hint\">Password</string>\r\n    <string name=\"login_btn\">Log In</string>\r\n    <string name=\"register_btn\"><u>Don\\'t have an account?</u></string>\r\n    <string name=\"forgot_password_link\"><u>Forgot Password?</u></string>\r\n    <string name=\"facebook_app_id\">1553403721513069</string>\r\n    <string name=\"fb_login_protocol_scheme\">fb1553403721513069</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 22d44a6b802dd4a2ad8f491f86986ba038a2b8b7)
++++ app/src/main/res/values/strings.xml	(date 1604877764746)
+@@ -3,7 +3,8 @@
+     <string name="input_email_hint">Email</string>
+     <string name="input_password_hint">Password</string>
+     <string name="login_btn">Log In</string>
+-    <string name="register_btn"><u>Don\'t have an account?</u></string>
++    <string name="register_link"><u>Don\'t have an account?</u></string>
++    <string name="register_btn">Sign Up</string>
+     <string name="forgot_password_link"><u>Forgot Password?</u></string>
+     <string name="facebook_app_id">1553403721513069</string>
+     <string name="fb_login_protocol_scheme">fb1553403721513069</string>
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Contract.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Contract.kt	(date 1604871364889)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Contract.kt	(date 1604871364889)
+@@ -0,0 +1,22 @@
++package sheridan.capstone.findmyfarmer.FarmerListing.Presenter
++
++import android.view.Menu
++import android.view.MenuItem
++import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerListing
++
++interface Contract {
++
++
++    interface View {
++        fun onCreateOptionsMenu(menu: Menu?): Boolean
++        fun onOptionsItemSelected(item: MenuItem): Boolean
++
++
++    }
++
++    interface Action {
++        fun GenerateList(size: Int): List<FarmerListing>
++
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Presenter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Presenter.kt	(date 1604871364890)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Presenter/Presenter.kt	(date 1604871364890)
+@@ -0,0 +1,108 @@
++package sheridan.capstone.findmyfarmer.FarmerListing.Presenter
++
++import android.content.Context
++import android.view.View
++import sheridan.capstone.findmyfarmer.FarmerListing.Model.FarmerListing
++import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
++import sheridan.capstone.findmyfarmer.R
++
++ class Presenter : Contract.Action {
++
++
++
++
++
++    private var Farmer_Name = arrayOf(
++        "WestSide Farmers Market", "EastSide Cherry Market",
++        "Bobs Fresh Vegetables", "Toms Market", "Toronto's Biggest Farmers Market"
++    )
++
++    private var Farmer_Desc = arrayOf(
++        "WestSide has the best fresh fruits and vegetables",
++        "At EastSide, we have the best cherries and all home grown during the season",
++        "Here at Bobs Fresh Vegetable market, we grow the freshest vegetables in the season ",
++        "We offer some of the best prices for our produce, and our strawberries are our staple",
++        "We are Toronto's most popular farmers market"
++    )
++
++    private  var Farmer_Rating = arrayOf("3/5", "4/5", "2.4/5", "4/5", "5/5")
++
++    private var Farmer_Dist = arrayOf("3km", "4km", "10km", "50km", "3km")
++
++
++
++    override fun GenerateList(size: Int): List<FarmerListing> {
++        val list = ArrayList<FarmerListing>()
++        for (i in 0 until size) {
++            val drawable = when (i % 3) {
++                0 -> R.drawable.test1
++                1 -> R.drawable.test3
++                2 -> R.drawable.test3
++                3 -> R.drawable.test3
++                4 -> R.drawable.test3
++
++                else -> R.drawable.test1
++            }
++            if (i == 0) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 1) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 2) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 3) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            } else if (i == 4) {
++                val item =
++                    FarmerListing(
++                        drawable,
++                        Farmer_Name[i],
++                        Farmer_Desc[i],
++                        Farmer_Rating[i],
++                        Farmer_Dist[i]
++                    )
++                list += item
++
++            }
++        }
++        return list
++    }
++
++}
++
++
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Model/FarmerListing.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Model/FarmerListing.kt	(date 1604871364888)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Model/FarmerListing.kt	(date 1604871364888)
+@@ -0,0 +1,21 @@
++package sheridan.capstone.findmyfarmer.FarmerListing.Model
++
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import android.widget.ImageView
++import android.widget.TextView
++import androidx.recyclerview.widget.RecyclerView
++import kotlinx.android.synthetic.main.farmer_listing.view.*
++import sheridan.capstone.findmyfarmer.R
++
++class FarmerListing (val imageResouce: Int, val Farmer_Name: String, val Farmer_Desc:String,
++val Farmer_Rating:String, val Farmer_Distance:String)
++
++{
++
++}
++
++
++
++
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/Login.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller\r\n\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.MotionEvent\r\nimport android.view.View\r\nimport android.view.animation.AnimationUtils\r\nimport android.view.inputmethod.InputMethodManager\r\nimport android.widget.Toast\r\nimport androidx.activity.viewModels\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.lifecycle.Observer\r\nimport com.facebook.CallbackManager\r\nimport com.facebook.FacebookCallback\r\nimport com.facebook.FacebookException\r\nimport com.facebook.login.LoginResult\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInClient\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions\r\nimport com.google.android.gms.common.api.ApiException\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.FirebaseUser\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport kotlinx.android.synthetic.main.activity_login.*\r\nimport sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass Login : AppCompatActivity(){\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private var RC_SIGN_IN  = 9001\r\n    private lateinit var sic : GoogleSignInClient\r\n    private lateinit var callBackManager: CallbackManager\r\n    private lateinit var fbCallBack : FacebookCallback<LoginResult>\r\n    private val model: LoginModel by viewModels()\r\n    private var user: FirebaseUser? = null\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n\r\n        auth = Firebase.auth\r\n\r\n        callBackManager = CallbackManager.Factory.create()\r\n\r\n        //observer for the user value in the LoginModel Class\r\n        val authObserver = Observer<FirebaseUser?>{\r\n            newAuth -> user = newAuth\r\n            if(user != null){\r\n                startActivity(Intent(this, FarmerPage::class.java))\r\n            }else{\r\n                Toast.makeText(\r\n                    applicationContext, \"Incorrect email/password!\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n            }\r\n        }\r\n\r\n        //observe when user value has been changed in the LoginModel\r\n        model.user.observe(this, authObserver)\r\n\r\n        val btnAnimation = AnimationUtils.loadAnimation(this,\r\n            R.anim.btn_click_animation\r\n        )\r\n        val btnUpAnimation = AnimationUtils.loadAnimation(this,\r\n            R.anim.btn_click_up_animation\r\n        )\r\n\r\n        //Remove keyboard and focus from the element when touch outside of the EditText\r\n        constraintLayoutLoginPage.setOnTouchListener{ v: View, m: MotionEvent ->\r\n            closeKeyboard(constraintLayoutLoginPage)\r\n            constraintLayoutLoginPage.requestFocus()\r\n            true}\r\n\r\n        forgotPswrdLink.setOnClickListener{\r\n            startActivity(Intent(this, RegistrationView::class.java))\r\n        }\r\n        //open register form when pressed register button\r\n        registerAccount.setOnClickListener{\r\n            Controller.register(this)\r\n        }\r\n\r\n        //login when the login button is pressed\r\n        loginBtn.setOnClickListener{\r\n            loginBtn.startAnimation(btnAnimation)\r\n            loginBtn.startAnimation(btnUpAnimation)\r\n\r\n            if(model.loginValidation(inputEmail, inputPassword)) {\r\n                model.login(savedInstanceState, auth, this, inputEmail.text.toString(), inputPassword.text.toString())\r\n\r\n\r\n            }\r\n                  /* startActivity(Intent(this, DashBoardView::class.java))\r\n               else\r\n                   Toast.makeText(applicationContext, \"Sign In Not Successful\", Toast.LENGTH_LONG).show()*/\r\n        }\r\n\r\n        //press button to login with google\r\n        GSignIn.setOnClickListener { googleLogIn() }\r\n\r\n        //press FBSign button in to login with faceBook\r\n        FBSignIn.setPermissions(\"email\")\r\n        FBSignIn.registerCallback(callBackManager,\r\n            object : FacebookCallback<LoginResult> {\r\n                override fun onSuccess(result: LoginResult?) {\r\n                    if (result != null) {\r\n                        model.firebaseAuthWithFacebook(this@Login, auth,result.accessToken,savedInstanceState)\r\n                    } else {\r\n                        Toast.makeText(\r\n                            applicationContext,\r\n                            \"Error getting Facebook Account\",\r\n                            Toast.LENGTH_SHORT\r\n                        ).show()\r\n                    }\r\n                }\r\n\r\n                override fun onCancel() {\r\n                }\r\n\r\n                override fun onError(error: FacebookException?) {\r\n                    Log.e(\"FacebookERROR\", error.toString())\r\n                }\r\n\r\n            })\r\n    }\r\n\r\n    public override fun onStart() {\r\n        super.onStart()\r\n        // Check if user is signed in (non-null) and update UI accordingly.\r\n        val currentUser = auth.currentUser\r\n        updateUI(this,currentUser)\r\n    }\r\n\r\n    /*private fun firebaseAuthWithFacebook(token: AccessToken,bundle :Bundle?){\r\n        val cred =  FacebookAuthProvider.getCredential(token.token)\r\n\r\n        auth.signInWithCredential(cred).addOnCompleteListener(this){ task ->\r\n            if(task.isSuccessful){\r\n                Toast.makeText(\r\n                    applicationContext,\r\n                    \"Successfully logged in with Facebook\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n                Controller.updateUI(this,auth.currentUser)\r\n            }\r\n            else{\r\n                Toast.makeText(\r\n                    applicationContext,\r\n                    \"Unable to log in with Facebook\",\r\n                    Toast.LENGTH_SHORT\r\n                ).show()\r\n            }\r\n        }\r\n    }*/\r\n\r\n    //starts the google login pop-up, allowing the user to choose the google account for log in\r\n    private fun googleLogIn(){\r\n        //initializing google services for login\r\n        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)\r\n            .requestIdToken(getString(R.string.default_web_client_id))\r\n            .requestEmail()\r\n            .build()\r\n        sic = GoogleSignIn.getClient(this, gso)\r\n        var signInGoogle = sic.signInIntent\r\n        startActivityForResult(signInGoogle, RC_SIGN_IN)\r\n    }\r\n\r\n    //After the user chooses the account (Facebook or google), this handles the user data returned\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n\r\n        //Tries to Log in into google first to check if the credentials are approved by google or not\r\n        if(requestCode == RC_SIGN_IN){\r\n            //if all is good then the account object is returned back\r\n            var googleAcc = GoogleSignIn.getSignedInAccountFromIntent(data)\r\n            if (googleAcc != null) {\r\n                try{\r\n                    //breaking down the account object to retrieve the basic data from the account, like name, email, id etc\r\n                    val acc = googleAcc.getResult(ApiException::class.java)!!\r\n                    model.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)\r\n                }\r\n                catch (e: Exception){\r\n                    Toast.makeText(\r\n                        applicationContext,\r\n                        \"Error Logging into google account\",\r\n                        Toast.LENGTH_SHORT\r\n                    ).show()\r\n                    Log.w(\"GOOGLE SIGN IN FAILED\", e)\r\n                }\r\n            }\r\n            else{\r\n                Toast.makeText(applicationContext, \"Sign In Not Successful\", Toast.LENGTH_LONG).show()\r\n            }\r\n        }\r\n        else{\r\n            callBackManager.onActivityResult(requestCode, resultCode, data)\r\n        }\r\n\r\n    }\r\n\r\n\r\n   //Opens next activity if the user signed in successfully\r\n    private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){\r\n        if(user != null){\r\n            var loggedIn = Intent(context, FarmerPage::class.java)\r\n            loggedIn.putExtras(Bundle().apply(extras))\r\n            ContextCompat.startActivity(context, loggedIn, null)\r\n        }\r\n    }\r\n\r\n    private fun register(ApplicationContext: Context){\r\n        var registration = Intent(ApplicationContext, RegistrationView::class.java)\r\n        ContextCompat.startActivity(ApplicationContext, registration, null)\r\n    }\r\n\r\n    //close keyboard on touch of the particular view\r\n    private fun closeKeyboard(view: View) {\r\n        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager\r\n        imm.hideSoftInputFromWindow(view.windowToken, 0)\r\n\r\n    }\r\n    override fun onBackPressed() {\r\n        moveTaskToBack(true)\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/Login.kt	(revision 7484ccec83b03848a42d106371290af2a987419b)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/Login.kt	(date 1604878018498)
+@@ -26,7 +26,7 @@
+ import com.google.firebase.auth.FirebaseUser
+ import com.google.firebase.auth.ktx.auth
+ import com.google.firebase.ktx.Firebase
+-import kotlinx.android.synthetic.main.activity_login.*
++import kotlinx.android.synthetic.main.fragment_login.*
+ import sheridan.capstone.findmyfarmer.FarmerListing.View.FarmerPage
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.RegistrationView
+@@ -72,6 +72,7 @@
+         val btnUpAnimation = AnimationUtils.loadAnimation(this,
+             R.anim.btn_click_up_animation
+         )
++        constraint
+ 
+         //Remove keyboard and focus from the element when touch outside of the EditText
+         constraintLayoutLoginPage.setOnTouchListener{ v: View, m: MotionEvent ->
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_1.xml	(date 1604867505853)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_1.xml	(date 1604867505853)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]1" date="1604530921594" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]1/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/4/2020 6:01 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_.xml	(date 1604867505846)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM__Default_Changelist_.xml	(date 1604867505846)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]" date="1604530887785" recycled="false" toDelete="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_4_2020_6_01_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/4/2020 6:01 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch	(date 1604867223472)
++++ .idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch	(date 1604867223472)
+@@ -0,0 +1,37 @@
++Index: app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/View/RegistrationFragment.kt
++===================================================================
++--- app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/View/RegistrationFragment.kt	(revision e015f9028052b8a8f3312b399d52e8b458995029)
+++++ app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/View/RegistrationFragment.kt	(revision e015f9028052b8a8f3312b399d52e8b458995029)
++@@ -1,31 +0,0 @@
++-package sheridan.capstone.findmyfarmer.LoginAndRegistration.View
++-
++-import android.os.Bundle
++-import androidx.fragment.app.Fragment
++-import android.view.LayoutInflater
++-import android.view.View
++-import android.view.ViewGroup
++-import kotlinx.android.synthetic.main.fragment_registration.view.*
++-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationInterface
++-import sheridan.capstone.findmyfarmer.R
++-
++-
++-private lateinit var registration_interface: LoginRegistrationInterface
++-
++-class RegistrationFragment : Fragment() {
++-
++-
++-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
++-        savedInstanceState: Bundle?): View? {
++-        // Inflate the layout for this fragment
++-
++-        val view = inflater.inflate(R.layout.fragment_registration, container, false)
++-        registration_interface = activity as LoginRegistrationInterface
++-
++-        view.signUpButton.setOnClickListener{
++-            registration_interface.OnSignUpButtonClickListener(view.newUserEmail,view.password,view.RePassword)
++-        }
++-        return view
++-    }
++-
++-}
++\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Model/RegistrationModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Model/RegistrationModel.kt	(date 1604867447167)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Model/RegistrationModel.kt	(date 1604867447167)
+@@ -0,0 +1,63 @@
++package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
++
++import android.app.Activity
++import android.content.Intent
++import android.util.Log
++import android.widget.EditText
++import android.widget.Toast
++import androidx.lifecycle.MutableLiveData
++import androidx.lifecycle.ViewModel
++import com.google.firebase.auth.FirebaseAuth
++import com.google.firebase.auth.FirebaseUser
++import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
++
++class RegistrationModel:ViewModel() {
++
++    val user : MutableLiveData<FirebaseUser?> by lazy{
++        MutableLiveData<FirebaseUser?>()
++    }
++    public fun register(auth: FirebaseAuth, activity: Activity, email: String, password: String) {
++        auth.createUserWithEmailAndPassword(email, password)
++            .addOnCompleteListener(activity) { task ->
++                if (task.isSuccessful) {
++                    //if task is successful new user is added to the Firebase
++                    user.value = auth.currentUser
++                    Log.d("REGISTRATION", "registration :success $user"
++                    )
++                } else {
++                    // If registration fails show log
++                    user.value = null
++                    Log.d("REGISTRATION", "registration :failure")
++                }
++            }
++    }
++    public  fun registerValidation(emailInput: EditText, passwordInput: EditText, repeatPasswordInput: EditText) : Boolean{
++        var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
++        var emailInputVerification: Boolean = false
++        var passwordInputVerification: Boolean = false
++        var repeatPasswordInputVerification: Boolean = false
++
++        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
++            emailInput.setError("Wrong email")
++            emailInputVerification = false
++        }else{
++            emailInputVerification = true
++        }
++        if(!passwordInput.text.matches(regexPattern)){
++            passwordInput.setError("Password must be 6 to 20 characters. Password must include letters and numbers")
++            passwordInputVerification = false
++        }else{
++            passwordInputVerification = true
++            if(!passwordInput.text.toString().equals(repeatPasswordInput.text.toString(),false)) {
++                repeatPasswordInput.setError("Password doesn't match")
++                repeatPasswordInputVerification = false
++            }else{
++                repeatPasswordInputVerification = true
++            }
++
++        }
++        /*return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
++                passwordInput.text.matches(regexPattern)*/
++        return emailInputVerification && passwordInputVerification && repeatPasswordInputVerification
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_registration.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_registration.xml	(date 1604869824663)
++++ app/src/main/res/layout/fragment_registration.xml	(date 1604869824663)
+@@ -0,0 +1,99 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@drawable/leaves"
++    tools:context=".LoginAndRegistration.View.RegistrationFragment">
++
++    <androidx.constraintlayout.widget.ConstraintLayout
++        android:id="@+id/constraint_layout_registration"
++        android:layout_width="match_parent"
++        android:layout_height="569dp"
++        android:layout_marginTop="90dp"
++        android:background="#BCFFFFFF"
++        android:focusableInTouchMode="true"
++        tools:context=".LoginAndRegistration.View.RegistrationView">
++
++        <EditText
++            android:id="@+id/password"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="60dp"
++            android:ems="10"
++            android:hint="Password"
++            android:inputType="textPassword"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.502"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/newUserEmail" />
++
++        <EditText
++            android:id="@+id/RePassword"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="52dp"
++            android:ems="10"
++            android:hint="Retype Password"
++            android:inputType="textPassword"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.497"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toBottomOf="@+id/password" />
++
++        <Button
++            android:id="@+id/signUpButton"
++            android:layout_width="0dp"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="40dp"
++            android:background="@color/design_default_color_secondary"
++            android:backgroundTint="#11EF82"
++            android:fontFamily="sans-serif-light"
++            android:text="@string/register_btn"
++            android:textAllCaps="false"
++            android:textColor="#FFFFFF"
++            android:textSize="24sp"
++            app:layout_constraintEnd_toEndOf="@+id/RePassword"
++            app:layout_constraintHorizontal_bias="0.0"
++            app:layout_constraintStart_toStartOf="@+id/RePassword"
++            app:layout_constraintTop_toBottomOf="@+id/RePassword" />
++
++        <EditText
++            android:id="@+id/newUserEmail"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="144dp"
++            android:ems="10"
++            android:hint="Email"
++            android:inputType="textEmailAddress"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintHorizontal_bias="0.497"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <ImageView
++            android:id="@+id/imageView"
++            android:layout_width="62dp"
++            android:layout_height="51dp"
++            android:layout_marginTop="72dp"
++            android:src="@drawable/farm"
++            app:layout_constraintEnd_toStartOf="@+id/textView"
++            app:layout_constraintHorizontal_bias="0.825"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <TextView
++            android:id="@+id/textView"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="88dp"
++            android:layout_marginEnd="92dp"
++            android:text="FindMyFarmer"
++            android:textColor="#F00"
++            android:textSize="24dp"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++    </androidx.constraintlayout.widget.ConstraintLayout>
++
++</FrameLayout>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM__Default_Changelist_.xml	(date 1604867505858)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM__Default_Changelist_.xml	(date 1604867505858)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM_[Default_Changelist]" date="1604866070931" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_07_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/8/2020 3:07 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM__Default_Changelist_.xml	(date 1604867505864)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM__Default_Changelist_.xml	(date 1604867505864)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM_[Default_Changelist]" date="1604867138115" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_8_2020_3_25_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/8/2020 3:25 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM__Default_Changelist_.xml	(date 1604873208093)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM__Default_Changelist_.xml	(date 1604873208093)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM_[Default_Changelist]" date="1604873142650" recycled="false" toDelete="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_5_05_PM_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Update at 11/8/2020 5:05 PM [Default Changelist]" />
++</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml	(date 1604867505869)
++++ .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml	(date 1604867505869)
+@@ -0,0 +1,4 @@
++<changelist name="Uncommitted_changes_before_rebase_[Default_Changelist]" date="1604867223472" recycled="false" toDelete="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Default_Changelist]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before rebase [Default Changelist]" />
++</changelist>
+\ No newline at end of file
