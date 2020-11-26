@@ -1,0 +1,1129 @@
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport androidx.navigation.Navigation\r\nimport androidx.navigation.findNavController\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView\r\nimport sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler\r\nimport sheridan.capstone.findmyfarmer.Entities.Customer\r\nimport sheridan.capstone.findmyfarmer.Entities.Farmer\r\nimport sheridan.capstone.findmyfarmer.Entities.Product\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n\r\n        //startActivity(Intent(this, LoginRegistrationController::class.java))\r\n        //Log.d(\"Switched Activity\", \"Switched to the LoginRegistrationController\")\r\n        checkIfSignedInAccount()\r\n    }\r\n\r\n    //Checks if the user in signed in the account\r\n    //if not - go to the sign in page. if yes - go to a different activity\r\n    private fun checkIfSignedInAccount() {\r\n\r\n        val user = Firebase.auth.currentUser\r\n        if (user != null) {\r\n            startActivity(Intent(this,\r\n              CustomerView::class.java))\r\n\r\n        } else {\r\n            startActivity(Intent(this, LoginRegistrationController::class.java))\r\n        }\r\n\r\n        val c = DatabaseAPIHandler(this)\r\n        var d = Customer(1,\"Sobi5180\",\"sobi@hotmail.ca\",\"5180\")\r\n        var d1 = Customer(1,\"Sobi\",\"sobi5180@hotmail.ca\",\"1234\")\r\n        var d2 = Customer(1,\"Sobi\",\"sobi5180@hotmail.ca\",\"1234\")\r\n\r\n        var f = Farmer(1,\"TestBus\",\"Testsestes\",10,14)\r\n        var f1 = Farmer(1,\"TestBus\",\"Testsestes\",10,16)\r\n        var f2 = Farmer(1,\"TestBus\",\"Testsestes\",10,12)\r\n\r\n        var p = Product(1,\"Rice\",\"Grain\")\r\n        var p1 = Product(1,\"Quinoa\",\"Grain\")\r\n        var p2 = Product(1,\"Carrot\",\"Vegetable\")\r\n\r\n        var custlists = listOf<Customer>(d,d1,d2)\r\n        var flist = listOf<Farmer>(f,f1,f2)\r\n        var plist = listOf<Product>(p1,p2)\r\n\r\n        //This how to call the API\r\n        //c.execute(\"/addProducts\",plist);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/MainActivity.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/MainActivity.kt	(date 1606371240954)
+@@ -3,17 +3,14 @@
+ import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+-import androidx.navigation.Navigation
+-import androidx.navigation.findNavController
+ import com.google.firebase.auth.ktx.auth
+ import com.google.firebase.ktx.Firebase
+-import sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView
++import sheridan.capstone.findmyfarmer.Customer.View.CustomerView
+ import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
+ import sheridan.capstone.findmyfarmer.Entities.Customer
+ import sheridan.capstone.findmyfarmer.Entities.Farmer
+ import sheridan.capstone.findmyfarmer.Entities.Product
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
+ 
+ class MainActivity : AppCompatActivity() {
+ 
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/MarketPlace.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.View\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.FragmentManager\r\nimport androidx.fragment.app.FragmentTransaction\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Controller.FarmerGenerateList\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Controller.FarmerListToView\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\n\r\nclass MarketPlace : Fragment(),\r\n    FarmerListToView.OnItemClickListener {\r\n\r\n    var FarmerController : FarmerGenerateList =\r\n        FarmerGenerateList()\r\n\r\n\r\n    private lateinit var viewModel : SharedViewModel\r\n    val List = FarmerController.GenerateList(5)\r\n\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n\r\n    ): View? {\r\n        val View : View = inflater.inflate(R.layout.fragment_market_place, container, false)\r\n\r\n        val recycleView : RecyclerView = View.findViewById(R.id.recycleView)\r\n\r\n            recycleView.adapter =\r\n                FarmerListToView(\r\n                    List, this\r\n                )\r\n\r\n        recycleView.layoutManager = LinearLayoutManager(context)\r\n        recycleView.setHasFixedSize(true)\r\n\r\n        return View\r\n\r\n    }\r\n    override fun onItemClick(position: Int) {\r\n\r\n        val Image = List[position].imageResouce\r\n        val Farmer_Name = List[position].Farmer_Name\r\n        val Farmer_Desc = List[position].Farmer_Desc\r\n        val Farmer_Rat = List[position].Farmer_Rating\r\n        val Farmer_City = List[position].Farmer_City\r\n\r\n        viewModel.setImage(Image)\r\n        viewModel.setFarmer_Name(Farmer_Name)\r\n        viewModel.setFarmer_Desc(Farmer_Desc)\r\n        viewModel.setFarmer_Rat(Farmer_Rat)\r\n        viewModel.setFarmer_City(Farmer_City)\r\n\r\n        val FragmentManager : FragmentManager? = activity?.supportFragmentManager\r\n        val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()\r\n        fragmentTransaction?.replace(R.id.fragment_container,sheridan.capstone.findmyfarmer.CustomerMain.View.FarmerInfo())\r\n            ?.commit()\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)\r\n        viewModel.getFarmer_Name()\r\n        viewModel.getFarmer_City()\r\n        viewModel.getFarmer_Desc()\r\n        viewModel.getFarmer_Rating()\r\n        viewModel.getImage()\r\n\r\n    }\r\n\r\n\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/MarketPlace.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/View/MarketPlace.kt	(date 1606372533998)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.View
++package sheridan.capstone.findmyfarmer.Customer.View
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+@@ -10,10 +10,11 @@
+ import androidx.lifecycle.ViewModelProvider
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel
+-import sheridan.capstone.findmyfarmer.CustomerMain.Controller.FarmerGenerateList
+-import sheridan.capstone.findmyfarmer.CustomerMain.Controller.FarmerListToView
+ import sheridan.capstone.findmyfarmer.R
++import sheridan.capstone.findmyfarmer.Customer.Controller.FarmerGenerateList
++import sheridan.capstone.findmyfarmer.Customer.Controller.FarmerListToView
++import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
++import sheridan.capstone.findmyfarmer.Farmer.View.FarmManager
+ 
+ 
+ class MarketPlace : Fragment(),
+@@ -36,10 +37,10 @@
+ 
+         val recycleView : RecyclerView = View.findViewById(R.id.recycleView)
+ 
+-            recycleView.adapter =
+-                FarmerListToView(
+-                    List, this
+-                )
++        recycleView.adapter =
++            FarmerListToView(
++                List, this
++            )
+ 
+         recycleView.layoutManager = LinearLayoutManager(context)
+         recycleView.setHasFixedSize(true)
+@@ -63,7 +64,9 @@
+ 
+         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+         val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
+-        fragmentTransaction?.replace(R.id.fragment_container,sheridan.capstone.findmyfarmer.CustomerMain.View.FarmerInfo())
++        fragmentTransaction?.replace(R.id.fragment_container,
++            FarmerInfo()
++        )
+             ?.commit()
+ 
+ 
+@@ -74,11 +77,6 @@
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+-        viewModel.getFarmer_Name()
+-        viewModel.getFarmer_City()
+-        viewModel.getFarmer_Desc()
+-        viewModel.getFarmer_Rating()
+-        viewModel.getImage()
+ 
+     }
+ 
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FruitData.kt
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FruitData.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FruitData.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
+@@ -1,4 +0,0 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Model
+-
+-class FruitData(val imageResouce: String, val Fruit_Name: String, val Fruit_Cat: String){
+-}
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/LoginRegistrationController.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller\r\n\r\n\r\nimport android.content.Context\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.MotionEvent\r\nimport android.view.View\r\nimport android.view.inputmethod.InputMethodManager\r\nimport android.widget.EditText\r\nimport android.widget.Toast\r\nimport androidx.activity.viewModels\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.core.content.ContextCompat\r\nimport androidx.lifecycle.Observer\r\nimport androidx.navigation.Navigation\r\nimport com.facebook.CallbackManager\r\nimport com.facebook.FacebookCallback\r\nimport com.facebook.FacebookException\r\nimport com.facebook.login.LoginResult\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInClient\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions\r\nimport com.google.android.gms.common.api.ApiException\r\nimport com.google.firebase.auth.FirebaseAuth\r\nimport com.google.firebase.auth.FirebaseUser\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\n\r\nimport kotlinx.android.synthetic.main.fragment_modified_login.*\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView\r\n\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.ResetModel\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface, ViewBehaviorInterface{\r\n\r\n    private lateinit var auth: FirebaseAuth\r\n    private var RC_SIGN_IN  = 9001\r\n    private lateinit var sic : GoogleSignInClient\r\n    private lateinit var callBackManager: CallbackManager\r\n    private lateinit var fbCallBack : FacebookCallback<LoginResult>\r\n    private val loginModel: LoginModel by viewModels()\r\n    private val registerModel: RegistrationModel by viewModels()\r\n    private val resetModel : ResetModel by viewModels()\r\n    private var user: FirebaseUser? = null\r\n    private var registeredUser: Boolean = false\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n        auth = Firebase.auth\r\n        callBackManager = CallbackManager.Factory.create()\r\n\r\n        //observer for the user value in the LoginModel Class\r\n        //if changed - log in to the farmerListing\r\n        val authObserver = Observer<FirebaseUser?>{\r\n                newAuth -> user = newAuth\r\n            if(user != null){\r\n                startActivity(Intent(this, CustomerView::class.java))\r\n                finish()\r\n            }else{\r\n                Toast.makeText(applicationContext, \"Incorrect email/password\",\r\n                    Toast.LENGTH_SHORT).show()\r\n            }\r\n        }\r\n\r\n        //if the email in reset is registered and reset password was sent - hide keyboard, show Toast\r\n        val resetObserver = Observer<Boolean> {\r\n            newEmailStatus -> registeredUser = newEmailStatus\r\n            var toastMessage: String = if(registeredUser){\r\n\r\n                var layout : View = findViewById(R.id.resetPasswordConstraintLayout)\r\n                hideKeyboard(layout)\r\n                layout.requestFocus()\r\n                \"Check your E-mail. The reset password is sent\"\r\n            }else{\r\n                \"Something went wrong. This E-mail might not be registered\"\r\n            }\r\n            Toast.makeText(applicationContext, toastMessage,\r\n                Toast.LENGTH_LONG).show()\r\n        }\r\n        //observe when user value has been changed in the resetModel\r\n        resetModel.registeredEmail.observe(this,resetObserver)\r\n        //observe when user value has been changed in the registerModel\r\n        registerModel.user.observe(this,authObserver)\r\n        //observe when user value has been changed in the LoginModel\r\n        loginModel.user.observe(this, authObserver)\r\n\r\n\r\n    }\r\n\r\n    public override fun onStart() {\r\n        super.onStart()\r\n        // Check if user is signed in (non-null) and update UI accordingly.\r\n        val currentUser = auth.currentUser\r\n        updateUI(this,currentUser)\r\n    }\r\n\r\n    //starts the google login pop-up, allowing the user to choose the google account for log in\r\n    private fun googleLogIn(){\r\n        //initializing google services for login\r\n        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)\r\n            .requestIdToken(getString(R.string.default_web_client_id))\r\n            .requestEmail()\r\n            .build()\r\n        sic = GoogleSignIn.getClient(this, gso)\r\n        var signInGoogle = sic.signInIntent\r\n        startActivityForResult(signInGoogle, RC_SIGN_IN)\r\n    }\r\n\r\n    //After the user chooses the account (Facebook or google), this handles the user data returned\r\n    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {\r\n        super.onActivityResult(requestCode, resultCode, data)\r\n\r\n        //Tries to Log in into google first to check if the credentials are approved by google or not\r\n        if(requestCode == RC_SIGN_IN){\r\n            //if all is good then the account object is returned back\r\n            var googleAcc = GoogleSignIn.getSignedInAccountFromIntent(data)\r\n            if (googleAcc != null) {\r\n                try{\r\n                    //breaking down the account object to retrieve the basic data from the account, like name, email, id etc\r\n                    val acc = googleAcc.getResult(ApiException::class.java)!!\r\n                    loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)\r\n                }\r\n                catch (e: Exception){\r\n                    Toast.makeText(\r\n                        applicationContext,\r\n                        \"Error Logging into google account\",\r\n                        Toast.LENGTH_SHORT\r\n                    ).show()\r\n                    Log.w(\"GOOGLE SIGN IN FAILED\", e)\r\n                }\r\n            }\r\n            else{\r\n                Toast.makeText(applicationContext, \"Sign In Not Successful\", Toast.LENGTH_LONG).show()\r\n            }\r\n        }\r\n        else{\r\n            callBackManager.onActivityResult(requestCode, resultCode, data)\r\n        }\r\n\r\n    }\r\n\r\n\r\n   //Opens next activity if the user signed in successfully\r\n    private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){\r\n        if(user != null){\r\n            var loggedIn = Intent(context, CustomerView::class.java)\r\n            loggedIn.putExtras(Bundle().apply(extras))\r\n            ContextCompat.startActivity(context, loggedIn, null)\r\n        }\r\n    }\r\n\r\n\r\n    //Run validation and login function with input provided by the user\r\n    override fun OnLoginButtonClickListener(email: EditText, password: EditText) {\r\n            if(loginModel.loginValidation(email, password)) {\r\n                loginModel.login( auth, this, email.text.toString(), password.text.toString())\r\n        }\r\n    }\r\n\r\n    //When sign up button is clicked - parse the information to the input validation and then signUp\r\n    override fun OnSignUpButtonClickListener(email: String, name: String, password: String, isFarmer: Boolean) {\r\n            registerModel.register(auth,this,email,password)\r\n    }\r\n\r\n    //Open registration fragment on link click\r\n    override fun OnRegisterLinkClickListener() {\r\n        var navController = Navigation.findNavController(this,R.id.fragment_host)\r\n        navController.navigate(R.id.action_loginFragment_to_registrationFragment)\r\n    }\r\n\r\n    //When google Sign In button is pressed - call googleLogIn\r\n    override fun OnGoogleButtonClickListener() {\r\n        googleLogIn()\r\n    }\r\n\r\n    //When facebook Sign In button is pressed - call facebook log in\r\n    override fun OnFBLogInButtonClickListener() {\r\n        FBSignIn.setPermissions(\"email\")\r\n        FBSignIn.registerCallback(callBackManager,\r\n            object : FacebookCallback<LoginResult> { override fun onSuccess(result: LoginResult?) {\r\n                    if (result != null) {\r\n                        loginModel.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken)\r\n                    } else {\r\n                        Toast.makeText(applicationContext, \"Error getting Facebook Account\",\r\n                            Toast.LENGTH_SHORT).show()\r\n                    }\r\n                }\r\n                override fun onCancel() {\r\n                }\r\n                override fun onError(error: FacebookException?) {\r\n                    Log.e(\"FacebookERROR\", error.toString())\r\n                }\r\n            })\r\n    }\r\n\r\n    //open reset password fragment\r\n    override fun OnResetPasswordButtonClickListener() {\r\n        var navController = Navigation.findNavController(this,R.id.fragment_host)\r\n        navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)\r\n    }\r\n\r\n    override fun OnSendResetButtonClickListener(email: EditText) {\r\n        if(resetModel.loginValidation(email)){\r\n            resetModel.sendResetPasswordEmail(email)\r\n        }\r\n    }\r\n\r\n    override fun Validation(email: EditText, name: EditText, password: EditText, repeatPassword: EditText):Boolean {\r\n         val validatedSensitive = registerModel.registerValidation(email,password,repeatPassword)\r\n         val validatedName = registerModel.registerNameValidation(name)\r\n        return validatedSensitive && validatedName\r\n    }\r\n\r\n    override fun Navigate(FragmentId: Int) {\r\n        var navController = Navigation.findNavController(this,R.id.fragment_host)\r\n        navController.navigate(FragmentId)\r\n    }\r\n\r\n    //hide the keyboard\r\n    override fun hideKeyboard(view: View) {\r\n        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager\r\n        imm.hideSoftInputFromWindow(view.windowToken, 0)\r\n    }\r\n\r\n    //request focus on from all the input fields and hide a keyboard if touched outside of the current input field\r\n    override fun viewBehavior(view: View) {\r\n        view.requestFocus()\r\n        view.setOnTouchListener{ view, m: MotionEvent ->\r\n            hideKeyboard(view)\r\n            view.requestFocus()\r\n            true}\r\n    }\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/LoginRegistrationController.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/LoginAndRegistration/Controller/LoginRegistrationController.kt	(date 1606371240816)
+@@ -29,7 +29,7 @@
+ import com.google.firebase.ktx.Firebase
+ 
+ import kotlinx.android.synthetic.main.fragment_modified_login.*
+-import sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView
++import sheridan.capstone.findmyfarmer.Customer.View.CustomerView
+ 
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Controller/FruitListToView.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Controller\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\n\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.makeramen.roundedimageview.RoundedImageView\r\nimport kotlinx.android.synthetic.main.farmer_info_card.view.*\r\n\r\nimport kotlinx.android.synthetic.main.farmer_listing.view.Name\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.FruitData\r\n\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass FruitListToView (private val FruitList: List<FruitData>)\r\n    : RecyclerView.Adapter<FruitListToView.MyViewHolder>()  {\r\n\r\n\r\n\r\n    override fun onCreateViewHolder(\r\n        parent: ViewGroup,\r\n        viewType: Int\r\n    ): MyViewHolder {\r\n        val itemView = LayoutInflater.from(parent.context).inflate(\r\n            R.layout.farmer_info_card,\r\n            parent, false\r\n        )\r\n        return MyViewHolder(\r\n            itemView\r\n        )\r\n    }\r\n\r\n    override fun getItemCount() = FruitList.size\r\n\r\n\r\n\r\n    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {\r\n\r\n\r\n        val currentItem = FruitList[position]\r\n        holder.Image.setImageResource(currentItem.imageResouce)\r\n        holder.Farmer_Name.text = currentItem.Fruit_Name\r\n        holder.Farmer_Cat.text = currentItem.Fruit_Cat\r\n\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\r\n\r\n\r\n        val Image : RoundedImageView = itemView.ImageView\r\n        val Farmer_Name: TextView = itemView.Name\r\n        val Farmer_Cat : TextView = itemView.Category\r\n\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Controller/FruitListToView.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Controller/FruitListToView.kt	(date 1606371544042)
+@@ -1,30 +1,23 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Controller
++package sheridan.capstone.findmyfarmer.Customer.Controller
+ 
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+-
++import android.widget.RatingBar
+ import android.widget.TextView
+ import androidx.recyclerview.widget.RecyclerView
+ import com.makeramen.roundedimageview.RoundedImageView
+-import kotlinx.android.synthetic.main.farmer_info_card.view.*
+-
+-import kotlinx.android.synthetic.main.farmer_listing.view.Name
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.FruitData
+-
++import kotlinx.android.synthetic.main.farmer_listing.view.*
+ import sheridan.capstone.findmyfarmer.R
++import sheridan.capstone.findmyfarmer.Customer.Model.ListData
+ 
+-class FruitListToView (private val FruitList: List<FruitData>)
+-    : RecyclerView.Adapter<FruitListToView.MyViewHolder>()  {
++class FollowingList (private val FavoritList: List<ListData>, private val listener: OnItemClickListener)
++    : RecyclerView.Adapter<FollowingList.MyViewHolder>() {
+ 
+ 
+-
+-    override fun onCreateViewHolder(
+-        parent: ViewGroup,
+-        viewType: Int
+-    ): MyViewHolder {
++    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+         val itemView = LayoutInflater.from(parent.context).inflate(
+-            R.layout.farmer_info_card,
++            R.layout.fragment_following,
+             parent, false
+         )
+         return MyViewHolder(
+@@ -32,31 +25,56 @@
+         )
+     }
+ 
+-    override fun getItemCount() = FruitList.size
+-
+-
++    override fun getItemCount() = FavoritList.size
+ 
+     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+ 
+ 
+-        val currentItem = FruitList[position]
+-        holder.Image.setImageResource(currentItem.imageResouce)
+-        holder.Farmer_Name.text = currentItem.Fruit_Name
+-        holder.Farmer_Cat.text = currentItem.Fruit_Cat
++        val currentItem = FavoritList.get(position)
++        holder.imageView.setImageResource(currentItem.imageResouce)
++        holder.Farmer_Name.text = currentItem.Farmer_Name
++        holder.Farmers_Desc.text = currentItem.Farmer_Desc
++        holder.Rating.rating = currentItem.Farmer_Rating
++        holder.Farmer_City.text = currentItem.Farmer_City
++
+ 
+ 
+ 
+ 
++    }
+ 
+ 
+-    }
++
+ 
+-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+ 
++    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
+ 
+-        val Image : RoundedImageView = itemView.ImageView
++
++        val imageView: RoundedImageView = itemView.ImageView
+         val Farmer_Name: TextView = itemView.Name
+-        val Farmer_Cat : TextView = itemView.Category
++        val Farmers_Desc: TextView = itemView.Desc
++        val Rating: RatingBar = itemView.rating
++        val Farmer_City: TextView = itemView.City
++
++
++
++
++        init {
++            itemView.setOnClickListener(this)
++        }
++
++
++        override fun onClick(v: View?) {
++            val position = adapterPosition
++            if (position != RecyclerView.NO_POSITION) {
++                listener.onItemClick(position)
++            }
+ 
++        }
++    }
++    interface OnItemClickListener{
++        fun onItemClick(position: Int)
+     }
++
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Controller/FarmerListToView.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Controller\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.RatingBar\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.makeramen.roundedimageview.RoundedImageView\r\nimport kotlinx.android.synthetic.main.farmer_listing.view.*\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\n\r\nclass FarmerListToView (private val FarmerList: List<ListData>, private val listener: OnItemClickListener)\r\n    : RecyclerView.Adapter<FarmerListToView.MyViewHolder>() {\r\n\r\n\r\n\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {\r\n        val itemView = LayoutInflater.from(parent.context).inflate(\r\n            R.layout.farmer_listing,\r\n            parent, false\r\n        )\r\n        return MyViewHolder(\r\n            itemView\r\n        )\r\n    }\r\n\r\n    override fun getItemCount() = FarmerList.size\r\n\r\n    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {\r\n\r\n\r\n        val currentItem = FarmerList[position]\r\n        holder.imageView.setImageResource(currentItem.imageResouce)\r\n        holder.Farmer_Name.text = currentItem.Farmer_Name\r\n        holder.Farmers_Desc.text = currentItem.Farmer_Desc\r\n        holder.Rating.rating = currentItem.Farmer_Rating\r\n        holder.Farmer_City.text = currentItem.Farmer_City\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {\r\n\r\n\r\n        val imageView: RoundedImageView = itemView.ImageView\r\n        val Farmer_Name: TextView = itemView.Name\r\n        val Farmers_Desc: TextView = itemView.Desc\r\n        val Rating: RatingBar = itemView.rating\r\n        val Farmer_City: TextView = itemView.City\r\n\r\n\r\n\r\n\r\n        init {\r\n            itemView.setOnClickListener(this)\r\n        }\r\n\r\n\r\n        override fun onClick(v: View?) {\r\n            val position = adapterPosition\r\n            if (position != RecyclerView.NO_POSITION) {\r\n                listener.onItemClick(position)\r\n            }\r\n\r\n        }\r\n    }\r\n        interface OnItemClickListener{\r\n            fun onItemClick(position: Int)\r\n        }\r\n\r\n\r\n    }\r\n\r\n
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Controller/FarmerListToView.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Controller/FarmerListToView.kt	(date 1606371492815)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Controller
++package sheridan.capstone.findmyfarmer.Customer.Controller
+ 
+ import android.view.LayoutInflater
+ import android.view.View
+@@ -8,8 +8,8 @@
+ import androidx.recyclerview.widget.RecyclerView
+ import com.makeramen.roundedimageview.RoundedImageView
+ import kotlinx.android.synthetic.main.farmer_listing.view.*
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData
+ import sheridan.capstone.findmyfarmer.R
++import sheridan.capstone.findmyfarmer.Customer.Model.ListData
+ 
+ 
+ class FarmerListToView (private val FarmerList: List<ListData>, private val listener: OnItemClickListener)
+@@ -75,10 +75,9 @@
+ 
+         }
+     }
+-        interface OnItemClickListener{
+-            fun onItemClick(position: Int)
+-        }
++    interface OnItemClickListener{
++        fun onItemClick(position: Int)
++    }
+ 
+ 
+-    }
+-
++}
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/SharedViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Model\r\n\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\n\r\nclass SharedViewModel : ViewModel() {\r\n// this SharedViewModel class stores data for the clicked recycleview element. This is passed and shared by the activity.\r\n    private val Image : MutableLiveData<Int> = MutableLiveData()\r\n    private val Farmer_Name:MutableLiveData<String> = MutableLiveData()\r\n    private val Farmer_Desc: MutableLiveData<String> = MutableLiveData()\r\n    private val Farmer_Rat : MutableLiveData<Float> = MutableLiveData()\r\n    private val Farmer_City: MutableLiveData<String> = MutableLiveData()\r\n\r\n\r\n    fun setImage(input: Int){\r\n        Image.value = input\r\n    }\r\n\r\n    fun setFarmer_Name(input: String){\r\n        Farmer_Name.value = input\r\n    }\r\n    fun setFarmer_Desc(input: String){\r\n        Farmer_Desc.value = input\r\n    }\r\n\r\n    fun setFarmer_Rat(input: Float){\r\n        Farmer_Rat.value = input\r\n    }\r\n\r\n    fun setFarmer_City(input: String){\r\n        Farmer_City.value = input\r\n    }\r\n\r\n\r\n\r\n    fun getImage() : LiveData<Int>{\r\n        return Image\r\n    }\r\n    fun getFarmer_Name(): LiveData<String>{\r\n        return Farmer_Name\r\n    }\r\n    fun getFarmer_Desc() : LiveData<String>{\r\n        return Farmer_Desc\r\n    }\r\n    fun getFarmer_Rating() : LiveData<Float>{\r\n        return Farmer_Rat\r\n    }\r\n    fun getFarmer_City() : LiveData<String> {\r\n        return Farmer_City\r\n    }\r\n\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/SharedViewModel.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/SharedViewModel.kt	(date 1606371732633)
+@@ -1,22 +1,33 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Model
++package sheridan.capstone.findmyfarmer.Customer.Model
+ 
+ import androidx.lifecycle.LiveData
+ import androidx.lifecycle.MutableLiveData
+ import androidx.lifecycle.ViewModel
+ 
++
+ class SharedViewModel : ViewModel() {
+ // this SharedViewModel class stores data for the clicked recycleview element. This is passed and shared by the activity.
++
+     private val Image : MutableLiveData<Int> = MutableLiveData()
+     private val Farmer_Name:MutableLiveData<String> = MutableLiveData()
+     private val Farmer_Desc: MutableLiveData<String> = MutableLiveData()
+     private val Farmer_Rat : MutableLiveData<Float> = MutableLiveData()
+     private val Farmer_City: MutableLiveData<String> = MutableLiveData()
++    private val SavedData : MutableLiveData<ListData> = MutableLiveData()
++    private val Farmers_Followers : MutableLiveData<Int> = MutableLiveData()
++
+ 
+ 
+     fun setImage(input: Int){
+         Image.value = input
+     }
+ 
++
++    fun setFarmers_Followers(input:Int){
++        Farmers_Followers.value = input
++    }
++
++
+     fun setFarmer_Name(input: String){
+         Farmer_Name.value = input
+     }
+@@ -32,7 +43,18 @@
+         Farmer_City.value = input
+     }
+ 
++    fun setSavedData(List : ListData){
++        SavedData.value = List
++    }
++
++    fun getSavedData() : LiveData<ListData> {
++        return SavedData
++    }
+ 
++
++    fun getFarmers_Followers() : LiveData<Int>{
++        return Farmers_Followers
++    }
+ 
+     fun getImage() : LiveData<Int>{
+         return Image
+@@ -50,4 +72,5 @@
+         return Farmer_City
+     }
+ 
+-}
+\ No newline at end of file
++}
++
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Controller/FarmerGenerateList.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Controller\r\n\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.FarmerData\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.FruitData\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass FarmerGenerateList {\r\n\r\n    val FarmerData : FarmerData =\r\n        FarmerData()\r\n\r\n    fun GenerateFruit(size:Int) : List<FruitData> {\r\n\r\n        val list = ArrayList<FruitData>()\r\n        for (i in 0 until size) {\r\n            val drawable = when (i) {\r\n                0 -> R.drawable.apples\r\n                1 -> R.drawable.straw\r\n                2 -> R.drawable.banana\r\n                3 -> R.drawable.water_melon\r\n\r\n                else -> R.drawable.apples\r\n            }\r\n            if (i == 0) {\r\n                val item =\r\n                    FruitData(\r\n                        drawable,\r\n                        FarmerData.getFruitName()[i],\r\n                        FarmerData.getFruitCat()[i],\r\n\r\n                        )\r\n                list += item\r\n\r\n            } else if (i == 1) {\r\n                val item =\r\n                    FruitData(\r\n                        drawable,\r\n                        FarmerData.getFruitName()[i],\r\n                        FarmerData.getFruitCat()[i]\r\n\r\n                    )\r\n                list += item\r\n            }\r\n            else if (i == 2) {\r\n                val item =\r\n                    FruitData(\r\n                        drawable,\r\n                        FarmerData.getFruitName()[i],\r\n                        FarmerData.getFruitCat()[i]\r\n\r\n                    )\r\n                list += item\r\n            }\r\n            else if (i == 3) {\r\n                val item =\r\n                    FruitData(\r\n                        drawable,\r\n                        FarmerData.getFruitName()[i],\r\n                        FarmerData.getFruitCat()[i]\r\n\r\n                    )\r\n                list += item\r\n            }\r\n        }\r\n        return list\r\n    }\r\n\r\n    fun GenerateList(size: Int): List<ListData> {\r\n        val list = ArrayList<ListData>()\r\n        for (i in 0 until size) {\r\n            val drawable = when (i % 3) {\r\n                0 -> R.drawable.test1\r\n                1 -> R.drawable.test3\r\n                2 -> R.drawable.test3\r\n                3 -> R.drawable.test3\r\n                4 -> R.drawable.test3\r\n\r\n                else -> R.drawable.test1\r\n            }\r\n            if (i == 0) {\r\n                val item =\r\n                    ListData(\r\n                        drawable,\r\n                        FarmerData.getFarmerName()[i],\r\n                        FarmerData.getFarmerDesc()[i],\r\n                        FarmerData.getFarmerRating()[i],\r\n                        FarmerData.getFarmerCity()[i],\r\n                        FarmerData.getisSelected()[i]\r\n                    )\r\n                list += item\r\n\r\n            } else if (i == 1) {\r\n                val item =\r\n                    ListData(\r\n                        drawable,\r\n                        FarmerData.getFarmerName()[i],\r\n                        FarmerData.getFarmerDesc()[i],\r\n                        FarmerData.getFarmerRating()[i],\r\n                        FarmerData.getFarmerCity()[i],\r\n                        FarmerData.getisSelected()[i]\r\n                    )\r\n                list += item\r\n\r\n            } else if (i == 2) {\r\n                val item =\r\n                    ListData(\r\n                        drawable,\r\n                        FarmerData.getFarmerName()[i],\r\n                        FarmerData.getFarmerDesc()[i],\r\n                        FarmerData.getFarmerRating()[i],\r\n                        FarmerData.getFarmerCity()[i],\r\n                        FarmerData.getisSelected()[i]\r\n                    )\r\n                list += item\r\n\r\n            } else if (i == 3) {\r\n                val item =\r\n                    ListData(\r\n                        drawable,\r\n                        FarmerData.getFarmerName()[i],\r\n                        FarmerData.getFarmerDesc()[i],\r\n                        FarmerData.getFarmerRating()[i],\r\n                        FarmerData.getFarmerCity()[i],\r\n                        FarmerData.getisSelected()[i]\r\n                    )\r\n                list += item\r\n\r\n            } else if (i == 4) {\r\n                val item =\r\n                    ListData(\r\n                        drawable,\r\n                        FarmerData.getFarmerName()[i],\r\n                        FarmerData.getFarmerDesc()[i],\r\n                        FarmerData.getFarmerRating()[i],\r\n                        FarmerData.getFarmerCity()[i],\r\n                        FarmerData.getisSelected()[i]\r\n\r\n                    )\r\n                list += item\r\n\r\n            }\r\n        }\r\n        return list\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Controller/FarmerGenerateList.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Controller/FarmerGenerateList.kt	(date 1606371385525)
+@@ -1,70 +1,18 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Controller
++package sheridan.capstone.findmyfarmer.Customer.Controller
+ 
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.FarmerData
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.FruitData
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.ListData
+ import sheridan.capstone.findmyfarmer.R
++import sheridan.capstone.findmyfarmer.Customer.Model.FarmerData
++import sheridan.capstone.findmyfarmer.Customer.Model.ListData
+ 
+ class FarmerGenerateList {
+ 
+     val FarmerData : FarmerData =
+         FarmerData()
+ 
+-    fun GenerateFruit(size:Int) : List<FruitData> {
+-
+-        val list = ArrayList<FruitData>()
+-        for (i in 0 until size) {
+-            val drawable = when (i) {
+-                0 -> R.drawable.apples
+-                1 -> R.drawable.straw
+-                2 -> R.drawable.banana
+-                3 -> R.drawable.water_melon
+ 
+-                else -> R.drawable.apples
+-            }
+-            if (i == 0) {
+-                val item =
+-                    FruitData(
+-                        drawable,
+-                        FarmerData.getFruitName()[i],
+-                        FarmerData.getFruitCat()[i],
+ 
+-                        )
+-                list += item
+ 
+-            } else if (i == 1) {
+-                val item =
+-                    FruitData(
+-                        drawable,
+-                        FarmerData.getFruitName()[i],
+-                        FarmerData.getFruitCat()[i]
+ 
+-                    )
+-                list += item
+-            }
+-            else if (i == 2) {
+-                val item =
+-                    FruitData(
+-                        drawable,
+-                        FarmerData.getFruitName()[i],
+-                        FarmerData.getFruitCat()[i]
+-
+-                    )
+-                list += item
+-            }
+-            else if (i == 3) {
+-                val item =
+-                    FruitData(
+-                        drawable,
+-                        FarmerData.getFruitName()[i],
+-                        FarmerData.getFruitCat()[i]
+-
+-                    )
+-                list += item
+-            }
+-        }
+-        return list
+-    }
+ 
+     fun GenerateList(size: Int): List<ListData> {
+         val list = ArrayList<ListData>()
+@@ -86,8 +34,8 @@
+                         FarmerData.getFarmerDesc()[i],
+                         FarmerData.getFarmerRating()[i],
+                         FarmerData.getFarmerCity()[i],
+-                        FarmerData.getisSelected()[i]
+-                    )
++
++                        )
+                 list += item
+ 
+             } else if (i == 1) {
+@@ -98,8 +46,8 @@
+                         FarmerData.getFarmerDesc()[i],
+                         FarmerData.getFarmerRating()[i],
+                         FarmerData.getFarmerCity()[i],
+-                        FarmerData.getisSelected()[i]
+-                    )
++
++                        )
+                 list += item
+ 
+             } else if (i == 2) {
+@@ -110,8 +58,8 @@
+                         FarmerData.getFarmerDesc()[i],
+                         FarmerData.getFarmerRating()[i],
+                         FarmerData.getFarmerCity()[i],
+-                        FarmerData.getisSelected()[i]
+-                    )
++
++                        )
+                 list += item
+ 
+             } else if (i == 3) {
+@@ -122,8 +70,8 @@
+                         FarmerData.getFarmerDesc()[i],
+                         FarmerData.getFarmerRating()[i],
+                         FarmerData.getFarmerCity()[i],
+-                        FarmerData.getisSelected()[i]
+-                    )
++
++                        )
+                 list += item
+ 
+             } else if (i == 4) {
+@@ -134,9 +82,9 @@
+                         FarmerData.getFarmerDesc()[i],
+                         FarmerData.getFarmerRating()[i],
+                         FarmerData.getFarmerCity()[i],
+-                        FarmerData.getisSelected()[i]
++
+ 
+-                    )
++                        )
+                 list += item
+ 
+             }
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/ListData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Model\r\n\r\nimport kotlinx.android.synthetic.main.farmer_listing.view.*\r\n\r\nclass ListData (val imageResouce: Int, val Farmer_Name: String, val Farmer_Desc:String,\r\n                val Farmer_Rating:Float, val Farmer_City:String,var isSelected:Boolean) {\r\n\r\n\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/ListData.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/ListData.kt	(date 1606371652454)
+@@ -1,9 +1,9 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Model
+-
+-import kotlinx.android.synthetic.main.farmer_listing.view.*
++package sheridan.capstone.findmyfarmer.Customer.Model
+ 
+ class ListData (val imageResouce: Int, val Farmer_Name: String, val Farmer_Desc:String,
+-                val Farmer_Rating:Float, val Farmer_City:String,var isSelected:Boolean) {
++                val Farmer_Rating:Float, val Farmer_City:String) {
++
++
+ 
+ 
+ }
+@@ -12,4 +12,3 @@
+ 
+ 
+ 
+-
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/RateItDialogue.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Model\r\n\r\n\r\nimport android.app.AlertDialog\r\nimport android.app.Dialog\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.EditText\r\nimport android.widget.RatingBar\r\nimport android.widget.RatingBar.OnRatingBarChangeListener\r\nimport android.widget.TextView\r\nimport androidx.appcompat.app.AppCompatDialogFragment\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nprivate lateinit var ratingsbar : RatingBar\r\nprivate lateinit var ratingsdesc : EditText\r\nprivate lateinit var SendFeedBack : Button\r\nprivate lateinit var RatingsScale : TextView\r\n\r\n//The custom dialog box - appearing when the user clicks the small icon near the ratings bar\r\nclass RateItDialogue : AppCompatDialogFragment(){\r\n\r\n    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {\r\n        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)\r\n        val inflater = requireActivity().layoutInflater\r\n        val view: View = inflater.inflate(R.layout.activity_rate_it, null)\r\n        ratingsdesc = view.findViewById(R.id.RateDesc)\r\n        ratingsbar = view.findViewById(R.id.ratingBar)\r\n        SendFeedBack = view.findViewById(R.id.RateIt)\r\n        RatingsScale = view.findViewById(R.id.RatingsScale)\r\n\r\n        builder.setView(view)\r\n        ratingsbar.setOnRatingBarChangeListener(OnRatingBarChangeListener { ratingBar, v, b ->\r\n           RatingsScale.setText(v.toString())\r\n            when (ratingBar.rating.toInt()) {\r\n                1 -> RatingsScale.setText(\"Very bad\")\r\n                2 -> RatingsScale.setText(\"Need some improvement\")\r\n                3 -> RatingsScale.setText(\"Good\")\r\n                4 -> RatingsScale.setText(\"Great\")\r\n                5 -> RatingsScale.setText(\"Awesome. I love it\")\r\n                else -> RatingsScale.setText(\"\")\r\n            }\r\n        })\r\n\r\nSendFeedBack.setOnClickListener {\r\n    dialog?.dismiss()\r\n}\r\n        return builder.create()\r\n    }\r\n\r\n\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/RateItDialogue.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/RateItDialogue.kt	(date 1606371670264)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Model
++package sheridan.capstone.findmyfarmer.Customer.Model
+ 
+ 
+ import android.app.AlertDialog
+@@ -32,7 +32,7 @@
+ 
+         builder.setView(view)
+         ratingsbar.setOnRatingBarChangeListener(OnRatingBarChangeListener { ratingBar, v, b ->
+-           RatingsScale.setText(v.toString())
++            RatingsScale.setText(v.toString())
+             when (ratingBar.rating.toInt()) {
+                 1 -> RatingsScale.setText("Very bad")
+                 2 -> RatingsScale.setText("Need some improvement")
+@@ -43,9 +43,10 @@
+             }
+         })
+ 
+-SendFeedBack.setOnClickListener {
+-    dialog?.dismiss()
+-}
++        SendFeedBack.setOnClickListener {
++            // add feedback desc/rating to the database in the ratings table.
++            dialog?.dismiss()
++        }
+         return builder.create()
+     }
+ 
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FollowingDialog.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Model\r\n\r\nimport android.app.AlertDialog\r\nimport android.app.Dialog\r\nimport android.os.Bundle\r\nimport android.view.View\r\nimport android.widget.Button\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.appcompat.app.AppCompatDialogFragment\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nprivate lateinit var Following_Image : ImageView\r\nprivate lateinit var Add_To_Following : Button\r\nprivate lateinit var FarmerImage : ImageView\r\nprivate lateinit var FarmerName: TextView\r\nprivate  var Image : Int =0\r\nprivate var Farmer_Name_View = \"\"\r\n\r\n\r\nclass FollowingDialog: AppCompatDialogFragment() {\r\n\r\n    fun setImagage(Farmer_Image: Int){\r\n        Image = Farmer_Image\r\n\r\n    }\r\n    fun setFarmerName(Farmer_Name: String){\r\n       Farmer_Name_View = Farmer_Name\r\n\r\n    }\r\n\r\n\r\n    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {\r\n        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)\r\n        val inflater = requireActivity().layoutInflater\r\n        val view: View = inflater.inflate(R.layout.following_dialog, null)\r\n\r\n        FarmerImage = view.findViewById(R.id.Image_Following)\r\n        FarmerName = view.findViewById(R.id.Farmers_Name)\r\n        Add_To_Following = view.findViewById(R.id.Following)\r\n\r\n\r\n        builder.setView(view)\r\n        FarmerName.setText(Farmer_Name_View)\r\n        FarmerImage.setImageResource(Image)\r\n\r\n        Add_To_Following.setOnClickListener {\r\n            dialog?.dismiss()\r\n        }\r\n        return builder.create()\r\n    }\r\n\r\n\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FollowingDialog.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/FollowingDialog.kt	(date 1606371630246)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Model
++package sheridan.capstone.findmyfarmer.Customer.Model
+ 
+ import android.app.AlertDialog
+ import android.app.Dialog
+@@ -8,6 +8,7 @@
+ import android.widget.ImageView
+ import android.widget.TextView
+ import androidx.appcompat.app.AppCompatDialogFragment
++import androidx.lifecycle.ViewModelProvider
+ import sheridan.capstone.findmyfarmer.R
+ 
+ private lateinit var Following_Image : ImageView
+@@ -16,18 +17,13 @@
+ private lateinit var FarmerName: TextView
+ private  var Image : Int =0
+ private var Farmer_Name_View = ""
++private var Farmer_City_View = ""
++private var Farmer_Rating_View = 0f
++private var Farmer_Desc_View = ""
+ 
+ 
+ class FollowingDialog: AppCompatDialogFragment() {
+ 
+-    fun setImagage(Farmer_Image: Int){
+-        Image = Farmer_Image
+-
+-    }
+-    fun setFarmerName(Farmer_Name: String){
+-       Farmer_Name_View = Farmer_Name
+-
+-    }
+ 
+ 
+     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+@@ -39,12 +35,34 @@
+         FarmerName = view.findViewById(R.id.Farmers_Name)
+         Add_To_Following = view.findViewById(R.id.Following)
+ 
++        val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
++
++        FarmerName.text= viewModel.getFarmer_Name().value
++        Farmer_Name_View = FarmerName.text.toString()
++
++        Farmer_City_View = viewModel.getFarmer_City().value.toString()
++
++
++        Farmer_Desc_View = viewModel.getFarmer_Desc().value.toString()
++
++        Image = viewModel.getImage().value!!.toInt()
++
++
++
++        Farmer_Rating_View = viewModel.getFarmer_Rating().value!!.toFloat()
++
++
+ 
+         builder.setView(view)
+-        FarmerName.setText(Farmer_Name_View)
+-        FarmerImage.setImageResource(Image)
++        FarmerName.setText(
++            Farmer_Name_View
++        )
++        FarmerImage.setImageResource(
++            Image
++        )
+ 
+         Add_To_Following.setOnClickListener {
++//add farmer to the following table.
+             dialog?.dismiss()
+         }
+         return builder.create()
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/FruitData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/FruitData.kt	(date 1606371240800)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/FruitData.kt	(date 1606371240800)
+@@ -0,0 +1,4 @@
++package sheridan.capstone.findmyfarmer.Customer.Model
++
++class FruitData(val imageResouce: Int, val Fruit_Name: String, val Fruit_Cat: String){
++}
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FarmerData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Model\r\n\r\nimport org.json.JSONArray\r\nimport sheridan.capstone.findmyfarmer.Database.ProductAPI\r\nclass FarmerData {\r\n\r\n    var productList:ProductAPI=ProductAPI()\r\n\r\n    private var Fruit_List= productList.apiLOAD()\r\n    private var Fruit_Cat = arrayOf(\"Fruit\",\"Berry\",\"Fruit\",\"Berry\")\r\n\r\n\r\n    private var Farmer_Name = arrayOf(\r\n        \"WestSide Farmers Market\", \"EastSide Cherry Market\",\r\n        \"Bobs Fresh Vegetables\", \"Toms Market\", \"Toronto's Biggest Farmers Market\"\r\n    )\r\n\r\n    private var Farmer_Desc = arrayOf(\r\n        \"WestSide has the best fresh fruits and vegetables.\" +\r\n                \"We grow the freshest vegetables in the season\",\r\n        \"At EastSide, we have the best cherries and all home grown during the season\",\r\n        \"Here at Bobs Fresh Vegetable market, we grow the freshest vegetables in the season \",\r\n        \"We offer some of the best prices for our produce, and our strawberries are our staple\",\r\n        \"We are Toronto's most popular farmers market\"\r\n    )\r\n\r\n    private  var Farmer_Rating = arrayOf(5f,4.5f,1.4f,4f,3f)\r\n\r\n    private var Farmer_City = arrayOf(\"Brampton\",\"Mississauga\",\"Toronto\",\"Ajax\",\"Brampton\")\r\n\r\n    private var isSelected =  arrayOf(true,true,true,true,true)\r\n\r\n\r\n    fun getFarmerName() : Array<String>{\r\n        return Farmer_Name\r\n    }\r\n    fun getFarmerDesc(): Array<String>{\r\n        return Farmer_Desc\r\n    }\r\n    fun getFarmerRating() : Array<Float>{\r\n        return Farmer_Rating\r\n    }\r\n    fun getFarmerCity() : Array<String>{\r\n        return Farmer_City\r\n    }\r\n    fun getisSelected() : Array<Boolean>{\r\n        return isSelected\r\n    }\r\n    fun getFruitList(): JSONArray {\r\n        return Fruit_List\r\n    }\r\n    fun getFruitCat(): Array<String>{\r\n        return Fruit_Cat\r\n    }\r\n\r\n}\r\n
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FarmerData.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/Model/FarmerData.kt	(date 1606371800754)
+@@ -1,12 +1,10 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.Model
++package sheridan.capstone.findmyfarmer.Customer.Model
+ 
+-import org.json.JSONArray
+-import sheridan.capstone.findmyfarmer.Database.ProductAPI
+ class FarmerData {
+ 
+-    var productList:ProductAPI=ProductAPI()
+ 
+-    private var Fruit_List= productList.apiLOAD()
++
++    private var Fruit_Name= arrayOf("Apples","Strawberries","Bananas","Watermelons")
+     private var Fruit_Cat = arrayOf("Fruit","Berry","Fruit","Berry")
+ 
+ 
+@@ -46,11 +44,11 @@
+     fun getisSelected() : Array<Boolean>{
+         return isSelected
+     }
+-    fun getFruitList(): JSONArray {
+-        return Fruit_List
++    fun getFruitName(): Array<String>{
++        return Fruit_Name
+     }
+     fun getFruitCat(): Array<String>{
+         return Fruit_Cat
+     }
+ 
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/Following.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.View\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass Following : Fragment() {\r\n\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_following, container, false)\r\n    }\r\n\r\n\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/Following.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/View/Following.kt	(date 1606372448045)
+@@ -1,13 +1,16 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.View
++package sheridan.capstone.findmyfarmer.Customer.View
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import sheridan.capstone.findmyfarmer.Customer.Controller.FollowingList
+ import sheridan.capstone.findmyfarmer.R
+ 
+-class Following : Fragment() {
++class Following : Fragment(),
++    FollowingList.OnItemClickListener {
++
+ 
+ 
+     override fun onCreateView(
+@@ -15,8 +18,17 @@
+         savedInstanceState: Bundle?
+     ): View? {
+         // Inflate the layout for this fragment
+-        return inflater.inflate(R.layout.fragment_following, container, false)
++        val view : View = inflater.inflate(R.layout.fragment_following, container, false)
++
++
++
++
++
++        return  view
+     }
++    override fun onItemClick(position: Int) {
+ 
+ 
++    }
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/Maps.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.View\r\n\r\nimport android.location.Geocoder\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.google.android.gms.maps.*\r\nimport com.google.android.gms.maps.model.LatLng\r\nimport com.google.android.gms.maps.model.MarkerOptions\r\nimport kotlinx.android.synthetic.main.fragment_maps.*\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\n\r\nclass Maps : Fragment(), OnMapReadyCallback {\r\n\r\n\r\n    private lateinit var Google: GoogleMap\r\n    private lateinit var mapview : MapView\r\n\r\n    private var MAPVIEW_BUNDLE_KEY: String = \"MapViewBundleKey\"\r\n\r\n\r\n\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n\r\n        val View: View = inflater.inflate(R.layout.fragment_maps, container, false)\r\n\r\n        mapview = View.findViewById(R.id.google_map)\r\n\r\n        mapview.onCreate(savedInstanceState)\r\n        mapview.onResume()\r\n\r\n       mapview.getMapAsync(this)\r\n\r\n\r\n        return View\r\n    }\r\n\r\n\r\n\r\n    override fun onMapReady(map: GoogleMap?) {\r\n\r\n        map?.addMarker(MarkerOptions().position(LatLng(43.594040, -79.644732)))\r\n        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(43.594040,-79.644732),15f))\r\n    }\r\n}\r\n
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/Maps.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/View/Maps.kt	(date 1606372493183)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.View
++package sheridan.capstone.findmyfarmer.Customer.View
+ 
+ import android.location.Geocoder
+ import android.os.Bundle
+@@ -18,10 +18,10 @@
+ class Maps : Fragment(), OnMapReadyCallback {
+ 
+ 
+-    private lateinit var Google: GoogleMap
++
+     private lateinit var mapview : MapView
+ 
+-    private var MAPVIEW_BUNDLE_KEY: String = "MapViewBundleKey"
++
+ 
+ 
+ 
+@@ -38,7 +38,7 @@
+         mapview.onCreate(savedInstanceState)
+         mapview.onResume()
+ 
+-       mapview.getMapAsync(this)
++        mapview.getMapAsync(this)
+ 
+ 
+         return View
+@@ -51,4 +51,4 @@
+         map?.addMarker(MarkerOptions().position(LatLng(43.594040, -79.644732)))
+         map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(43.594040,-79.644732),15f))
+     }
+-}
++}
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/FarmerInfo.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.View\r\n\r\nimport android.os.Bundle\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.Button\r\nimport android.widget.ImageView\r\nimport android.widget.RatingBar\r\nimport android.widget.TextView\r\nimport androidx.fragment.app.Fragment\r\nimport androidx.fragment.app.FragmentManager\r\nimport androidx.fragment.app.FragmentTransaction\r\nimport androidx.lifecycle.Observer\r\nimport androidx.lifecycle.ViewModelProvider\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.FollowingDialog\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.RateItDialogue\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass FarmerInfo : Fragment(){\r\n\r\nprivate lateinit var FarmerName:TextView\r\n\r\nprivate lateinit var FarmerDesc:TextView\r\nprivate lateinit var FarmerRating : RatingBar\r\nprivate lateinit var FarmerCity:TextView\r\n\r\nprivate lateinit var FarmerImage : ImageView\r\nprivate lateinit var To_Products : Button\r\nprivate lateinit var To_Map: Button\r\nprivate lateinit var RateIt: ImageView\r\n\r\nprivate lateinit var FarmerInfo : ImageView\r\n\r\nvar ImageInt : Int =0\r\n\r\n\r\n\r\n\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n\r\n        val view:View=  inflater.inflate(R.layout.fragment_farmer_info, container, false)\r\n         FarmerName  = view.findViewById(R.id.Name)\r\n        FarmerCity = view.findViewById(R.id.Address)\r\n        FarmerDesc = view.findViewById(R.id.Desc)\r\n        FarmerRating = view.findViewById(R.id.Ratings)\r\n        FarmerImage = view.findViewById(R.id.icon)\r\n        To_Products = view.findViewById(R.id.Products)\r\n        To_Map = view.findViewById(R.id.Maps)\r\n        RateIt = view.findViewById(R.id.RateIt)\r\n        FarmerInfo = view.findViewById(R.id.FollowIcon)\r\n\r\n\r\n\r\n        To_Map.setOnClickListener {\r\n            val FragmentManager : FragmentManager? = activity?.supportFragmentManager\r\n\r\n            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()\r\n            fragmentTransaction?.replace(R.id.fragment_container,Maps())\r\n                ?.commit()\r\n\r\n\r\n\r\n        }\r\n\r\n        To_Products.setOnClickListener {\r\n            val FragmentManager : FragmentManager? = activity?.supportFragmentManager\r\n\r\n            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()\r\n            fragmentTransaction?.replace(R.id.fragment_container,FarmerProducts())\r\n                ?.commit()\r\n\r\n        }\r\n\r\n        RateIt.setOnClickListener{\r\n         openDialog()\r\n        }\r\n\r\n\r\n\r\n\r\n        return view\r\n    }\r\n\r\n    fun openDialog() {\r\n        val FragmentManager : FragmentManager? = activity?.supportFragmentManager\r\n        val exampleDialog = RateItDialogue()\r\n\r\n        if (FragmentManager != null) {\r\n            exampleDialog.show(FragmentManager,\"Rate it\")\r\n        }\r\n\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)\r\n        viewModel.getFarmer_Name().observe(viewLifecycleOwner, Observer {\r\n\r\n           FarmerName.text = it\r\n\r\n        })\r\n        viewModel.getFarmer_City().observe(viewLifecycleOwner, Observer {\r\n            FarmerCity.text = it\r\n\r\n        })\r\n        viewModel.getFarmer_Desc().observe(viewLifecycleOwner, Observer {\r\n            FarmerDesc.text = it\r\n\r\n        })\r\n        viewModel.getImage().observe(viewLifecycleOwner, Observer {\r\n            ImageInt = it\r\n        FarmerImage.setImageResource(it)\r\n        })\r\n        viewModel.getFarmer_Rating().observe(viewLifecycleOwner, Observer {\r\n\r\n\r\n            FarmerRating.rating = it\r\n\r\n        })\r\n\r\n\r\n\r\n\r\n\r\n        FarmerInfo.setOnClickListener {\r\n            var Following:FollowingDialog = FollowingDialog()\r\n            Following.setImagage(ImageInt)\r\n            Following.setFarmerName(FarmerName.text.toString())\r\n\r\n            val FragmentManager : FragmentManager? = activity?.supportFragmentManager\r\n            if (FragmentManager != null) {\r\n                Following.show(FragmentManager, \"Follow?\")\r\n            }\r\n        }\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/FarmerInfo.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/View/FarmerInfo.kt	(date 1606372406660)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.View
++package sheridan.capstone.findmyfarmer.Customer.View
+ 
+ import android.os.Bundle
+ import android.view.LayoutInflater
+@@ -13,27 +13,27 @@
+ import androidx.fragment.app.FragmentTransaction
+ import androidx.lifecycle.Observer
+ import androidx.lifecycle.ViewModelProvider
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.FollowingDialog
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.RateItDialogue
+-import sheridan.capstone.findmyfarmer.CustomerMain.Model.SharedViewModel
+ import sheridan.capstone.findmyfarmer.R
++import sheridan.capstone.findmyfarmer.Customer.Model.FollowingDialog
++import sheridan.capstone.findmyfarmer.Customer.Model.RateItDialogue
++import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
+ 
+ class FarmerInfo : Fragment(){
+ 
+-private lateinit var FarmerName:TextView
++    private lateinit var FarmerName:TextView
+ 
+-private lateinit var FarmerDesc:TextView
+-private lateinit var FarmerRating : RatingBar
+-private lateinit var FarmerCity:TextView
++    private lateinit var FarmerDesc:TextView
++    private lateinit var FarmerRating : RatingBar
++    private lateinit var FarmerCity:TextView
+ 
+-private lateinit var FarmerImage : ImageView
+-private lateinit var To_Products : Button
+-private lateinit var To_Map: Button
+-private lateinit var RateIt: ImageView
++    private lateinit var FarmerImage : ImageView
++    private lateinit var To_Products : Button
++    private lateinit var To_Map: Button
++    private lateinit var RateIt: ImageView
+ 
+-private lateinit var FarmerInfo : ImageView
++    private lateinit var FarmerInfo : ImageView
+ 
+-var ImageInt : Int =0
++    var ImageInt : Int =0
+ 
+ 
+ 
+@@ -46,7 +46,7 @@
+         // Inflate the layout for this fragment
+ 
+         val view:View=  inflater.inflate(R.layout.fragment_farmer_info, container, false)
+-         FarmerName  = view.findViewById(R.id.Name)
++        FarmerName  = view.findViewById(R.id.Name)
+         FarmerCity = view.findViewById(R.id.Address)
+         FarmerDesc = view.findViewById(R.id.Desc)
+         FarmerRating = view.findViewById(R.id.Ratings)
+@@ -62,7 +62,9 @@
+             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+ 
+             val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
+-            fragmentTransaction?.replace(R.id.fragment_container,Maps())
++            fragmentTransaction?.replace(R.id.fragment_container,
++                Maps()
++            )
+                 ?.commit()
+ 
+ 
+@@ -73,13 +75,15 @@
+             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+ 
+             val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
+-            fragmentTransaction?.replace(R.id.fragment_container,FarmerProducts())
++            fragmentTransaction?.replace(R.id.fragment_container,
++                FarmerProducts()
++            )
+                 ?.commit()
+ 
+         }
+ 
+         RateIt.setOnClickListener{
+-         openDialog()
++            openDialog()
+         }
+ 
+ 
+@@ -90,7 +94,8 @@
+ 
+     fun openDialog() {
+         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+-        val exampleDialog = RateItDialogue()
++        val exampleDialog =
++            RateItDialogue()
+ 
+         if (FragmentManager != null) {
+             exampleDialog.show(FragmentManager,"Rate it")
+@@ -103,7 +108,7 @@
+         val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+         viewModel.getFarmer_Name().observe(viewLifecycleOwner, Observer {
+ 
+-           FarmerName.text = it
++            FarmerName.text = it
+ 
+         })
+         viewModel.getFarmer_City().observe(viewLifecycleOwner, Observer {
+@@ -116,7 +121,7 @@
+         })
+         viewModel.getImage().observe(viewLifecycleOwner, Observer {
+             ImageInt = it
+-        FarmerImage.setImageResource(it)
++            FarmerImage.setImageResource(it)
+         })
+         viewModel.getFarmer_Rating().observe(viewLifecycleOwner, Observer {
+ 
+@@ -130,9 +135,8 @@
+ 
+ 
+         FarmerInfo.setOnClickListener {
+-            var Following:FollowingDialog = FollowingDialog()
+-            Following.setImagage(ImageInt)
+-            Following.setFarmerName(FarmerName.text.toString())
++            var Following: FollowingDialog =
++                FollowingDialog()
+ 
+             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+             if (FragmentManager != null) {
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/FarmerProducts.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.View\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass FarmerProducts : Fragment() {\r\n\r\n\r\n\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_farmer_products, container, false)\r\n    }\r\n    \r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/FarmerProducts.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/View/FarmerProducts.kt	(date 1606372428531)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.View
++package sheridan.capstone.findmyfarmer.Customer.View
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+@@ -19,5 +19,5 @@
+         // Inflate the layout for this fragment
+         return inflater.inflate(R.layout.fragment_farmer_products, container, false)
+     }
+-    
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/CustomerView.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.View\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.view.MenuItem\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.appcompat.widget.Toolbar\r\nimport androidx.drawerlayout.widget.DrawerLayout\r\nimport androidx.fragment.app.Fragment\r\nimport com.facebook.login.LoginManager\r\nimport com.firebase.ui.auth.AuthUI\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView\r\nimport com.google.android.material.navigation.NavigationView\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport sheridan.capstone.findmyfarmer.AccountSettings\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController\r\nimport sheridan.capstone.findmyfarmer.R\r\n\r\nclass CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {\r\n    private lateinit var drawerLayout: DrawerLayout\r\n    private lateinit var NavigationView: NavigationView\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_customer_view)\r\n\r\n\r\n\r\n        val toolbarView: Toolbar = findViewById(R.id.toolbarD)\r\n\r\n        drawerLayout=findViewById(R.id.drawerLayout)\r\n        NavigationView = findViewById(R.id.nav_view)\r\n\r\n        NavigationView.setNavigationItemSelectedListener(this)\r\n\r\n\r\n        setSupportActionBar(toolbarView)\r\n\r\n        val toggle= ActionBarDrawerToggle(this,drawerLayout,\r\n            toolbarView,R.string.navigation_drawer_open,R.string.navigation_drawer_close)\r\n\r\n\r\n        drawerLayout.addDrawerListener(toggle)\r\n\r\n        toggle.syncState()\r\n\r\n        val bottomnav : BottomNavigationView = findViewById(R.id.bottom_nav)\r\n\r\n\r\n\r\n        supportFragmentManager.beginTransaction().replace(R.id.fragment_container,MarketPlace()).commit()\r\n\r\n\r\n        bottomnav.setOnNavigationItemSelectedListener{\r\n           when (it.itemId){\r\n               R.id.nav_market -> {\r\n                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,MarketPlace()).commit()\r\n               }\r\n               R.id.nav_following -> {\r\n                   supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Following()).commit()\r\n               }\r\n               R.id.nav_maps -> {\r\n                   supportFragmentManager.beginTransaction().replace(R.id.fragment_container,Maps()).commit()\r\n               }\r\n           }\r\n\r\n            false\r\n        }\r\n    }\r\n    override fun onNavigationItemSelected(item: MenuItem): Boolean {\r\n        when(item.itemId){\r\n            R.id.nav_logout ->{\r\n                logOut()\r\n\r\n\r\n                finish()\r\n\r\n            }\r\n            R.id.nav_account -> {\r\n                val intent = Intent(this, AccountSettings::class.java)\r\n                // start your next activity\r\n                startActivity(intent)\r\n            }\r\n\r\n\r\n\r\n        }\r\n\r\n        return true\r\n    }\r\n    private fun logOut(){\r\n        Firebase.auth.signOut()\r\n\r\n        LoginManager.getInstance().logOut()\r\n        AuthUI.getInstance().signOut(this).addOnCompleteListener(){\r\n            startActivity(\r\n                Intent(this,\r\n                    LoginRegistrationController::class.java)\r\n            )\r\n        }\r\n        Toast.makeText(applicationContext, \"Logged out\", Toast.LENGTH_LONG).show()\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/CustomerView.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Customer/View/CustomerView.kt	(date 1606371240937)
+@@ -1,4 +1,4 @@
+-package sheridan.capstone.findmyfarmer.CustomerMain.View
++package sheridan.capstone.findmyfarmer.Customer.View
+ 
+ import android.content.Intent
+ import androidx.appcompat.app.AppCompatActivity
+@@ -8,7 +8,6 @@
+ import androidx.appcompat.app.ActionBarDrawerToggle
+ import androidx.appcompat.widget.Toolbar
+ import androidx.drawerlayout.widget.DrawerLayout
+-import androidx.fragment.app.Fragment
+ import com.facebook.login.LoginManager
+ import com.firebase.ui.auth.AuthUI
+ import com.google.android.material.bottomnavigation.BottomNavigationView
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/AccountSettings.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer\r\n\r\nimport android.content.Intent\r\nimport android.os.Bundle\r\nimport android.view.MenuItem\r\nimport android.widget.Button\r\nimport android.widget.Toast\r\nimport androidx.appcompat.app.ActionBarDrawerToggle\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport androidx.appcompat.widget.Toolbar\r\nimport androidx.drawerlayout.widget.DrawerLayout\r\nimport com.facebook.login.LoginManager\r\nimport com.firebase.ui.auth.AuthUI\r\nimport com.google.android.material.navigation.NavigationView\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController\r\nimport sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close\r\nimport sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open\r\n\r\nclass AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {\r\n    private lateinit var drawerLayout: DrawerLayout\r\n    private lateinit var NavigationView: NavigationView\r\n    private lateinit var Save : Button\r\n    private lateinit var Password : Button\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_account_settings)\r\n\r\n        val toolbarView: Toolbar = findViewById(R.id.toolbarD)\r\n\r\n        drawerLayout=findViewById(R.id.drawerLayout)\r\n        NavigationView = findViewById(R.id.nav_view)\r\n        Save = findViewById(R.id.Save)\r\n        Password = findViewById(R.id.UpdatePassword)\r\n\r\n        NavigationView.setNavigationItemSelectedListener(this)\r\n        setSupportActionBar(toolbarView)\r\n\r\n        val toggle= ActionBarDrawerToggle(this,drawerLayout,\r\n            toolbarView, navigation_drawer_open, navigation_drawer_close\r\n        )\r\n\r\n        drawerLayout.addDrawerListener(toggle)\r\n\r\n        toggle.syncState()\r\n\r\n\r\n        // Saves data into data base and passes it to the CustomerView activity which displays the marketplace fragment as default.\r\n\r\n        Save.setOnClickListener {\r\n            val i = Intent(applicationContext, CustomerView::class.java)\r\n            startActivity(i)\r\n        }\r\n        Password.setOnClickListener {\r\n            // changes password in the database.\r\n        }\r\n    }\r\n\r\n    override fun onNavigationItemSelected(item: MenuItem): Boolean {\r\n        when(item.itemId){\r\n            R.id.nav_logout ->{\r\n                logOut()\r\n\r\n\r\n                finish()\r\n\r\n            }\r\n\r\n\r\n\r\n        }\r\n\r\n        return true\r\n    }\r\n    private fun logOut(){\r\n        Firebase.auth.signOut()\r\n\r\n        LoginManager.getInstance().logOut()\r\n        AuthUI.getInstance().signOut(this).addOnCompleteListener(){\r\n            startActivity(\r\n                Intent(this,\r\n                    LoginRegistrationController::class.java)\r\n            )\r\n        }\r\n        Toast.makeText(applicationContext, \"Logged out\", Toast.LENGTH_LONG).show()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/AccountSettings.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/AccountSettings.kt	(date 1606371240779)
+@@ -14,7 +14,7 @@
+ import com.google.android.material.navigation.NavigationView
+ import com.google.firebase.auth.ktx.auth
+ import com.google.firebase.ktx.Firebase
+-import sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView
++import sheridan.capstone.findmyfarmer.Customer.View.CustomerView
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+ import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
+ import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ .idea/gradle.xml	(date 1606370181781)
+@@ -14,6 +14,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: app/src/main/res/layout/activity_rate_it.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".CustomerMain.Model.RateItDialogue\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView2\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"37dp\"\r\n        android:gravity=\"center_horizontal\"\r\n        android:text=\"We Hope You Ejoyed Our Produce.\"\r\n        android:textSize=\"20sp\"\r\n        android:textStyle=\"italic\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/ratingBar\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/RateDesc\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"227dp\"\r\n        android:gravity=\"top\"\r\n        android:hint=\"Your opinion matters to us\"\r\n        android:inputType=\"textMultiLine\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/RatingsScale\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:layout_marginBottom=\"27dp\"\r\n        android:text=\"Awesome. I love it\"\r\n        android:textSize=\"16sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/RateDesc\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n    <RatingBar\r\n        android:id=\"@+id/ratingBar\"\r\n        android:layout_width=\"240dp\"\r\n        android:layout_height=\"56dp\"\r\n        android:layout_marginBottom=\"21dp\"\r\n        android:numStars=\"5\"\r\n        android:rating=\"5\"\r\n        android:stepSize=\"1\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/RatingsScale\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.497\"\r\n        app:layout_constraintStart_toStartOf=\"parent\">\r\n\r\n    </RatingBar>\r\n\r\n    <Button\r\n        android:id=\"@+id/RateIt\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_alignParentStart=\"true\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:background=\"#e57373\"\r\n        android:text=\"Send feedback\"\r\n        android:textColor=\"@android:color/white\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/RateDesc\" />\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_rate_it.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/res/layout/activity_rate_it.xml	(date 1606371240773)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".CustomerMain.Model.RateItDialogue">
++    tools:context=".Customer.Model.RateItDialogue">
+ 
+     <TextView
+         android:id="@+id/textView2"
+Index: app/src/main/res/layout/fragment_following.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".CustomerMain.View.Following\">\r\n\r\n\r\n\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_following.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/res/layout/fragment_following.xml	(date 1606371240741)
+@@ -3,7 +3,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".CustomerMain.View.Following">
++    tools:context=".Customer.View.Following">
+ 
+ 
+ 
+Index: app/src/main/res/layout/activity_customer_view.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><androidx.drawerlayout.widget.DrawerLayout\r\n    android:id=\"@+id/drawerLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:fitsSystemWindows=\"true\"\r\n    tools:context = \".CustomerMain.View.CustomerView\"\r\n\r\n\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n\r\n\r\n        <com.google.android.material.bottomnavigation.BottomNavigationView\r\n            android:id=\"@+id/bottom_nav\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_alignParentBottom=\"true\"\r\n            android:background=\"?android:attr/windowBackground\"\r\n            app:menu=\"@menu/bottom_navigation\"\r\n\r\n            />\r\n\r\n\r\n        <androidx.appcompat.widget.Toolbar\r\n\r\n            android:id=\"@+id/toolbarD\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"?attr/actionBarSize\"\r\n            android:background=\"@color/colorPrimary\"\r\n            android:elevation=\"4dp\"\r\n            android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:popupTheme=\"@style/ThemeOverlay.AppCompat.Light\" />\r\n        <FrameLayout\r\n            android:id=\"@+id/fragment_container\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_above=\"@+id/bottom_nav\" />\r\n\r\n    </RelativeLayout>\r\n\r\n    <com.google.android.material.navigation.NavigationView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"match_parent\"\r\n        android:layout_gravity=\"start\"\r\n        android:id=\"@+id/nav_view\"\r\n        app:headerLayout=\"@layout/nav_header\"\r\n        app:menu=\"@menu/drawer_menu\"\r\n        />\r\n\r\n\r\n</androidx.drawerlayout.widget.DrawerLayout>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_customer_view.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/res/layout/activity_customer_view.xml	(date 1606371240732)
+@@ -3,7 +3,7 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:fitsSystemWindows="true"
+-    tools:context = ".CustomerMain.View.CustomerView"
++    tools:context = ".Customer.View.CustomerView"
+ 
+ 
+     xmlns:android="http://schemas.android.com/apk/res/android"
+Index: app/src/main/res/layout/fragment_farmer_info.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".CustomerMain.View.FarmerInfo\"\r\n    tools:layout_editor_absoluteX=\"-4dp\"\r\n    tools:layout_editor_absoluteY=\"-168dp\">\r\n\r\n    <RatingBar\r\n        android:id=\"@+id/Ratings\"\r\n        style=\"@android:style/Widget.Material.RatingBar.Indicator\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n\r\n        android:layout_gravity=\"center\"\r\n        android:isIndicator=\"true\"\r\n        android:numStars=\"5\"\r\n        android:textAlignment=\"center\"\r\n        android:theme=\"@style/Rating2\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Address\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"49dp\"\r\n        android:text=\"Address\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/colorTextPrimary\"\r\n        android:textSize=\"24sp\"\r\n        android:textStyle=\"normal\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Name\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Name\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"78dp\"\r\n        android:text=\"Name\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/colorTextPrimary\"\r\n        android:textSize=\"24sp\"\r\n        android:textStyle=\"normal\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Ratings\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Desc\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"16dp\"\r\n        android:layout_marginTop=\"56dp\"\r\n        android:background=\"@color/WhiteColor\"\r\n        android:text=\"Description\"\r\n        android:textAlignment=\"center\"\r\n        android:textColor=\"@color/colorTextSecondar\"\r\n        android:textSize=\"18sp\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Address\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/Maps\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"40dp\"\r\n        android:layout_gravity=\"center\"\r\n        android:layout_marginTop=\"50dp\"\r\n        android:text=\"Open In Maps\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Products\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/Products\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"40dp\"\r\n        android:layout_gravity=\"center\"\r\n        android:layout_marginTop=\"48dp\"\r\n        android:text=\"See Products\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.498\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/Desc\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/icon\"\r\n        android:layout_width=\"413dp\"\r\n        android:layout_height=\"337dp\"\r\n        android:layout_alignParentTop=\"true\"\r\n\r\n        android:layout_gravity=\"center\"\r\n        android:layout_marginBottom=\"12dp\"\r\n        android:contentDescription=\"TODO\"\r\n        android:scaleType=\"centerCrop\"\r\n        android:src=\"@drawable/test1\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/Ratings\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/RateIt\"\r\n        android:layout_width=\"62dp\"\r\n        android:layout_height=\"28dp\"\r\n        android:src=\"@drawable/review\"\r\n\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/Ratings\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/FollowIcon\"\r\n        android:layout_width=\"60dp\"\r\n        android:layout_height=\"50dp\"\r\n        android:layout_marginTop=\"337dp\"\r\n        android:layout_marginEnd=\"55dp\"\r\n        android:src=\"@drawable/follow\"\r\n        app:layout_constraintEnd_toStartOf=\"@+id/Ratings\"\r\n        app:layout_constraintTop_toTopOf=\"@+id/icon\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_farmer_info.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/res/layout/fragment_farmer_info.xml	(date 1606371240768)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".CustomerMain.View.FarmerInfo"
++    tools:context=".Customer.View.FarmerInfo"
+     tools:layout_editor_absoluteX="-4dp"
+     tools:layout_editor_absoluteY="-168dp">
+ 
+Index: app/src/main/res/layout/fragment_farmer_products.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".CustomerMain.View.FarmerProducts\">\r\n\r\n    <!-- TODO: Update blank fragment layout -->\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"Products\" />\r\n\r\n</FrameLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_farmer_products.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/res/layout/fragment_farmer_products.xml	(date 1606371240788)
+@@ -3,7 +3,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".CustomerMain.View.FarmerProducts">
++    tools:context=".Customer.View.FarmerProducts">
+ 
+     <!-- TODO: Update blank fragment layout -->
+     <TextView
+Index: app/src/main/res/layout/fragment_market_place.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".CustomerMain.View.MarketPlace\">\r\n\r\n    <!-- TODO: Update blank fragment layout -->\r\n\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recycleView\"\r\n        android:layout_width=\"414dp\"\r\n        android:layout_height=\"649dp\"\r\n        android:layout_alignParentEnd=\"true\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_marginEnd=\"13dp\"\r\n\r\n        android:layout_marginBottom=\"4dp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        tools:listitem=\"@layout/farmer_listing\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_market_place.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/res/layout/fragment_market_place.xml	(date 1606371240763)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".CustomerMain.View.MarketPlace">
++    tools:context=".Customer.View.MarketPlace">
+ 
+     <!-- TODO: Update blank fragment layout -->
+ 
+Index: app/src/main/res/layout/fragment_maps.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/mapFragment\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".CustomerMain.View.Maps\">\r\n\r\n    <com.google.android.gms.maps.MapView\r\n        xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:id=\"@+id/google_map\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_maps.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/res/layout/fragment_maps.xml	(date 1606371240758)
+@@ -5,7 +5,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".CustomerMain.View.Maps">
++    tools:context=".Customer.View.Maps">
+ 
+     <com.google.android.gms.maps.MapView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"sheridan.capstone.findmyfarmer\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity android:name=\".CustomerMain.Model.RateIt\"></activity>\r\n        <activity android:name=\".AccountSettings\" />\r\n        <activity android:name=\".CustomerMain.View.CustomerAccount\" />\r\n        <activity android:name=\".CustomerMain.View.CustomerView\" />\r\n        <activity android:name=\".LoginAndRegistration.View.DashBoardView\" />\r\n        <activity\r\n            android:name=\".LoginAndRegistration.Controller.LoginRegistrationController\"\r\n            android:windowSoftInputMode=\"adjustUnspecified\" />\r\n        <activity android:name=\".MainActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <meta-data\r\n            android:name=\"com.facebook.sdk.ApplicationId\"\r\n            android:value=\"@string/facebook_app_id\"\r\n            tools:replace=\"android:value\" />\r\n        <meta-data\r\n            android:name=\"com.google.android.geo.API_KEY\"\r\n            android:value=\"AIzaSyDH9OuGB6g7tKlesC2stXuy4yNu4JIOBUo\" />\r\n\r\n        <activity\r\n            android:name=\"com.facebook.FacebookActivity\"\r\n            android:configChanges=\"keyboard|keyboardHidden|screenLayout|screenSize|orientation\"\r\n            android:label=\"@string/app_name\" />\r\n        <activity\r\n            android:name=\"com.facebook.CustomTabActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.VIEW\" />\r\n\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n                <category android:name=\"android.intent.category.BROWSABLE\" />\r\n\r\n                <data android:scheme=\"@string/fb_login_protocol_scheme\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/AndroidManifest.xml	(date 1606371240830)
+@@ -15,10 +15,10 @@
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme"
+         android:usesCleartextTraffic="true">
+-        <activity android:name=".CustomerMain.Model.RateIt"></activity>
++        <activity android:name=".Customer.Model.RateIt"></activity>
+         <activity android:name=".AccountSettings" />
+-        <activity android:name=".CustomerMain.View.CustomerAccount" />
+-        <activity android:name=".CustomerMain.View.CustomerView" />
++        <activity android:name=".Customer.View.CustomerAccount" />
++        <activity android:name=".Customer.View.CustomerView" />
+         <activity android:name=".LoginAndRegistration.View.DashBoardView" />
+         <activity
+             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_12_2020_4_05_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_12_2020_4_05_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_1.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_1.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Uncommitted_changes_before_rebase_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Uncommitted_changes_before_rebase_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_.xml

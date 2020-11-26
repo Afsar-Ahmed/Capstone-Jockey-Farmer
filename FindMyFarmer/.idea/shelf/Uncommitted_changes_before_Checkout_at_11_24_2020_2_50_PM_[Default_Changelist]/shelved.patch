@@ -1,0 +1,87 @@
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ .idea/gradle.xml	(date 1606243340736)
+@@ -14,6 +14,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FruitData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Model\r\n\r\nclass FruitData(val imageResouce: String, val Fruit_Name: String, val Fruit_Cat: String){\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FruitData.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FruitData.kt	(date 1606244692827)
+@@ -1,4 +1,4 @@
+ package sheridan.capstone.findmyfarmer.CustomerMain.Model
+ 
+-class FruitData(val imageResouce: String, val Fruit_Name: String, val Fruit_Cat: String){
++class FruitData(val imageResouce: Int, val Fruit_Name: String, val Fruit_Cat: String){
+ }
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport androidx.navigation.Navigation\r\nimport androidx.navigation.findNavController\r\nimport com.google.firebase.auth.ktx.auth\r\nimport com.google.firebase.ktx.Firebase\r\nimport sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView\r\nimport sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler\r\nimport sheridan.capstone.findmyfarmer.Entities.Customer\r\nimport sheridan.capstone.findmyfarmer.Entities.Farmer\r\nimport sheridan.capstone.findmyfarmer.Entities.Product\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController\r\nimport sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n\r\n        //startActivity(Intent(this, LoginRegistrationController::class.java))\r\n        //Log.d(\"Switched Activity\", \"Switched to the LoginRegistrationController\")\r\n        checkIfSignedInAccount()\r\n    }\r\n\r\n    //Checks if the user in signed in the account\r\n    //if not - go to the sign in page. if yes - go to a different activity\r\n    private fun checkIfSignedInAccount() {\r\n\r\n        val user = Firebase.auth.currentUser\r\n        if (user != null) {\r\n            startActivity(Intent(this,\r\n              CustomerView::class.java))\r\n\r\n        } else {\r\n            startActivity(Intent(this, LoginRegistrationController::class.java))\r\n        }\r\n\r\n        val c = DatabaseAPIHandler(this)\r\n        var d = Customer(1,\"Sobi5180\",\"sobi@hotmail.ca\",\"5180\")\r\n        var d1 = Customer(1,\"Sobi\",\"sobi5180@hotmail.ca\",\"1234\")\r\n        var d2 = Customer(1,\"Sobi\",\"sobi5180@hotmail.ca\",\"1234\")\r\n\r\n        var f = Farmer(1,\"TestBus\",\"Testsestes\",10,14)\r\n        var f1 = Farmer(1,\"TestBus\",\"Testsestes\",10,16)\r\n        var f2 = Farmer(1,\"TestBus\",\"Testsestes\",10,12)\r\n\r\n        var p = Product(1,\"Rice\",\"Grain\")\r\n        var p1 = Product(1,\"Quinoa\",\"Grain\")\r\n        var p2 = Product(1,\"Carrot\",\"Vegetable\")\r\n\r\n        var custlists = listOf<Customer>(d,d1,d2)\r\n        var flist = listOf<Farmer>(f,f1,f2)\r\n        var plist = listOf<Product>(p1,p2)\r\n\r\n        //This how to call the API\r\n        //c.execute(\"/addProducts\",plist);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/MainActivity.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/MainActivity.kt	(date 1606244338951)
+@@ -13,7 +13,6 @@
+ import sheridan.capstone.findmyfarmer.Entities.Farmer
+ import sheridan.capstone.findmyfarmer.Entities.Product
+ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
+ 
+ class MainActivity : AppCompatActivity() {
+ 
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FarmerData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.CustomerMain.Model\r\n\r\nimport org.json.JSONArray\r\nimport sheridan.capstone.findmyfarmer.Database.ProductAPI\r\nclass FarmerData {\r\n\r\n    var productList:ProductAPI=ProductAPI()\r\n\r\n    private var Fruit_List= productList.apiLOAD()\r\n    private var Fruit_Cat = arrayOf(\"Fruit\",\"Berry\",\"Fruit\",\"Berry\")\r\n\r\n\r\n    private var Farmer_Name = arrayOf(\r\n        \"WestSide Farmers Market\", \"EastSide Cherry Market\",\r\n        \"Bobs Fresh Vegetables\", \"Toms Market\", \"Toronto's Biggest Farmers Market\"\r\n    )\r\n\r\n    private var Farmer_Desc = arrayOf(\r\n        \"WestSide has the best fresh fruits and vegetables.\" +\r\n                \"We grow the freshest vegetables in the season\",\r\n        \"At EastSide, we have the best cherries and all home grown during the season\",\r\n        \"Here at Bobs Fresh Vegetable market, we grow the freshest vegetables in the season \",\r\n        \"We offer some of the best prices for our produce, and our strawberries are our staple\",\r\n        \"We are Toronto's most popular farmers market\"\r\n    )\r\n\r\n    private  var Farmer_Rating = arrayOf(5f,4.5f,1.4f,4f,3f)\r\n\r\n    private var Farmer_City = arrayOf(\"Brampton\",\"Mississauga\",\"Toronto\",\"Ajax\",\"Brampton\")\r\n\r\n    private var isSelected =  arrayOf(true,true,true,true,true)\r\n\r\n\r\n    fun getFarmerName() : Array<String>{\r\n        return Farmer_Name\r\n    }\r\n    fun getFarmerDesc(): Array<String>{\r\n        return Farmer_Desc\r\n    }\r\n    fun getFarmerRating() : Array<Float>{\r\n        return Farmer_Rating\r\n    }\r\n    fun getFarmerCity() : Array<String>{\r\n        return Farmer_City\r\n    }\r\n    fun getisSelected() : Array<Boolean>{\r\n        return isSelected\r\n    }\r\n    fun getFruitList(): JSONArray {\r\n        return Fruit_List\r\n    }\r\n    fun getFruitCat(): Array<String>{\r\n        return Fruit_Cat\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FarmerData.kt	(revision 800a0993ec7a47ae90a513db60339c7543e88362)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/Model/FarmerData.kt	(date 1606244692833)
+@@ -6,7 +6,7 @@
+ 
+     var productList:ProductAPI=ProductAPI()
+ 
+-    private var Fruit_List= productList.apiLOAD()
++    private var Fruit_Name= arrayOf("Apples, Watermelon, Banana, Oranges")
+     private var Fruit_Cat = arrayOf("Fruit","Berry","Fruit","Berry")
+ 
+ 
+@@ -46,8 +46,8 @@
+     fun getisSelected() : Array<Boolean>{
+         return isSelected
+     }
+-    fun getFruitList(): JSONArray {
+-        return Fruit_List
++    fun getFruitName(): Array<String> {
++        return Fruit_Name
+     }
+     fun getFruitCat(): Array<String>{
+         return Fruit_Cat
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_12_2020_4_05_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_12_2020_4_05_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_1.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Uncommitted_changes_before_rebase_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Uncommitted_changes_before_rebase_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_rebase__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_1.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_.xml

@@ -1,0 +1,48 @@
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.Database\r\n\r\nimport android.app.DownloadManager\r\nimport android.os.Bundle\r\nimport com.android.volley.Request\r\nimport com.android.volley.RequestQueue\r\nimport com.android.volley.Response\r\nimport com.android.volley.toolbox.JsonObjectRequest\r\nimport com.android.volley.toolbox.Volley\r\nimport org.json.JSONArray\r\nimport org.json.JSONException\r\nimport sheridan.capstone.findmyfarmer.Entities.Product\r\n\r\nclass ProductAPI {\r\n\r\n    val apiKey:String=\"87cbc6eb7d3548bd9b95d1f715621c20\"\r\n    var url:String=\"\"\r\n    var product:Product?=null\r\n    private var requestQueue: RequestQueue? = null\r\n\r\n    fun ProductAPI(){\r\n\r\n    }\r\n\r\n     fun apiLOAD(): JSONArray {\r\n         url = \"https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple\"\r\n         var productlist = JSONArray()\r\n        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {\r\n            response -> try{\r\n            productlist = response.getJSONArray(\"results\")\r\n\r\n//            for (i in 1..productlist.length()){\r\n//                var produce = productlist.getJSONObject(i)\r\n//\r\n//                var img = produce.getString(\"image\")\r\n//                var productName = produce.getString(\"name\")\r\n//\r\n//            }\r\n\r\n        return@Listener\r\n        } catch (e: JSONException){\r\n            e.printStackTrace()\r\n        }\r\n        }, Response.ErrorListener { error -> error.printStackTrace() })\r\n\r\n         return productlist\r\n    }\r\n\r\n\r\n    fun apiSearch(){\r\n        url = \"https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple\"\r\n\r\n      var req = JsonObjectRequest(Request.Method.GET,url,null, {\r\n              response -> try{\r\n          var searchProducts = response.getJSONArray(\"results\")\r\n\r\n//          for (i in 1..searchProducts.length()){\r\n//              var searchProduce = searchProducts.getJSONObject(i)\r\n//\r\n//              var img = searchProduce.getString(\"image\")\r\n//              var productName = searchProduce.getString(\"name\")\r\n//          }\r\n\r\n      }catch (e: JSONException)\r\n      {e.printStackTrace()}  },\r\n          {  })\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(revision 22167eab97dc789365acc3a7d5f3531a552b9d13)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(date 1606209757663)
+@@ -25,23 +25,15 @@
+      fun apiLOAD(): JSONArray {
+          url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
+          var productlist = JSONArray()
+-        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+-            response -> try{
+-            productlist = response.getJSONArray("results")
++         JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
++             response -> try{
++             productlist = response.getJSONArray("results")
+ 
+-//            for (i in 1..productlist.length()){
+-//                var produce = productlist.getJSONObject(i)
+-//
+-//                var img = produce.getString("image")
+-//                var productName = produce.getString("name")
+-//
+-//            }
+-
+-        return@Listener
+-        } catch (e: JSONException){
+-            e.printStackTrace()
+-        }
+-        }, Response.ErrorListener { error -> error.printStackTrace() })
++         return@Listener
++         } catch (e: JSONException){
++             e.printStackTrace()
++         }
++         }, Response.ErrorListener { error -> error.printStackTrace() })
+ 
+          return productlist
+     }
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Uncommitted_changes_before_rebase_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Uncommitted_changes_before_rebase_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_12_2020_4_05_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_12_2020_4_05_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_9_2020_1_53_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_1.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_11_8_2020_6_27_PM__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_1.xml .idea/shelf/Uncommitted_changes_before_Checkout_at_11_9_2020_6_02_PM__Default_Changelist_1.xml

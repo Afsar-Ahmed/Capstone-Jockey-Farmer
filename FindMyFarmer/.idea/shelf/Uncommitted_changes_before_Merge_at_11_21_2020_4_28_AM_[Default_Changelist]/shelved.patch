@@ -1,0 +1,113 @@
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Model/FruitData.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.FarmerListing.Model\r\n\r\nclass FruitData(val imageResouce: Int, val Fruit_Name: String, val Fruit_Cat : String){\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Model/FruitData.kt	(revision 0ce7cd8993d075c46a1346ab1d338ae51cb32627)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/FarmerListing/Model/FruitData.kt	(date 1605777550929)
+@@ -1,4 +1,5 @@
+ package sheridan.capstone.findmyfarmer.FarmerListing.Model
+ 
+ class FruitData(val imageResouce: Int, val Fruit_Name: String, val Fruit_Cat : String){
++
+ }
+\ No newline at end of file
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductsAPI.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductsAPI.java	(date 1605869353517)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductsAPI.java	(date 1605869353517)
+@@ -0,0 +1,19 @@
++package sheridan.capstone.findmyfarmer.Database;
++
++import org.json.JSONObject;
++
++import java.util.ArrayList;
++
++import sheridan.capstone.findmyfarmer.Entities.Product;
++
++public interface ProductsAPI {
++//spoonacular
++    ArrayList<Product> productList = new ArrayList<Product>();
++
++    final String APIKEY= "87cbc6eb7d3548bd9b95d1f715621c20";
++    String API_BASE_URL = "https://api.spoonacular.com/food/ingredients/search?apiKey="+ APIKEY;
++
++
++
++
++}
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(date 1605950911265)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(date 1605950911265)
+@@ -0,0 +1,43 @@
++package sheridan.capstone.findmyfarmer.Database
++
++import android.app.DownloadManager
++import com.android.volley.Request
++import com.android.volley.RequestQueue
++import com.android.volley.Response
++import com.android.volley.toolbox.JsonObjectRequest
++import com.android.volley.toolbox.Volley
++import org.json.JSONArray
++import org.json.JSONException
++import sheridan.capstone.findmyfarmer.Entities.Product
++
++class ProductAPI {
++
++    val apiKey:String="87cbc6eb7d3548bd9b95d1f715621c20"
++    var url:String= "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey"
++    var product:Product?=null
++
++    private fun apiParse(){
++        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
++            response -> try{
++            var productlist = response.getJSONArray("products")
++
++            for (i in 1..productlist.length()){
++                var produce = productlist.getJSONObject(i)
++
++                var img = produce.getString("image")
++                var productName = produce.getString("name")
++                
++            }
++        } catch (e: JSONException){
++            e.printStackTrace()
++        }
++        }, null)
++    }
++
++
++    private fun searchProducts(){
++        url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey"
++
++        req = JsonObjectRequest(Request.Method.GET,url,null,Response.Listener { response -> try{}catch (e: JSONException){e.printStackTrace()}  },)
++    }
++}
+\ No newline at end of file
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Wed Sep 30 16:15:46 EDT 2020\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-6.1.1-all.zip\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 0ce7cd8993d075c46a1346ab1d338ae51cb32627)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1605302024364)
+@@ -1,6 +1,6 @@
+-#Wed Sep 30 16:15:46 EDT 2020
++#Fri Nov 13 16:01:12 EST 2020
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.1.1-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
