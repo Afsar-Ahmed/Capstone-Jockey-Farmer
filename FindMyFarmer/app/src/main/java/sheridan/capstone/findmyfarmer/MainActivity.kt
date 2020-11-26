@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         //startActivity(Intent(this, LoginRegistrationController::class.java))
         //Log.d("Switched Activity", "Switched to the LoginRegistrationController")
+        storeAPIDataintoDB()
         checkIfSignedInAccount()
         storeAPIDataintoDB()
     }
@@ -69,11 +70,11 @@ class MainActivity : AppCompatActivity() {
         val plist = listOf<Product>(p1,p2)
 
         //This how to call the API
-       c.execute("/addProducts",plist)
+       //c.execute("/addProducts",plist)
     }
 
     //requests access to api
-    fun storeAPIDataintoDB(){
+    private fun storeAPIDataintoDB(){
         val c = DatabaseAPIHandler(this)
         val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
         val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
