@@ -49,11 +49,11 @@ class MainActivity : AppCompatActivity() {
         val p1 = Product(1,"Quinoa","Grain")
         val p2 = Product(1,"Carrot","Vegetable")
 
-        var custlists = listOf<Customer>(d,d1,d2)
-        var flist = listOf<Farmer>(f,f1,f2)
-        var plist = listOf<Product>(p1,p2)
+        val custlists = listOf<Customer>(d,d1,d2)
+        val flist = listOf<Farmer>(f,f1,f2)
+        val plist = listOf<Product>(p1,p2)
 
         //This how to call the API
-       c.execute("/addProducts",plist);
+       c.execute("/addProducts",plist)
     }
 }
