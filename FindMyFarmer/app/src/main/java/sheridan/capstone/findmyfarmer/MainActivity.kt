@@ -37,23 +37,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         val c = DatabaseAPIHandler(this)
-        var d = Customer(1,"Sobi5180","sobi@hotmail.ca","5180")
-        var d1 = Customer(1,"Sobi","sobi5180@hotmail.ca","1234")
-        var d2 = Customer(1,"Sobi","sobi5180@hotmail.ca","1234")
+        val d = Customer(1,"Sobi5180","sobi@hotmail.ca","5180")
+        val d1 = Customer(1,"Sobi","sobi5180@hotmail.ca","1234")
+        val d2 = Customer(1,"Sobi","sobi5180@hotmail.ca","1234")
 
-        var f = Farmer(1,"TestBus","Testsestes",10,14)
-        var f1 = Farmer(1,"TestBus","Testsestes",10,16)
-        var f2 = Farmer(1,"TestBus","Testsestes",10,12)
+        val f = Farmer(1,"TestBus","Testsestes",10,14)
+        val f1 = Farmer(1,"TestBus","Testsestes",10,16)
+        val f2 = Farmer(1,"TestBus","Testsestes",10,12)
 
-        var p = Product(1,"Rice","Grain")
-        var p1 = Product(1,"Quinoa","Grain")
-        var p2 = Product(1,"Carrot","Vegetable")
+        val p = Product(1,"Rice","Grain")
+        val p1 = Product(1,"Quinoa","Grain")
+        val p2 = Product(1,"Carrot","Vegetable")
 
         var custlists = listOf<Customer>(d,d1,d2)
         var flist = listOf<Farmer>(f,f1,f2)
         var plist = listOf<Product>(p1,p2)
 
         //This how to call the API
-        //c.execute("/addProducts",plist);
+       c.execute("/addProducts",plist);
     }
 }
