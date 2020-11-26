@@ -15,10 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CustomerMain.Model.RateIt"></activity>
-        <activity android:name=".AccountSettings" />
+        <activity android:name=".Users.FarmerActivity"></activity>
+        <activity android:name=".CustomerMain.Model.RateIt" />
+        <activity android:name=".Users.AccountSettings" />
         <activity android:name=".CustomerMain.View.CustomerAccount" />
-        <activity android:name=".CustomerMain.View.CustomerView" />
+        <activity android:name=".Users.CustomerActivity" />
         <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"

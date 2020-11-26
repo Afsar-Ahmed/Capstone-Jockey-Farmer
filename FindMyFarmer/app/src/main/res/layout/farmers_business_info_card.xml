@@ -1,0 +1,116 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/farmerListing"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:elevation="60dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="407dp"
+        android:layout_height="wrap_content"
+
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/Farmers_Hub_Image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="15dp" />
+
+        <TextView
+            android:id="@+id/Farmers_Hub_Name"
+            style="bold"
+            android:layout_width="124dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="15dp"
+            android:text="Name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/Farmers_Hub_Image"
+            app:layout_constraintTop_toTopOf="@id/Farmers_Hub_Image" />
+
+        <RatingBar
+            android:id="@+id/Farmers_Hub_Rating"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:theme="@style/Rating"
+            app:layout_constraintStart_toStartOf="@id/Farmers_Hub_Name"
+            app:layout_constraintTop_toBottomOf="@id/Farmers_Hub_Name" />
+
+        <TextView
+            android:id="@+id/Farmers_Hub_City"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/Farmers_Hub_Name"
+            app:layout_constraintStart_toStartOf="@id/Farmers_Hub_Name"
+            app:layout_constraintTop_toBottomOf="@id/Farmers_Hub_Rating" />
+
+        <TextView
+            android:id="@+id/Farmers_Hub_Desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@id/Farmers_Hub_Name"
+            app:layout_constraintStart_toStartOf="@id/Farmers_Hub_Name"
+            app:layout_constraintTop_toBottomOf="@id/Farmers_Hub_City" />
+
+        <TextView
+            android:id="@+id/Following_Me"
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@+id/Farmers_Hub_Image"
+            app:layout_constraintTop_toBottomOf="@+id/Farmers_Hub_Desc" />
+
+        <TextView
+            android:id="@+id/Following"
+            android:layout_width="104dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="284dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="following"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@+id/Farmers_Hub_Image"
+            app:layout_constraintTop_toBottomOf="@+id/Farmers_Hub_Desc" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
