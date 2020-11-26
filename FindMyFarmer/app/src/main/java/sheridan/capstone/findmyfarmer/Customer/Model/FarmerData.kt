@@ -1,5 +1,6 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONArray
 import sheridan.capstone.findmyfarmer.Database.ProductAPI
 class FarmerData {
@@ -46,7 +47,7 @@ class FarmerData {
     fun getisSelected() : Array<Boolean>{
         return isSelected
     }
-    fun getFruitList(): JSONArray {
+    fun getFruitList(): JsonObjectRequest {
         return Fruit_List
     }
     fun getFruitCat(): Array<String>{
