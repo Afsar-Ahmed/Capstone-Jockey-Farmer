@@ -29,6 +29,7 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
 
+   var User_Customer_Only : Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
