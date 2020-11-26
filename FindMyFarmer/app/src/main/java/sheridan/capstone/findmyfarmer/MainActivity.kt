@@ -3,6 +3,7 @@ package sheridan.capstone.findmyfarmer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -20,10 +21,12 @@ import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
-import java.io.File
+
 
 class MainActivity : AppCompatActivity() {
     var requestQueue: RequestQueue? = null
+    private lateinit var pName: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,27 +75,27 @@ class MainActivity : AppCompatActivity() {
     //requests access to api
     fun storeAPIDataintoDB(){
         val c = DatabaseAPIHandler(this)
-        val apiKey:String="87cbc6eb7d3548bd9b95d1f715621c20"
+        val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
         val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
 
-
+        pName = findViewById(R.id.product_name)
 
         var productlist: JSONArray
-        var req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response -> try{
             productlist = response.getJSONArray("results")
 
-            for (i in 1..productlist.length()){
-                var produce = productlist.getJSONObject(i)
+            for (i in 0..productlist.length()){
+                val produce = productlist.getJSONObject(i)
 
-                var id = produce.getInt("id")
-                var img = produce.getString("image")
-                var productName = produce.getString("name")
+                val id = produce.getInt("id")
+               // val img = produce.getString("image")
+                val productName = produce.getString("name")
 
-                product_name.append(productName)
+                pName.append(productName)
                 produce_catergory.append("")
 
-            convertStringIntoLoad(img)
+         //   convertStringIntoLoad(img)
         //Fruit_Image.getso
                 //uploads certain values to db
                 c.execute("/addProduct",Product(id,productName,""))
@@ -102,14 +105,12 @@ class MainActivity : AppCompatActivity() {
         } catch (e: JSONException){
             e.printStackTrace()
         }
-        }, Response.ErrorListener { error -> error.printStackTrace() })
+            return@Listener
+        }, { error -> error.printStackTrace() })
 
         //after setting up json object, requests call to api
         requestQueue?.add(req)
     }
 
-    private fun convertStringIntoLoad(img: String) {
 
-
-    }
 }
