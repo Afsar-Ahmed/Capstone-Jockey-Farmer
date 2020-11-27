@@ -18,37 +18,42 @@ import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.R
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_account_settings.*
+import kotlinx.android.synthetic.main.farmer_info_card.*
 
 
 class ProductManagement : Fragment() {
-    private lateinit var productName: TextView
-    private lateinit var productCategory: TextView
     private lateinit var requestQueue: RequestQueue
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        lateinit var context: Context
-
-        requestQueue= Volley.newRequestQueue(context)
+        requestQueue= Volley.newRequestQueue(activity?.applicationContext)
         val view: View = inflater.inflate(R.layout.fragment_product_management, container, false)
-        productName = view.findViewById(R.id.player)
-        storeAPIDataintoDB()
+
+        storeAPIDataintoDB(view)
+
 
 
         // Inflate the layout for this fragment
         return view
     }
 
-    private fun storeAPIDataintoDB(){
+   private fun storeAPIDataintoDB(view: View){
+        var randomCategory: String
+
+        val productName = view.findViewById<TextView>(R.id.nME)
+        val productCategory= view.findViewById<TextView>(R.id.produce_cate)
+
+        //Lists and objects
         val c= DatabaseAPIHandler(context)
        val productList = ArrayList<Product>()
         val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
 
-        //api keys
+        //api keys & JSON
         val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
         val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
         var productlist: JSONArray
+
 
         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response -> try{
@@ -58,17 +63,18 @@ class ProductManagement : Fragment() {
                 val produce = productlist.getJSONObject(i)
 
                 val id = produce.getInt("id")
-                // val img = produce.getString("image")
+                val img = produce.getString("image")
                 val pName = produce.getString("name")
 
-                productName.append(pName)
-                println(productName)
-                productCategory.append("")
+                productName.text=pName
+
+                randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
+                productCategory.text=randomCategory
 
                 //   convertStringIntoLoad(img)
-                //Fruit_Image.getso
+
                 //uploads certain values to db
-                productList += Product(id, pName, categories[Math.random().toInt() * (categories.size - 0) + 1])
+                productList += Product(id, pName, randomCategory)
 
             }
             c.execute("/addProducts",productlist)
@@ -80,6 +86,8 @@ class ProductManagement : Fragment() {
         }, { error -> error.printStackTrace() })
 
         //after setting up json object, requests call to api
-        requestQueue?.add(req)
+       requestQueue.add(req)
     }
 }
+
+
