@@ -1,6 +1,7 @@
 package sheridan.capstone.findmyfarmer.Database
 
 import android.app.DownloadManager
+import android.content.Context
 import android.os.Bundle
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -15,21 +16,24 @@ import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 
 class ProductAPI {
 
-    val apiKey:String="87cbc6eb7d3548bd9b95d1f715621c20"
-    var url:String=""
+    private val apiKey:String="87cbc6eb7d3548bd9b95d1f715621c20"
+    private var url:String=""
+
     var product:Product?=null
+    var context:Context?=null
+    fun ProductAPI(context: Context){this.context=context}
 
     //sets up request to API and what fields that are being called
      fun apiLOAD(): JsonObjectRequest{
 
        val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
          var productlist = JSONArray()
-        var req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
             response -> try{
             productlist = response.getJSONArray("results")
 
             for (i in 1..productlist.length()){
-                var produce = productlist.getJSONObject(i)
+                val produce = productlist.getJSONObject(i)
 
                 var img = produce.getString("image")
                 var productName = produce.getString("name")
@@ -62,7 +66,12 @@ class ProductAPI {
 //          }
 
       }catch (e: JSONException)
-      {e.printStackTrace()}  },
-          {  })
+      {
+          e.printStackTrace()
+      }
+                                                               }, {  })
+
+
+
     }
 }

@@ -3,18 +3,10 @@ package sheridan.capstone.findmyfarmer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.farmer_info_card.*
-import kotlinx.android.synthetic.main.fragment_product_management.*
-import org.json.JSONArray
-import org.json.JSONException
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
@@ -25,7 +17,7 @@ import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 
 class MainActivity : AppCompatActivity() {
     var requestQueue: RequestQueue? = null
-    private lateinit var pName: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         //startActivity(Intent(this, LoginRegistrationController::class.java))
         //Log.d("Switched Activity", "Switched to the LoginRegistrationController")
-        storeAPIDataintoDB()
+       // storeAPIDataintoDB()
         checkIfSignedInAccount()
-        storeAPIDataintoDB()
     }
 
     //Checks if the user in signed in the account
@@ -72,46 +63,5 @@ class MainActivity : AppCompatActivity() {
         //This how to call the API
        //c.execute("/addProducts",plist)
     }
-
-    //requests access to api
-    private fun storeAPIDataintoDB(){
-        val c = DatabaseAPIHandler(this)
-        val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
-        val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
-
-        pName = findViewById(R.id.product_name)
-
-        var productlist: JSONArray
-        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
-                response -> try{
-            productlist = response.getJSONArray("results")
-
-            for (i in 0..productlist.length()){
-                val produce = productlist.getJSONObject(i)
-
-                val id = produce.getInt("id")
-               // val img = produce.getString("image")
-                val productName = produce.getString("name")
-
-                pName.append(productName)
-                produce_catergory.append("")
-
-         //   convertStringIntoLoad(img)
-        //Fruit_Image.getso
-                //uploads certain values to db
-                c.execute("/addProduct",Product(id,productName,""))
-
-            }
-
-        } catch (e: JSONException){
-            e.printStackTrace()
-        }
-            return@Listener
-        }, { error -> error.printStackTrace() })
-
-        //after setting up json object, requests call to api
-        requestQueue?.add(req)
-    }
-
 
 }
