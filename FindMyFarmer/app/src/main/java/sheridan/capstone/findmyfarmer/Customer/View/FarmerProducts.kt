@@ -19,6 +19,7 @@ class FarmerProducts : Fragment() {
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_farmer_products, container, false)
 
+
         // Inflate the layout for this fragment
         return view
     }

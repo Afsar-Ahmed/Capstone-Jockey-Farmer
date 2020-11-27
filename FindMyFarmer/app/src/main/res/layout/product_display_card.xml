@@ -1,0 +1,113 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/productListing"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:elevation="60dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="407dp"
+        android:layout_height="wrap_content"
+
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/productImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius="15dp" />
+
+        <TextView
+            android:id="@+id/productName_card"
+            style="bold"
+            android:layout_width="124dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="15dp"
+            android:text="Name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/productImage"
+            app:layout_constraintTop_toTopOf="@id/productImage" />
+
+
+        <TextView
+            android:id="@+id/produce_City"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@id/productName_card"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/productName_card"
+            app:layout_constraintTop_toBottomOf="@+id/productName_card" />
+
+        <TextView
+            android:id="@+id/productDescription"
+            android:layout_width="124dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="15dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@id/productName_card"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/productImage"
+            app:layout_constraintTop_toBottomOf="@+id/produce_City" />
+
+        <TextView
+            android:id="@+id/Following_Me"
+            android:layout_width="45dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="112dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/productImage"
+            app:layout_constraintTop_toBottomOf="@+id/Farmers_Hub_Desc" />
+
+        <TextView
+            android:id="@+id/Following"
+            android:layout_width="104dp"
+            android:layout_height="19dp"
+            android:layout_marginStart="284dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="116dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="following"
+            android:textColor="@color/colorTextSecondar"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/Following_Me"
+            app:layout_constraintStart_toStartOf="@+id/productImage"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

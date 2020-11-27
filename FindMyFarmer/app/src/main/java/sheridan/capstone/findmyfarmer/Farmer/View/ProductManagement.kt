@@ -32,7 +32,7 @@ class ProductManagement : Fragment() {
 
         requestQueue= Volley.newRequestQueue(context)
         val view: View = inflater.inflate(R.layout.fragment_product_management, container, false)
-        productName = view.findViewById(R.id.product_name)
+        productName = view.findViewById(R.id.player)
         storeAPIDataintoDB()
 
 
@@ -42,6 +42,8 @@ class ProductManagement : Fragment() {
 
     private fun storeAPIDataintoDB(){
         val c= DatabaseAPIHandler(context)
+       val productList = ArrayList<Product>()
+        val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
 
         //api keys
         val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
@@ -61,14 +63,15 @@ class ProductManagement : Fragment() {
 
                 productName.append(pName)
                 println(productName)
-                produce_catergory.append("")
+                productCategory.append("")
 
                 //   convertStringIntoLoad(img)
                 //Fruit_Image.getso
                 //uploads certain values to db
-                c.execute("/addProduct", Product(id,pName,""))
+                productList += Product(id, pName, categories[Math.random().toInt() * (categories.size - 0) + 1])
 
             }
+            c.execute("/addProducts",productlist)
 
         } catch (e: JSONException){
             e.printStackTrace()

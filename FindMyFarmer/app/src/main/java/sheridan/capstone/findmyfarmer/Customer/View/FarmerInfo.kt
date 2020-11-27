@@ -51,7 +51,9 @@ var ImageInt : Int =0
         FarmerDesc = view.findViewById(R.id.Desc)
         FarmerRating = view.findViewById(R.id.Ratings)
         FarmerImage = view.findViewById(R.id.icon)
+
         To_Products = view.findViewById(R.id.Products)
+
         To_Map = view.findViewById(R.id.Maps)
         RateIt = view.findViewById(R.id.RateIt)
         FarmerInfo = view.findViewById(R.id.FollowIcon)
@@ -135,7 +137,7 @@ var ImageInt : Int =0
 
 
         FarmerInfo.setOnClickListener {
-            var Following: FollowingDialog =
+            val Following =
                 FollowingDialog()
 
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
