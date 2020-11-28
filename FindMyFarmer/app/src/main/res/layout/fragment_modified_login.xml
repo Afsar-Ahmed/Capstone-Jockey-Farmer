@@ -131,7 +131,10 @@
             android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="@+id/forgotPswrdLink"
             app:layout_constraintEnd_toEndOf="@+id/registerAccount"
-            app:layout_constraintTop_toTopOf="@+id/inputEmail" />
+            app:layout_constraintHorizontal_bias="0.961"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/inputEmail"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/loginBtn"

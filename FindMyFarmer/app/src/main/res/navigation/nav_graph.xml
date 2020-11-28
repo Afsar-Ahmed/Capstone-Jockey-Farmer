@@ -37,13 +37,6 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_out_right"
             app:popExitAnim="@android:anim/slide_in_left" />
-        <action
-            android:id="@+id/action_registrationFragment_to_farmerConfirmationFragment"
-            app:destination="@id/farmerConfirmationFragment"
-            app:enterAnim="@anim/fui_slide_in_right"
-            app:exitAnim="@anim/fui_slide_out_left"
-            app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
@@ -57,25 +50,5 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:launchSingleTop="false"
             app:popEnterAnim="@android:anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/farmerConfirmationFragment"
-        android:name="sheridan.capstone.findmyfarmer.LoginAndRegistration.View.FarmerConfirmationFragment"
-        android:label="fragment_farmer_confirmation"
-        tools:layout="@layout/fragment_farmer_confirmation" >
-        <action
-            android:id="@+id/action_farmerConfirmationFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment"
-            app:enterAnim="@android:anim/slide_in_left"
-            app:exitAnim="@android:anim/slide_out_right"
-            app:popEnterAnim="@android:anim/slide_out_right"
-            app:popExitAnim="@android:anim/slide_in_left" />
-        <argument android:name="email"
-            app:argType="string" />
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument android:name="password"
-            app:argType="string" />
     </fragment>
 </navigation>
