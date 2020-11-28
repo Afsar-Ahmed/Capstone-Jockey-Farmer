@@ -91,4 +91,3 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
     }
 }
-

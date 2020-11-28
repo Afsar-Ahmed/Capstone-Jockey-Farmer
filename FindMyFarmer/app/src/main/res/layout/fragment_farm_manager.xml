@@ -117,4 +117,3 @@
         app:layout_constraintTop_toTopOf="@+id/Farmers_Updated_Desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

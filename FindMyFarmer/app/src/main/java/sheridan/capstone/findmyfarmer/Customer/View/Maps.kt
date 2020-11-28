@@ -38,7 +38,7 @@ class Maps : Fragment(), OnMapReadyCallback {
         mapview.onCreate(savedInstanceState)
         mapview.onResume()
 
-       mapview.getMapAsync(this)
+        mapview.getMapAsync(this)
 
 
         return View

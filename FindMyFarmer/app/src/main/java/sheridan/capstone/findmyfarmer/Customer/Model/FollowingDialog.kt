@@ -43,7 +43,7 @@ class FollowingDialog: AppCompatDialogFragment() {
         Farmer_City_View = viewModel.getFarmer_City().value.toString()
 
 
-       Farmer_Desc_View = viewModel.getFarmer_Desc().value.toString()
+        Farmer_Desc_View = viewModel.getFarmer_Desc().value.toString()
 
         Image = viewModel.getImage().value!!.toInt()
 

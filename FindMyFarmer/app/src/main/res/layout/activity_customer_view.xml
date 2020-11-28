@@ -32,19 +32,19 @@
             android:layout_above="@+id/Bottom_nav_customer" />
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/Bottom_nav_customer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/Bottom_nav_customer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-        android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="true"
 
-        android:background="?android:attr/windowBackground"
+            android:background="?android:attr/windowBackground"
 
-        app:menu="@menu/bottom_navigation"
-        >
+            app:menu="@menu/bottom_navigation"
+            >
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -58,4 +58,3 @@
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
-

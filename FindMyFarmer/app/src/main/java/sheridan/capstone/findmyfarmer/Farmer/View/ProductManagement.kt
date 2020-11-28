@@ -1,11 +1,14 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
@@ -43,6 +46,7 @@ class ProductManagement : Fragment() {
 
         val productName = view.findViewById<TextView>(R.id.nME)
         val productCategory= view.findViewById<TextView>(R.id.produce_cate)
+       val productImage = view.findViewById<ImageView>(R.id.player)
 
         //Lists and objects
         val c= DatabaseAPIHandler(context)
@@ -63,10 +67,18 @@ class ProductManagement : Fragment() {
                 val produce = productlist.getJSONObject(i)
 
                 val id = produce.getInt("id")
-                val img = produce.getString("image")
+
+                val img = produce.get("image")
+                println(img)
+                //converts image to Bitmap then uploads to view
+               // var convtoBit = Base64.decode(img.toString(),0)
+                //var image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
+
                 val pName = produce.getString("name")
 
                 productName.text=pName
+
+                //productImage.setImageBitmap(image)
 
                 randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
                 productCategory.text=randomCategory

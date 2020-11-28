@@ -11,7 +11,7 @@ import sheridan.capstone.findmyfarmer.R
 class Following : Fragment(),
     FollowingList.OnItemClickListener {
 
-    
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

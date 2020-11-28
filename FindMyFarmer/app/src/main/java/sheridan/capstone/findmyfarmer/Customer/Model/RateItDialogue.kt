@@ -32,7 +32,7 @@ class RateItDialogue : AppCompatDialogFragment(){
 
         builder.setView(view)
         ratingsbar.setOnRatingBarChangeListener(OnRatingBarChangeListener { ratingBar, v, b ->
-           RatingsScale.setText(v.toString())
+            RatingsScale.setText(v.toString())
             when (ratingBar.rating.toInt()) {
                 1 -> RatingsScale.setText("Very bad")
                 2 -> RatingsScale.setText("Need some improvement")
@@ -43,10 +43,10 @@ class RateItDialogue : AppCompatDialogFragment(){
             }
         })
 
-SendFeedBack.setOnClickListener {
-    // add feedback desc/rating to the database in the ratings table.
-    dialog?.dismiss()
-}
+        SendFeedBack.setOnClickListener {
+            // add feedback desc/rating to the database in the ratings table.
+            dialog?.dismiss()
+        }
         return builder.create()
     }
 

@@ -1,3 +1,4 @@
+
 package sheridan.capstone.findmyfarmer.Farmer.Controller
 
 import sheridan.capstone.findmyfarmer.Farmer.Model.FarmerHubData
@@ -31,7 +32,7 @@ class GenerateFruitList {
 
 
 
-                        )
+                    )
                 list += item
 
             } else if (i == 1) {
