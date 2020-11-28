@@ -1,4 +1,3 @@
-
 package sheridan.capstone.findmyfarmer.Customer.Controller
 
 import android.view.LayoutInflater
@@ -76,9 +75,10 @@ class FarmerListToView (private val FarmerList: List<ListData>, private val list
 
         }
     }
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
+        interface OnItemClickListener{
+            fun onItemClick(position: Int)
+        }
+
+
     }
 
-
-}

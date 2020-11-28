@@ -1,4 +1,3 @@
-
 package sheridan.capstone.findmyfarmer.Customer.Controller
 
 import android.view.LayoutInflater

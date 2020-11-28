@@ -20,18 +20,18 @@ class LoginModel:ViewModel() {
     //logs in user with right credentials
     public fun login(auth: FirebaseAuth, activity: Activity, email: String, password: String){
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(activity) { task ->
-            if (task.isSuccessful) {
-                // Sign in success - show log, update user value
-                user.value = auth.currentUser
-                Log.d("AUTHENTICATION", "login :success $user"
-                )
+                if (task.isSuccessful) {
+                    // Sign in success - show log, update user value
+                     user.value = auth.currentUser
+                    Log.d("AUTHENTICATION", "login :success $user"
+                            )
 
-            } else {
-                user.value = null
-                // If sign in fails show log
-                Log.d("AUTHENTICATION", "login :failure")
+                } else {
+                    user.value = null
+                    // If sign in fails show log
+                    Log.d("AUTHENTICATION", "login :failure")
+                }
             }
-        }
     }
 
     //Registers the google Sign in as an authenticated user in Firebase, lasts only within a session

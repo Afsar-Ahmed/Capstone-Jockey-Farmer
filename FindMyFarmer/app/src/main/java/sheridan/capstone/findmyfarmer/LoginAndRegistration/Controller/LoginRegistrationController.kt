@@ -64,14 +64,14 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                 startActivity(Intent(this, FarmerActivity::class.java))
                 finish()
             }else{
-                Toast.makeText(applicationContext, "Incorrect email/password!",
+                Toast.makeText(applicationContext, "Incorrect email/password",
                     Toast.LENGTH_SHORT).show()
             }
         }
 
         //if the email in reset is registered and reset password was sent - hide keyboard, show Toast
         val resetObserver = Observer<Boolean> {
-                newEmailStatus -> registeredUser = newEmailStatus
+            newEmailStatus -> registeredUser = newEmailStatus
             var toastMessage: String = if(registeredUser){
 
                 var layout : View = findViewById(R.id.resetPasswordConstraintLayout)
@@ -148,28 +148,25 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
 
 
    //Opens next activity if the user signed in successfully
-   private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
-       if(user != null){
-           var loggedIn = Intent(context, FarmerActivity::class.java)
-           loggedIn.putExtras(Bundle().apply(extras))
-           ContextCompat.startActivity(context, loggedIn, null)
-       }
-   }
-
-
-    //Run validation and login function with input provided by the user
-    override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
-        if(loginModel.loginValidation(email, password)) {
-            loginModel.login( auth, this, email.text.toString(), password.text.toString())
+    private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
+        if(user != null){
+            var loggedIn = Intent(context, FarmerActivity::class.java)
+            loggedIn.putExtras(Bundle().apply(extras))
+            ContextCompat.startActivity(context, loggedIn, null)
         }
     }
 
 
+    //Run validation and login function with input provided by the user
+    override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
+            if(loginModel.loginValidation(email, password)) {
+                loginModel.login( auth, this, email.text.toString(), password.text.toString())
+        }
+    }
 
     //When sign up button is clicked - parse the information to the input validation and then signUp
-    override fun OnSignUpButtonClickListener(email: EditText, password: EditText, repeatPassword: EditText) {
-        if(registerModel.registerValidation(email,password,repeatPassword))
-            registerModel.register(auth,this,email.text.toString(),password.text.toString())
+    override fun OnSignUpButtonClickListener(email: String, name: String, password: String, isFarmer: Boolean) {
+            registerModel.register(auth,this,email,password)
     }
 
     //Open registration fragment on link click
@@ -188,13 +185,13 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         FBSignIn.setPermissions("email")
         FBSignIn.registerCallback(callBackManager,
             object : FacebookCallback<LoginResult> { override fun onSuccess(result: LoginResult?) {
-                if (result != null) {
-                    loginModel.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken)
-                } else {
-                    Toast.makeText(applicationContext, "Error getting Facebook Account",
-                        Toast.LENGTH_SHORT).show()
+                    if (result != null) {
+                        loginModel.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken)
+                    } else {
+                        Toast.makeText(applicationContext, "Error getting Facebook Account",
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
                 override fun onCancel() {
                 }
                 override fun onError(error: FacebookException?) {
@@ -215,6 +212,17 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         }
     }
 
+    override fun Validation(email: EditText, name: EditText, password: EditText, repeatPassword: EditText):Boolean {
+         val validatedSensitive = registerModel.registerValidation(email,password,repeatPassword)
+         val validatedName = registerModel.registerNameValidation(name)
+        return validatedSensitive && validatedName
+    }
+
+    override fun Navigate(FragmentId: Int) {
+        var navController = Navigation.findNavController(this,R.id.fragment_host)
+        navController.navigate(FragmentId)
+    }
+
     //hide the keyboard
     override fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -231,3 +239,4 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     }
 
 }
+

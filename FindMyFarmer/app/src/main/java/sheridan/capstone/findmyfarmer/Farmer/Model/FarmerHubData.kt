@@ -9,7 +9,7 @@ class FarmerHubData {
             "Vegetable","Vegetable","Fruit","General Goods")
 
     private var Fruit_Info = arrayOf("Selling Fast!", "Our Signiture","Just Harvested!",
-        "Fresh!","No Stock - Coming Soon"," "," ")
+    "Fresh!","No Stock - Coming Soon"," "," ")
 
 
     private var Farmer_Name = arrayOf(
@@ -23,7 +23,7 @@ class FarmerHubData {
         "At EastSide, we have the best cherries and all home grown during the season",
         "Here at Bobs Fresh Vegetable market, we grow the freshest vegetables in the season ",
 
-        )
+    )
 
     private  var Farmer_Rating = arrayOf(5f,4.5f,1.4f)
 
@@ -56,7 +56,7 @@ class FarmerHubData {
         return Farmer_City
     }
 
-    fun getFarmerFollowers() : Array<Int>{
-        return Farmer_Followers
-    }
+ fun getFarmerFollowers() : Array<Int>{
+     return Farmer_Followers
+ }
 }

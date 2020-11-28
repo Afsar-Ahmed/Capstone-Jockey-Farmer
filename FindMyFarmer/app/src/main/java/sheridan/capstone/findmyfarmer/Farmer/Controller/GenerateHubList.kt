@@ -32,7 +32,7 @@ class GenerateHubList (){
                         HubData.getFarmerCity()[i],
                         HubData.getFarmerFollowers()[i]
 
-                    )
+                        )
                 list += item
 
             } else if (i == 1) {
@@ -45,7 +45,7 @@ class GenerateHubList (){
                         HubData.getFarmerCity()[i],
                         HubData.getFarmerFollowers()[i]
 
-                    )
+                        )
                 list += item
 
             } else if (i == 2) {
@@ -58,7 +58,7 @@ class GenerateHubList (){
                         HubData.getFarmerCity()[i],
                         HubData.getFarmerFollowers()[i]
 
-                    )
+                        )
                 list += item
 
             } else if (i == 3) {
@@ -71,7 +71,7 @@ class GenerateHubList (){
                         HubData.getFarmerCity()[i],
                         HubData.getFarmerFollowers()[i]
 
-                    )
+                        )
                 list += item
 
             }

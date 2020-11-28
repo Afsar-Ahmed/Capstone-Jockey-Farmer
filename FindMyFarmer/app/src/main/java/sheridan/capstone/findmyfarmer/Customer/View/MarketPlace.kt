@@ -1,4 +1,3 @@
-
 package sheridan.capstone.findmyfarmer.Customer.View
 
 import android.os.Bundle
@@ -38,10 +37,10 @@ class MarketPlace : Fragment(),
 
         val recycleView : RecyclerView = View.findViewById(R.id.recycleView)
 
-        recycleView.adapter =
-            FarmerListToView(
-                List, this
-            )
+            recycleView.adapter =
+                FarmerListToView(
+                    List, this
+                )
 
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
@@ -66,7 +65,7 @@ class MarketPlace : Fragment(),
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
         val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container,
-            FarmerInfo()
+          FarmerInfo()
         )
             ?.commit()
 

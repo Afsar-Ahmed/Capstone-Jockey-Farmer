@@ -21,7 +21,6 @@ class ProductAPI {
 
     var product:Product?=null
     var context:Context?=null
-    fun ProductAPI(context: Context){this.context=context}
 
     //sets up request to API and what fields that are being called
      fun apiLOAD(): JsonObjectRequest{
@@ -52,18 +51,19 @@ class ProductAPI {
 
 
     fun apiSearch(){
+
         url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
 
       var req = JsonObjectRequest(Request.Method.GET,url,null, {
               response -> try{
           var searchProducts = response.getJSONArray("results")
 
-//          for (i in 1..searchProducts.length()){
-//              var searchProduce = searchProducts.getJSONObject(i)
-//
-//              var img = searchProduce.getString("image")
-//              var productName = searchProduce.getString("name")
-//          }
+          for (i in 1..searchProducts.length()){
+              var searchProduce = searchProducts.getJSONObject(i)
+
+              var img = searchProduce.getString("image")
+              var productName = searchProduce.getString("name")
+          }
 
       }catch (e: JSONException)
       {

@@ -49,7 +49,7 @@ class ProductManagement : Fragment() {
        val productImage = view.findViewById<ImageView>(R.id.player)
 
         //Lists and objects
-        val c= DatabaseAPIHandler(context)
+        val c= DatabaseAPIHandler(activity?.applicationContext)
        val productList = ArrayList<Product>()
         val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
 
