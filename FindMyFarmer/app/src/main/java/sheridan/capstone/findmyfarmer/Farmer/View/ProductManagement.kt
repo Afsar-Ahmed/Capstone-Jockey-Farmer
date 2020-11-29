@@ -2,6 +2,7 @@ package sheridan.capstone.findmyfarmer.Farmer.View
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Base64
 import androidx.fragment.app.Fragment
@@ -46,7 +47,7 @@ class ProductManagement : Fragment() {
 
         val productName = view.findViewById<TextView>(R.id.nME)
         val productCategory= view.findViewById<TextView>(R.id.produce_cate)
-       val productImage = view.findViewById<ImageView>(R.id.player)
+        val productImage = view.findViewById<ImageView>(R.id.player)
 
         //Lists and objects
         val c= DatabaseAPIHandler(activity?.applicationContext)
@@ -73,7 +74,7 @@ class ProductManagement : Fragment() {
                 //converts image to Bitmap then uploads to view
                // var convtoBit = Base64.decode(img.toString(),0)
                 //var image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
-
+                player.setImageDrawable(img as Drawable?)
                 val pName = produce.getString("name")
 
                 productName.text=pName
