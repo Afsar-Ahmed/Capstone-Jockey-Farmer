@@ -1,0 +1,49 @@
+Index: app/src/main/res/layout/fragment_farmer_products.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Customer.View.FarmerProducts\">\r\n\r\n    <!-- TODO: Update blank fragment layout -->\r\n\r\n\r\n    <TableLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n\r\n        <TableRow\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/PrdouctN\"\r\n                android:layout_width=\"67dp\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"84dp\"\r\n                android:text=\"Products\"\r\n                app:layout_constraintEnd_toStartOf=\"@+id/PrdouctI\"\r\n                app:layout_constraintHorizontal_bias=\"0.451\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/PrdouctC\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"84dp\"\r\n                android:layout_marginEnd=\"76dp\"\r\n                android:text=\"Products\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/PrdouctI\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"84dp\"\r\n                android:layout_marginEnd=\"64dp\"\r\n                android:text=\"Products\"\r\n                app:layout_constraintEnd_toStartOf=\"@+id/PrdouctC\"\r\n                app:layout_constraintHorizontal_bias=\"0.964\"\r\n                app:layout_constraintStart_toStartOf=\"parent\"\r\n                app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/PrdouctQ\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"84dp\"\r\n                android:layout_marginEnd=\"64dp\"\r\n                android:text=\"Quantity\" />\r\n        </TableRow>\r\n\r\n        <TableRow\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:textAlignment=\"center\">\r\n\r\n            <TextView\r\n                android:id=\"@+id/productN\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"40dp\"\r\n                android:layout_marginTop=\"48dp\"\r\n                android:text=\"TextView\"\r\n\r\n                />\r\n\r\n            <TextView\r\n                android:id=\"@+id/productC\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"48dp\"\r\n                android:layout_marginEnd=\"68dp\"\r\n                android:text=\"TextView\"\r\n                app:layout_constraintEnd_toStartOf=\"@+id/productI\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/productI\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"48dp\"\r\n                android:layout_marginEnd=\"72dp\"\r\n                android:text=\"TextView\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/productQ\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"48dp\"\r\n                android:layout_marginEnd=\"72dp\"\r\n                android:text=\"TextView\"\r\n                app:layout_constraintEnd_toEndOf=\"parent\" />\r\n        </TableRow>\r\n\r\n        <TableRow\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\" />\r\n\r\n        <TableRow\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\" />\r\n    </TableLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_farmer_products.xml	(revision 1a34a5572d94261ff89e454e69f66ccbc9987613)
++++ app/src/main/res/layout/fragment_farmer_products.xml	(date 1606586668662)
+@@ -21,6 +21,7 @@
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+ 
++
+             <TextView
+                 android:id="@+id/PrdouctN"
+                 android:layout_width="67dp"
+@@ -30,7 +31,8 @@
+                 app:layout_constraintEnd_toStartOf="@+id/PrdouctI"
+                 app:layout_constraintHorizontal_bias="0.451"
+                 app:layout_constraintStart_toStartOf="parent"
+-                app:layout_constraintTop_toTopOf="parent" />
++                app:layout_constraintTop_toTopOf="parent"
++                />
+ 
+             <TextView
+                 android:id="@+id/PrdouctC"
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.Database\r\n\r\nimport android.app.DownloadManager\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport com.android.volley.Request\r\nimport com.android.volley.RequestQueue\r\nimport com.android.volley.Response\r\nimport com.android.volley.toolbox.JsonObjectRequest\r\nimport com.android.volley.toolbox.Volley\r\nimport org.json.JSONArray\r\nimport org.json.JSONException\r\nimport sheridan.capstone.findmyfarmer.Entities.Product\r\nimport sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler\r\n\r\n\r\nclass ProductAPI {\r\n\r\n    private val apiKey:String=\"87cbc6eb7d3548bd9b95d1f715621c20\"\r\n    private var url:String=\"\"\r\n\r\n    var product:Product?=null\r\n    var context:Context?=null\r\n\r\n    //sets up request to API and what fields that are being called\r\n     fun apiLOAD(): JsonObjectRequest{\r\n\r\n       val url = \"https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple\"\r\n         var productlist = JSONArray()\r\n        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {\r\n            response -> try{\r\n            productlist = response.getJSONArray(\"results\")\r\n\r\n            for (i in 1..productlist.length()){\r\n                val produce = productlist.getJSONObject(i)\r\n\r\n                var img = produce.getString(\"image\")\r\n                var productName = produce.getString(\"name\")\r\n\r\n\r\n            }\r\n\r\n        return@Listener\r\n        } catch (e: JSONException){\r\n            e.printStackTrace()\r\n        }\r\n        }, Response.ErrorListener { error -> error.printStackTrace() })\r\n\r\n         return req\r\n    }\r\n\r\n\r\n    fun apiSearch(){\r\n\r\n        url = \"https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple\"\r\n\r\n      var req = JsonObjectRequest(Request.Method.GET,url,null, {\r\n              response -> try{\r\n          var searchProducts = response.getJSONArray(\"results\")\r\n\r\n          for (i in 1..searchProducts.length()){\r\n              var searchProduce = searchProducts.getJSONObject(i)\r\n\r\n              var img = searchProduce.getString(\"image\")\r\n              var productName = searchProduce.getString(\"name\")\r\n          }\r\n\r\n      }catch (e: JSONException)\r\n      {\r\n          e.printStackTrace()\r\n      }\r\n                                                               }, {  })\r\n\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(revision 1a34a5572d94261ff89e454e69f66ccbc9987613)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(date 1606585955295)
+@@ -17,10 +17,9 @@
+ class ProductAPI {
+ 
+     private val apiKey:String="87cbc6eb7d3548bd9b95d1f715621c20"
+-    private var url:String=""
++    private lateinit var url:String
+ 
+-    var product:Product?=null
+-    var context:Context?=null
++    lateinit var product:Product
+ 
+     //sets up request to API and what fields that are being called
+      fun apiLOAD(): JsonObjectRequest{
