@@ -30,6 +30,7 @@ class RegistrationFragment : Fragment() {
         view.nextButton.setOnClickListener{
 
          if(registration_interface.Validation(view.newUserEmail,view.NameInput,view.password,view.repeatPassword)) {
+             //Database Writing information to
              val directions = RegistrationFragmentDirections.
              actionRegistrationFragmentToFarmerConfirmationFragment(newUserEmail.text.toString(),
                  NameInput.text.toString(),password.text.toString())

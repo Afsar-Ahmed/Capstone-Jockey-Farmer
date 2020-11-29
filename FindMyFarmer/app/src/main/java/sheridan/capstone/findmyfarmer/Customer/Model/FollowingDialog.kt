@@ -37,21 +37,15 @@ class FollowingDialog: AppCompatDialogFragment() {
 
         val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
-        FarmerName.text= viewModel.getFarmer_Name().value
+        FarmerName.text= viewModel.getFarmData().value!!.businessName
         Farmer_Name_View = FarmerName.text.toString()
 
-        Farmer_City_View = viewModel.getFarmer_City().value.toString()
+        Farmer_City_View = viewModel.getFarmData().value!!.city
 
 
-       Farmer_Desc_View = viewModel.getFarmer_Desc().value.toString()
+       Farmer_Desc_View = viewModel.getFarmData().value!!.businessDescription
 
-        Image = viewModel.getImage().value!!.toInt()
-
-
-
-        Farmer_Rating_View = viewModel.getFarmer_Rating().value!!.toFloat()
-
-
+        //Image = viewModel.getImage().value!!.toInt()
 
         builder.setView(view)
         FarmerName.setText(

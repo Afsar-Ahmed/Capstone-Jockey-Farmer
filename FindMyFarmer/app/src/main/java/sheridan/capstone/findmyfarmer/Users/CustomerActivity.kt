@@ -3,6 +3,7 @@ package sheridan.capstone.findmyfarmer.Users
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,24 +24,31 @@ import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 
 class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
-
+    private lateinit var sessionData: SessionData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_view)
 
-
+        sessionData = SessionData(this)
+        var customer = sessionData.customerData
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
 
         drawerLayout = findViewById(R.id.drawerLayout)
         NavigationView = findViewById(R.id.nav_view)
 
         NavigationView.setNavigationItemSelectedListener(this)
+
+        if(customer != null) {
+            var usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)
+            usertext.text = customer.customerName
+        }
 
 
         setSupportActionBar(toolbarView)
@@ -118,6 +126,7 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
 
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
+            sessionData.ClearAllData()
             startActivity(
                 Intent(this,
                     LoginRegistrationController::class.java)

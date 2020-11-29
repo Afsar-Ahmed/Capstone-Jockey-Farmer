@@ -18,17 +18,20 @@ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegis
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
     private lateinit var Save : Button
     private lateinit var Password : Button
+    private lateinit var sessionData: SessionData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_settings)
 
+        sessionData = SessionData(this)
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
 
         drawerLayout=findViewById(R.id.drawerLayout)
@@ -65,24 +68,17 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         when(item.itemId){
             R.id.nav_logout ->{
                 logOut()
-
-
                 finish()
-
             }
-
-
-
-
         }
 
         return true
     }
     private fun logOut(){
         Firebase.auth.signOut()
-
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
+            sessionData.ClearAllData()
             startActivity(
                 Intent(this,
                     LoginRegistrationController::class.java)

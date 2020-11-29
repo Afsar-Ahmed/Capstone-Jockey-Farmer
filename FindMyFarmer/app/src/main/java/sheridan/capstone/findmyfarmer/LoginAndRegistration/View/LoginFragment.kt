@@ -14,31 +14,35 @@ import sheridan.capstone.findmyfarmer.R
 
 class LoginFragment : Fragment() {
 
-    private lateinit var login_interface: LoginRegistrationInterface
+    private lateinit var loginInterface: LoginRegistrationInterface
     private lateinit var viewBehaviorInterface: ViewBehaviorInterface
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_modified_login, container, false)
-        login_interface = activity as LoginRegistrationInterface
+        loginInterface = activity as LoginRegistrationInterface
 
         view.loginBtn.setOnClickListener{
-            login_interface.OnLoginButtonClickListener(view.inputEmail,view.inputPassword)
+            loginInterface.OnLoginButtonClickListener(view.inputEmail,view.inputPassword)
         }
 
         view.GSignIn.setOnClickListener{
-            login_interface.OnGoogleButtonClickListener()
+            loginInterface.OnGoogleButtonClickListener()
         }
 
+
+//        view.fb2.setOnClickListener{
+//            view.FBSignIn.performClick()
+//        }
         view.FBSignIn.setOnClickListener{
-            login_interface.OnFBLogInButtonClickListener()
+            loginInterface.OnFBLogInButtonClickListener()
         }
 
         view.registerAccount.setOnClickListener{
-            login_interface.OnRegisterLinkClickListener()
+            loginInterface.OnRegisterLinkClickListener()
         }
         view.forgotPswrdLink.setOnClickListener{
-            login_interface.OnResetPasswordButtonClickListener()
+            loginInterface.OnResetPasswordButtonClickListener()
         }
         return view
     }

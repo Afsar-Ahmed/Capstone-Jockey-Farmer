@@ -21,6 +21,7 @@ class FarmerConfirmationFragment : Fragment() {
     private lateinit var password: String
 
     private lateinit var registrationInterface: LoginRegistrationInterface
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

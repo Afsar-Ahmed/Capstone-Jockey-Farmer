@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -24,22 +25,29 @@ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegis
 import sheridan.capstone.findmyfarmer.Customer.View.Following
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener  {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
+    private lateinit var sessionData: SessionData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_farmer_view)
 
-
-
+        sessionData = SessionData(this)
+        var customer = sessionData.customerData
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
 
         drawerLayout=findViewById(R.id.drawerLayout)
         NavigationView = findViewById(R.id.nav_view)
+        if(customer != null) {
+            var usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)
+            usertext.text = customer.customerName
+        }
+
 
         NavigationView.setNavigationItemSelectedListener(this)
 
@@ -60,13 +68,7 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
         val bottomnav: BottomNavigationView = findViewById(R.id.bottom_nav_farmer)
 
 
-
-
-
-        supportFragmentManager.beginTransaction().replace(
-            R.id.fragment_container,
-            FarmerHub()
-        ).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FarmerHub()).commit()
 
 
         bottomnav.setOnNavigationItemSelectedListener { item ->
@@ -78,15 +80,7 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
                 R.id.nav_farmer_map_view-> selectedFragment = Maps()
             }
 
-            supportFragmentManager.beginTransaction()
-
-
-                .replace(
-                    R.id.fragment_container,
-                    selectedFragment!!
-                )
-
-                .commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment!!).commit()
             true
         }
     }
@@ -96,10 +90,7 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
         when(item.itemId){
             R.id.nav_logout ->{
                 logOut()
-
-
                 finish()
-
             }
             R.id.nav_account -> {
                 val intent = Intent(this, AccountSettings::class.java)
@@ -114,9 +105,9 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
 
     private fun logOut(){
         Firebase.auth.signOut()
-
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
+            sessionData.ClearAllData()
             startActivity(
                 Intent(this,
                     LoginRegistrationController::class.java)

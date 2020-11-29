@@ -10,83 +10,66 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import sheridan.capstone.findmyfarmer.Customer.Controller.FarmerGenerateList
-import sheridan.capstone.findmyfarmer.Customer.Controller.FarmerListToView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
-import sheridan.capstone.findmyfarmer.Customer.View.FarmerInfo
-import sheridan.capstone.findmyfarmer.Farmer.Controller.GenerateHubList
+import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Farmer.Controller.HubListToView
+import sheridan.capstone.findmyfarmer.Farmer.Model.GetFarmersFarms
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 
 class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
 
-    var GenerateController: GenerateHubList = GenerateHubList()
-
     private lateinit var viewModel: SharedViewModel
-
-    val List = GenerateController.GenerateListHub(3)
-
+    private lateinit var sessionData: SessionData
+    private var HubList = ArrayList<Farm>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?): View? {
+
+        sessionData = SessionData(activity)
+        var farmer = sessionData.farmerData
 
 
         val view: View = inflater.inflate(R.layout.fragment_farmer_hub, container, false)
-
-
+        val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.pullToRefresh)
         val recycleView: RecyclerView = view.findViewById(R.id.Hub_Recycle_View)
 
-        recycleView.adapter =
-            HubListToView(
-                List, this
-            )
-
+        val adapter = HubListToView(requireActivity(),HubList, this)
+        recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        return view
+        var getFarmersFarms = context?.let { GetFarmersFarms(it,swipeRefreshLayout,adapter) }
 
+        if (getFarmersFarms != null && farmer != null) {
+            getFarmersFarms.GetHubFarms(HubList,farmer.farmerID)
+        }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            if (getFarmersFarms != null && farmer != null) {
+                getFarmersFarms.GetHubFarms(HubList,farmer.farmerID)
+            }
+        }
+
+        return view
     }
 
     override fun onItemClick(position: Int) {
-
-        val Image = List[position].imageResouce
-        val Farmer_Name = List[position].Farmer_Name
-        val Farmer_Desc = List[position].Farmer_Desc
-        val Farmer_City = List[position].Farmer_City
-
-
-        viewModel.setImage(Image)
-        viewModel.setFarmer_Name(Farmer_Name)
-        viewModel.setFarmer_Desc(Farmer_Desc)
-        viewModel.setFarmer_City(Farmer_City)
-
-
+        viewModel.setFarmData(HubList[position])
 
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
         val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container,
-            FarmManager(),
-        )
-            ?.commit()
-
-
-
-
+        fragmentTransaction?.replace(R.id.fragment_container, FarmManager(),)?.commit()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        viewModel.getFarmer_Name()
-        viewModel.getFarmer_City()
-        viewModel.getFarmer_Desc()
-        viewModel.getFarmer_Rating()
-        viewModel.getImage()
+        viewModel.getFarmData()
         viewModel.getFarmers_Followers()
 
     }

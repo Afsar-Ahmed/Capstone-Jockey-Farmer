@@ -11,33 +11,29 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Customer.Model.FollowingDialog
 import sheridan.capstone.findmyfarmer.Customer.Model.RateItDialogue
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
+import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
 
-class FarmerInfo : Fragment(){
+class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
-private lateinit var FarmerName:TextView
+private lateinit var FarmName:TextView
 
-private lateinit var FarmerDesc:TextView
-private lateinit var FarmerRating : RatingBar
-private lateinit var FarmerCity:TextView
+private lateinit var FarmDesc:TextView
+private lateinit var FarmRating : RatingBar
+private lateinit var FarmCity:TextView
 
-private lateinit var FarmerImage : ImageView
-private lateinit var To_Products : Button
+private lateinit var FarmImage : ImageView
 private lateinit var To_Map: Button
 private lateinit var RateIt: ImageView
 
-private lateinit var FarmerInfo : ImageView
+private lateinit var FarmInfo : ImageView
 
 var ImageInt : Int =0
-
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,17 +42,25 @@ var ImageInt : Int =0
         // Inflate the layout for this fragment
 
         val view:View=  inflater.inflate(R.layout.fragment_farmer_info, container, false)
-         FarmerName  = view.findViewById(R.id.Name)
-        FarmerCity = view.findViewById(R.id.Address)
-        FarmerDesc = view.findViewById(R.id.Desc)
-        FarmerRating = view.findViewById(R.id.Ratings)
-        FarmerImage = view.findViewById(R.id.icon)
-
-        To_Products = view.findViewById(R.id.Products)
+         FarmName  = view.findViewById(R.id.Name)
+        FarmCity = view.findViewById(R.id.Address)
+        FarmDesc = view.findViewById(R.id.Desc)
+        FarmRating = view.findViewById(R.id.Ratings)
+        FarmImage = view.findViewById(R.id.icon)
 
         To_Map = view.findViewById(R.id.Maps)
         RateIt = view.findViewById(R.id.RateIt)
-        FarmerInfo = view.findViewById(R.id.FollowIcon)
+        FarmInfo = view.findViewById(R.id.FollowIcon)
+
+
+//        val recycleView : RecyclerView = view.findViewById(R.id.Fruit_List)
+//
+//        recycleView.adapter =
+//            FruitListToView(
+//                List, this
+//            )
+//        recycleView.layoutManager = LinearLayoutManager(context)
+//        recycleView.setHasFixedSize(true)
 
 
 
@@ -68,28 +72,11 @@ var ImageInt : Int =0
                 Maps()
             )
                 ?.commit()
-
-
-
-        }
-
-        To_Products.setOnClickListener {
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-
-            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container,
-                FarmerProducts()
-            )
-                ?.commit()
-
         }
 
         RateIt.setOnClickListener{
          openDialog()
         }
-
-
-
 
         return view
     }
@@ -108,36 +95,16 @@ var ImageInt : Int =0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        viewModel.getFarmer_Name().observe(viewLifecycleOwner, Observer {
 
-           FarmerName.text = it
-
-        })
-        viewModel.getFarmer_City().observe(viewLifecycleOwner, Observer {
-            FarmerCity.text = it
-
-        })
-        viewModel.getFarmer_Desc().observe(viewLifecycleOwner, Observer {
-            FarmerDesc.text = it
-
-        })
-        viewModel.getImage().observe(viewLifecycleOwner, Observer {
-            ImageInt = it
-        FarmerImage.setImageResource(it)
-        })
-        viewModel.getFarmer_Rating().observe(viewLifecycleOwner, Observer {
+        FarmImage.setImageBitmap(viewModel.getFarmData().value!!.primaryImage)
+        FarmName.text = viewModel.getFarmData().value!!.businessName
+        FarmCity.text = viewModel.getFarmData().value!!.city
+        FarmDesc.text = viewModel.getFarmData().value!!.businessDescription
+        FarmRating.rating = viewModel.getFarmData().value!!.businessRating
 
 
-            FarmerRating.rating = it
-
-        })
-
-
-
-
-
-        FarmerInfo.setOnClickListener {
-            val Following =
+        FarmInfo.setOnClickListener {
+            var Following: FollowingDialog =
                 FollowingDialog()
 
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
@@ -150,7 +117,9 @@ var ImageInt : Int =0
 
     }
 
-
+    override fun onItemClick(position: Int) {
+        //Click Event For FruitList
+    }
 
 
 }
