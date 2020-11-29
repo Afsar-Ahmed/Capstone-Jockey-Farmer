@@ -25,15 +25,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserInfo
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_modified_login.*
-import sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView
-import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.ResetModel
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
+import sheridan.capstone.findmyfarmer.Users.CustomerActivity
+import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 
 class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface, ViewBehaviorInterface{
 
@@ -41,26 +43,26 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     private var RC_SIGN_IN  = 9001
     private lateinit var sic : GoogleSignInClient
     private lateinit var callBackManager: CallbackManager
-    private lateinit var fbCallBack : FacebookCallback<LoginResult>
     private val loginModel: LoginModel by viewModels()
     private val registerModel: RegistrationModel by viewModels()
     private val resetModel : ResetModel by viewModels()
     private var user: FirebaseUser? = null
     private var registeredUser: Boolean = false
+    private lateinit var sessionData: SessionData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = Firebase.auth
         callBackManager = CallbackManager.Factory.create()
-
+        sessionData = SessionData(this)
         //observer for the user value in the LoginModel Class
         //if changed - log in to the farmerListing
-        val authObserver = Observer<FirebaseUser?>{
-                newAuth -> user = newAuth
+        val authObserver = Observer<FirebaseUser?>{ newAuth ->
+            user = newAuth
             if(user != null){
-                startActivity(Intent(this, CustomerView::class.java))
-                finish()
+               //startActivity(Intent(this,CustomerActivity::class.java))
+                updateUI(this,user)
             }else{
                 Toast.makeText(applicationContext, "Incorrect email/password",
                     Toast.LENGTH_SHORT).show()
@@ -88,8 +90,6 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         registerModel.user.observe(this,authObserver)
         //observe when user value has been changed in the LoginModel
         loginModel.user.observe(this, authObserver)
-
-
     }
 
     public override fun onStart() {
@@ -123,7 +123,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                 try{
                     //breaking down the account object to retrieve the basic data from the account, like name, email, id etc
                     val acc = googleAcc.getResult(ApiException::class.java)!!
-                    loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)
+                    loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!,bundle=null)
                 }
                 catch (e: Exception){
                     Toast.makeText(
@@ -141,19 +141,52 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         else{
             callBackManager.onActivityResult(requestCode, resultCode, data)
         }
-
     }
-
 
    //Opens next activity if the user signed in successfully
     private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
-        if(user != null){
-            var loggedIn = Intent(context, CustomerView::class.java)
-            loggedIn.putExtras(Bundle().apply(extras))
-            ContextCompat.startActivity(context, loggedIn, null)
-        }
-    }
+       var loggedIn : Intent
+       var loginPlatform = FirebaseAuth.getInstance().currentUser?.providerData
+       var platformLogIn = false
 
+       if(loginPlatform != null){
+           for(user: UserInfo in loginPlatform){
+               var providerid = user.providerId.toLowerCase()
+               if(providerid.contains("facebook".toLowerCase())
+                   || providerid.contains("google")){
+                   platformLogIn = true
+               }
+           }
+       }
+
+       if(!platformLogIn){
+           var customer = sessionData.customerData
+           if(user != null){
+               if(customer != null){
+                   if(customer.isFarmer){
+                       loggedIn = Intent(context, FarmerActivity::class.java)
+                       loggedIn.putExtras(Bundle().apply(extras))
+                       startActivity(loggedIn)
+                       finish()
+                   }
+                   else{
+                       loggedIn = Intent(context, CustomerActivity::class.java)
+                       loggedIn.putExtras(Bundle().apply(extras))
+                       startActivity(loggedIn)
+                       finish()
+                   }
+               }
+           }
+       }
+       else{
+           loggedIn = Intent(context, CustomerActivity::class.java)
+           loggedIn.putExtras(Bundle().apply(extras))
+           startActivity(loggedIn)
+           finish()
+       }
+
+
+   }
 
     //Run validation and login function with input provided by the user
     override fun OnLoginButtonClickListener(email: EditText, password: EditText) {

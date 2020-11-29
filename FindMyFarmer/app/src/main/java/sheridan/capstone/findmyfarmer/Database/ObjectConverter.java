@@ -10,8 +10,8 @@ import java.util.List;
 
 import sheridan.capstone.findmyfarmer.Entities.Customer;
 import sheridan.capstone.findmyfarmer.Entities.Farm;
-import sheridan.capstone.findmyfarmer.Entities.Farmer;
 import sheridan.capstone.findmyfarmer.Entities.FarmProduct;
+import sheridan.capstone.findmyfarmer.Entities.Farmer;
 import sheridan.capstone.findmyfarmer.Entities.Product;
 
 public class ObjectConverter {

@@ -1,8 +1,6 @@
 package sheridan.capstone.findmyfarmer.Database;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.media.Image;
 import android.os.AsyncTask;
 
 import com.android.volley.Request;
@@ -23,18 +21,19 @@ import java.util.concurrent.TimeUnit;
 
 import sheridan.capstone.findmyfarmer.Entities.Customer;
 import sheridan.capstone.findmyfarmer.Entities.Farm;
-import sheridan.capstone.findmyfarmer.Entities.Farmer;
 import sheridan.capstone.findmyfarmer.Entities.FarmProduct;
+import sheridan.capstone.findmyfarmer.Entities.Farmer;
+import sheridan.capstone.findmyfarmer.Entities.Following;
 import sheridan.capstone.findmyfarmer.Entities.Product;
+import sheridan.capstone.findmyfarmer.Entities.Rating;
 
 public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
-    private static final String API_BASE_URL = "http://farmerdb.us-east-2.elasticbeanstalk.com";
+    private static final String API_BASE_URL = "http://farmerapi.us-east-2.elasticbeanstalk.com";
     private Context context;
     public AsyncResponse del = null;
-    private ProgressDialog dialog;
 
-    public DatabaseAPIHandler(Context context,AsyncResponse asyncResponse)
+    public DatabaseAPIHandler(Context context, AsyncResponse asyncResponse)
     {
         this.context = context;
         del = asyncResponse;
@@ -42,16 +41,12 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
     //Adding Single instance of Farmers,Farms,Products,Customers,FarmProducts
     private JSONObject AddCustomer(Customer customer){
-        Map<String, Object> params = new HashMap();
-        int bol = 0;
-        if(customer.getIsFarmer()){
-            bol = 1;
-        }
+        Map<String, String> params = new HashMap();
 
         params.put("CustomerName", customer.getCustomerName());
         params.put("CustomerEmail",customer.getCustomerEmail());
         params.put("CustomerPassword", customer.getCustomerPassword());
-        params.put("IsFarmer",customer.getIsFarmer());
+        params.put("IsFarmer",String.valueOf(customer.getIsFarmer()));
 
         return new JSONObject(params);
     }
@@ -91,6 +86,23 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         params.put("PostalCode",farm.getPostalCode());
         params.put("Unit",String.valueOf(farm.getUnit()));
         params.put("FarmerID",String.valueOf(farm.getFarmerID()));
+
+        return new JSONObject(params);
+    }
+    private JSONObject AddRating(Rating rating){
+        Map<String, String> params = new HashMap();
+
+        params.put("FarmID",String.valueOf(rating.getFarmID()));
+        params.put("CustomerID", String.valueOf(rating.getCustomerID()));
+        params.put("Rating",String.valueOf(rating.getRating()));
+        params.put("Feedback",rating.getFeedback());
+        return new JSONObject(params);
+    }
+    private JSONObject AddFollow(Following following){
+        Map<String, String> params = new HashMap();
+
+        params.put("CustomerID",String.valueOf(following.getCustomerID()));
+        params.put("FarmID", String.valueOf(following.getFarmID()));
 
         return new JSONObject(params);
     }
@@ -175,7 +187,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             for (Farm farm : farms) {
                 JSONObject params = new JSONObject();
 
-                params.put("Business_Name",farm.getBusinessName());
+                params.put("Businsess_Name",farm.getBusinessName());
                 params.put("Business_Description", farm.getBusinessDescription());
                 params.put("Business_Rating",String.valueOf(farm.getBusinessRating()));
                 params.put("City",farm.getCity());
@@ -193,6 +205,43 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             return null;
         }
     }
+    private JSONArray AddRatings(List<Rating> ratings){
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (Rating rating : ratings) {
+                JSONObject params = new JSONObject();
+
+                params.put("FarmID",String.valueOf(rating.getFarmID()));
+                params.put("CustomerID", String.valueOf(rating.getCustomerID()));
+                params.put("Rating",String.valueOf(rating.getRating()));
+                params.put("Feedback",rating.getFeedback());
+
+                jsonArray.put(params);
+            }
+            return jsonArray;
+        }catch (Exception ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
+    private JSONArray AddFollows(List<Following> followings){
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (Following following : followings) {
+                JSONObject params = new JSONObject();
+
+                params.put("CustomerID",String.valueOf(following.getCustomerID()));
+                params.put("FarmID", String.valueOf(following.getFarmID()));
+
+                jsonArray.put(params);
+            }
+            return jsonArray;
+        }catch (Exception ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
+
 
     //Updating Farmers,Farms,Products,Customers,FarmProducts
     private JSONObject UpdateCustomer(Customer customer){
@@ -213,7 +262,8 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     private JSONObject UpdateFarm(Farm farm){
         Map<String, String> params = new HashMap();
 
-        params.put("Business_Name",farm.getBusinessName());
+        params.put("FarmID",String.valueOf(farm.getFarmID()));
+        params.put("Businsess_Name",farm.getBusinessName());
         params.put("Business_Description", farm.getBusinessDescription());
         params.put("Business_Rating",String.valueOf(farm.getBusinessRating()));
         params.put("City",farm.getCity());
@@ -254,6 +304,12 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             else if(objects.get(0).getClass() == Farm.class){
                 listArray = AddFarms((List<Farm>)objects);
             }
+            else if(objects.get(0).getClass() == Rating.class){
+                listArray = AddRatings((List<Rating>)objects);
+            }
+            else if(objects.get(0).getClass() == Following.class){
+                listArray = AddFollows((List<Following>)objects);
+            }
         }
         try {
             RequestQueue rq = Volley.newRequestQueue(context);
@@ -273,6 +329,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     //API calls handled for Single instance of object
     private String SendSingleObjectRequest(int method,String url,Object object){
         JSONObject obj = new JSONObject();
+        //updating/deleting objects from database
         if(method == Request.Method.PUT){
             if(object.getClass() == Customer.class){
                 obj = UpdateCustomer((Customer) object);
@@ -282,6 +339,9 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             }
             else if(object.getClass() == Product.class){
                 obj = UpdateProduct((Product) object);
+            }
+            else if(object.getClass() == Farm.class){
+                obj = UpdateFarm((Farm) object);
             }
             else{
                 return null;
@@ -302,6 +362,12 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             }
             else if(object.getClass() == Farm.class){
                 obj = AddFarm((Farm) object);
+            }
+            else if(object.getClass() == Rating.class){
+                obj = AddRating((Rating) object);
+            }
+            else if(object.getClass() == Following.class){
+                obj = AddFollow((Following) object);
             }
             else{
                 return null;
@@ -337,11 +403,6 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
     }
 
-    //API calls for Images
-    private Image GetImagesFor(){
-        return null;
-    }
-
     //Api Call function
     //Params[0] = URL , Params[1] = requirement of the URL or null otherwise
     @Override
@@ -374,11 +435,11 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
                 }
             }
             else{
-                //Function for only url calls GET
                 if(!(objects[0].toString().toLowerCase().contains("delete"))){
                     response = SendPlainRequest(Request.Method.GET,url);
                 }
                 else{
+                    //PUT request for deleting
                     response = SendPlainRequest(Request.Method.PUT,url);
                 }
             }

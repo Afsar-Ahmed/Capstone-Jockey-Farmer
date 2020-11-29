@@ -4,21 +4,14 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -28,8 +21,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +33,7 @@ public class FirebaseImagehandler {
     private StorageReference storageReference;
     private String FolderName;
     private Context context;
-
+    private String ACTIVE_KEYWORD = "ACTIVE";
 
     public FirebaseImagehandler(DirectoryName directoryName, int id, Context context){
         storage = FirebaseStorage.getInstance();
@@ -58,6 +49,321 @@ public class FirebaseImagehandler {
         String date = dateFormat.format(new Date());
         return FolderName + "_" + date + ".jpg";
     }
+    //gets the list of images from firebase based on directoryname and id given
+    public void GetAllFirebaseImageNames(StorageResponse storageResponse) {
+        StorageReference listRef = storage.getReference().child(FolderName);
+        listRef.listAll().addOnSuccessListener(listResult -> {
+                storageResponse.processFinish(listResult.getItems(),null);
+        }).addOnFailureListener(e -> {
+            storageResponse.OnErrorListener(e.toString());
+            System.out.println(e);
+        });
+    }
+    //downloads all images from firebase to internal storage
+    private void DownloadImagesFromFirebaseToLocalStorage(List<String> filenames, int index,StorageResponse response){
+        final long TEN_MEGABYTE = 1024 * 1024 * 10;
+
+        if(index < filenames.size()){
+            String endpoint = FolderName +"/"+filenames.get(index);
+            StorageReference downloadRef = storageReference.child(endpoint);
+
+            downloadRef.getBytes(TEN_MEGABYTE).addOnSuccessListener(bytes -> {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                saveToInternalStorage(bitmap,filenames.get(index));
+                //Toast.makeText(context,"Downloaded " + filenames.get(index) ,Toast.LENGTH_SHORT).show();
+                DownloadImagesFromFirebaseToLocalStorage(filenames,index+1,response);
+
+            }).addOnFailureListener(e -> {
+                System.out.println(e);
+                response.OnErrorListener(e.toString());
+            });
+        }
+        else{
+            response.processFinish(null,null);
+            return;
+        }
+    }
+
+    //Checks if the images in cloud have been downloaded, if there are any new files from cloud
+    //then they are downloaded into local storage
+    private void InitializeImages(StorageResponse storageResponse){
+            GetAllFirebaseImageNames(new StorageResponse() {
+                @Override
+                public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                    List<String> localStorageImages = GetNamesOfImagesInLocalStorage();
+                    List<String> ImagesToDownloadFromCloud = new ArrayList();
+
+                    for(StorageReference ref: response){
+                        if(!(localStorageImages.contains(ref.getName()))){
+                            ImagesToDownloadFromCloud.add(ref.getName());
+                        }
+                    }
+
+                    DownloadImagesFromFirebaseToLocalStorage(ImagesToDownloadFromCloud,0,storageResponse);
+                }
+                @Override
+                public void OnErrorListener(String error) { }
+            });
+    }
+    //checks if there are any extra images that have been deleted from the cloud,
+    // and are then removed from the local storage as well
+    public void RefreshLocalStorage(StorageResponse response){
+        List<String> localStorageImages = GetNamesOfImagesInLocalStorage();
+        if(!(localStorageImages.isEmpty())){
+            GetAllFirebaseImageNames(new StorageResponse() {
+                @Override
+                public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                    List<String> cloudImages = new ArrayList();
+                    for(StorageReference ref: response){
+                        cloudImages.add(ref.getName());
+                    }
+
+                    for (String localStorageImage: localStorageImages){
+                        if(!(cloudImages.contains(localStorageImage))){
+                            DeleteImageFromlocalStorage(localStorageImage);
+                        }
+                    }
+                }
+                @Override
+                public void OnErrorListener(String error) {
+
+                }
+            });
+            InitializeImages(response);
+        }
+        else{
+            InitializeImages(response);
+        }
+    }
+    //uploads the image to Firebase
+    public void UploadImageToFirebase(Bitmap bitmap,StorageResponse response){
+        try {
+            StorageReference ref = storageReference.child(FolderName + "/" + generateFileName());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = ref.putBytes(data);
+
+            uploadTask.addOnFailureListener(e -> {
+                System.out.println("Failed upload image");
+                response.OnErrorListener(e.toString());
+            }).addOnSuccessListener(taskSnapshot -> {
+                System.out.println("Successfully upload image");
+                response.processFinish(null,null);
+            });
+        }catch (Exception ex){
+            System.out.println(ex);
+            response.OnErrorListener(ex.toString());
+        }
+    }
+    //uploads the image to Firebase with a custom name
+    private void UploadImageToFirebasewithCustomName(Bitmap bitmap,String NewFileName,StorageResponse response){
+        try {
+            StorageReference ref = storageReference.child(FolderName + "/" + NewFileName);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = ref.putBytes(data);
+
+            uploadTask.addOnFailureListener(e -> {
+                System.out.println("Failed upload image");
+                response.OnErrorListener(e.toString());
+            }).addOnSuccessListener(taskSnapshot -> {
+                System.out.println("Successfully upload image");
+                response.processFinish(null,null);
+            });
+        }catch (Exception ex){
+            System.out.println(ex);
+            response.OnErrorListener(ex.toString());
+        }
+    }
+    private void GetImageFromFirebase(String fileName,StorageResponse storageResponse){
+        GetAllFirebaseImageNames(new StorageResponse() {
+            @Override
+            public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                final long TEN_MEGABYTE = 1024 * 1024 * 10;
+                for(StorageReference ref : response){
+                    String refname = ref.getName();
+                    if(refname.compareToIgnoreCase(fileName)==0){
+                        ref.getBytes(TEN_MEGABYTE).addOnSuccessListener(bytes -> {
+                            Bitmap bitmap1 = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                            storageResponse.processFinish(null,bitmap1);
+                        }).addOnFailureListener(e ->{
+                            storageResponse.OnErrorListener(e.toString());
+                        });
+                    }
+                }
+            }
+            @Override
+            public void OnErrorListener(String error) {
+                storageResponse.OnErrorListener(error);
+            }
+        });
+    }
+
+    public void DeleteImageFromFirebase(String fileName, StorageResponse storageResponse){
+        StorageReference ref = storageReference.child(FolderName + "/" + fileName);
+
+        ref.delete().addOnSuccessListener(aVoid -> {
+            System.out.println("Deleted " + fileName + "Successfully!");
+            storageResponse.processFinish(null,null);
+        }).addOnFailureListener(e ->
+                storageResponse.OnErrorListener(e.toString()));
+    }
+
+    private void RenameFileFirebase(String fileName,String newName, StorageResponse storageResponse){
+        GetAllFirebaseImageNames(new StorageResponse() {
+            @Override
+            public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                for(StorageReference ref : response){
+                    String refname = ref.getName();
+                    if(refname.compareToIgnoreCase(fileName)==0){
+                        GetImageFromFirebase(fileName, new StorageResponse() {
+                            @Override
+                            public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                                //uploading with a new Name
+                                UploadImageToFirebasewithCustomName(bitmap, newName, new StorageResponse() {
+                                    @Override
+                                    public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                                        DeleteImageFromFirebase(fileName, new StorageResponse() {
+                                            @Override
+                                            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                                                storageResponse.processFinish(null,null);
+                                            }
+                                            @Override
+                                            public void OnErrorListener(String error) {
+                                                storageResponse.OnErrorListener(error);
+                                            }
+                                        });
+                                    }
+                                    @Override
+                                    public void OnErrorListener(String error) {
+                                        storageResponse.OnErrorListener(error);
+                                    }
+                                });
+                            }
+                            @Override
+                            public void OnErrorListener(String error) {
+                                storageResponse.OnErrorListener(error);
+                            }
+                        });
+                    }
+                }
+            }
+            @Override
+            public void OnErrorListener(String error) {
+                storageResponse.OnErrorListener(error);
+            }
+        });
+    }
+
+    public void GetPrimaryImageFromFirebase(StorageResponse storageResponse){
+        GetAllFirebaseImageNames(new StorageResponse() {
+            @Override
+            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                for(StorageReference ref: response){
+                    String refname = ref.getName();
+                    if(refname.toLowerCase().contains(ACTIVE_KEYWORD.toLowerCase())){
+                        System.out.println();
+                        GetImageFromFirebase(refname, new StorageResponse() {
+                            @Override
+                            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                                List<StorageReference> references = new ArrayList<>();
+                                references.add(ref);
+                                storageResponse.processFinish(references,bitmap);
+                            }
+                            @Override
+                            public void OnErrorListener(String error) {
+                                storageResponse.OnErrorListener(error);
+                            }
+                        });
+                    }
+                }
+
+                storageResponse.processFinish(null,null);
+            }
+            @Override
+            public void OnErrorListener(String error) {
+                storageResponse.OnErrorListener(error);
+            }
+        });
+    }
+
+    public void MakeImagePrimary(String fileName,StorageResponse storageResponse){
+        GetPrimaryImageFromFirebase(new StorageResponse() {
+            @Override
+            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                if(bitmap != null){
+                    String respname = response.get(0).getName();
+                    if(respname.compareToIgnoreCase(fileName)!=0){
+                        String OldName = response.get(0).getName();
+                        String NewName = OldName.toLowerCase().replaceAll(ACTIVE_KEYWORD.toLowerCase(),"");
+                        RenameFileFirebase(OldName, NewName, new StorageResponse() {
+                            @Override
+                            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                                String oldName = fileName;
+                                String newName = fileName.replace(".jpg","");
+                                newName = newName + ACTIVE_KEYWORD.toLowerCase() + ".jpg";
+                                RenameFileFirebase(oldName, newName, new StorageResponse() {
+                                    @Override
+                                    public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                                        storageResponse.processFinish(null,null);
+                                    }
+                                    @Override
+                                    public void OnErrorListener(String error) {
+                                        storageResponse.OnErrorListener(error);
+                                    }
+                                });
+                            }
+                            @Override
+                            public void OnErrorListener(String error) { storageResponse.OnErrorListener(error); }
+                        });
+                    }
+
+                    storageResponse.processFinish(null,null);
+                }
+                else{
+                     GetAllFirebaseImageNames(new StorageResponse() {
+                         @Override
+                         public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                             for(StorageReference storageReference: response){
+                                 String refname = storageReference.getName();
+                                 if(refname.compareToIgnoreCase(fileName)==0){
+                                     if(storageReference != null){
+                                         String OldName = storageReference.getName();
+                                         String NewName = OldName.replaceAll(".jpg","");
+                                         NewName = NewName.replaceAll(ACTIVE_KEYWORD.toLowerCase(),"");
+                                         NewName = NewName + ACTIVE_KEYWORD.toLowerCase() +".jpg";
+                                         if(NewName.compareToIgnoreCase(OldName)!=0){
+                                             RenameFileFirebase(OldName, NewName, new StorageResponse() {
+                                                 @Override
+                                                 public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                                                     storageResponse.processFinish(null,null);
+                                                 }
+                                                 @Override
+                                                 public void OnErrorListener(String error) {
+                                                     storageResponse.OnErrorListener(error);
+                                                 }
+                                             });
+                                         }
+                                     }
+                                 }
+                             }
+                         }
+                         @Override
+                         public void OnErrorListener(String error) {
+                            storageResponse.OnErrorListener(error);
+                         }
+                     });
+                }
+            }
+            @Override
+            public void OnErrorListener(String error) {
+                storageResponse.OnErrorListener(error);
+            }
+        });
+    }
+
     //saves the image to internal storage, using the given filename
     private String saveToInternalStorage(Bitmap bitmapImage,String fileName){
         ContextWrapper cw = new ContextWrapper(context);
@@ -82,38 +388,32 @@ public class FirebaseImagehandler {
 
 
     }
-    //gets the list of images from firebase based on directoryname and id given
-    public List<String> GetAllFirebaseImageNames(StorageResponse storageResponse) {
-        List<String> files = new  ArrayList();
-        StorageReference listRef = storage.getReference().child(FolderName);
-        listRef.listAll().addOnSuccessListener(listResult -> {
-                storageResponse.processFinish(listResult.getItems());
-        }).addOnFailureListener(e ->
-                System.out.println(e)
-        );
-        return files;
-    }
-    //downloads all images from firebase to internal storage
-    private void DownloadImagesFromFirebaseToLocalStorage(List<String> filenames, int index, ProgressBar progressBar){
-        final long ONE_MEGABYTE = 1024 * 1024 * 10;
-
-        if(index < filenames.size()){
-            String endpoint = FolderName +"/"+filenames.get(index);
-            StorageReference downloadRef = storageReference.child(endpoint);
-
-            downloadRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(bytes -> {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                saveToInternalStorage(bitmap,filenames.get(index));
-                //Toast.makeText(context,"Downloaded " + filenames.get(index) ,Toast.LENGTH_SHORT).show();
-                DownloadImagesFromFirebaseToLocalStorage(filenames,index+1,progressBar);
-
-            }).addOnFailureListener(e ->
-                    System.out.println(e)
-            );
+    //loads the image from local storage based on filename
+    public Bitmap loadImageFromStorage(String fileName) {
+        try {
+            ContextWrapper cw = new ContextWrapper(context);
+            File directory = cw.getDir(FolderName, Context.MODE_PRIVATE);
+            File f = new File(directory,fileName);
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+            return b;
         }
-        else{
-            progressBar.setVisibility(View.INVISIBLE);
-            return;
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    //Deletes the File from local Storage
+    private void DeleteImageFromlocalStorage(String fileName){
+        try{
+            ContextWrapper cw = new ContextWrapper(context);
+            File directory = cw.getDir(FolderName, Context.MODE_PRIVATE);
+            File f = new File(directory,fileName);
+            System.out.println(f.exists());
+            System.out.println(f.delete());
+        }catch (Exception ex){
+            System.out.println(ex);
         }
     }
     //Gets the Names of Images in Local Storage
@@ -138,101 +438,6 @@ public class FirebaseImagehandler {
         }
 
         return files;
-    }
-    //Deletes the File from local Storage
-    private void DeleteImageFromlocalStorage(String fileName){
-        try{
-            ContextWrapper cw = new ContextWrapper(context);
-            File directory = cw.getDir(FolderName, Context.MODE_PRIVATE);
-            File f = new File(directory,fileName);
-            System.out.println(f.exists());
-            System.out.println(f.delete());
-        }catch (Exception ex){
-            System.out.println(ex);
-        }
-    }
-    //Checks if the images in cloud have been downloaded, if there are any new files from cloud
-    //then they are downloaded into local storage
-    private void InitializeImages(ProgressBar progressBar){
-        GetAllFirebaseImageNames(response -> {
-            List<String> localStorageImages = GetNamesOfImagesInLocalStorage();
-            List<String> ImagesToDownloadFromCloud = new ArrayList();
-
-            for(StorageReference ref: response){
-                if(!(localStorageImages.contains(ref.getName()))){
-                    ImagesToDownloadFromCloud.add(ref.getName());
-                }
-            }
-
-            DownloadImagesFromFirebaseToLocalStorage(ImagesToDownloadFromCloud,0,progressBar);
-
-        });
-    }
-
-    //loads the image from local storage based on filename
-    public Bitmap loadImageFromStorage(String fileName) {
-        try {
-            ContextWrapper cw = new ContextWrapper(context);
-            File directory = cw.getDir(FolderName, Context.MODE_PRIVATE);
-            File f = new File(directory,fileName);
-            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-            return b;
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-    //uploads the image to Firebase
-    public void UploadImageToFirebase(Bitmap bitmap){
-        try {
-            StorageReference ref = storageReference.child(FolderName + "/" + generateFileName());
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-            UploadTask uploadTask = ref.putBytes(data);
-
-            uploadTask.addOnFailureListener(e -> {
-                System.out.println("Failed upload image");
-            }).addOnSuccessListener(taskSnapshot -> {
-                System.out.println("Successfully upload image");
-            });
-        }catch (Exception ex){
-            System.out.println(ex);
-        }
-    }
-    public void DeleteImageFromFirebase(String fileName){
-        StorageReference ref = storageReference.child(FolderName + "/" + fileName);
-        ref.delete().addOnSuccessListener(aVoid ->
-                System.out.println("Deleted " + fileName + "Successfully!")
-        ).addOnFailureListener(e ->
-                System.out.println(e)
-        );
-    }
-    //checks if there are any extra images that have been deleted from the cloud,
-    // and are then removed from the local storage as well
-    public void RefreshLocalStorage(ProgressBar progressBar){
-        List<String> localStorageImages = GetNamesOfImagesInLocalStorage();
-        if(!(localStorageImages.isEmpty())){
-            GetAllFirebaseImageNames(response -> {
-                List<String> cloudImages = new ArrayList();
-                for(StorageReference ref: response){
-                    cloudImages.add(ref.getName());
-                }
-
-                for (String localStorageImage: localStorageImages){
-                    if(!(cloudImages.contains(localStorageImage))){
-                        DeleteImageFromlocalStorage(localStorageImage);
-                    }
-                }
-            });
-            InitializeImages(progressBar);
-        }
-        else{
-            InitializeImages(progressBar);
-        }
     }
 }
 

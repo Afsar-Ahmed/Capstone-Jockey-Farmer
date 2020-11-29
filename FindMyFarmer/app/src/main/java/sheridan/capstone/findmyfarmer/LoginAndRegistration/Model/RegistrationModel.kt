@@ -10,13 +10,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
+import sheridan.capstone.findmyfarmer.Database.ObjectConverter
 import sheridan.capstone.findmyfarmer.Entities.Customer
+import sheridan.capstone.findmyfarmer.Entities.Farmer
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 class RegistrationModel:ViewModel() {
 
     val user : MutableLiveData<FirebaseUser?> by lazy{
         MutableLiveData<FirebaseUser?>()
     }
+    private lateinit var sessionData: SessionData
     public fun register(auth: FirebaseAuth, activity: Activity, email: String,name:String, password: String,IsFarmer:Boolean) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
@@ -25,13 +29,33 @@ class RegistrationModel:ViewModel() {
                     user.value = auth.currentUser
                     //Creating customer to add to database
                     //Adding customer instance to database
+                    sessionData = SessionData(activity)
                     var customer = Customer(1,name,email,password,IsFarmer)
                     DatabaseAPIHandler(activity, AsyncResponse {
-                        Toast.makeText(activity,"Message: " + it,Toast.LENGTH_LONG).show()
+                        var CustomerAdded = ObjectConverter.convertStringToObject(it,Customer::class.java,false) as Customer
+                        if(CustomerAdded != null){
+                            if(customer.isFarmer){
+                                var farmer = Farmer(1,CustomerAdded.customerID)
+                                DatabaseAPIHandler(activity, AsyncResponse {it2 ->
+                                    var FarmerAdded = ObjectConverter.convertStringToObject(it2,Farmer::class.java,false) as Farmer
+                                    if(FarmerAdded != null){
+                                        sessionData.setUserDataForSession(FarmerAdded,CustomerAdded)
+                                    }
+                                    else{
+                                        Toast.makeText(activity.applicationContext,"Couldnt add Farmer for: ${customer.customerEmail}",Toast.LENGTH_SHORT).show()
+                                    }
+                                }).execute("/addFarmer",farmer)
+                            }
+                            else{
+                                sessionData.setUserDataForSession(null,CustomerAdded)
+                            }
+                        }
+                        else{
+                            Toast.makeText(activity.applicationContext,"Couldnt add Customer ${customer.customerEmail}",Toast.LENGTH_SHORT).show()
+                        }
                     }).execute("/addCustomer",customer)
 
-                    Log.d("REGISTRATION", "registration :success $user"
-                    )
+                    Log.d("REGISTRATION", "registration :success $user")
                 } else {
                     // If registration fails show log
                     user.value = null

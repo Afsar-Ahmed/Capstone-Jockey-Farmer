@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
 
 
     <item
         android:id="@+id/nav_market"
-        android:icon="@drawable/ic_marketplace"
+        android:icon="@drawable/market_selector"
         android:title="Market"
-        />
+
+        >
+
+    </item>
     <item
         android:id="@+id/nav_following"
-        android:icon="@drawable/ic_following"
-        android:title="Following"/>
+        android:icon="@drawable/following_selector"
+        android:title="Following"
+
+        >
+
+    </item>
 
     <item
         android:id="@+id/nav_maps"
-        android:icon="@drawable/ic_map"
+        android:icon="@drawable/maps_selector"
         android:title="Map"
-        />
+
+        >
+
+    </item>
 
 </menu>
