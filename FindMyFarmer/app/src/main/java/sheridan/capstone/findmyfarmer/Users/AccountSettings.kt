@@ -9,12 +9,16 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import sheridan.capstone.findmyfarmer.Farmer.View.FarmManager
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.AfterLoginFarmerRegistration
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
@@ -69,6 +73,9 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
             R.id.nav_logout ->{
                 logOut()
                 finish()
+            }
+            R.id.WantToBeFarmer ->{
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,AfterLoginFarmerRegistration()).commit()
             }
         }
 

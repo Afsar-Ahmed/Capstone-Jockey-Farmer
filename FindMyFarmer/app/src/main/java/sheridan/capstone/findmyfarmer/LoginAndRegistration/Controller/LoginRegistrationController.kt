@@ -146,46 +146,22 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
    //Opens next activity if the user signed in successfully
     private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
        var loggedIn : Intent
-       var loginPlatform = FirebaseAuth.getInstance().currentUser?.providerData
-       var platformLogIn = false
+       var customer = sessionData.customerData
 
-       if(loginPlatform != null){
-           for(user: UserInfo in loginPlatform){
-               var providerid = user.providerId.toLowerCase()
-               if(providerid.contains("facebook".toLowerCase())
-                   || providerid.contains("google")){
-                   platformLogIn = true
-               }
+       if(customer != null){
+           if(customer.isFarmer){
+               loggedIn = Intent(context, FarmerActivity::class.java)
+               loggedIn.putExtras(Bundle().apply(extras))
+               startActivity(loggedIn)
+               finish()
+           }
+           else{
+               loggedIn = Intent(context, CustomerActivity::class.java)
+               loggedIn.putExtras(Bundle().apply(extras))
+               startActivity(loggedIn)
+               finish()
            }
        }
-
-       if(!platformLogIn){
-           var customer = sessionData.customerData
-           if(user != null){
-               if(customer != null){
-                   if(customer.isFarmer){
-                       loggedIn = Intent(context, FarmerActivity::class.java)
-                       loggedIn.putExtras(Bundle().apply(extras))
-                       startActivity(loggedIn)
-                       finish()
-                   }
-                   else{
-                       loggedIn = Intent(context, CustomerActivity::class.java)
-                       loggedIn.putExtras(Bundle().apply(extras))
-                       startActivity(loggedIn)
-                       finish()
-                   }
-               }
-           }
-       }
-       else{
-           loggedIn = Intent(context, CustomerActivity::class.java)
-           loggedIn.putExtras(Bundle().apply(extras))
-           startActivity(loggedIn)
-           finish()
-       }
-
-
    }
 
     //Run validation and login function with input provided by the user

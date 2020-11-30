@@ -2,6 +2,7 @@ package sheridan.capstone.findmyfarmer.Users
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,7 @@ import sheridan.capstone.findmyfarmer.Customer.View.Following
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.AfterLoginFarmerRegistration
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
@@ -84,14 +86,7 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
                     R.id.nav_following -> selectedFragment = Following()
                     R.id.nav_maps-> selectedFragment = Maps()
                 }
-
-                supportFragmentManager.beginTransaction()
-
-
-                    .replace(
-                    R.id.fragment_container,
-                    selectedFragment!!
-                )
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment!!)
 
           .addToBackStack(null)
                 .commit()
@@ -104,17 +99,16 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
         when(item.itemId){
             R.id.nav_logout ->{
                 logOut()
-
-
                 finish()
-
             }
             R.id.nav_account -> {
                 val intent = Intent(this, AccountSettings::class.java)
                 // start your next activity
                 startActivity(intent)
             }
-
+            R.id.WantToBeFarmer ->{
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AfterLoginFarmerRegistration()).commit()
+            }
 
 
         }

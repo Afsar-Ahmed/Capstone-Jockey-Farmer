@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.StorageReference
 import com.makeramen.roundedimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.farmers_business_info_card.view.*
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
@@ -36,8 +37,9 @@ class HubListToView (private val activity: Activity, val HubList: List<Farm>, pr
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val currentItem = HubList[position]
-
-        holder.imageView.setImageBitmap(currentItem.primaryImage)
+        if(!(currentItem.primaryImage.isNullOrBlank())){
+            Picasso.get().load(currentItem.primaryImage).into(holder.imageView)
+        }
         holder.Farmer_Name.text = currentItem.businessName
         holder.Farmers_Desc.text = currentItem.businessDescription
         holder.Rating.rating = currentItem.businessRating

@@ -1,10 +1,10 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
 import android.os.Bundle
+import android.view.*
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +37,7 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         val view: View = inflater.inflate(R.layout.fragment_farmer_hub, container, false)
         val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.pullToRefresh)
         val recycleView: RecyclerView = view.findViewById(R.id.Hub_Recycle_View)
+        val farmadd = view.findViewById<ImageView>(R.id.AddFarmImage)
 
         val adapter = HubListToView(requireActivity(),HubList, this)
         recycleView.adapter = adapter
@@ -54,6 +55,13 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
                 getFarmersFarms.GetHubFarms(HubList,farmer.farmerID)
             }
         }
+
+        farmadd.setOnClickListener{
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container,FarmAddFragment())?.commit()
+        }
+
+
 
         return view
     }

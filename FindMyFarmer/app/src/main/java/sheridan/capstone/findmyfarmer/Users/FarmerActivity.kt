@@ -24,6 +24,7 @@ import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.Customer.View.Following
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
+import sheridan.capstone.findmyfarmer.Farmer.View.FarmAddFragment
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
@@ -43,6 +44,8 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
 
         drawerLayout=findViewById(R.id.drawerLayout)
         NavigationView = findViewById(R.id.nav_view)
+
+
         if(customer != null) {
             var usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)
             usertext.text = customer.customerName
@@ -67,24 +70,28 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
 
         val bottomnav: BottomNavigationView = findViewById(R.id.bottom_nav_farmer)
 
-
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, FarmerHub()).commit()
-
 
         bottomnav.setOnNavigationItemSelectedListener { item ->
             var selectedFragment: Fragment? = null
             when (item.itemId) {
-                R.id.nav_manage_hub -> selectedFragment = FarmerHub()
-                R.id.nav_manage_market-> selectedFragment = MarketPlace()
-                R.id.nav__manage_following -> selectedFragment = Following()
-                R.id.nav_farmer_map_view-> selectedFragment = Maps()
+                R.id.nav_manage_hub -> {
+                    selectedFragment = FarmerHub()
+                }
+                R.id.nav_manage_market-> {
+                    selectedFragment = MarketPlace()
+                }
+                R.id.nav__manage_following -> {
+                    selectedFragment = Following()
+                }
+                R.id.nav_farmer_map_view-> {
+                    selectedFragment = Maps()
+                }
             }
-
             supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment!!).commit()
             true
         }
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -101,7 +108,6 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
 
         return true
     }
-
 
     private fun logOut(){
         Firebase.auth.signOut()

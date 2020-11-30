@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.StorageReference
 import com.makeramen.roundedimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.farmer_listing.view.*
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Farm
@@ -35,13 +36,14 @@ class FarmListToView (val FarmList: ArrayList<Farm>, private val listener:OnItem
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = FarmList[position]
 
-        if (currentItem != null) {
-            holder.imageView.setImageBitmap(currentItem.primaryImage)
-            holder.Farm_Name.text = currentItem.businessName
-            holder.Farm_Desc.text = currentItem.businessDescription
-            holder.Rating.rating = currentItem.businessRating
-            holder.Farm_City.text = currentItem.city
+        if(!(currentItem.primaryImage.isNullOrBlank())){
+            Picasso.get().load(currentItem.primaryImage).into(holder.imageView)
         }
+        holder.Farm_Name.text = currentItem.businessName
+        holder.Farm_Desc.text = currentItem.businessDescription
+        holder.Rating.rating = currentItem.businessRating
+        holder.Farm_City.text = currentItem.city
+
 
     }
 

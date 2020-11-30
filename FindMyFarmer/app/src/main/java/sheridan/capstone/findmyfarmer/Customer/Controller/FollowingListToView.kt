@@ -7,17 +7,18 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.farmer_listing.view.*
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.R
 
-class FollowingListToView (private val FavoritList: List<Farm>, private val listener: OnItemClickListener)
+class FollowingListToView (private val FavouriteList: ArrayList<Farm>, private val listener: OnItemClickListener)
     : RecyclerView.Adapter<FollowingListToView.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.fragment_following,
+            R.layout.farmer_listing,
             parent, false
         )
         return MyViewHolder(
@@ -25,12 +26,14 @@ class FollowingListToView (private val FavoritList: List<Farm>, private val list
         )
     }
 
-    override fun getItemCount() = FavoritList.size
+    override fun getItemCount() = FavouriteList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        val currentItem = FavoritList.get(position)
-        holder.imageView.setImageBitmap(currentItem.primaryImage)
+        val currentItem = FavouriteList[position]
+        if(!(currentItem.primaryImage.isNullOrBlank())){
+            Picasso.get().load(currentItem.primaryImage).into(holder.imageView)
+        }
         holder.Farmer_Name.text = currentItem.businessName
         holder.Farmers_Desc.text = currentItem.businessDescription
         holder.Rating.rating = currentItem.businessRating

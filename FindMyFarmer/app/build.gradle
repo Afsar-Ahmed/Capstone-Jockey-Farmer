@@ -100,6 +100,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
 
     implementation 'com.etebarian:meow-bottom-navigation:1.0.0'
+
+    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.71828'
+
 }
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.google-services'
