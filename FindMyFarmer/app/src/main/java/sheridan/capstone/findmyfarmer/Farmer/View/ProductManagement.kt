@@ -24,6 +24,8 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_account_settings.*
 import kotlinx.android.synthetic.main.farmer_info_card.*
+import sheridan.capstone.findmyfarmer.Database.AsyncResponse
+import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 
 
 class ProductManagement : Fragment() {
@@ -43,6 +45,8 @@ class ProductManagement : Fragment() {
     }
 
    private fun storeAPIDataintoDB(view: View){
+
+
         var randomCategory: String
 
         val productName = view.findViewById<TextView>(R.id.nME)
@@ -50,18 +54,20 @@ class ProductManagement : Fragment() {
         val productImage = view.findViewById<ImageView>(R.id.player)
 
         //Lists and objects
-        val c= DatabaseAPIHandler(activity?.applicationContext)
+        val c= DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {  })
+        val sr:StorageResponse
        val productList = ArrayList<Product>()
         val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
 
         //api keys & JSON
         val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
         val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
-        var productlist: JSONArray
+        lateinit var productlist: JSONArray
 
 
         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response -> try{
+            DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
             productlist = response.getJSONArray("results")
 
             for (i in 0..productlist.length()){
@@ -90,7 +96,7 @@ class ProductManagement : Fragment() {
                 productList += Product(id, pName, randomCategory)
 
             }
-            c.execute("/addProducts",productlist)
+            }).execute("/addProducts",productlist)
 
         } catch (e: JSONException){
             e.printStackTrace()

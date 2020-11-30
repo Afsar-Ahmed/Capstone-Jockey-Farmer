@@ -1,6 +1,8 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +17,13 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONException
 import org.w3c.dom.Text
+import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
+import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Entities.Product
+import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
+import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
+import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import sheridan.capstone.findmyfarmer.R
 
 class FarmerProducts : Fragment() {
@@ -26,7 +33,7 @@ class FarmerProducts : Fragment() {
     private lateinit var Pid: TextView
     private lateinit var quantity: TextView
     private lateinit var requestQueue: RequestQueue
-
+    private lateinit var fh: FirebaseImagehandler
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,10 +53,9 @@ class FarmerProducts : Fragment() {
         return view
     }
     private fun loadData(){
-
+        fh = FirebaseImagehandler(DirectoryName.Farm,1,activity?.applicationContext)
 
         //Lists and objects
-        val c= DatabaseAPIHandler(activity?.applicationContext)
         val productList = ArrayList<Product>()
         val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
 
@@ -62,34 +68,35 @@ class FarmerProducts : Fragment() {
         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response -> try{
             productlist = response.getJSONArray("results")
+    DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
+    for (i in 0..productlist.length()) {
+        val produce = productlist.getJSONObject(i)
 
-            for (i in 0..productlist.length()){
-                val produce = productlist.getJSONObject(i)
+        val id = produce.getInt("id")
 
-                val id = produce.getInt("id")
+        val img = produce.get("image")
+        println(img)
 
-                val img = produce.get("image")
-                println(img)
-                //converts image to Bitmap then uploads to view
-                // var convtoBit = Base64.decode(img.toString(),0)
-                //var image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
+        var convtoBit = Base64.decode(img.toString(),0)
+        var image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
 
-                val pName = produce.getString("name")
-                Pid.append("$id\n")
-                name.append("$pName\n")
+        val pName = produce.getString("name")
+        Pid.append("$id\n")
+        name.append("$pName\n")
 
-                //productImage.setImageBitmap(image)
+       // fh.UploadImageToFirebase(image,str))
+        //productImage.setImageBitmap(image)
 
-                randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
-                category.append("$randomCategory\n")
+        randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
+        category.append("$randomCategory\n")
 
-                //   convertStringIntoLoad(img)
+        //   convertStringIntoLoad(img)
 
-                //uploads certain values to db
-                productList += Product(id, pName, randomCategory)
+        //uploads certain values to db
+        productList += Product(id, pName, randomCategory)
 
-            }
-            c.execute("/addProducts",productlist)
+    }
+}).execute("/addProducts",productlist)
 
         } catch (e: JSONException){
             e.printStackTrace()
@@ -100,5 +107,4 @@ class FarmerProducts : Fragment() {
         //after setting up json object, requests call to api
         requestQueue.add(req)
     }
-
 }

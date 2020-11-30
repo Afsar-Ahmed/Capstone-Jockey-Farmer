@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="Farm_PostalCode_Updated" type="id">Farm_Po</item>
+    <item name="Farm_Updated_Image" type="id" />
+    <item name="updateFarmProgbar" type="id" />
+</resources>

@@ -63,8 +63,7 @@ class FarmListToView (val FarmList: ArrayList<Farm>, private val listener:OnItem
             }
         }
     }
-        interface OnItemClickListener{
-            fun onItemClick(position: Int)
-        }
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
     }
-
+}

@@ -22,7 +22,7 @@ class ImageListToView (private val imageList: List<Bitmap>, private val listener
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-       holder.imageView.setImageBitmap(imageList[position])
+        holder.imageView.setImageBitmap(imageList[position])
     }
 
     override fun getItemCount(): Int {
