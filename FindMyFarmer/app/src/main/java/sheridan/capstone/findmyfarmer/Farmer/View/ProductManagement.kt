@@ -1,6 +1,7 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -22,15 +23,18 @@ import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.R
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_account_settings.*
 import kotlinx.android.synthetic.main.farmer_info_card.*
 import sheridan.capstone.findmyfarmer.Database.AsyncResponse
+import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
+import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 
 
 class ProductManagement : Fragment() {
     private lateinit var requestQueue: RequestQueue
-
+    private lateinit var fh:FirebaseImagehandler
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         requestQueue= Volley.newRequestQueue(activity?.applicationContext)
@@ -45,17 +49,15 @@ class ProductManagement : Fragment() {
     }
 
    private fun storeAPIDataintoDB(view: View){
+       fh = FirebaseImagehandler(DirectoryName.Farm,1,activity?.applicationContext)
 
 
         var randomCategory: String
 
         val productName = view.findViewById<TextView>(R.id.nME)
         val productCategory= view.findViewById<TextView>(R.id.produce_cate)
-        val productImage = view.findViewById<ImageView>(R.id.player)
 
         //Lists and objects
-        val c= DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {  })
-        val sr:StorageResponse
        val productList = ArrayList<Product>()
         val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
 
@@ -67,7 +69,7 @@ class ProductManagement : Fragment() {
 
         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response -> try{
-            DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
+           DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
             productlist = response.getJSONArray("results")
 
             for (i in 0..productlist.length()){
@@ -78,9 +80,19 @@ class ProductManagement : Fragment() {
                 val img = produce.get("image")
                 println(img)
                 //converts image to Bitmap then uploads to view
-               // var convtoBit = Base64.decode(img.toString(),0)
-                //var image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
-                player.setImageDrawable(img as Drawable?)
+                val convtoBit = Base64.decode(img.toString(),0)
+                val image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
+
+                fh.UploadImageToFirebase(image,object:StorageResponse{
+                    override fun processFinish(response: MutableList<StorageReference>?, image: Bitmap?){
+
+                    }
+
+                    override fun OnErrorListener(error: String?) {
+                        print(error)
+                    }
+                })
+
                 val pName = produce.getString("name")
 
                 productName.text=pName
@@ -96,7 +108,7 @@ class ProductManagement : Fragment() {
                 productList += Product(id, pName, randomCategory)
 
             }
-            }).execute("/addProducts",productlist)
+           }).execute("/addProducts",productlist)
 
         } catch (e: JSONException){
             e.printStackTrace()

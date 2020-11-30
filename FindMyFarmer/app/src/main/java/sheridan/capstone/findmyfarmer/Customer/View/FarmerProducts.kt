@@ -1,5 +1,6 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -14,6 +15,7 @@ import com.android.volley.Response
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.firebase.storage.StorageReference
 import org.json.JSONArray
 import org.json.JSONException
 import org.w3c.dom.Text
@@ -53,7 +55,7 @@ class FarmerProducts : Fragment() {
         return view
     }
     private fun loadData(){
-        fh = FirebaseImagehandler(DirectoryName.Farm,1,activity?.applicationContext)
+        fh = FirebaseImagehandler(DirectoryName.Customer,1,activity?.applicationContext)
 
         //Lists and objects
         val productList = ArrayList<Product>()
@@ -68,7 +70,8 @@ class FarmerProducts : Fragment() {
         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response -> try{
             productlist = response.getJSONArray("results")
-    DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
+
+   DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
     for (i in 0..productlist.length()) {
         val produce = productlist.getJSONObject(i)
 
@@ -77,14 +80,22 @@ class FarmerProducts : Fragment() {
         val img = produce.get("image")
         println(img)
 
-        var convtoBit = Base64.decode(img.toString(),0)
-        var image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
+        val convtoBit = Base64.decode(img.toString(),0)
+        val image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
 
         val pName = produce.getString("name")
         Pid.append("$id\n")
         name.append("$pName\n")
 
-       // fh.UploadImageToFirebase(image,str))
+       fh.UploadImageToFirebase(image,object:StorageResponse{
+           override fun processFinish(response: MutableList<StorageReference>?, image: Bitmap?){
+
+           }
+
+           override fun OnErrorListener(error: String?) {
+               print(error)
+           }
+       })
         //productImage.setImageBitmap(image)
 
         randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
