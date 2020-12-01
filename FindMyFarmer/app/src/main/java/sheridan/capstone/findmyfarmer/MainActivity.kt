@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
-import sheridan.capstone.findmyfarmer.Entities.Customer
-import sheridan.capstone.findmyfarmer.Entities.Farmer
-import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
@@ -24,13 +20,12 @@ class MainActivity : AppCompatActivity() {
         sessionData = SessionData(this)
         checkIfSignedInAccount()
     }
-
     //Checks if the user in signed in the account
     //if not - go to the sign in page. if yes - go to a different activity
     private fun checkIfSignedInAccount() {
 
         val user = Firebase.auth.currentUser
-        var customer = sessionData.customerData
+        val customer = sessionData.customerData
         if (user != null && customer != null) {
             if(customer.isFarmer){
                 startActivity(Intent(this,

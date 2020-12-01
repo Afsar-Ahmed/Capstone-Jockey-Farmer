@@ -30,6 +30,8 @@ import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ProductManagement : Fragment() {
@@ -78,14 +80,17 @@ class ProductManagement : Fragment() {
                 val id = produce.getInt("id")
 
                 val img = produce.get("image")
-                println(img)
                 //converts image to Bitmap then uploads to view
                 val convtoBit = Base64.decode(img.toString(),0)
                 val image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
 
                 fh.UploadImageToFirebase(image,object:StorageResponse{
-                    override fun processFinish(response: MutableList<StorageReference>?, image: Bitmap?){
 
+                    override fun processFinish(
+                        response: MutableList<StorageReference>?,
+                        bitmap: Optional<Bitmap>?,
+                        Url: Optional<String>?
+                    ) {
                     }
 
                     override fun OnErrorListener(error: String?) {

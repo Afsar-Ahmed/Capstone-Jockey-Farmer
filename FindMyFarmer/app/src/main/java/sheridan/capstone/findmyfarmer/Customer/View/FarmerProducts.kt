@@ -27,6 +27,8 @@ import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import sheridan.capstone.findmyfarmer.R
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FarmerProducts : Fragment() {
 
@@ -88,7 +90,11 @@ class FarmerProducts : Fragment() {
         name.append("$pName\n")
 
        fh.UploadImageToFirebase(image,object:StorageResponse{
-           override fun processFinish(response: MutableList<StorageReference>?, image: Bitmap?){
+           override fun processFinish(
+               response: MutableList<StorageReference>?,
+               bitmap: Optional<Bitmap>?,
+               Url: Optional<String>?
+           ) {
 
            }
 
