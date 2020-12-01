@@ -37,13 +37,13 @@ import kotlin.collections.ArrayList
 class ProductManagement : Fragment() {
     private lateinit var requestQueue: RequestQueue
     private lateinit var fh:FirebaseImagehandler
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         requestQueue= Volley.newRequestQueue(activity?.applicationContext)
         val view: View = inflater.inflate(R.layout.fragment_product_management, container, false)
 
         storeAPIDataintoDB(view)
-
 
 
         // Inflate the layout for this fragment
@@ -80,6 +80,7 @@ class ProductManagement : Fragment() {
                 val id = produce.getInt("id")
 
                 val img = produce.get("image")
+                println(img)
                 //converts image to Bitmap then uploads to view
                 val convtoBit = Base64.decode(img.toString(),0)
                 val image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
@@ -100,14 +101,12 @@ class ProductManagement : Fragment() {
 
                 val pName = produce.getString("name")
 
-                productName.text=pName
+                productName.append("$pName")
 
-                //productImage.setImageBitmap(image)
+
 
                 randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
                 productCategory.text=randomCategory
-
-                //   convertStringIntoLoad(img)
 
                 //uploads certain values to db
                 productList += Product(id, pName, randomCategory)
@@ -124,6 +123,8 @@ class ProductManagement : Fragment() {
         //after setting up json object, requests call to api
        requestQueue.add(req)
     }
+
+
 }
 
 

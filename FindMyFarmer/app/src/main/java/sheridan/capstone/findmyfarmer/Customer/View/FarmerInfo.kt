@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_farmer_info.*
 import sheridan.capstone.findmyfarmer.Customer.Model.*
 import sheridan.capstone.findmyfarmer.Entities.Following
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
+import sheridan.capstone.findmyfarmer.Farmer.View.ProductManagement
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
@@ -34,6 +36,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     private lateinit var FarmImage : ImageView
     private lateinit var To_Map: Button
+    private lateinit var To_Products: Button
     private lateinit var RateIt: ImageView
 
     private lateinit var FarmFollow : ImageView
@@ -57,6 +60,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         FarmImage = view.findViewById(R.id.icon)
 
         To_Map = view.findViewById(R.id.Maps)
+        To_Products= view.findViewById(R.id.go_products)
         RateIt = view.findViewById(R.id.RateIt)
         FarmFollow = view.findViewById(R.id.FollowIcon)
 
@@ -88,17 +92,17 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
             }
             else{
 
-                var deletedFollow = activity?.let { it1 -> DeleteFollow(it1,FarmFollow) }
-                var farmid = viewModel.getFarmData().value!!.farmID
-                var customerid = sessionData.customerData.customerID
-                var following = Following(1,customerid,farmid)
+                val deletedFollow = activity?.let { it1 -> DeleteFollow(it1,FarmFollow) }
+                val farmid = viewModel.getFarmData().value!!.farmID
+                val customerid = sessionData.customerData.customerID
+                val following = Following(1,customerid,farmid)
                 if (deletedFollow != null) {
                     deletedFollow.removefollow(following)
                 }
             }
         }
 
-        var farm = viewModel.getFarmData().value
+        val farm = viewModel.getFarmData().value
 
         To_Map.setOnClickListener {
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
@@ -109,6 +113,17 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
             )
                 ?.commit()
         }
+
+      To_Products.setOnClickListener{
+            val FragmentManager: FragmentManager? = activity?.supportFragmentManager
+
+            val fragmentTransaction: FragmentTransaction? = FragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.fragment_container,
+                ProductManagement()
+            )
+                ?.commit()
+        }
+
         if (farm != null) {
             if(farm.isFollowed){
                FarmFollow.setImageDrawable(context?.resources?.getDrawable(android.R.drawable.btn_star_big_on))

@@ -22,10 +22,6 @@ class Maps : Fragment(), OnMapReadyCallback {
     private lateinit var mapview : MapView
 
 
-
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
