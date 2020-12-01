@@ -11,7 +11,14 @@ import android.widget.RatingBar
 import android.widget.RatingBar.OnRatingBarChangeListener
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
+<<<<<<< HEAD
 import sheridan.capstone.findmyfarmer.R
+=======
+import androidx.lifecycle.ViewModelProvider
+import sheridan.capstone.findmyfarmer.Entities.Rating
+import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
+>>>>>>> Sohaib
 
 private lateinit var ratingsbar : RatingBar
 private lateinit var ratingsdesc : EditText
@@ -42,6 +49,7 @@ class RateItDialogue : AppCompatDialogFragment(){
                 else -> RatingsScale.setText("")
             }
         })
+<<<<<<< HEAD
 
 SendFeedBack.setOnClickListener {
     // add feedback desc/rating to the database in the ratings table.
@@ -51,4 +59,21 @@ SendFeedBack.setOnClickListener {
     }
 
 
+=======
+        SendFeedBack.setOnClickListener {
+            // add feedback desc/rating to the database in the ratings table.
+            var viewModel =  ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+            var sessionData = SessionData(activity)
+            var farmid = viewModel.getFarmData().value!!.farmID
+            var customerid = sessionData.customerData.customerID
+            var rating = Rating(1,farmid,customerid, ratingsbar.rating, ratingsdesc.text.toString())
+            var addRating = activity?.let { it1 -> AddRating(it1,this) }
+            if (addRating != null) {
+                addRating.addRating(rating)
+            }
+        }
+        return builder.create()
+    }
+
+>>>>>>> Sohaib
 }

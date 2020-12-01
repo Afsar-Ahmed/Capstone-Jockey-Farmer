@@ -15,4 +15,11 @@
     <string name="reset_password_instructionLine2">We will send you a password reset</string>
     <string name="navigation_drawer_open">Open Navigation</string>
     <string name="navigation_drawer_close">Close Navigation</string>
+<<<<<<< HEAD
+=======
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="are_you_farmer">Are you a farmer?</string>
+    <string name="next">Next</string>
+>>>>>>> Sohaib
 </resources>

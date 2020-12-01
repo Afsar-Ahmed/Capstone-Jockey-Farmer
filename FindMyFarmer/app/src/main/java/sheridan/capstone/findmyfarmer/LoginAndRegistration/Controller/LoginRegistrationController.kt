@@ -25,16 +25,28 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+<<<<<<< HEAD
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 import kotlinx.android.synthetic.main.fragment_modified_login.*
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 
+=======
+import com.google.firebase.auth.UserInfo
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_modified_login.*
+>>>>>>> Sohaib
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.ResetModel
 import sheridan.capstone.findmyfarmer.R
+<<<<<<< HEAD
+=======
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
+import sheridan.capstone.findmyfarmer.Users.CustomerActivity
+>>>>>>> Sohaib
 import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 
 class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterface, ViewBehaviorInterface{
@@ -43,18 +55,26 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     private var RC_SIGN_IN  = 9001
     private lateinit var sic : GoogleSignInClient
     private lateinit var callBackManager: CallbackManager
+<<<<<<< HEAD
     private lateinit var fbCallBack : FacebookCallback<LoginResult>
+=======
+>>>>>>> Sohaib
     private val loginModel: LoginModel by viewModels()
     private val registerModel: RegistrationModel by viewModels()
     private val resetModel : ResetModel by viewModels()
     private var user: FirebaseUser? = null
     private var registeredUser: Boolean = false
+<<<<<<< HEAD
+=======
+    private lateinit var sessionData: SessionData
+>>>>>>> Sohaib
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = Firebase.auth
         callBackManager = CallbackManager.Factory.create()
+<<<<<<< HEAD
 
         //observer for the user value in the LoginModel Class
         //if changed - log in to the farmerListing
@@ -65,6 +85,18 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                 finish()
             }else{
                 Toast.makeText(applicationContext, "Incorrect email/password!",
+=======
+        sessionData = SessionData(this)
+        //observer for the user value in the LoginModel Class
+        //if changed - log in to the farmerListing
+        val authObserver = Observer<FirebaseUser?>{ newAuth ->
+            user = newAuth
+            if(user != null){
+               //startActivity(Intent(this,CustomerActivity::class.java))
+                updateUI(this,user)
+            }else{
+                Toast.makeText(applicationContext, "Incorrect email/password",
+>>>>>>> Sohaib
                     Toast.LENGTH_SHORT).show()
             }
         }
@@ -90,8 +122,11 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         registerModel.user.observe(this,authObserver)
         //observe when user value has been changed in the LoginModel
         loginModel.user.observe(this, authObserver)
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> Sohaib
     }
 
     public override fun onStart() {
@@ -125,7 +160,11 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                 try{
                     //breaking down the account object to retrieve the basic data from the account, like name, email, id etc
                     val acc = googleAcc.getResult(ApiException::class.java)!!
+<<<<<<< HEAD
                     loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!, acc,bundle=null)
+=======
+                    loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!,bundle=null)
+>>>>>>> Sohaib
                 }
                 catch (e: Exception){
                     Toast.makeText(
@@ -143,6 +182,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         else{
             callBackManager.onActivityResult(requestCode, resultCode, data)
         }
+<<<<<<< HEAD
 
     }
 
@@ -156,6 +196,30 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         }
     }
 
+=======
+    }
+
+   //Opens next activity if the user signed in successfully
+    private fun updateUI(context: Context, user: FirebaseUser?, extras: Bundle.() -> Unit = {}){
+       var loggedIn : Intent
+       var customer = sessionData.customerData
+
+       if(customer != null){
+           if(customer.isFarmer){
+               loggedIn = Intent(context, FarmerActivity::class.java)
+               loggedIn.putExtras(Bundle().apply(extras))
+               startActivity(loggedIn)
+               this.finish()
+           }
+           else{
+               loggedIn = Intent(context, CustomerActivity::class.java)
+               loggedIn.putExtras(Bundle().apply(extras))
+               startActivity(loggedIn)
+               this.finish()
+           }
+       }
+   }
+>>>>>>> Sohaib
 
     //Run validation and login function with input provided by the user
     override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
@@ -165,9 +229,14 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     }
 
     //When sign up button is clicked - parse the information to the input validation and then signUp
+<<<<<<< HEAD
     override fun OnSignUpButtonClickListener(email: EditText, password: EditText, repeatPassword: EditText) {
         if(registerModel.registerValidation(email,password,repeatPassword))
             registerModel.register(auth,this,email.text.toString(),password.text.toString())
+=======
+    override fun OnSignUpButtonClickListener(email: String, name: String, password: String, isFarmer: Boolean) {
+            registerModel.register(auth,this,email,name,password,isFarmer)
+>>>>>>> Sohaib
     }
 
     //Open registration fragment on link click
@@ -213,6 +282,20 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         }
     }
 
+<<<<<<< HEAD
+=======
+    override fun Validation(email: EditText, name: EditText, password: EditText, repeatPassword: EditText):Boolean {
+         val validatedSensitive = registerModel.registerValidation(email,password,repeatPassword)
+         val validatedName = registerModel.registerNameValidation(name)
+        return validatedSensitive && validatedName
+    }
+
+    override fun Navigate(FragmentId: Int) {
+        var navController = Navigation.findNavController(this,R.id.fragment_host)
+        navController.navigate(FragmentId)
+    }
+
+>>>>>>> Sohaib
     //hide the keyboard
     override fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

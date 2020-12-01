@@ -10,16 +10,30 @@ import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+<<<<<<< HEAD
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 
 class MainActivity : AppCompatActivity() {
 
+=======
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
+import sheridan.capstone.findmyfarmer.Users.CustomerActivity
+import sheridan.capstone.findmyfarmer.Users.FarmerActivity
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var sessionData: SessionData
+>>>>>>> Sohaib
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+<<<<<<< HEAD
         //startActivity(Intent(this, LoginRegistrationController::class.java))
         //Log.d("Switched Activity", "Switched to the LoginRegistrationController")
+=======
+        sessionData = SessionData(this)
+>>>>>>> Sohaib
         checkIfSignedInAccount()
     }
 
@@ -28,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkIfSignedInAccount() {
 
         val user = Firebase.auth.currentUser
+<<<<<<< HEAD
         if (user != null) {
             startActivity(Intent(this,
               CustomerActivity::class.java))
@@ -55,5 +70,28 @@ class MainActivity : AppCompatActivity() {
 
         //This how to call the API
         //c.execute("/addProducts",plist);
+=======
+        var customer = sessionData.customerData
+        if (user != null && customer != null) {
+            if(customer.isFarmer){
+                startActivity(Intent(this,
+                    FarmerActivity::class.java))
+            }
+            else{
+                startActivity(Intent(this,
+                    CustomerActivity::class.java))
+            }
+
+        }
+        else {
+            sessionData.ClearAllData()
+            startActivity(Intent(this, LoginRegistrationController::class.java))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkIfSignedInAccount()
+>>>>>>> Sohaib
     }
 }

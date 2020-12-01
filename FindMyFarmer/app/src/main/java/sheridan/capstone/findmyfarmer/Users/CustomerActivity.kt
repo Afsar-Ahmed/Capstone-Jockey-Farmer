@@ -2,7 +2,13 @@ package sheridan.capstone.findmyfarmer.Users
 
 import android.content.Intent
 import android.os.Bundle
+<<<<<<< HEAD
 import android.view.MenuItem
+=======
+import android.view.Gravity
+import android.view.MenuItem
+import android.widget.TextView
+>>>>>>> Sohaib
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,20 +28,35 @@ import sheridan.capstone.findmyfarmer.Customer.View.Following
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
+<<<<<<< HEAD
 import sheridan.capstone.findmyfarmer.R
+=======
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.AfterLoginFarmerRegistration
+import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
+>>>>>>> Sohaib
 
 
 class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
+<<<<<<< HEAD
 
    var User_Customer_Only : Boolean = true
+=======
+    private lateinit var sessionData: SessionData
+>>>>>>> Sohaib
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_view)
 
+<<<<<<< HEAD
 
+=======
+        sessionData = SessionData(this)
+        var customer = sessionData.customerData
+>>>>>>> Sohaib
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
 
         drawerLayout = findViewById(R.id.drawerLayout)
@@ -43,6 +64,14 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
 
         NavigationView.setNavigationItemSelectedListener(this)
 
+<<<<<<< HEAD
+=======
+        if(customer != null) {
+            var usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)
+            usertext.text = customer.customerName
+        }
+
+>>>>>>> Sohaib
 
         setSupportActionBar(toolbarView)
 
@@ -77,6 +106,7 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
                     R.id.nav_following -> selectedFragment = Following()
                     R.id.nav_maps-> selectedFragment = Maps()
                 }
+<<<<<<< HEAD
 
                 supportFragmentManager.beginTransaction()
 
@@ -85,6 +115,9 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
                     R.id.fragment_container,
                     selectedFragment!!
                 )
+=======
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment!!)
+>>>>>>> Sohaib
 
           .addToBackStack(null)
                 .commit()
@@ -97,17 +130,27 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
         when(item.itemId){
             R.id.nav_logout ->{
                 logOut()
+<<<<<<< HEAD
 
 
                 finish()
 
+=======
+                finish()
+>>>>>>> Sohaib
             }
             R.id.nav_account -> {
                 val intent = Intent(this, AccountSettings::class.java)
                 // start your next activity
                 startActivity(intent)
             }
+<<<<<<< HEAD
 
+=======
+            R.id.WantToBeFarmer ->{
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AfterLoginFarmerRegistration()).commit()
+            }
+>>>>>>> Sohaib
 
 
         }
@@ -119,6 +162,10 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
 
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
+<<<<<<< HEAD
+=======
+            sessionData.ClearAllData()
+>>>>>>> Sohaib
             startActivity(
                 Intent(this,
                     LoginRegistrationController::class.java)

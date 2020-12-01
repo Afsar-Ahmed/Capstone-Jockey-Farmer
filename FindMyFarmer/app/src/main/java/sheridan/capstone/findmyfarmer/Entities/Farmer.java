@@ -1,5 +1,6 @@
 package sheridan.capstone.findmyfarmer.Entities;
 
+<<<<<<< HEAD
 public class Farmer extends Customer {
     private int FarmerID;
     private String BusinessName;
@@ -40,4 +41,20 @@ public class Farmer extends Customer {
     public int getProductID() { return ProductID; }
     public String getBusinessDescription() { return BusinessDescription; }
     public int getBusinessRating() { return BusinessRating; }
+=======
+public class Farmer{
+    private int FarmerID;
+    private int CustomerID;
+
+    public Farmer(){ }
+
+    public Farmer(int FarmerID,int CustomerID){
+        this.FarmerID = FarmerID;
+        this.CustomerID = CustomerID;
+    }
+
+    //Getters
+    public int getFarmerID() { return FarmerID; }
+    public int getCustomerID() { return CustomerID; }
+>>>>>>> Sohaib
 }

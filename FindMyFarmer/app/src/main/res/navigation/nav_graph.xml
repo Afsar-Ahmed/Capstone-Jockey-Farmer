@@ -8,8 +8,13 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="sheridan.capstone.findmyfarmer.LoginAndRegistration.View.LoginFragment"
+<<<<<<< HEAD
         android:label="fragment_modified_login"
         tools:layout="@layout/fragment_modified_login">
+=======
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+>>>>>>> Sohaib
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment"
@@ -37,6 +42,16 @@
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/slide_out_right"
             app:popExitAnim="@android:anim/slide_in_left" />
+<<<<<<< HEAD
+=======
+        <action
+            android:id="@+id/action_registrationFragment_to_farmerConfirmationFragment"
+            app:destination="@id/farmerConfirmationFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+>>>>>>> Sohaib
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
@@ -51,4 +66,27 @@
             app:launchSingleTop="false"
             app:popEnterAnim="@android:anim/slide_out_right" />
     </fragment>
+<<<<<<< HEAD
+=======
+    <fragment
+        android:id="@+id/farmerConfirmationFragment"
+        android:name="sheridan.capstone.findmyfarmer.LoginAndRegistration.View.FarmerConfirmationFragment"
+        android:label="fragment_farmer_confirmation"
+        tools:layout="@layout/fragment_farmer_confirmation" >
+        <action
+            android:id="@+id/action_farmerConfirmationFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_in_left" />
+        <argument android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument android:name="password"
+            app:argType="string" />
+    </fragment>
+>>>>>>> Sohaib
 </navigation>
