@@ -13,12 +13,11 @@
     android:focusableInTouchMode="true"
     tools:context=".LoginAndRegistration.View.LoginFragment">
 
-
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="156dp"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/custom_email_icon"
         android:drawablePadding="12dp"
@@ -37,13 +36,14 @@
 
     <EditText
         android:id="@+id/inputPassword"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/custom_password_icon"
         android:drawablePadding="12dp"
         android:ems="12"
+        android:fontFamily="@font/roboto_light"
         android:hint="@string/fui_password_hint"
         android:inputType="textPassword"
         android:paddingStart="12dp"
@@ -52,15 +52,15 @@
         android:textColorHint="@color/scheme_medium_green"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="@+id/inputEmail"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/inputEmail"
         app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
-
 
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/roboto_light"
         android:paddingStart="30dp"
@@ -73,19 +73,6 @@
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
         app:layout_constraintStart_toStartOf="@+id/inputPassword"
         app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
-
-
-    <!--    <com.google.android.gms.common.SignInButton-->
-    <!--        android:id="@+id/GSignIn"-->
-    <!--        android:layout_width="92dp"-->
-    <!--        android:layout_height="79dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:background="@color/scheme_orange_selected"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintEnd_toStartOf="@+id/textView"-->
-    <!--        app:layout_constraintHorizontal_bias="0.59"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/loginBtn"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/textView"></com.google.android.gms.common.SignInButton>-->
 
     <TextView
         android:id="@+id/forgotPswrdLink"
@@ -123,7 +110,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="108dp"
         android:text="OR \n SIGN IN WITH "
         android:textAlignment="center"
         android:textSize="22sp"
