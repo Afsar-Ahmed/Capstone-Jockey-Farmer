@@ -131,6 +131,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Fruit_List"
         android:layout_width="392dp"
@@ -141,6 +142,8 @@
         app:layout_constraintTop_toTopOf="@+id/Desc"
         tools:listitem="@layout/farmer_info_card"/>
 
+=======
+>>>>>>> parent of 7f933a8... Most Recent
 =======
 >>>>>>> parent of 7f933a8... Most Recent
 =======
