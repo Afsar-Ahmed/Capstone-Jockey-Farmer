@@ -44,20 +44,12 @@
             android:layout_height="wrap_content"
 
 
-<<<<<<< HEAD
             android:layout_marginTop="236dp"
-=======
-            android:layout_marginTop="284dp"
->>>>>>> Sohaib
             android:background="@color/fui_transparent"
             android:ems="10"
             android:hint="@string/input_email_hint"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
-<<<<<<< HEAD
-=======
-            app:layout_constraintHorizontal_bias="0.497"
->>>>>>> Sohaib
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/FarmerLogo" />
 
@@ -78,20 +70,13 @@
             android:id="@+id/forgotPswrdLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
             android:layout_marginStart="188dp"
-=======
->>>>>>> Sohaib
             android:layout_marginTop="97dp"
             android:layout_marginBottom="4dp"
             android:clickable="true"
             android:text="@string/forgot_password_link"
             android:textColor="@color/WhiteColor"
             app:layout_constraintBottom_toTopOf="@+id/registerAccount"
-<<<<<<< HEAD
-=======
-            app:layout_constraintEnd_toEndOf="parent"
->>>>>>> Sohaib
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/inputEmail" />
 
@@ -99,22 +84,14 @@
             android:id="@+id/registerAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
             android:layout_marginStart="99dp"
-=======
->>>>>>> Sohaib
             android:layout_marginTop="121dp"
             android:layout_marginBottom="76dp"
             android:clickable="true"
             android:text="@string/register_link"
             android:textColor="@color/WhiteColor"
             app:layout_constraintBottom_toBottomOf="@+id/loginBtn"
-<<<<<<< HEAD
             app:layout_constraintStart_toStartOf="@+id/loginBtn"
-=======
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
->>>>>>> Sohaib
             app:layout_constraintTop_toTopOf="@+id/inputEmail" />
 
 
@@ -127,11 +104,7 @@
             android:layout_marginBottom="9dp"
             app:layout_constraintBottom_toTopOf="@+id/FBSignIn"
             app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
             app:layout_constraintTop_toTopOf="@+id/textView"></com.google.android.gms.common.SignInButton>
-=======
-            app:layout_constraintTop_toTopOf="@+id/textView"/>
->>>>>>> Sohaib
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/FBSignIn"
@@ -149,10 +122,7 @@
 
 
             android:layout_marginTop="49dp"
-<<<<<<< HEAD
             android:layout_marginEnd="23dp"
-=======
->>>>>>> Sohaib
             android:layout_marginBottom="44dp"
             android:background="@color/fui_transparent"
 
@@ -160,12 +130,7 @@
             android:hint="@string/fui_password_hint"
             android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="@+id/forgotPswrdLink"
-<<<<<<< HEAD
             app:layout_constraintEnd_toEndOf="@+id/registerAccount"
-=======
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
->>>>>>> Sohaib
             app:layout_constraintTop_toTopOf="@+id/inputEmail" />
 
         <Button

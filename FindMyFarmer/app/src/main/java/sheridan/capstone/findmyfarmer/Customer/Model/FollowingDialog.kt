@@ -9,13 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.ViewModelProvider
-<<<<<<< HEAD
 import sheridan.capstone.findmyfarmer.R
-=======
-import sheridan.capstone.findmyfarmer.Entities.Following
-import sheridan.capstone.findmyfarmer.R
-import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
->>>>>>> Sohaib
 
 private lateinit var Following_Image : ImageView
 private lateinit var Add_To_Following : Button
@@ -28,13 +22,9 @@ private var Farmer_Rating_View = 0f
 private var Farmer_Desc_View = ""
 
 
-<<<<<<< HEAD
 class FollowingDialog: AppCompatDialogFragment() {
 
 
-=======
-class FollowingDialog(val imageView: ImageView): AppCompatDialogFragment() {
->>>>>>> Sohaib
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -47,7 +37,6 @@ class FollowingDialog(val imageView: ImageView): AppCompatDialogFragment() {
 
         val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
-<<<<<<< HEAD
         FarmerName.text= viewModel.getFarmer_Name().value
         Farmer_Name_View = FarmerName.text.toString()
 
@@ -63,17 +52,6 @@ class FollowingDialog(val imageView: ImageView): AppCompatDialogFragment() {
         Farmer_Rating_View = viewModel.getFarmer_Rating().value!!.toFloat()
 
 
-=======
-        FarmerName.text= viewModel.getFarmData().value!!.businessName
-        Farmer_Name_View = FarmerName.text.toString()
-
-        Farmer_City_View = viewModel.getFarmData().value!!.city
-
-
-       Farmer_Desc_View = viewModel.getFarmData().value!!.businessDescription
-
-        //Image = viewModel.getImage().value!!.toInt()
->>>>>>> Sohaib
 
         builder.setView(view)
         FarmerName.setText(
@@ -84,21 +62,8 @@ class FollowingDialog(val imageView: ImageView): AppCompatDialogFragment() {
         )
 
         Add_To_Following.setOnClickListener {
-<<<<<<< HEAD
 //add farmer to the following table.
             dialog?.dismiss()
-=======
-            //add farmer to the following table.
-            var viewModel =  ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-            var sessionData = SessionData(activity)
-            var farmid = viewModel.getFarmData().value!!.farmID
-            var customerid = sessionData.customerData.customerID
-            var following = Following(1,customerid,farmid)
-            var addFollow = activity?.let { it1 -> AddFollow(it1,this,imageView) }
-            if (addFollow != null) {
-                addFollow.addfollow(following)
-            }
->>>>>>> Sohaib
         }
         return builder.create()
     }

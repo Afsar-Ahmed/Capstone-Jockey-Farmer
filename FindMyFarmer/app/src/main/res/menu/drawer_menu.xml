@@ -13,13 +13,6 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_signout"
             android:title="logout" />
-<<<<<<< HEAD
-=======
-        <item
-            android:id="@+id/WantToBeFarmer"
-            android:icon="@drawable/harvest"
-            android:title="Want to be a Farmer?" />
->>>>>>> Sohaib
     </group>
 
     <item android:title="Info">

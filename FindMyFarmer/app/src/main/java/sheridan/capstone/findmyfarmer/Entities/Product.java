@@ -1,10 +1,6 @@
 package sheridan.capstone.findmyfarmer.Entities;
 
-<<<<<<< HEAD
 public class    Product {
-=======
-public class Product {
->>>>>>> Sohaib
 
     private int ProductID;
     private String ProductName;

@@ -1,10 +1,6 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.View
 
 import android.os.Bundle
-<<<<<<< HEAD
-=======
-import android.util.Log
->>>>>>> Sohaib
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View

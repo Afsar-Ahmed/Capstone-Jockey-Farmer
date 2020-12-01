@@ -8,24 +8,6 @@
     tools:layout_editor_absoluteX="-4dp"
     tools:layout_editor_absoluteY="-168dp">
 
-<<<<<<< HEAD
-=======
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-
-        android:layout_gravity="center"
-        android:contentDescription="TODO"
-        android:scaleType="centerCrop"
-        android:src="@drawable/test1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
->>>>>>> Sohaib
     <RatingBar
         android:id="@+id/Ratings"
         style="@android:style/Widget.Material.RatingBar.Indicator"
@@ -33,26 +15,14 @@
         android:layout_height="wrap_content"
 
         android:layout_gravity="center"
-<<<<<<< HEAD
-=======
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
->>>>>>> Sohaib
         android:isIndicator="true"
         android:numStars="5"
         android:textAlignment="center"
         android:theme="@style/Rating2"
-<<<<<<< HEAD
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-=======
-        app:layout_constraintEnd_toStartOf="@+id/RateIt"
-        app:layout_constraintStart_toEndOf="@+id/FollowIcon"
-        app:layout_constraintTop_toBottomOf="@+id/icon" />
->>>>>>> Sohaib
 
     <TextView
         android:id="@+id/Address"
@@ -60,26 +30,14 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="16dp"
-<<<<<<< HEAD
         android:layout_marginTop="49dp"
-=======
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="306dp"
->>>>>>> Sohaib
         android:text="Address"
         android:textAlignment="center"
         android:textColor="@color/colorTextPrimary"
         android:textSize="24sp"
         android:textStyle="normal"
-<<<<<<< HEAD
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Name" />
-=======
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Name" />
->>>>>>> Sohaib
 
     <TextView
         android:id="@+id/Name"
@@ -87,51 +45,28 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="16dp"
-<<<<<<< HEAD
         android:layout_marginTop="78dp"
-=======
-        android:layout_marginTop="16dp"
->>>>>>> Sohaib
         android:text="Name"
         android:textAlignment="center"
         android:textColor="@color/colorTextPrimary"
         android:textSize="24sp"
         android:textStyle="normal"
-<<<<<<< HEAD
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Ratings" />
-=======
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Ratings" />
->>>>>>> Sohaib
 
     <TextView
         android:id="@+id/Desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-<<<<<<< HEAD
         android:layout_marginTop="56dp"
-=======
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="304dp"
->>>>>>> Sohaib
         android:background="@color/WhiteColor"
         android:text="Description"
         android:textAlignment="center"
         android:textColor="@color/colorTextSecondar"
         android:textSize="18sp"
-<<<<<<< HEAD
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Address" />
-=======
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Address" />
->>>>>>> Sohaib
 
     <Button
         android:id="@+id/Maps"
@@ -141,7 +76,6 @@
         android:layout_marginTop="50dp"
         android:text="Open In Maps"
         app:layout_constraintEnd_toEndOf="parent"
-<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Products" />
@@ -172,13 +106,10 @@
         app:layout_constraintBottom_toTopOf="@+id/Ratings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-=======
->>>>>>> Sohaib
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/RateIt"
-<<<<<<< HEAD
         android:layout_width="62dp"
         android:layout_height="28dp"
         android:src="@drawable/review"
@@ -186,23 +117,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Ratings"
         app:layout_constraintTop_toTopOf="parent" />
-=======
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/review"
-        app:layout_constraintBottom_toBottomOf="@+id/Ratings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Ratings"
-        app:layout_constraintTop_toTopOf="@+id/Ratings" />
->>>>>>> Sohaib
 
     <ImageView
         android:id="@+id/FollowIcon"
         android:layout_width="60dp"
         android:layout_height="50dp"
-<<<<<<< HEAD
         android:layout_marginTop="337dp"
         android:layout_marginEnd="55dp"
         android:src="@drawable/follow"
@@ -219,30 +138,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Desc"
         tools:listitem="@layout/farmer_info_card"/>
-=======
-        android:layout_marginStart="16dp"
-        android:src="@drawable/follow"
-        app:layout_constraintBottom_toBottomOf="@+id/Ratings"
-        app:layout_constraintEnd_toStartOf="@+id/Ratings"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Ratings"
-        app:srcCompat="@android:drawable/btn_star_big_off" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Fruit_List"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/Maps"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Desc"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/farmer_info_card" />
->>>>>>> Sohaib
 
 =======
 >>>>>>> parent of 7f933a8... Most Recent

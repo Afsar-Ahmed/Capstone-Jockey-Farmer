@@ -5,10 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD
-=======
-import androidx.navigation.findNavController
->>>>>>> Sohaib
 import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.android.synthetic.main.fragment_registration.view.*
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationInterface
@@ -18,59 +14,26 @@ import sheridan.capstone.findmyfarmer.R
 
 private lateinit var registration_interface: LoginRegistrationInterface
 private lateinit var viewBehaviorInterface: ViewBehaviorInterface
-<<<<<<< HEAD
 class RegistrationFragment : Fragment() {
 
 
-=======
-lateinit var email: String
-class RegistrationFragment : Fragment() {
-
->>>>>>> Sohaib
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_registration, container, false)
         registration_interface = activity as LoginRegistrationInterface
-<<<<<<< HEAD
 
         view.signUpButton.setOnClickListener{
             registration_interface.OnSignUpButtonClickListener(view.newUserEmail,view.password,view.RePassword)
-=======
-        viewBehaviorInterface = activity as ViewBehaviorInterface
-
-        //validates the input and moves to the confirmation
-        view.nextButton.setOnClickListener{
-
-         if(registration_interface.Validation(view.newUserEmail,view.NameInput,view.password,view.repeatPassword)) {
-             //Database Writing information to
-             val directions = RegistrationFragmentDirections.
-             actionRegistrationFragmentToFarmerConfirmationFragment(newUserEmail.text.toString(),
-                 NameInput.text.toString(),password.text.toString())
-             view.findNavController().navigate(directions)
-             viewBehaviorInterface.hideKeyboard(view)
-         }
-
->>>>>>> Sohaib
         }
         return view
     }
 
-<<<<<<< HEAD
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBehaviorInterface = activity as ViewBehaviorInterface
         viewBehaviorInterface.viewBehavior(constraint_layout_registration)
-=======
-
-    private fun sendData(){
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewBehaviorInterface = activity as ViewBehaviorInterface
-        viewBehaviorInterface.viewBehavior(FrameLayout)
->>>>>>> Sohaib
     }
 
 }

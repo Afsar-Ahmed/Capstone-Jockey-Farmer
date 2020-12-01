@@ -1,9 +1,5 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
-<<<<<<< HEAD
-=======
-import android.annotation.SuppressLint
->>>>>>> Sohaib
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +11,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-<<<<<<< HEAD
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import sheridan.capstone.findmyfarmer.R
@@ -46,6 +41,7 @@ var ImageInt : Int =0
 <<<<<<< HEAD
     val List = FarmerController.GenerateFruit(4)
 
+<<<<<<< HEAD
 =======
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,13 +75,14 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 >>>>>>> Sohaib
 =======
 >>>>>>> parent of 7f933a8... Most Recent
+=======
+>>>>>>> parent of 43f1637... up
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-<<<<<<< HEAD
 
         val view:View=  inflater.inflate(R.layout.fragment_farmer_info, container, false)
          FarmerName  = view.findViewById(R.id.Name)
@@ -110,6 +107,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         recycleView.setHasFixedSize(true)
 
 
+<<<<<<< HEAD
 =======
         val view:View=  inflater.inflate(R.layout.fragment_farmer_info, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -166,6 +164,8 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 >>>>>>> Sohaib
 =======
 >>>>>>> parent of 7f933a8... Most Recent
+=======
+>>>>>>> parent of 43f1637... up
 
         To_Map.setOnClickListener {
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
@@ -175,7 +175,6 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
                 Maps()
             )
                 ?.commit()
-<<<<<<< HEAD
 
 
 
@@ -199,38 +198,13 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
 
 
-=======
-        }
-        if (farm != null) {
-            if(farm.isFollowed){
-               FarmFollow.setImageDrawable(context?.resources?.getDrawable(android.R.drawable.btn_star_big_on))
-            }
-            else{
-                FarmFollow.setImageDrawable(context?.resources?.getDrawable(android.R.drawable.btn_star_big_off))
-            }
-
-            if(farm.alreadyRated){
-                RateIt.visibility = View.INVISIBLE
-                RateIt.isEnabled = false;
-            }
-            else{
-                RateIt.visibility = View.VISIBLE
-                RateIt.isEnabled = true;
-            }
-        }
-
->>>>>>> Sohaib
         return view
     }
 
     fun openDialog() {
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-<<<<<<< HEAD
         val exampleDialog =
             RateItDialogue()
-=======
-        val exampleDialog = RateItDialogue()
->>>>>>> Sohaib
 
         if (FragmentManager != null) {
             exampleDialog.show(FragmentManager,"Rate it")
@@ -240,7 +214,6 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-<<<<<<< HEAD
         val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel.getFarmer_Name().observe(viewLifecycleOwner, Observer {
 
@@ -281,16 +254,6 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         }
 
 
-=======
-
-        if(!(viewModel.getFarmData().value!!.primaryImage.isNullOrBlank())){
-            Picasso.get().load(viewModel.getFarmData().value!!.primaryImage).into(FarmImage)
-        }
-        FarmName.text = viewModel.getFarmData().value!!.businessName
-        FarmCity.text = viewModel.getFarmData().value!!.city
-        FarmDesc.text = viewModel.getFarmData().value!!.businessDescription
-        FarmRating.rating = viewModel.getFarmData().value!!.businessRating
->>>>>>> Sohaib
 
     }
 

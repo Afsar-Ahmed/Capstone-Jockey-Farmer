@@ -9,49 +9,26 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-<<<<<<< HEAD
-=======
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
->>>>>>> Sohaib
 import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-<<<<<<< HEAD
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
-=======
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmManager
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.AfterLoginFarmerRegistration
-import sheridan.capstone.findmyfarmer.R
-import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
-import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
-import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
->>>>>>> Sohaib
 
 class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
     private lateinit var Save : Button
     private lateinit var Password : Button
-<<<<<<< HEAD
-=======
-    private lateinit var sessionData: SessionData
->>>>>>> Sohaib
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_settings)
 
-<<<<<<< HEAD
-=======
-        sessionData = SessionData(this)
->>>>>>> Sohaib
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
 
         drawerLayout=findViewById(R.id.drawerLayout)
@@ -88,7 +65,6 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         when(item.itemId){
             R.id.nav_logout ->{
                 logOut()
-<<<<<<< HEAD
 
 
                 finish()
@@ -98,28 +74,15 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
 
 
-=======
-                finish()
-            }
-            R.id.WantToBeFarmer ->{
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,AfterLoginFarmerRegistration()).commit()
-            }
->>>>>>> Sohaib
         }
 
         return true
     }
     private fun logOut(){
         Firebase.auth.signOut()
-<<<<<<< HEAD
 
         LoginManager.getInstance().logOut()
         AuthUI.getInstance().signOut(this).addOnCompleteListener(){
-=======
-        LoginManager.getInstance().logOut()
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(){
-            sessionData.ClearAllData()
->>>>>>> Sohaib
             startActivity(
                 Intent(this,
                     LoginRegistrationController::class.java)
