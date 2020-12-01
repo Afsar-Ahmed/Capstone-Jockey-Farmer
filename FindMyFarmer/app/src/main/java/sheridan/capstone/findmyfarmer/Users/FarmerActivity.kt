@@ -40,10 +40,13 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
 <<<<<<< HEAD
+<<<<<<< HEAD
     var User_Customer_Only : Boolean = false
 =======
     private lateinit var sessionData: SessionData
 >>>>>>> Sohaib
+=======
+>>>>>>> parent of 7f933a8... Most Recent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

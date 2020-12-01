@@ -42,10 +42,13 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
     private lateinit var NavigationView: NavigationView
 <<<<<<< HEAD
 
+<<<<<<< HEAD
    var User_Customer_Only : Boolean = true
 =======
     private lateinit var sessionData: SessionData
 >>>>>>> Sohaib
+=======
+>>>>>>> parent of 7f933a8... Most Recent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

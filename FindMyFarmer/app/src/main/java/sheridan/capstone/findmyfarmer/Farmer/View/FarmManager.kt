@@ -26,7 +26,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
-import sheridan.capstone.findmyfarmer.Customer.Controller.FarmerListToView
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Customer.View.FarmerInfo
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
@@ -92,7 +91,12 @@ class FarmManager : Fragment(),FruitListToView.OnItemClickListener  {
             FruitListToView(
                 List, this
             )
-        recycleView.layoutManager = LinearLayoutManager(context)
+
+        recycleView.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            true
+        )
         recycleView.setHasFixedSize(true)
 
 

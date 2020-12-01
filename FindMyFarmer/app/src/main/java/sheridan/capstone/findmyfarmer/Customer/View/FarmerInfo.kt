@@ -18,16 +18,12 @@ import androidx.fragment.app.FragmentTransaction
 <<<<<<< HEAD
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Customer.Model.FollowingDialog
 import sheridan.capstone.findmyfarmer.Customer.Model.RateItDialogue
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
-import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
-import sheridan.capstone.findmyfarmer.Farmer.Controller.GenerateFruitList
 
-class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
+class FarmerInfo : Fragment(){
 
 private lateinit var FarmerName:TextView
 
@@ -36,6 +32,7 @@ private lateinit var FarmerRating : RatingBar
 private lateinit var FarmerCity:TextView
 
 private lateinit var FarmerImage : ImageView
+private lateinit var To_Products : Button
 private lateinit var To_Map: Button
 private lateinit var RateIt: ImageView
 
@@ -44,9 +41,9 @@ private lateinit var FarmerInfo : ImageView
 var ImageInt : Int =0
 
 
-    var FarmerController : GenerateFruitList = GenerateFruitList()
 
 
+<<<<<<< HEAD
     val List = FarmerController.GenerateFruit(4)
 
 =======
@@ -80,6 +77,8 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
     private lateinit var viewModel: SharedViewModel
     private lateinit var sessionData: SessionData
 >>>>>>> Sohaib
+=======
+>>>>>>> parent of 7f933a8... Most Recent
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,12 +93,13 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         FarmerDesc = view.findViewById(R.id.Desc)
         FarmerRating = view.findViewById(R.id.Ratings)
         FarmerImage = view.findViewById(R.id.icon)
-
+        To_Products = view.findViewById(R.id.Products)
         To_Map = view.findViewById(R.id.Maps)
         RateIt = view.findViewById(R.id.RateIt)
         FarmerInfo = view.findViewById(R.id.FollowIcon)
 
 
+<<<<<<< HEAD
         val recycleView : RecyclerView = view.findViewById(R.id.Fruit_List)
 
         recycleView.adapter =
@@ -164,6 +164,8 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
         var farm = viewModel.getFarmData().value
 >>>>>>> Sohaib
+=======
+>>>>>>> parent of 7f933a8... Most Recent
 
         To_Map.setOnClickListener {
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
@@ -179,7 +181,16 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
         }
 
+        To_Products.setOnClickListener {
+            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
 
+            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.fragment_container,
+                FarmerProducts()
+            )
+                ?.commit()
+
+        }
 
         RateIt.setOnClickListener{
          openDialog()
@@ -283,9 +294,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     }
 
-    override fun onItemClick(position: Int) {
-        //Click Event For FruitList
-    }
+
 
 
 }
