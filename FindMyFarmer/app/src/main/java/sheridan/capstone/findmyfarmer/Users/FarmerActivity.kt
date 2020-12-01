@@ -45,6 +45,10 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
         drawerLayout=findViewById(R.id.drawerLayout)
         NavigationView = findViewById(R.id.nav_view)
 
+        var menu = NavigationView.menu
+        var wanttobefarmeritem = menu.findItem(R.id.WantToBeFarmer)
+        wanttobefarmeritem.setEnabled(false)
+        wanttobefarmeritem.setVisible(false)
 
         if(customer != null) {
             var usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)

@@ -35,8 +35,7 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                 FIH.GetPrimaryImageFromFirebaseURL(object: StorageResponse{
                     @RequiresApi(Build.VERSION_CODES.N)
                     override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
-                        if (Url != null) {
-                            if(!(Url.get().isNullOrBlank())) {
+                            if(Url != null && !(Url.get().isNullOrBlank())) {
                                 farmlistdata.primaryImage = Url.get()
                                 if(customer != null){
                                     DatabaseAPIHandler(activity, AsyncResponse {resp ->
@@ -55,7 +54,8 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                     adapter.notifyDataSetChanged()
                                     swipeRefreshLayout.isRefreshing = false
                                 }
-                            } else{
+                            }
+                            else{
                                 if(customer != null){
                                     DatabaseAPIHandler(activity, AsyncResponse {resp ->
                                         farmlistdata.isFollowed = !(resp.isNullOrBlank())
@@ -74,7 +74,6 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                     swipeRefreshLayout.isRefreshing = false
                                 }
                             }
-                        }
                     }
                     override fun OnErrorListener(error: String?) {
                         if(customer != null){

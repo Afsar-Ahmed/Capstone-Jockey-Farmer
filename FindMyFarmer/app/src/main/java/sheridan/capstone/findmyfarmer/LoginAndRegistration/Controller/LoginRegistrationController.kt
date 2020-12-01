@@ -153,13 +153,13 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                loggedIn = Intent(context, FarmerActivity::class.java)
                loggedIn.putExtras(Bundle().apply(extras))
                startActivity(loggedIn)
-               finish()
+               this.finish()
            }
            else{
                loggedIn = Intent(context, CustomerActivity::class.java)
                loggedIn.putExtras(Bundle().apply(extras))
                startActivity(loggedIn)
-               finish()
+               this.finish()
            }
        }
    }

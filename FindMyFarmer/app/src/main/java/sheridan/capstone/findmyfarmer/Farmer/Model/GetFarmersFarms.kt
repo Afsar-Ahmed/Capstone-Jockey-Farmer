@@ -29,8 +29,7 @@ class GetFarmersFarms(val context: Context, val swipeRefreshLayout: SwipeRefresh
                 FIH.GetPrimaryImageFromFirebaseURL(object: StorageResponse {
                     @RequiresApi(Build.VERSION_CODES.N)
                     override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
-                        if (Url != null) {
-                            if(!(Url.get().isNullOrBlank())) {
+                            if(Url != null && !(Url.get().isNullOrBlank())) {
                                 farmlistdata.primaryImage = Url.get()
                                 HubFarms.add(farmlistdata)
                                 //notifying change on list
@@ -42,7 +41,6 @@ class GetFarmersFarms(val context: Context, val swipeRefreshLayout: SwipeRefresh
                                 adapter.notifyDataSetChanged()
                                 swipeRefreshLayout.isRefreshing = false
                             }
-                        }
                     }
                     override fun OnErrorListener(error: String?) {
                         HubFarms.add(farmlistdata)

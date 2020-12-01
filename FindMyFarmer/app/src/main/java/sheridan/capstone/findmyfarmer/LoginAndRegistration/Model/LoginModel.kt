@@ -119,6 +119,7 @@ class LoginModel:ViewModel() {
                             sessionData.setUserDataForSession(null, customer)
                         }
                         user.value = auth.currentUser
+                        activity.finish()
                     }
                     else {
                         //create this user
@@ -132,6 +133,7 @@ class LoginModel:ViewModel() {
                                 sessionData.setUserDataForSession(null,cust)
                             }
                             user.value = auth.currentUser
+                            activity.finish()
                             Log.d("AUTHENTICATION", "login with $platform :success $user")
                         }).execute("/addCustomer",customer)
                     }

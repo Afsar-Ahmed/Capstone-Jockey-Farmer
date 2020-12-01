@@ -37,13 +37,16 @@ class GetFollows(val activity: Activity, val adapter: FollowingListToView){
                     FIH.GetPrimaryImageFromFirebaseURL(object: StorageResponse {
                         @RequiresApi(Build.VERSION_CODES.N)
                         override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
-                            if (Url != null) {
-                                if(!(Url.get().isNullOrBlank())) {
-                                    followedFarm.primaryImage = Url.get()
-                                    FollowedFarms.add(followedFarm);
-                                    //notifying change on list
-                                    adapter.notifyDataSetChanged()
-                                }
+                            if(Url != null && !(Url.get().isNullOrBlank())) {
+                                followedFarm.primaryImage = Url.get()
+                                FollowedFarms.add(followedFarm);
+                                //notifying change on list
+                                adapter.notifyDataSetChanged()
+                            }
+                            else{
+                                FollowedFarms.add(followedFarm);
+                                //notifying change on list
+                                adapter.notifyDataSetChanged()
                             }
                         }
                         override fun OnErrorListener(error: String?) {
