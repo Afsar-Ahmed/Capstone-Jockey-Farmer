@@ -3,14 +3,17 @@ package sheridan.capstone.findmyfarmer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import sheridan.capstone.findmyfarmer.CustomerMain.View.CustomerView
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
-import sheridan.capstone.findmyfarmer.Users.CustomerActivity
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.DashBoardView
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         if (user != null) {
             startActivity(Intent(this,
-              CustomerActivity::class.java))
+              CustomerView::class.java))
 
         } else {
             startActivity(Intent(this, LoginRegistrationController::class.java))
