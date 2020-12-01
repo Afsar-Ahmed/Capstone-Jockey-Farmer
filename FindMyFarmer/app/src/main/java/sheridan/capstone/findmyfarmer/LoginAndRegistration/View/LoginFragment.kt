@@ -26,14 +26,13 @@ class LoginFragment : Fragment() {
             loginInterface.OnLoginButtonClickListener(view.inputEmail,view.inputPassword)
         }
 
-        view.GSignIn.setOnClickListener{
+        view.faceBookSignInBtn.setOnClickListener{
+            view.FBSignIn.performClick()
+        }
+        view.googleSignInBtn.setOnClickListener{
             loginInterface.OnGoogleButtonClickListener()
         }
 
-
-//        view.fb2.setOnClickListener{
-//            view.FBSignIn.performClick()
-//        }
         view.FBSignIn.setOnClickListener{
             loginInterface.OnFBLogInButtonClickListener()
         }
@@ -50,7 +49,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewBehaviorInterface = activity as ViewBehaviorInterface
-        viewBehaviorInterface.viewBehavior(constraintLayoutLoginFragment)
+        viewBehaviorInterface.viewBehavior(constraintLayoutLogIn)
     }
 
 }

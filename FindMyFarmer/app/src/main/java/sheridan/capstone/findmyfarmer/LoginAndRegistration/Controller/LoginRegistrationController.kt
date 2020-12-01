@@ -126,11 +126,11 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                     loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!,bundle=null)
                 }
                 catch (e: Exception){
-                    Toast.makeText(
+                    /*Toast.makeText(
                         applicationContext,
                         "Error Logging into google account",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()*/
                     Log.w("GOOGLE SIGN IN FAILED", e)
                 }
             }
