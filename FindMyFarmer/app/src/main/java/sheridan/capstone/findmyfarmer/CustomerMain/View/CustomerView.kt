@@ -25,6 +25,7 @@ import sheridan.capstone.findmyfarmer.SharedViews.MarketPlace
 class CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
+<<<<<<< HEAD:FindMyFarmer/app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/CustomerView.kt
 <<<<<<< HEAD:FindMyFarmer/app/src/main/java/sheridan/capstone/findmyfarmer/Users/FarmerActivity.kt
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -41,6 +42,8 @@ class CustomerView : AppCompatActivity(),NavigationView.OnNavigationItemSelected
 =======
    var SavedDataList : ArrayList<ListData> = ArrayList()
 >>>>>>> parent of 8f3d46a... Most Recent Branch:FindMyFarmer/app/src/main/java/sheridan/capstone/findmyfarmer/CustomerMain/View/CustomerView.kt
+=======
+>>>>>>> parent of 7f933a8... Most Recent:FindMyFarmer/app/src/main/java/sheridan/capstone/findmyfarmer/Users/FarmerActivity.kt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
