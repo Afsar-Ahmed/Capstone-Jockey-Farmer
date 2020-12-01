@@ -77,7 +77,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     private JSONObject AddFarm(Farm farm){
         Map<String, String> params = new HashMap();
 
-        params.put("Business_Name",farm.getBusinessName());
+        params.put("Businsess_Name",farm.getBusinessName());
         params.put("Business_Description", farm.getBusinessDescription());
         params.put("Business_Rating",String.valueOf(farm.getBusinessRating()));
         params.put("City",farm.getCity());
@@ -246,16 +246,12 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     //Updating Farmers,Farms,Products,Customers,FarmProducts
     private JSONObject UpdateCustomer(Customer customer){
         Map<String, String> params = new HashMap();
-        int bol = 0;
-        if(customer.getIsFarmer()){
-            bol = 1;
-        }
 
         params.put("CustomerID",String.valueOf(customer.getCustomerID()));
         params.put("CustomerName", customer.getCustomerName());
         params.put("CustomerEmail",customer.getCustomerEmail());
         params.put("CustomerPassword", customer.getCustomerPassword());
-        params.put("IsFarmer",String.valueOf(bol));
+        params.put("IsFarmer",String.valueOf(customer.getIsFarmer()));
 
         return new JSONObject(params);
     }

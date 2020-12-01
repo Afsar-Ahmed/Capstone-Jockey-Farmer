@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,11 +24,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class FirebaseImagehandler {
 
@@ -53,7 +59,7 @@ public class FirebaseImagehandler {
     public void GetAllFirebaseImageNames(StorageResponse storageResponse) {
         StorageReference listRef = storage.getReference().child(FolderName);
         listRef.listAll().addOnSuccessListener(listResult -> {
-                storageResponse.processFinish(listResult.getItems(),null);
+            storageResponse.processFinish(listResult.getItems(),null,null);
         }).addOnFailureListener(e -> {
             storageResponse.OnErrorListener(e.toString());
             System.out.println(e);
@@ -79,7 +85,7 @@ public class FirebaseImagehandler {
             });
         }
         else{
-            response.processFinish(null,null);
+            response.processFinish(null,null,null);
             return;
         }
     }
@@ -89,7 +95,7 @@ public class FirebaseImagehandler {
     private void InitializeImages(StorageResponse storageResponse){
             GetAllFirebaseImageNames(new StorageResponse() {
                 @Override
-                public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                public void processFinish(List<StorageReference> response, Optional<Bitmap> bitmap, Optional<String> Url) {
                     List<String> localStorageImages = GetNamesOfImagesInLocalStorage();
                     List<String> ImagesToDownloadFromCloud = new ArrayList();
 
@@ -102,7 +108,9 @@ public class FirebaseImagehandler {
                     DownloadImagesFromFirebaseToLocalStorage(ImagesToDownloadFromCloud,0,storageResponse);
                 }
                 @Override
-                public void OnErrorListener(String error) { }
+                public void OnErrorListener(String error) {
+                    storageResponse.OnErrorListener(error);
+                }
             });
     }
     //checks if there are any extra images that have been deleted from the cloud,
@@ -112,7 +120,7 @@ public class FirebaseImagehandler {
         if(!(localStorageImages.isEmpty())){
             GetAllFirebaseImageNames(new StorageResponse() {
                 @Override
-                public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                public void processFinish(List<StorageReference> response, Optional<Bitmap> bitmap, Optional<String> Url) {
                     List<String> cloudImages = new ArrayList();
                     for(StorageReference ref: response){
                         cloudImages.add(ref.getName());
@@ -149,7 +157,7 @@ public class FirebaseImagehandler {
                 response.OnErrorListener(e.toString());
             }).addOnSuccessListener(taskSnapshot -> {
                 System.out.println("Successfully upload image");
-                response.processFinish(null,null);
+                response.processFinish(null,null,null);
             });
         }catch (Exception ex){
             System.out.println(ex);
@@ -170,7 +178,7 @@ public class FirebaseImagehandler {
                 response.OnErrorListener(e.toString());
             }).addOnSuccessListener(taskSnapshot -> {
                 System.out.println("Successfully upload image");
-                response.processFinish(null,null);
+                response.processFinish(null,null,null);
             });
         }catch (Exception ex){
             System.out.println(ex);
@@ -179,15 +187,17 @@ public class FirebaseImagehandler {
     }
     private void GetImageFromFirebase(String fileName,StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+            public void processFinish(List<StorageReference> response, Optional<Bitmap> bitmap, Optional<String> Url) {
                 final long TEN_MEGABYTE = 1024 * 1024 * 10;
                 for(StorageReference ref : response){
                     String refname = ref.getName();
                     if(refname.compareToIgnoreCase(fileName)==0){
                         ref.getBytes(TEN_MEGABYTE).addOnSuccessListener(bytes -> {
                             Bitmap bitmap1 = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                            storageResponse.processFinish(null,bitmap1);
+                            Optional<Bitmap> optBitmap =Optional.ofNullable(bitmap1);
+                            storageResponse.processFinish(null,optBitmap,null);
                         }).addOnFailureListener(e ->{
                             storageResponse.OnErrorListener(e.toString());
                         });
@@ -206,7 +216,7 @@ public class FirebaseImagehandler {
 
         ref.delete().addOnSuccessListener(aVoid -> {
             System.out.println("Deleted " + fileName + "Successfully!");
-            storageResponse.processFinish(null,null);
+            storageResponse.processFinish(null,null,null);
         }).addOnFailureListener(e ->
                 storageResponse.OnErrorListener(e.toString()));
     }
@@ -214,21 +224,22 @@ public class FirebaseImagehandler {
     private void RenameFileFirebase(String fileName,String newName, StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
             @Override
-            public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+            public void processFinish(List<StorageReference> response, Optional<Bitmap> bitmap, Optional<String> Url) {
                 for(StorageReference ref : response){
                     String refname = ref.getName();
                     if(refname.compareToIgnoreCase(fileName)==0){
                         GetImageFromFirebase(fileName, new StorageResponse() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
-                            public void processFinish(List<StorageReference> response,Bitmap bitmap) {
+                            public void processFinish(List<StorageReference> response, Optional<Bitmap> bitmap, Optional<String> Url) {
                                 //uploading with a new Name
-                                UploadImageToFirebasewithCustomName(bitmap, newName, new StorageResponse() {
+                                UploadImageToFirebasewithCustomName(bitmap.get(), newName, new StorageResponse() {
                                     @Override
-                                    public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                                    public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
                                         DeleteImageFromFirebase(fileName, new StorageResponse() {
                                             @Override
-                                            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
-                                                storageResponse.processFinish(null,null);
+                                            public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                                                storageResponse.processFinish(response,bitmap,Url);
                                             }
                                             @Override
                                             public void OnErrorListener(String error) {
@@ -259,28 +270,68 @@ public class FirebaseImagehandler {
 
     public void GetPrimaryImageFromFirebase(StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
+            StorageReference reference = null;
             @Override
-            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+            public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
                 for(StorageReference ref: response){
                     String refname = ref.getName();
                     if(refname.toLowerCase().contains(ACTIVE_KEYWORD.toLowerCase())){
-                        System.out.println();
-                        GetImageFromFirebase(refname, new StorageResponse() {
-                            @Override
-                            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
-                                List<StorageReference> references = new ArrayList<>();
-                                references.add(ref);
-                                storageResponse.processFinish(references,bitmap);
-                            }
-                            @Override
-                            public void OnErrorListener(String error) {
-                                storageResponse.OnErrorListener(error);
-                            }
-                        });
+                        reference = ref;
+                    }
+                }
+               if(reference != null){
+                   GetImageFromFirebase(reference.getName(), new StorageResponse() {
+                       @Override
+                       public void processFinish(List<StorageReference> response, Optional<Bitmap> bitmap, Optional<String> Url) {
+                           List<StorageReference> references = new ArrayList<>();
+                           references.add(reference);
+                           storageResponse.processFinish(references,bitmap,null);
+                       }
+                       @Override
+                       public void OnErrorListener(String error) {
+                           storageResponse.OnErrorListener(error);
+                       }
+                   });
+               }
+               else{
+                   storageResponse.processFinish(null,null,null);
+               }
+            }
+            @Override
+            public void OnErrorListener(String error) {
+                storageResponse.OnErrorListener(error);
+            }
+        });
+    }
+    public void GetPrimaryImageFromFirebaseURL(StorageResponse storageResponse){
+        GetAllFirebaseImageNames(new StorageResponse() {
+            boolean NoPrimaryImageExists = true;
+            StorageReference reference = null;
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                for (StorageReference ref : response){
+                    String refname = ref.getName();
+                    if(refname.toLowerCase().contains(ACTIVE_KEYWORD.toLowerCase())){
+                        reference = ref;
                     }
                 }
 
-                storageResponse.processFinish(null,null);
+                if(reference != null){
+                    reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        ArrayList<StorageReference> references = new ArrayList<>();
+                        references.add(reference);
+                        NoPrimaryImageExists = false;
+                        Optional<String> stringOptional = Optional.of(uri.toString());
+                        storageResponse.processFinish(references,null,stringOptional);
+                        return;
+                    }).addOnFailureListener(e ->
+                            storageResponse.OnErrorListener(e.toString())
+                    );
+                }
+                else{
+                    storageResponse.processFinish(null,null,null);
+                }
             }
             @Override
             public void OnErrorListener(String error) {
@@ -292,22 +343,23 @@ public class FirebaseImagehandler {
     public void MakeImagePrimary(String fileName,StorageResponse storageResponse){
         GetPrimaryImageFromFirebase(new StorageResponse() {
             @Override
-            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+            public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                //if there is a primary image
                 if(bitmap != null){
                     String respname = response.get(0).getName();
                     if(respname.compareToIgnoreCase(fileName)!=0){
-                        String OldName = response.get(0).getName();
+                        String OldName = respname;
                         String NewName = OldName.toLowerCase().replaceAll(ACTIVE_KEYWORD.toLowerCase(),"");
                         RenameFileFirebase(OldName, NewName, new StorageResponse() {
                             @Override
-                            public void processFinish(List<StorageReference> response, Bitmap bitmap) {
+                            public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
                                 String oldName = fileName;
                                 String newName = fileName.replace(".jpg","");
                                 newName = newName + ACTIVE_KEYWORD.toLowerCase() + ".jpg";
                                 RenameFileFirebase(oldName, newName, new StorageResponse() {
                                     @Override
-                                    public void processFinish(List<StorageReference> response, Bitmap bitmap) {
-                                        storageResponse.processFinish(null,null);
+                                    public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                                        storageResponse.processFinish(response,bitmap,Url);
                                     }
                                     @Override
                                     public void OnErrorListener(String error) {
@@ -319,34 +371,73 @@ public class FirebaseImagehandler {
                             public void OnErrorListener(String error) { storageResponse.OnErrorListener(error); }
                         });
                     }
-
-                    storageResponse.processFinish(null,null);
+                    else{
+                        storageResponse.processFinish(null,null,null);
+                    }
                 }
+                //if there is no primary image
                 else{
+                    //If there are no primary images, make the given filename the primary image.
+                    //If the filename does not exist, then check if there are any other images.
+                    //If there are images in the directory then use the first image and make it primary
+                    //If there are no images then return error message and null
                      GetAllFirebaseImageNames(new StorageResponse() {
+                         StorageReference reference = null;
+                         String OldName;
+                         String NewName;
                          @Override
-                         public void processFinish(List<StorageReference> response, Bitmap bitmap) {
-                             for(StorageReference storageReference: response){
-                                 String refname = storageReference.getName();
+                         public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                             //check if the filename exists
+                             for(StorageReference streference: response){
+                                 String refname = streference.getName();
                                  if(refname.compareToIgnoreCase(fileName)==0){
-                                     if(storageReference != null){
-                                         String OldName = storageReference.getName();
-                                         String NewName = OldName.replaceAll(".jpg","");
-                                         NewName = NewName.replaceAll(ACTIVE_KEYWORD.toLowerCase(),"");
-                                         NewName = NewName + ACTIVE_KEYWORD.toLowerCase() +".jpg";
-                                         if(NewName.compareToIgnoreCase(OldName)!=0){
-                                             RenameFileFirebase(OldName, NewName, new StorageResponse() {
-                                                 @Override
-                                                 public void processFinish(List<StorageReference> response, Bitmap bitmap) {
-                                                     storageResponse.processFinish(null,null);
-                                                 }
-                                                 @Override
-                                                 public void OnErrorListener(String error) {
-                                                     storageResponse.OnErrorListener(error);
-                                                 }
-                                             });
+                                    reference = streference;
+                                 }
+                             }
+                             //if the filename exists then make that filename the primary image
+                             if(reference != null){
+                                 OldName = reference.getName();
+                                 NewName = OldName.replaceAll(".jpg","");
+                                 NewName = NewName.replaceAll(ACTIVE_KEYWORD.toLowerCase(),"");
+                                 NewName = NewName + ACTIVE_KEYWORD.toLowerCase() +".jpg";
+                                 if(NewName.compareToIgnoreCase(OldName)!=0){
+                                     RenameFileFirebase(OldName, NewName, new StorageResponse() {
+                                         @Override
+                                         public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                                             storageResponse.processFinish(response,bitmap,Url);
                                          }
+                                         @Override
+                                         public void OnErrorListener(String error) {
+                                             storageResponse.OnErrorListener(error);
+                                         }
+                                     });
+                                 }
+                             }
+                             //if the filename by the name does not exist then check if there are any files,
+                             else{
+                                 //if there are files then get the top most one and make it primary
+                                 //if there are no file then return error message
+                                 if(response.size() > 0){
+                                     StorageReference ref1 = response.get(0);
+                                     OldName = ref1.getName();
+                                     NewName = OldName.replaceAll(".jpg","");
+                                     NewName = NewName.replaceAll(ACTIVE_KEYWORD.toLowerCase(),"");
+                                     NewName = NewName + ACTIVE_KEYWORD.toLowerCase() +".jpg";
+                                     if(NewName.compareToIgnoreCase(OldName)!=0){
+                                         RenameFileFirebase(OldName, NewName, new StorageResponse() {
+                                             @Override
+                                             public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                                                 storageResponse.processFinish(response,bitmap,Url);
+                                             }
+                                             @Override
+                                             public void OnErrorListener(String error) {
+                                                 storageResponse.OnErrorListener(error);
+                                             }
+                                         });
                                      }
+                                 }
+                                 else {
+                                     storageResponse.OnErrorListener("Filename: " + fileName + " does not exist");
                                  }
                              }
                          }

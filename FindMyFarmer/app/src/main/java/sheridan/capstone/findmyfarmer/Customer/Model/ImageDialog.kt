@@ -29,6 +29,7 @@ import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import sheridan.capstone.findmyfarmer.Users.PhotoPicker
 import java.io.InputStream
+import java.util.*
 
 class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
 
@@ -82,7 +83,7 @@ class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
                         }
                         bitmap = BitmapFactory.decodeStream(stream);
                         FIH2.UploadImageToFirebase(bitmap,object :StorageResponse{
-                            override fun processFinish(response: MutableList<StorageReference>?, bitmap: Bitmap?) {
+                            override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                                 viewModel.setFirebaseImageHandler(FIH2);
                                 dismiss()
                                 val FragmentManager : FragmentManager? = activity?.supportFragmentManager
@@ -115,7 +116,7 @@ class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
                         if (intent != null) {
                             bitmap = intent.extras?.get("data") as Bitmap
                             FIH2.UploadImageToFirebase(bitmap,object :StorageResponse{
-                                override fun processFinish(response: MutableList<StorageReference>?,bitmap: Bitmap?) {
+                                override fun processFinish(response: MutableList<StorageReference>?,bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                                     viewModel.setFirebaseImageHandler(FIH2)
                                     dismiss()
                                     val FragmentManager : FragmentManager? = activity?.supportFragmentManager

@@ -8,7 +8,7 @@
     tools:layout_editor_absoluteY="-168dp">
 
     <EditText
-        android:id="@+id/Farm_PostalCode_Updated"
+        android:id="@+id/Farm_PostalCode_Update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -16,12 +16,12 @@
         android:hint="PostalCode"
         android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/Farm_Country_Updated"
+        app:layout_constraintBottom_toBottomOf="@+id/Farm_Country_Update"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Farm_Country_Updated" />
+        app:layout_constraintTop_toTopOf="@+id/Farm_Country_Update" />
 
     <EditText
-        android:id="@+id/Farm_Unit_Updated"
+        android:id="@+id/Farm_Unit_Update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -29,12 +29,12 @@
         android:hint="Unit"
         android:inputType="textPersonName"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/Farm_City_Updated"
+        app:layout_constraintBottom_toBottomOf="@+id/Farm_City_Update"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Farm_City_Updated" />
+        app:layout_constraintTop_toTopOf="@+id/Farm_City_Update" />
 
     <EditText
-        android:id="@+id/Farm_Country_Updated"
+        android:id="@+id/Farm_Country_Update"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -45,13 +45,14 @@
         android:inputType="textPersonName"
         android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/UpdateFarmData"
-        app:layout_constraintEnd_toStartOf="@+id/Farm_PostalCode_Updated"
+        app:layout_constraintEnd_toStartOf="@+id/Farm_PostalCode_Update"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Farm_City_Updated"
+        app:layout_constraintTop_toBottomOf="@+id/Farm_City_Update"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/Farm_Street_Updated"
+        android:id="@+id/Farm_Street_Update"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -65,11 +66,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Farm_Updated_Desc"
+        app:layout_constraintTop_toBottomOf="@+id/Farm_Desc_Update"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/Farm_Updated_Image"
+        android:id="@+id/Farm_Image_Updated"
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
@@ -91,9 +92,9 @@
         android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/farmers_updated_image"
-        app:layout_constraintBottom_toBottomOf="@+id/Farm_Name_Updated"
+        app:layout_constraintBottom_toBottomOf="@+id/Farm_Name_Update"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Farm_Name_Updated"
+        app:layout_constraintTop_toTopOf="@+id/Farm_Name_Update"
         app:srcCompat="@drawable/farmers_updated_image" />
 
     <Button
@@ -122,7 +123,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/Farm_Name_Updated"
+        android:id="@+id/Farm_Name_Update"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -136,11 +137,11 @@
         app:layout_constraintEnd_toStartOf="@+id/ImageChangeIcon"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Farm_Updated_Image"
+        app:layout_constraintTop_toBottomOf="@+id/Farm_Image_Updated"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/Farm_Updated_Desc"
+        android:id="@+id/Farm_Desc_Update"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -154,11 +155,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Farm_Name_Updated"
+        app:layout_constraintTop_toBottomOf="@+id/Farm_Name_Update"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/Farm_City_Updated"
+        android:id="@+id/Farm_City_Update"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -169,11 +170,11 @@
         android:inputType="textPersonName"
         android:text="Name"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Farm_Unit_Updated"
+        app:layout_constraintEnd_toStartOf="@+id/Farm_Unit_Update"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Farm_Street_Updated"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintTop_toBottomOf="@+id/Farm_Street_Update"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ProgressBar
         android:id="@+id/updateFarmProgbar"
@@ -184,7 +185,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Farm_Updated_Image" />
+        app:layout_constraintTop_toTopOf="@+id/Farm_Image_Updated" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

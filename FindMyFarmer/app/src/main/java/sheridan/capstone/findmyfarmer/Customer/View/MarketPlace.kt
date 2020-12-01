@@ -49,7 +49,7 @@ class MarketPlace : Fragment(),
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        val GetAllFarms = context?.let { GetAllFarms(it,swipeResfreshLayout,adapter) }
+        val GetAllFarms = activity?.let { GetAllFarms(it,swipeResfreshLayout,adapter) }
         if (GetAllFarms != null) {
             GetAllFarms.GetFarms(FarmList)
         }
@@ -63,26 +63,16 @@ class MarketPlace : Fragment(),
         return View
     }
     override fun onItemClick(position: Int) {
-
         FarmList[position]?.let { viewModel.setFarmData(it) }
 
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
         val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container,
-          FarmerInfo()
-        )
-            ?.commit()
-
-
-
-
+        fragmentTransaction?.replace(R.id.fragment_container, FarmerInfo())?.commit()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-
-
     }
 
 

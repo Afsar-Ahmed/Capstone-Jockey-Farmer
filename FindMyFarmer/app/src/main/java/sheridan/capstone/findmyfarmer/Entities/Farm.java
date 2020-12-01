@@ -13,7 +13,9 @@ public class Farm {
     private String PostalCode;
     private int Unit = 0;
     private int FarmerID;
-    private Bitmap PrimaryImage;
+    private String PrimaryImage;
+    private boolean isFollowed = false;
+    private boolean alreadyRated = false;
 
     public Farm(){ }
 
@@ -40,7 +42,9 @@ public class Farm {
     public void setBusinessName(String businessName) { Businsess_Name = businessName; }
     public void setBusinessRating(int businessRating) { Business_Rating = businessRating; }
     public void setUnit(int unit) { Unit = unit; }
-    public void setPrimaryImage(Bitmap primaryImage) { PrimaryImage = primaryImage; }
+    public void setPrimaryImage(String primaryImage) { PrimaryImage = primaryImage; }
+    public void setAlreadyRated(boolean alreadyRated) { this.alreadyRated = alreadyRated; }
+    public void setIsFollowed(boolean isFollowed) { this.isFollowed = isFollowed; }
 
     //Getters
     public String getPostalCode() { return PostalCode; }
@@ -53,5 +57,7 @@ public class Farm {
     public String getBusinessDescription() { return Business_Description; }
     public String getBusinessName() { return Businsess_Name; }
     public String getStreet() { return Street; }
-    public Bitmap getPrimaryImage() { return PrimaryImage; }
+    public String getPrimaryImage() { return PrimaryImage; }
+    public boolean getAlreadyRated(){ return alreadyRated; }
+    public boolean getIsFollowed(){ return isFollowed; }
 }

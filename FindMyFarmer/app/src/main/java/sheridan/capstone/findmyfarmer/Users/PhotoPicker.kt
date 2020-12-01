@@ -1,11 +1,13 @@
 package sheridan.capstone.findmyfarmer.Users
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -19,6 +21,9 @@ import sheridan.capstone.findmyfarmer.Farmer.View.FarmManager
 import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import sheridan.capstone.findmyfarmer.R
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
     private lateinit var viewModel: SharedViewModel
@@ -45,18 +50,31 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
     }
 
     override fun onItemClick(position: Int) {
-        var f = viewModel.getFarmData().value
-        if (f != null) {
-            f.primaryImage=imagelist[position]
-            viewModel.setFarmData(f)
-        }
         progressbar.visibility = View.VISIBLE
         FIH2.MakeImagePrimary(references[imagelist[position]],object : StorageResponse{
-            override fun processFinish(response: MutableList<StorageReference>?, bitmap: Bitmap?) {
-                progressbar.visibility = View.INVISIBLE
-                val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+            override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
+                    FIH2.GetPrimaryImageFromFirebaseURL(object :StorageResponse{
+                        @RequiresApi(Build.VERSION_CODES.N)
+                        override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
+                            var f = viewModel.getFarmData().value
+                            if (f != null) {
+                                if (Url != null) {
+                                    f.primaryImage=Url.get()
+                                    viewModel.setFarmData(f)
+                                }
+                            }
+                            progressbar.visibility = View.INVISIBLE
+                            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+                            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
+                            fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+                        }
+                        override fun OnErrorListener(error: String?) {
+                            progressbar.visibility = View.INVISIBLE
+                            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+                            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
+                            fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+                        }
+                    })
             }
             override fun OnErrorListener(error: String?) {
                 progressbar.visibility = View.INVISIBLE
@@ -64,7 +82,6 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
                 val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
                 fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
             }
-
         })
     }
 
@@ -74,7 +91,7 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
 
     fun refreshList(imageListToView: ImageListToView){
         FIH2.RefreshLocalStorage(object : StorageResponse {
-            override fun processFinish(response: MutableList<StorageReference>?,bitmap: Bitmap?) {
+            override fun processFinish(response: MutableList<StorageReference>?,bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                 var imagelistnames = ArrayList<String>()
                 var imagelistBitmap = ArrayList<Bitmap>()
                 imagelistnames.addAll(FIH2.GetNamesOfImagesInLocalStorage())

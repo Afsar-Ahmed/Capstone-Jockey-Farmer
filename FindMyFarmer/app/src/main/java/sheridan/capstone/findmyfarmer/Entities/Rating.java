@@ -8,10 +8,11 @@ public class Rating {
     private String Feedback;
 
     public Rating(){ }
-    public Rating(int RatingID, int FarmID,int CustomerID,String Feedback){
+    public Rating(int RatingID, int FarmID,int CustomerID,float Rating,String Feedback){
         this.RatingID = RatingID;
         this.FarmID = FarmID;
         this.CustomerID = CustomerID;
+        this.Rating = Rating;
         this.Feedback = Feedback;
     }
 
