@@ -26,7 +26,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Users.PhotoPicker"></activity>
+        <activity android:name=".Users.AnonymousUserActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".GetStartedActivity" />
+        <activity android:name=".Users.PhotoPicker" />
         <activity android:name=".Users.FarmerActivity" />
         <activity android:name=".Users.AccountSettings" />
         <activity android:name=".Users.CustomerActivity" />
@@ -34,7 +37,7 @@
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"
             android:windowSoftInputMode="adjustUnspecified" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

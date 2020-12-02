@@ -5,11 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
-import sheridan.capstone.findmyfarmer.Entities.Customer
-import sheridan.capstone.findmyfarmer.Entities.Farmer
-import sheridan.capstone.findmyfarmer.Entities.Product
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 import sheridan.capstone.findmyfarmer.Users.FarmerActivity
@@ -44,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             sessionData.ClearAllData()
-            startActivity(Intent(this, LoginRegistrationController::class.java))
+            startActivity(Intent(this, GetStartedActivity::class.java))
         }
     }
 
