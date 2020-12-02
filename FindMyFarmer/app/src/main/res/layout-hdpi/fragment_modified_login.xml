@@ -16,8 +16,8 @@
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
-        android:layout_marginTop="156dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/custom_email_icon"
         android:drawablePadding="12dp"
@@ -29,16 +29,16 @@
         android:paddingEnd="12dp"
         android:textColor="@color/scheme_dark_green"
         android:textColorHint="@color/scheme_medium_green"
-        android:textSize="22sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 
     <EditText
         android:id="@+id/inputPassword"
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/custom_input"
         android:drawableStart="@drawable/custom_password_icon"
         android:drawablePadding="12dp"
@@ -50,7 +50,7 @@
         android:paddingEnd="12dp"
         android:textColor="@color/scheme_dark_green"
         android:textColorHint="@color/scheme_medium_green"
-        android:textSize="22sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/inputEmail"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/inputEmail"
@@ -58,19 +58,17 @@
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="99dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="36dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/roboto_light"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:paddingBottom="6dp"
         android:text="@string/common_signin_button_text"
         android:textAllCaps="false"
         android:textColor="@color/colorTextSecondar"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/inputPassword"
         app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
@@ -78,13 +76,14 @@
         android:id="@+id/forgotPswrdLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:fontFamily="@font/roboto_light"
         android:text="@string/reset_password_title"
         android:textColor="@color/WhiteColor"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
@@ -92,14 +91,14 @@
         android:id="@+id/registerAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:clickable="true"
         android:fontFamily="@font/roboto_light"
         android:text="@string/register_link"
         android:textColor="@color/WhiteColor"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/forgotPswrdLink"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/forgotPswrdLink"
         app:layout_constraintTop_toBottomOf="@+id/forgotPswrdLink" />
 
@@ -110,37 +109,33 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="108dp"
+        android:layout_marginBottom="80dp"
         android:text="OR \n SIGN IN WITH "
         android:textAlignment="center"
-        android:textSize="22sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/forgotPswrdLink"
-        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="@+id/forgotPswrdLink" />
 
     <View
         android:id="@+id/line"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="64dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="@+id/orTextViewLogin"
-        app:layout_constraintHorizontal_bias="0.88"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/orTextViewLogin"
         tools:ignore="MissingConstraints" />
 
     <View
         android:id="@+id/line2"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="1dp"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/darker_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
         app:layout_constraintStart_toStartOf="@+id/orTextViewLogin"
         app:layout_constraintTop_toTopOf="@+id/orTextViewLogin"
         tools:ignore="MissingConstraints" />
@@ -149,22 +144,24 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/roboto_light"
         android:text="@string/app_name"
         android:textColor="@color/WhiteColor"
-        android:textSize="48sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/faceBookSignInBtn"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/custom_facebook_btn"
-        app:layout_constraintEnd_toEndOf="@+id/forgotPswrdLink"
+        app:layout_constraintEnd_toEndOf="@+id/line2"
         app:layout_constraintTop_toBottomOf="@+id/orTextViewLogin" />
 
     <com.facebook.login.widget.LoginButton
@@ -179,11 +176,12 @@
 
     <Button
         android:id="@+id/googleSignInBtn"
-        android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/custom_google_signin_button"
-        app:layout_constraintStart_toStartOf="@+id/forgotPswrdLink"
+        app:layout_constraintStart_toStartOf="@+id/line"
         app:layout_constraintTop_toBottomOf="@+id/orTextViewLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
