@@ -187,6 +187,8 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         googleLogIn()
     }
 
+
+
     //When facebook Sign In button is pressed - call facebook log in
     override fun OnFBLogInButtonClickListener() {
         FBSignIn.setPermissions("email")
