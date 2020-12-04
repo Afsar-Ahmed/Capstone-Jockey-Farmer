@@ -16,7 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.nav_header.view.*
 import sheridan.capstone.findmyfarmer.Customer.Model.*
 import sheridan.capstone.findmyfarmer.Entities.Following
 import sheridan.capstone.findmyfarmer.R
@@ -127,6 +131,12 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
             }
         }
 
+        if(Firebase.auth.currentUser!!.isAnonymous){
+            RateIt.visibility = View.INVISIBLE
+            RateIt.isEnabled = false
+            FarmFollow.visibility = View.INVISIBLE
+            FarmFollow.isEnabled = false
+        }
         return view
     }
 

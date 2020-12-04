@@ -119,7 +119,7 @@ class LoginModel:ViewModel() {
                             sessionData.setUserDataForSession(null, customer)
                         }
                         user.value = auth.currentUser
-                        activity.finish()
+                        //activity.finish()
                     }
                     else {
                         //create this user

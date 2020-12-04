@@ -43,13 +43,9 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-
-
         drawerLayout.addDrawerListener(toggle)
-
         toggle.syncState()
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MarketPlace()).commit()
-
         bottomnav.setOnNavigationItemSelectedListener { item ->
 
             var selectedFragment: Fragment? = null
@@ -72,13 +68,8 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_manage ->{
-
                 startActivity(Intent(this, LoginRegistrationController::class.java))
-
             }
-
-
-
         }
 
         return true
