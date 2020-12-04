@@ -35,7 +35,6 @@ class HubListToView (private val activity: Activity, val HubList: List<Farm>, pr
     override fun getItemCount() = HubList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
         val currentItem = HubList[position]
         if(!(currentItem.primaryImage.isNullOrBlank())){
             Picasso.get().load(currentItem.primaryImage).into(holder.imageView)
@@ -52,27 +51,21 @@ class HubListToView (private val activity: Activity, val HubList: List<Farm>, pr
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-
-
         val imageView: RoundedImageView = itemView.Farmers_Hub_Image
         val Farmer_Name: TextView = itemView.Farmers_Hub_Name
         val Farmers_Desc: TextView = itemView.Farmers_Hub_Desc
         val Rating: RatingBar = itemView.Farmers_Hub_Rating
         val Farmer_City: TextView = itemView.Farmers_Hub_City
         //val Farmer_Followers : TextView = itemView.Following_Me
-
-
         init {
             itemView.setOnClickListener(this)
         }
-
 
         override fun onClick(v: View?) {
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(position)
             }
-
         }
     }
     interface OnItemClickListener{

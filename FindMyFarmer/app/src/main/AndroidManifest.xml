@@ -28,7 +28,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Users.AnonymousUserActivity"></activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".GetStartedActivity" />
+        <activity android:name=".GetStartedActivity" android:excludeFromRecents="true"
+            android:noHistory="true"/>
         <activity android:name=".Users.PhotoPicker" />
         <activity android:name=".Users.FarmerActivity" />
         <activity android:name=".Users.AccountSettings" />
@@ -37,7 +38,8 @@
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"
             android:windowSoftInputMode="adjustUnspecified" />
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".SplashScreenActivity" android:excludeFromRecents="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
