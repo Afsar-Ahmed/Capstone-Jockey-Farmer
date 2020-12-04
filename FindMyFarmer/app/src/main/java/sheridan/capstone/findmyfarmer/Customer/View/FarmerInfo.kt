@@ -105,7 +105,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
             val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.fragment_container,
-                Maps()
+                FarmersMap()
             )
                 ?.commit()
         }
