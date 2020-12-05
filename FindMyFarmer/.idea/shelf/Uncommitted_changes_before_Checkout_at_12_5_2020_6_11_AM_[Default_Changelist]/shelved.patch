@@ -1,0 +1,99 @@
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/Farmer/View/ProductManagement.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.Farmer.View\r\n\r\nimport android.content.Context\r\nimport android.graphics.Bitmap\r\nimport android.graphics.BitmapFactory\r\nimport android.graphics.drawable.Drawable\r\nimport android.os.Build\r\nimport android.os.Bundle\r\nimport android.util.Base64\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.annotation.RequiresApi\r\nimport com.android.volley.Request\r\nimport com.android.volley.Response\r\nimport com.android.volley.toolbox.JsonObjectRequest\r\nimport kotlinx.android.synthetic.main.fragment_product_management.*\r\nimport org.json.JSONArray\r\nimport org.json.JSONException\r\nimport sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler\r\nimport sheridan.capstone.findmyfarmer.Entities.Product\r\nimport sheridan.capstone.findmyfarmer.R\r\nimport com.android.volley.RequestQueue\r\nimport com.android.volley.toolbox.Volley\r\nimport com.google.firebase.storage.StorageReference\r\nimport kotlinx.android.synthetic.main.activity_account_settings.*\r\nimport kotlinx.android.synthetic.main.farmer_info_card.*\r\nimport sheridan.capstone.findmyfarmer.Database.AsyncResponse\r\nimport sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName\r\nimport sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler\r\nimport sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse\r\nimport java.io.File\r\nimport java.nio.file.Files\r\nimport java.util.*\r\nimport kotlin.collections.ArrayList\r\n\r\n\r\nclass ProductManagement : Fragment() {\r\n    private lateinit var requestQueue: RequestQueue\r\n    private lateinit var fh:FirebaseImagehandler\r\n    private lateinit var file:File\r\n    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {\r\n\r\n        val view: View = inflater.inflate(R.layout.fragment_product_management, container, false)\r\n        requestQueue= Volley.newRequestQueue(activity?.applicationContext)\r\n        fh = FirebaseImagehandler(DirectoryName.Farm,1,activity?.applicationContext)\r\n\r\n        storeAPIDataintoDB(view)\r\n\r\n\r\n        // Inflate the layout for this fragment\r\n        return view\r\n    }\r\n\r\n   @RequiresApi(Build.VERSION_CODES.O)\r\n   private fun storeAPIDataintoDB(view: View){\r\n       lateinit var byteArray:ByteArray\r\n\r\n        var randomCategory: String\r\n\r\n        val productName = view.findViewById<TextView>(R.id.nME)\r\n        val productCategory= view.findViewById<TextView>(R.id.produce_cate)\r\n\r\n        //Lists and objects\r\n       val productList = ArrayList<Product>()\r\n        val categories = listOf<String>(\"Fruits\",\"Vegetables\",\"Rice\",\"Grain\",\"Meat\",\"Fish\",\"Kosher\",\"Halal\",\"Vegan\")\r\n\r\n        //api keys & JSON\r\n        val apiKey =\"87cbc6eb7d3548bd9b95d1f715621c20\"\r\n        val url = \"https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple\"\r\n       var productlist= JSONArray()\r\n\r\n\r\n        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {\r\n                response -> try{\r\n         val c =  DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {\"yay\"})\r\n            productlist = response.getJSONArray(\"results\")\r\n\r\n            for (i in 0 until productlist.length()){\r\n                val produce = productlist.getJSONObject(i)\r\n\r\n                val id = produce.getInt(\"id\")\r\n\r\n                val img = produce.get(\"image\")\r\n                val pName = produce.getString(\"name\")\r\n\r\n                productName.text=pName\r\n                file = File(img.toString())\r\n                byteArray= Files.readAllBytes(file.toPath())\r\n\r\n                randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]\r\n                productCategory.text=randomCategory\r\n                //converts image to Bitmap then uploads to view\r\n              /* var convtoBit = Base64.decode(byteArray,1)\r\n                val image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)\r\n\r\n                fh.UploadImageToFirebase(image,object:StorageResponse{\r\n\r\n                    override fun processFinish(\r\n                        response: MutableList<StorageReference>?,\r\n                        bitmap: Optional<Bitmap>?,\r\n                        Url: Optional<String>?\r\n                    ) {\r\n                    }\r\n\r\n                    override fun OnErrorListener(error: String?) {\r\n                        print(error)\r\n                    }\r\n                })*/\r\n\r\n\r\n\r\n                //uploads certain values to db\r\n                productList += Product(id, pName, randomCategory)\r\n\r\n            }\r\n            c.execute(\"/addProducts\",productlist)\r\n\r\n        } catch (e: JSONException){\r\n            e.printStackTrace()\r\n        }\r\n            return@Listener\r\n        }, { error -> error.printStackTrace() })\r\n\r\n        //after setting up json object, requests call to api\r\n       requestQueue.add(req)\r\n    }\r\n\r\n\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/Farmer/View/ProductManagement.kt	(revision f1feb851d3e433e3e1c490cdfaebc845e9ee9003)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Farmer/View/ProductManagement.kt	(date 1607165747432)
+@@ -42,6 +42,7 @@
+     private lateinit var requestQueue: RequestQueue
+     private lateinit var fh:FirebaseImagehandler
+     private lateinit var file:File
++    @RequiresApi(Build.VERSION_CODES.O)
+     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+ 
+         val view: View = inflater.inflate(R.layout.fragment_product_management, container, false)
+Index: app/src/main/res/layout/fragment_product_management.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Farmer.View.ProductManagement\">\r\n\r\n\r\n    <ImageView\r\n        android:id=\"@+id/player\"\r\n        android:layout_width=\"380dp\"\r\n        android:layout_height=\"247dp\"\r\n        android:layout_marginTop=\"56dp\"\r\n        android:src=\"@drawable/apples\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.516\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/nME\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"308dp\"\r\n        android:text=\"Product_Name\"\r\n        android:textSize=\"24sp\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/title\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"372dp\"\r\n        android:text=\"Nutrition Facts\"\r\n        android:textSize=\"18sp\"\r\n        android:textStyle=\"bold\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.095\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/label1\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"56dp\"\r\n        android:layout_marginTop=\"8dp\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/title\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/value1\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"113dp\"\r\n        android:layout_marginTop=\"28dp\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/label1\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/produce_cate\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/value3\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"112dp\"\r\n        android:layout_marginTop=\"48dp\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/label3\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/value2\"\r\n        app:layout_constraintVertical_bias=\"0.0\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/value2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginStart=\"108dp\"\r\n        android:layout_marginTop=\"52dp\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toEndOf=\"@+id/label2\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/value1\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/label2\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"48dp\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/label1\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/label1\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/label1\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/label3\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"52dp\"\r\n        android:text=\"TextView\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/label2\"\r\n        app:layout_constraintHorizontal_bias=\"0.0\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/label2\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/label2\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/produce_cate\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginTop=\"16dp\"\r\n        android:text=\"Produce_Category\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/nME\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_product_management.xml	(revision f1feb851d3e433e3e1c490cdfaebc845e9ee9003)
++++ app/src/main/res/layout/fragment_product_management.xml	(date 1607166491024)
+@@ -33,12 +33,12 @@
+         android:id="@+id/title"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="372dp"
++        android:layout_marginTop="456dp"
+         android:text="Nutrition Facts"
+         android:textSize="18sp"
+         android:textStyle="bold"
+         app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.095"
++        app:layout_constraintHorizontal_bias="0.113"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+ 
+@@ -57,7 +57,7 @@
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="113dp"
+-        android:layout_marginTop="28dp"
++        android:layout_marginTop="112dp"
+         android:text="TextView"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.0"
+@@ -105,7 +105,7 @@
+         android:id="@+id/label3"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="52dp"
++        android:layout_marginTop="44dp"
+         android:text="TextView"
+         app:layout_constraintEnd_toEndOf="@+id/label2"
+         app:layout_constraintHorizontal_bias="0.0"
+@@ -119,6 +119,7 @@
+         android:layout_marginTop="16dp"
+         android:text="Produce_Category"
+         app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.557"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/nME" />
+ 
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    ext.kotlin_version = \"1.4.10\"\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n    dependencies {\r\n        classpath 'com.android.tools.build:gradle:4.1.1'\r\n        classpath \"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version\"\r\n        classpath 'com.google.gms:google-services:4.3.4'\r\n        def nav_version = \"2.3.1\"\r\n        classpath \"androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version\"\r\n\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision f1feb851d3e433e3e1c490cdfaebc845e9ee9003)
++++ build.gradle	(date 1607160400493)
+@@ -1,6 +1,6 @@
+ // Top-level build file where you can add configuration options common to all sub-projects/modules.
+ buildscript {
+-    ext.kotlin_version = "1.4.10"
++    ext.kotlin_version = "1.4.20"
+     repositories {
+         google()
+         jcenter()
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Sun Nov 29 15:35:27 EST 2020\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-6.5-all.zip\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision f1feb851d3e433e3e1c490cdfaebc845e9ee9003)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1607160542554)
+@@ -1,4 +1,4 @@
+-#Sun Nov 29 15:35:27 EST 2020
++#Sat Dec 05 04:29:02 EST 2020
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME

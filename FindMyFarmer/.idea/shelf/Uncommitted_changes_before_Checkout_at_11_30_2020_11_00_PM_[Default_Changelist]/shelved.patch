@@ -1,0 +1,212 @@
+Index: app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package sheridan.capstone.findmyfarmer.Database\r\n\r\nimport android.app.DownloadManager\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport com.android.volley.Request\r\nimport com.android.volley.RequestQueue\r\nimport com.android.volley.Response\r\nimport com.android.volley.toolbox.JsonObjectRequest\r\nimport com.android.volley.toolbox.Volley\r\nimport org.json.JSONArray\r\nimport org.json.JSONException\r\nimport sheridan.capstone.findmyfarmer.Entities.Product\r\nimport sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler\r\n\r\n\r\nclass ProductAPI {\r\n\r\n    private val apiKey:String=\"87cbc6eb7d3548bd9b95d1f715621c20\"\r\n    private var url:String=\"\"\r\n\r\n    var product:Product?=null\r\n    var context:Context?=null\r\n\r\n    //sets up request to API and what fields that are being called\r\n     fun apiLOAD(): JsonObjectRequest{\r\n\r\n       val url = \"https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple\"\r\n         var productlist = JSONArray()\r\n        val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {\r\n            response -> try{\r\n            productlist = response.getJSONArray(\"results\")\r\n\r\n            for (i in 1..productlist.length()){\r\n                val produce = productlist.getJSONObject(i)\r\n\r\n                var img = produce.getString(\"image\")\r\n                var productName = produce.getString(\"name\")\r\n\r\n\r\n            }\r\n\r\n        return@Listener\r\n        } catch (e: JSONException){\r\n            e.printStackTrace()\r\n        }\r\n        }, Response.ErrorListener { error -> error.printStackTrace() })\r\n\r\n         return req\r\n    }\r\n\r\n\r\n    fun apiSearch(){\r\n\r\n        url = \"https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple\"\r\n\r\n      var req = JsonObjectRequest(Request.Method.GET,url,null, {\r\n              response -> try{\r\n          var searchProducts = response.getJSONArray(\"results\")\r\n\r\n          for (i in 1..searchProducts.length()){\r\n              var searchProduce = searchProducts.getJSONObject(i)\r\n\r\n              var img = searchProduce.getString(\"image\")\r\n              var productName = searchProduce.getString(\"name\")\r\n          }\r\n\r\n      }catch (e: JSONException)\r\n      {\r\n          e.printStackTrace()\r\n      }\r\n                                                               }, {  })\r\n\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ app/src/main/java/sheridan/capstone/findmyfarmer/Database/ProductAPI.kt	(date 1606795232855)
+@@ -16,6 +16,9 @@
+ 
+ class ProductAPI {
+ 
++    private lateinit var requestQueue: RequestQueue
++    private lateinit var fh:FirebaseImagehandler
++
+     private val apiKey:String="87cbc6eb7d3548bd9b95d1f715621c20"
+     private var url:String=""
+ 
+@@ -25,28 +28,80 @@
+     //sets up request to API and what fields that are being called
+      fun apiLOAD(): JsonObjectRequest{
+ 
+-       val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
+-         var productlist = JSONArray()
++        requestQueue= Volley.newRequestQueue(activity?.applicationContext)
++        fh = FirebaseImagehandler(DirectoryName.Farm,1,activity?.applicationContext)
++
++
++        //var randomCategory: String
++
++        val productName = view.findViewById<TextView>(R.id.nME)
++        //val productCategory= view.findViewById<TextView>(R.id.produce_cate)
++
++        //Lists and objects
++        val productList = ArrayList<Product>()
++        val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
++
++        //api keys & JSON
++        val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
++        val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
++        lateinit var productlist: JSONArray
++
++
+         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+-            response -> try{
+-            productlist = response.getJSONArray("results")
++                response -> try{
++            DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
++                productlist = response.getJSONArray("results")
+ 
+-            for (i in 1..productlist.length()){
+-                val produce = productlist.getJSONObject(i)
++                for (i in 0..productlist.length()){
++                    val produce = productlist.getJSONObject(i)
+ 
+-                var img = produce.getString("image")
+-                var productName = produce.getString("name")
++                    val id = produce.getInt("id")
++
++                    val img = produce.get("image")
++                    //converts image to Bitmap then uploads to view
++                    val convtoBit = Base64.decode(img.toString(),0)
++                    val image = BitmapFactory.decodeByteArray(convtoBit, 0, convtoBit.size)
++
++                    fh.UploadImageToFirebase(image,object:StorageResponse{
++
++                        override fun processFinish(
++                            response: MutableList<StorageReference>?,
++                            bitmap: Optional<Bitmap>?,
++                            Url: Optional<String>?
++                        ) {
++                            
++                        }
++
++                        override fun OnErrorListener(error: String?) {
++                            print(error)
++                        }
++                    })
++
++                    val pName = produce.getString("name")
++
++                    productName.text=pName
++
++                    //productImage.setImageBitmap(image)
+ 
++                    randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
++                    productCategory.text=randomCategory
++
++                    //   convertStringIntoLoad(img)
++
++                    //uploads certain values to db
++                    productList += Product(id, pName, randomCategory)
+ 
+-            }
++                }
++            }).execute("/addProducts",productlist)
+ 
+-        return@Listener
+         } catch (e: JSONException){
+             e.printStackTrace()
+         }
+-        }, Response.ErrorListener { error -> error.printStackTrace() })
++            return@Listener
++        }, { error -> error.printStackTrace() })
+ 
+-         return req
++        //after setting up json object, requests call to api
++        requestQueue.add(req)
+     }
+ 
+ 
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CompilerConfiguration\">\r\n    <bytecodeTargetLevel target=\"1.8\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ .idea/compiler.xml	(date 1606793225377)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-    <bytecodeTargetLevel target="1.8" />
++    <bytecodeTargetLevel target="1.6" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_23_2020_2_39_AM__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Checkout_at_11_23_2020_2_39_AM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ .idea/shelf/Uncommitted_changes_before_Checkout_at_11_23_2020_2_39_AM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_11_23_2020_2_39_AM_[Default_Changelist]" date="1606117164764" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_23_2020_2_39_AM_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/23/2020 2:39 AM [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_3_19_AM__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_3_19_AM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ .idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_3_19_AM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Merge_at_11_23_2020_3_19_AM_[Default_Changelist]" date="1606119591330" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_3_19_AM_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 11/23/2020 3:19 AM [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_11_23_2020_2_32_AM__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_11_23_2020_2_32_AM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_11_23_2020_2_32_AM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_11_23_2020_2_32_AM_[Default_Changelist]" date="1606116789799" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_23_2020_2_32_AM_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 11/23/2020 2:32 AM [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_6_20_PM__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_6_20_PM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ .idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_6_20_PM__Default_Changelist_.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Merge_at_11_23_2020_6_20_PM_[Default_Changelist]" date="1606173642890" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_11_23_2020_6_20_PM_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Merge at 11/23/2020 6:20 PM [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" default=\"true\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ .idea/misc.xml	(date 1606793225325)
+@@ -1,9 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+-  <component name="ProjectType">
+-    <option name="id" value="Android" />
+-  </component>
+ </project>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision f2aa3280c0deb179934470fedf32aa046592d4a0)
++++ .idea/gradle.xml	(date 1606793225400)
+@@ -7,10 +7,10 @@
+         <option name="testRunner" value="PLATFORM" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="gradleJvm" value="13" />
+         <option name="modules">
+           <set>
+             <option value="$PROJECT_DIR$" />
+-            <option value="$PROJECT_DIR$/app" />
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
