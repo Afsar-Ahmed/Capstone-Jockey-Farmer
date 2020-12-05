@@ -17,7 +17,7 @@
         <EditText
             android:id="@+id/NameInput"
             android:layout_width="wrap_content"
-            android:layout_height="54dp"
+            android:layout_height="40dp"
             android:layout_marginTop="48dp"
             android:background="@drawable/custom_input_registration"
             android:drawableStart="@drawable/custom_name_icon"
@@ -30,6 +30,7 @@
             android:paddingEnd="12dp"
             android:textColor="@color/scheme_dark_green"
             android:textColorHint="@color/scheme_medium_green"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,8 +38,8 @@
         <EditText
             android:id="@+id/newUserEmail"
             android:layout_width="wrap_content"
-            android:layout_height="54dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/custom_input_registration"
             android:drawableStart="@drawable/custom_email_icon"
             android:drawablePadding="12dp"
@@ -50,6 +51,7 @@
             android:paddingEnd="12dp"
             android:textColor="@color/scheme_dark_green"
             android:textColorHint="@color/scheme_medium_green"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/NameInput" />
@@ -57,8 +59,8 @@
         <EditText
             android:id="@+id/password"
             android:layout_width="wrap_content"
-            android:layout_height="54dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/custom_input_registration"
             android:drawableStart="@drawable/custom_password_icon"
             android:drawablePadding="12dp"
@@ -70,6 +72,7 @@
             android:paddingEnd="12dp"
             android:textColor="@color/scheme_dark_green"
             android:textColorHint="@color/scheme_medium_green"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/newUserEmail" />
@@ -77,8 +80,8 @@
         <EditText
             android:id="@+id/repeatPassword"
             android:layout_width="wrap_content"
-            android:layout_height="54dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/custom_input_registration"
             android:drawableStart="@drawable/custom_repeat_icon"
             android:drawablePadding="12dp"
@@ -90,21 +93,22 @@
             android:paddingEnd="12dp"
             android:textColor="@color/scheme_dark_green"
             android:textColorHint="@color/scheme_medium_green"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
         <Button
             android:id="@+id/nextButton"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="64dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="92dp"
             android:background="@drawable/custom_round_button"
             android:fontFamily="@font/roboto_light"
             android:text="@string/next"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/repeatPassword" />
