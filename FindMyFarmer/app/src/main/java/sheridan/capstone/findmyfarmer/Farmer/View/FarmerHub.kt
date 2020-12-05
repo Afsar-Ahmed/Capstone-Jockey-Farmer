@@ -44,7 +44,7 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        var getFarmersFarms = context?.let { GetFarmersFarms(it,swipeRefreshLayout,adapter) }
+        var getFarmersFarms = activity?.let { GetFarmersFarms(it,swipeRefreshLayout,adapter) }
 
         if (getFarmersFarms != null && farmer != null) {
             getFarmersFarms.GetHubFarms(HubList,farmer.farmerID)

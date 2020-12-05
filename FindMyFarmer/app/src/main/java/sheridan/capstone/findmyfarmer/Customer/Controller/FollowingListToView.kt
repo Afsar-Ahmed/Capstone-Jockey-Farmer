@@ -34,10 +34,11 @@ class FollowingListToView (private val FavouriteList: ArrayList<Farm>, private v
         if(!(currentItem.primaryImage.isNullOrBlank())){
             Picasso.get().load(currentItem.primaryImage).into(holder.imageView)
         }
-        holder.Farmer_Name.text = currentItem.businessName
-        holder.Farmers_Desc.text = currentItem.businessDescription
+        holder.Farm_Name.text = currentItem.businessName
+        holder.Farm_Desc.text = currentItem.businessDescription
         holder.Rating.rating = currentItem.businessRating
-        holder.Farmer_City.text = currentItem.city
+        holder.Farm_City.text = currentItem.city
+        holder.Followers.text = "Followers: ${currentItem.followers}"
 
     }
 
@@ -45,10 +46,11 @@ class FollowingListToView (private val FavouriteList: ArrayList<Farm>, private v
 
 
         val imageView: RoundedImageView = itemView.ImageView
-        val Farmer_Name: TextView = itemView.Name
-        val Farmers_Desc: TextView = itemView.Desc
+        val Farm_Name: TextView = itemView.Name
+        val Farm_Desc: TextView = itemView.Desc
         val Rating: RatingBar = itemView.rating
-        val Farmer_City: TextView = itemView.City
+        val Farm_City: TextView = itemView.City
+        val Followers : TextView = itemView.Followers
 
 
         init {

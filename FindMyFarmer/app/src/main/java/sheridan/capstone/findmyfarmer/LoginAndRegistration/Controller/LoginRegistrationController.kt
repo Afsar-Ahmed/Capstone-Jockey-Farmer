@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -61,7 +62,6 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         val authObserver = Observer<FirebaseUser?>{ newAuth ->
             user = newAuth
             if(user != null){
-               //startActivity(Intent(this,CustomerActivity::class.java))
                 updateUI(this,user)
             }else{
                 Toast.makeText(applicationContext, "Incorrect email/password",
@@ -126,11 +126,6 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                     loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!,bundle=null)
                 }
                 catch (e: Exception){
-                    /*Toast.makeText(
-                        applicationContext,
-                        "Error Logging into google account",
-                        Toast.LENGTH_SHORT
-                    ).show()*/
                     Log.w("GOOGLE SIGN IN FAILED", e)
                 }
             }
@@ -150,14 +145,16 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
 
        if(customer != null){
            if(customer.isFarmer){
-               loggedIn = Intent(context, FarmerActivity::class.java)
+               loggedIn = Intent(applicationContext, FarmerActivity::class.java)
                loggedIn.putExtras(Bundle().apply(extras))
+               loggedIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                startActivity(loggedIn)
                this.finish()
            }
            else{
-               loggedIn = Intent(context, CustomerActivity::class.java)
+               loggedIn = Intent(applicationContext, CustomerActivity::class.java)
                loggedIn.putExtras(Bundle().apply(extras))
+               loggedIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                startActivity(loggedIn)
                this.finish()
            }
@@ -186,8 +183,6 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     override fun OnGoogleButtonClickListener() {
         googleLogIn()
     }
-
-
 
     //When facebook Sign In button is pressed - call facebook log in
     override fun OnFBLogInButtonClickListener() {

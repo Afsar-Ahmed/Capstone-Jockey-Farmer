@@ -43,8 +43,7 @@ class FarmListToView (val FarmList: ArrayList<Farm>, private val listener:OnItem
         holder.Farm_Desc.text = currentItem.businessDescription
         holder.Rating.rating = currentItem.businessRating
         holder.Farm_City.text = currentItem.city
-
-
+        holder.Followers.text = "Followers: ${currentItem.followers}"
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
@@ -54,6 +53,7 @@ class FarmListToView (val FarmList: ArrayList<Farm>, private val listener:OnItem
         val Farm_Desc: TextView = itemView.Desc
         val Rating: RatingBar = itemView.rating
         val Farm_City: TextView = itemView.City
+        val Followers: TextView = itemView.Followers
 
 
         init { itemView.setOnClickListener(this) }

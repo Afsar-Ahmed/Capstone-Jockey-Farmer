@@ -17,11 +17,11 @@
         android:layout_gravity="center"
         android:contentDescription="TODO"
         android:scaleType="centerCrop"
-        android:src="@drawable/test1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/default_farm_image" />
 
     <RatingBar
         android:id="@+id/Ratings"
@@ -141,7 +141,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Desc"
         app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/farmer_info_card" />
+        tools:listitem="@layout/fruit_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

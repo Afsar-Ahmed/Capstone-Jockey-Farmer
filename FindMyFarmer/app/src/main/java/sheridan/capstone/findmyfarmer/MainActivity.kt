@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
         }
-
     }
 
     //Checks if the user in signed in the account
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         var customer = sessionData.customerData
         if(user!=null){
-            if (user.isAnonymous){
+             if (user.isAnonymous){
                 startActivity(Intent(this, AnonymousUserActivity::class.java))
             }
         }

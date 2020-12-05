@@ -77,7 +77,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     private JSONObject AddFarm(Farm farm){
         Map<String, String> params = new HashMap();
 
-        params.put("Businsess_Name",farm.getBusinessName());
+        params.put("Business_Name",farm.getBusinessName());
         params.put("Business_Description", farm.getBusinessDescription());
         params.put("Business_Rating",String.valueOf(farm.getBusinessRating()));
         params.put("City",farm.getCity());
@@ -171,6 +171,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
                 params.put("FarmID", farmProduct.getFarmerID());
                 params.put("ProductID", farmProduct.getProductID());
+                params.put("Quantity",String.valueOf(farmProduct.getQuantity()));
 
                 jsonArray.put(params);
             }
@@ -187,7 +188,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             for (Farm farm : farms) {
                 JSONObject params = new JSONObject();
 
-                params.put("Businsess_Name",farm.getBusinessName());
+                params.put("Business_Name",farm.getBusinessName());
                 params.put("Business_Description", farm.getBusinessDescription());
                 params.put("Business_Rating",String.valueOf(farm.getBusinessRating()));
                 params.put("City",farm.getCity());
@@ -259,7 +260,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         Map<String, String> params = new HashMap();
 
         params.put("FarmID",String.valueOf(farm.getFarmID()));
-        params.put("Businsess_Name",farm.getBusinessName());
+        params.put("Business_Name",farm.getBusinessName());
         params.put("Business_Description", farm.getBusinessDescription());
         params.put("Business_Rating",String.valueOf(farm.getBusinessRating()));
         params.put("City",farm.getCity());
@@ -280,6 +281,18 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    private JSONObject UpdateFarmProduct(FarmProduct farmProduct){
+        Map<String, String> params = new HashMap();
+
+        params.put("FarmProductID", String.valueOf(farmProduct.getFarmProductID()));
+        params.put("FarmID", String.valueOf(farmProduct.getFarmerID()));
+        params.put("ProductID", String.valueOf(farmProduct.getProductID()));
+        params.put("Quantity",String.valueOf(farmProduct.getQuantity()));
+
+        return new JSONObject(params);
+    }
+
+
 
     //API calls handled for a list of objects
     private String SendListRequest(String url, List<?> objects){
@@ -338,6 +351,9 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             }
             else if(object.getClass() == Farm.class){
                 obj = UpdateFarm((Farm) object);
+            }
+            else if(object.getClass() == FarmProduct.class){
+                obj = UpdateFarmProduct((FarmProduct) object);
             }
             else{
                 return null;

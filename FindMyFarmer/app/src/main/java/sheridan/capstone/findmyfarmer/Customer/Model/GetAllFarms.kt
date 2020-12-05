@@ -1,7 +1,6 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -17,7 +16,6 @@ import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import java.util.*
-import kotlin.collections.ArrayList
 
 class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLayout,val adapter: FarmListToView) {
 
@@ -42,17 +40,27 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                         farmlistdata.isFollowed = !(resp.isNullOrBlank())
                                         DatabaseAPIHandler(activity, AsyncResponse {resp2->
                                             farmlistdata.alreadyRated = !(resp2.isNullOrBlank())
-                                            Farms.add(farmlistdata);
-                                            //notifying change on list
-                                            adapter.notifyDataSetChanged()
-                                            swipeRefreshLayout.isRefreshing = false
+                                            DatabaseAPIHandler(activity, AsyncResponse {
+                                                if(it != null) {
+                                                    farmlistdata.followers = it.toInt()
+                                                }
+                                                Farms.add(farmlistdata);
+                                                //notifying change on list
+                                                adapter.notifyDataSetChanged()
+                                                swipeRefreshLayout.isRefreshing = false
+                                            }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                         }).execute("/getRatingByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                                     }).execute("/getFollowByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                                 }else{
-                                    Farms.add(farmlistdata);
-                                    //notifying change on list
-                                    adapter.notifyDataSetChanged()
-                                    swipeRefreshLayout.isRefreshing = false
+                                    DatabaseAPIHandler(activity, AsyncResponse {
+                                        if(it != null) {
+                                            farmlistdata.followers = it.toInt()
+                                        }
+                                        Farms.add(farmlistdata);
+                                        //notifying change on list
+                                        adapter.notifyDataSetChanged()
+                                        swipeRefreshLayout.isRefreshing = false
+                                    }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                 }
                             }
                             else{
@@ -61,17 +69,27 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                         farmlistdata.isFollowed = !(resp.isNullOrBlank())
                                         DatabaseAPIHandler(activity, AsyncResponse {resp2->
                                             farmlistdata.alreadyRated = !(resp2.isNullOrBlank())
-                                            Farms.add(farmlistdata);
-                                            //notifying change on list
-                                            adapter.notifyDataSetChanged()
-                                            swipeRefreshLayout.isRefreshing = false
+                                            DatabaseAPIHandler(activity, AsyncResponse {
+                                                if(it != null) {
+                                                    farmlistdata.followers = it.toInt()
+                                                }
+                                                Farms.add(farmlistdata);
+                                                //notifying change on list
+                                                adapter.notifyDataSetChanged()
+                                                swipeRefreshLayout.isRefreshing = false
+                                            }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                         }).execute("/getRatingByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                                     }).execute("/getFollowByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                                 }else{
-                                    Farms.add(farmlistdata);
-                                    //notifying change on list
-                                    adapter.notifyDataSetChanged()
-                                    swipeRefreshLayout.isRefreshing = false
+                                    DatabaseAPIHandler(activity, AsyncResponse {
+                                        if(it != null) {
+                                            farmlistdata.followers = it.toInt()
+                                        }
+                                        Farms.add(farmlistdata);
+                                        //notifying change on list
+                                        adapter.notifyDataSetChanged()
+                                        swipeRefreshLayout.isRefreshing = false
+                                    }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                 }
                             }
                     }
@@ -81,10 +99,15 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                 farmlistdata.isFollowed = !(resp.isNullOrBlank())
                                 DatabaseAPIHandler(activity, AsyncResponse {resp2->
                                     farmlistdata.alreadyRated = !(resp2.isNullOrBlank())
-                                    Farms.add(farmlistdata);
-                                    //notifying change on list
-                                    adapter.notifyDataSetChanged()
-                                    swipeRefreshLayout.isRefreshing = false
+                                    DatabaseAPIHandler(activity, AsyncResponse {
+                                        if(it != null) {
+                                            farmlistdata.followers = it.toInt()
+                                        }
+                                        Farms.add(farmlistdata);
+                                        //notifying change on list
+                                        adapter.notifyDataSetChanged()
+                                        swipeRefreshLayout.isRefreshing = false
+                                    }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                 }).execute("/getRatingByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                             }).execute("/getFollowByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                         }else{

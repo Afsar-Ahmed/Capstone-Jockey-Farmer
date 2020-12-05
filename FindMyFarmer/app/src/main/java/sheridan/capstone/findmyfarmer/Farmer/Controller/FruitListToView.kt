@@ -3,10 +3,10 @@ package sheridan.capstone.findmyfarmer.Farmer.Controller
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
-import kotlinx.android.synthetic.main.farmer_info_card.view.*
+import kotlinx.android.synthetic.main.fruit_card.view.*
 import sheridan.capstone.findmyfarmer.Entities.Product
 
 import sheridan.capstone.findmyfarmer.R
@@ -16,7 +16,7 @@ class FruitListToView (private val FruitList: List<Product>, private val listene
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.farmer_info_card,
+            R.layout.fruit_card,
             parent, false
         )
         return MyViewHolder(
@@ -28,20 +28,21 @@ class FruitListToView (private val FruitList: List<Product>, private val listene
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-
         val currentItem = FruitList[position]
         //holder.Fruit_Image.setImageResource(currentItem.ImageResource)
         holder.Fruit_Name.text = currentItem.productName
         holder.Fruit_Cat.text = currentItem.productCategory
+        holder.Fruit_quantity.text = currentItem.quantity.toString()
     }
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
 
-        val Fruit_Image : RoundedImageView = itemView.Fruit_Image
-        val Fruit_Name: TextView = itemView.Fruit_Name
-        val Fruit_Cat: TextView = itemView.Fruit_Cat
+        val Fruit_Image : RoundedImageView = itemView.Fruit_img
+        val Fruit_Name: TextView = itemView.Fruit_name
+        val Fruit_Cat: TextView = itemView.Fruit_Category
+        val Fruit_quantity :TextView = itemView.quantitytext
 
 
         init {

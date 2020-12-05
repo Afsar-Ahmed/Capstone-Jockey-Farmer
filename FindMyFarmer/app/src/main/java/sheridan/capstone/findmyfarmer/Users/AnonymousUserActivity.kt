@@ -69,9 +69,15 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
         when(item.itemId){
             R.id.nav_manage ->{
                 startActivity(Intent(this, LoginRegistrationController::class.java))
+                this.finish()
             }
         }
 
         return true
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
+}

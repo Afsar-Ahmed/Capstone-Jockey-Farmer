@@ -38,26 +38,39 @@ class GetFollows(val activity: Activity, val adapter: FollowingListToView){
                         @RequiresApi(Build.VERSION_CODES.N)
                         override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                             if(Url != null && !(Url.get().isNullOrBlank())) {
-                                followedFarm.primaryImage = Url.get()
-                                FollowedFarms.add(followedFarm);
-                                //notifying change on list
-                                adapter.notifyDataSetChanged()
+                                DatabaseAPIHandler(activity, AsyncResponse {
+                                    if(it != null) {
+                                        followedFarm.followers = it.toInt()
+                                    }
+                                    FollowedFarms.add(followedFarm);
+                                    //notifying change on list
+                                    adapter.notifyDataSetChanged()
+                                }).execute("/getFarmFollowers/${followedFarm.farmID}")
                             }
                             else{
-                                FollowedFarms.add(followedFarm);
-                                //notifying change on list
-                                adapter.notifyDataSetChanged()
+                                DatabaseAPIHandler(activity, AsyncResponse {
+                                    if(it != null) {
+                                        followedFarm.followers = it.toInt()
+                                    }
+                                    FollowedFarms.add(followedFarm);
+                                    //notifying change on list
+                                    adapter.notifyDataSetChanged()
+                                }).execute("/getFarmFollowers/${followedFarm.farmID}")
                             }
                         }
                         override fun OnErrorListener(error: String?) {
-                            FollowedFarms.add(followedFarm);
-                            //notifying change on list
-                            adapter.notifyDataSetChanged()
+                            DatabaseAPIHandler(activity, AsyncResponse {
+                                if(it != null) {
+                                    followedFarm.followers = it.toInt()
+                                }
+                                FollowedFarms.add(followedFarm);
+                                //notifying change on list
+                                adapter.notifyDataSetChanged()
+                            }).execute("/getFarmFollowers/${followedFarm.farmID}")
                         }
                     })
                 }
             }).execute("/getFollowedFarmsByCustomerID/${customer.customerID}")
         }
-
     }
 }

@@ -30,8 +30,8 @@
         android:textColor="@color/scheme_dark_green"
         android:textColorHint="@color/scheme_medium_green"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/titleTextView"
+        app:layout_constraintStart_toStartOf="@+id/titleTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -60,7 +60,7 @@
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/roboto_light"
         android:paddingStart="30dp"
@@ -110,14 +110,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="108dp"
+        android:layout_marginTop="108dp"
         android:text="OR \n SIGN IN WITH "
         android:textAlignment="center"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/forgotPswrdLink"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="@+id/forgotPswrdLink" />
+        app:layout_constraintStart_toStartOf="@+id/forgotPswrdLink"
+        app:layout_constraintTop_toBottomOf="@+id/forgotPswrdLink" />
 
     <View
         android:id="@+id/line"

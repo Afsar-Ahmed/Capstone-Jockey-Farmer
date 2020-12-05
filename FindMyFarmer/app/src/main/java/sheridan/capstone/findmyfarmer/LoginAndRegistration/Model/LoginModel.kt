@@ -32,28 +32,16 @@ class LoginModel:ViewModel() {
                     // Sign in success - show log, update user value
                     Log.d("AUTHENTICATION", "login :success $user")
                     DatabaseAPIHandler(activity.applicationContext, AsyncResponse {
-                        var customer = ObjectConverter.convertStringToObject(
-                            it,
-                            Customer::class.java,
-                            false
-                        ) as Customer
+                        var customer = ObjectConverter.convertStringToObject(it, Customer::class.java, false) as Customer
                         if (customer != null) {
                             var sessionData = SessionData(activity)
                             if (customer.isFarmer) {
                                 DatabaseAPIHandler(activity.applicationContext, AsyncResponse {
-                                    var farmer = ObjectConverter.convertStringToObject(
-                                        it,
-                                        Farmer::class.java,
-                                        false
-                                    ) as Farmer
+                                    var farmer = ObjectConverter.convertStringToObject(it, Farmer::class.java, false) as Farmer
                                     if (farmer != null) {
                                         sessionData.setUserDataForSession(farmer, customer)
                                     } else {
-                                        Toast.makeText(
-                                            activity.applicationContext,
-                                            "Farmer For Customer: ${email} does not exist!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        Toast.makeText(activity.applicationContext, "Farmer For Customer: ${email} does not exist!", Toast.LENGTH_SHORT).show()
                                     }
 
                                 }).execute("/FarmerByCustomerID/${customer.customerID}")
@@ -61,15 +49,11 @@ class LoginModel:ViewModel() {
                                 sessionData.setUserDataForSession(null, customer)
                             }
                         } else {
-                            Toast.makeText(
-                                activity.applicationContext,
-                                "Customer: ${email} does not exist!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(activity.applicationContext, "Customer: ${email} does not exist!", Toast.LENGTH_SHORT).show()
                         }
                         user.value = auth.currentUser
+                        activity.finish()
                     }).execute("/CustomerByEmail/${email}")
-
                 } else {
                     user.value = null
                     // If sign in fails show log
@@ -79,12 +63,7 @@ class LoginModel:ViewModel() {
     }
 
     //Registers the google Sign in as an authenticated user in Firebase, lasts only within a session
-    public fun firebaseAuthWithGoogle(
-        activity: Activity,
-        auth: FirebaseAuth,
-        idToken: String,
-        bundle: Bundle?
-    ) {
+    public fun firebaseAuthWithGoogle(activity: Activity, auth: FirebaseAuth, idToken: String, bundle: Bundle?) {
         val cred = GoogleAuthProvider.getCredential(idToken, null)
         signInWithCredential(activity, cred, auth, "google")
     }
@@ -106,20 +85,21 @@ class LoginModel:ViewModel() {
                         var sessionData = SessionData(activity)
                         if (customer.isFarmer) {
                             DatabaseAPIHandler(activity.applicationContext, AsyncResponse {farm->
-                                var farmer = ObjectConverter.convertStringToObject(farm, Farmer::class.java, false) as Farmer
-                                if (farmer != null) {
-                                    sessionData.setUserDataForSession(farmer, customer)
-                                } else {
-                                    Toast.makeText(activity.applicationContext, "Farmer For Customer: ${email} does not exist!", Toast.LENGTH_SHORT).show()
+                                if(!(farm.isNullOrBlank())){
+                                    var farmer = ObjectConverter.convertStringToObject(farm, Farmer::class.java, false) as Farmer
+                                    if (farmer != null) {
+                                        sessionData.setUserDataForSession(farmer, customer)
+                                    } else {
+                                        Toast.makeText(activity.applicationContext, "Farmer For Customer: ${email} does not exist!", Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-
                             }).execute("/FarmerByCustomerID/${customer.customerID}")
                         }
                         else{
                             sessionData.setUserDataForSession(null, customer)
                         }
                         user.value = auth.currentUser
-                        //activity.finish()
+                        activity.finish()
                     }
                     else {
                         //create this user
