@@ -1,19 +1,29 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
+import android.annotation.SuppressLint
+import android.graphics.Canvas
+import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import sheridan.capstone.findmyfarmer.Customer.Model.FollowingDialog
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Farmer.Controller.HubListToView
+import sheridan.capstone.findmyfarmer.Farmer.Model.FarmDeleteConfirmDialog
 import sheridan.capstone.findmyfarmer.Farmer.Model.GetFarmersFarms
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
@@ -28,7 +38,8 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?
+    ): View? {
 
         sessionData = SessionData(activity)
         var farmer = sessionData.farmerData
@@ -39,31 +50,56 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         val recycleView: RecyclerView = view.findViewById(R.id.Hub_Recycle_View)
         val farmadd = view.findViewById<ImageView>(R.id.AddFarmImage)
 
-        val adapter = HubListToView(requireActivity(),HubList, this)
+        val adapter = HubListToView(requireActivity(), HubList, this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        var getFarmersFarms = activity?.let { GetFarmersFarms(it,swipeRefreshLayout,adapter) }
+        var getFarmersFarms = activity?.let { GetFarmersFarms(it, swipeRefreshLayout, adapter) }
 
         if (getFarmersFarms != null && farmer != null) {
-            getFarmersFarms.GetHubFarms(HubList,farmer.farmerID)
+            getFarmersFarms.GetHubFarms(HubList, farmer.farmerID)
         }
 
         swipeRefreshLayout.setOnRefreshListener {
             if (getFarmersFarms != null && farmer != null) {
-                getFarmersFarms.GetHubFarms(HubList,farmer.farmerID)
+                getFarmersFarms.GetHubFarms(HubList, farmer.farmerID)
             }
         }
 
         farmadd.setOnClickListener{
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container,FarmAddFragment())?.commit()
+                ?.replace(R.id.fragment_container, FarmAddFragment())?.commit()
         }
 
-
+        var touchHelper  = ItemTouchHelper(itemTouchHelper)
+        touchHelper.attachToRecyclerView(recycleView)
 
         return view
+    }
+
+    private val itemTouchHelper = object :ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            return false
+        }
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            var deleteFarm: FarmDeleteConfirmDialog =
+                FarmDeleteConfirmDialog(HubList.get(viewHolder.adapterPosition))
+
+            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+            if (FragmentManager != null) {
+                deleteFarm.show(FragmentManager, "delete?")
+            }
+        }
+
+        override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+            RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(),R.color.RedApp))
+                .addSwipeLeftActionIcon(R.drawable.ic_delete_50)
+                .create()
+                .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        }
     }
 
     override fun onItemClick(position: Int) {
@@ -71,7 +107,7 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
         val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, FarmManager(),)?.commit()
+        fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,7 +115,6 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         viewModel.getFarmData()
         viewModel.getFarmers_Followers()
-
     }
 }
 

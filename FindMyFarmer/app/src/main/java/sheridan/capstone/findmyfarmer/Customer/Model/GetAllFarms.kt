@@ -51,7 +51,8 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                             }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                         }).execute("/getRatingByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                                     }).execute("/getFollowByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
-                                }else{
+                                }
+                                else{
                                     DatabaseAPIHandler(activity, AsyncResponse {
                                         if(it != null) {
                                             farmlistdata.followers = it.toInt()
@@ -80,7 +81,8 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                             }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                         }).execute("/getRatingByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                                     }).execute("/getFollowByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
-                                }else{
+                                }
+                                else{
                                     DatabaseAPIHandler(activity, AsyncResponse {
                                         if(it != null) {
                                             farmlistdata.followers = it.toInt()
@@ -110,11 +112,17 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
                                     }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                                 }).execute("/getRatingByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
                             }).execute("/getFollowByCustomerIDAndFarmID/${farmlistdata.farmID}/${customer.customerID}")
-                        }else{
-                            Farms.add(farmlistdata);
-                            //notifying change on list
-                            adapter.notifyDataSetChanged()
-                            swipeRefreshLayout.isRefreshing = false
+                        }
+                        else{
+                            DatabaseAPIHandler(activity, AsyncResponse {
+                                if(it != null) {
+                                    farmlistdata.followers = it.toInt()
+                                }
+                                Farms.add(farmlistdata);
+                                //notifying change on list
+                                adapter.notifyDataSetChanged()
+                                swipeRefreshLayout.isRefreshing = false
+                            }).execute("/getFarmFollowers/${farmlistdata.farmID}")
                         }
                     }
                 })

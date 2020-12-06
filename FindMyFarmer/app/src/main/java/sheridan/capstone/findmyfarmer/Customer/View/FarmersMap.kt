@@ -77,7 +77,6 @@ class FarmersMap : Fragment(), OnMapReadyCallback {
 
 
 
-
         if(addresslist.isEmpty()){
             Toast.makeText(requireActivity(),"No Address Found",Toast.LENGTH_LONG).show()
         }

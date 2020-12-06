@@ -238,7 +238,6 @@ class Maps : Fragment(),OnMapReadyCallback{
             fusedlocation.requestLocationUpdates(locationReq,locationCallback, Looper.myLooper())
 
 
-
             mapview.onCreate(savedInstanceState)
             mapview.onResume()
 

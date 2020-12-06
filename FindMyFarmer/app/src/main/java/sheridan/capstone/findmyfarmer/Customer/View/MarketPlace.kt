@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -42,6 +43,7 @@ class MarketPlace : Fragment(),
         val View : View = inflater.inflate(R.layout.fragment_market_place, container, false)
         swipeResfreshLayout = View.findViewById(R.id.pullToRefresh)
 
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val recycleView : RecyclerView = View.findViewById(R.id.recycleView)
 
         adapter = FarmListToView(FarmList,this)
@@ -62,6 +64,7 @@ class MarketPlace : Fragment(),
 
         return View
     }
+
     override fun onItemClick(position: Int) {
         FarmList[position]?.let { viewModel.setFarmData(it) }
 
@@ -70,10 +73,6 @@ class MarketPlace : Fragment(),
         fragmentTransaction?.replace(R.id.fragment_container, FarmerInfo())?.commit()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
 
 
 }
