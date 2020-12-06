@@ -37,6 +37,8 @@ class MarketPlace : Fragment(),
     private lateinit var swipeResfreshLayout: SwipeRefreshLayout
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val View : View = inflater.inflate(R.layout.fragment_market_place, container, false)
