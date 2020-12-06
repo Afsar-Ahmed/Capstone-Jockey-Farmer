@@ -1,6 +1,7 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -165,6 +167,30 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     override fun onItemClick(position: Int) {
         //Click Event For FruitList
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+
+                val FragmentManager: FragmentManager? = activity?.supportFragmentManager
+
+                val fragmentTransaction: FragmentTransaction? = FragmentManager?.beginTransaction()
+                fragmentTransaction?.replace(
+                    R.id.fragment_container,
+                   MarketPlace()
+                )
+                    ?.commit()
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,  // LifecycleOwner
+            callback
+        )
     }
 
 

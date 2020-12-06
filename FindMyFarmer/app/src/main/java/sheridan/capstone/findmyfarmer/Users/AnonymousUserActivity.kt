@@ -10,12 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import sheridan.capstone.findmyfarmer.Customer.View.Following
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.AfterLoginFarmerRegistration
 import sheridan.capstone.findmyfarmer.R
 
 class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
@@ -71,6 +68,7 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
                 startActivity(Intent(this, LoginRegistrationController::class.java))
                 this.finish()
             }
+
         }
 
         return true

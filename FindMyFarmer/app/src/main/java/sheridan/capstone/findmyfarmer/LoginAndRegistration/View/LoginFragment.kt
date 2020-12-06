@@ -1,15 +1,21 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.View
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import kotlinx.android.synthetic.main.fragment_modified_login.*
 import kotlinx.android.synthetic.main.fragment_modified_login.view.*
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationInterface
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.ViewBehaviorInterface
+import sheridan.capstone.findmyfarmer.MainActivity
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SplashScreenActivity
 
 
 class LoginFragment : Fragment() {
@@ -50,6 +56,27 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewBehaviorInterface = activity as ViewBehaviorInterface
         viewBehaviorInterface.viewBehavior(constraintLayoutLogIn)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+
+                val i = Intent(activity,  SplashScreenActivity::class.java)
+                startActivity(i)
+                (activity as Activity?)!!.overridePendingTransition(0, 0)
+
+
+            }
+
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,  // LifecycleOwner
+            callback
+        )
     }
 
 }
