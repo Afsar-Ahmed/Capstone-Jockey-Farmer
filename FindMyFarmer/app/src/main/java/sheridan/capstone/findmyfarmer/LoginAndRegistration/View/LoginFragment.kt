@@ -36,6 +36,7 @@ class LoginFragment : Fragment() {
             view.FBSignIn.performClick()
         }
         view.googleSignInBtn.setOnClickListener{
+
             loginInterface.OnGoogleButtonClickListener()
         }
 

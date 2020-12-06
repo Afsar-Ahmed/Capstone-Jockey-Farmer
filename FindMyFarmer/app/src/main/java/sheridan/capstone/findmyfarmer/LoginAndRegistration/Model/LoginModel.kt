@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,7 +27,7 @@ class LoginModel:ViewModel() {
     }
 
     //logs in user with right credentials
-    public fun login(auth: FirebaseAuth, activity: Activity, email: String, password: String){
+    public fun login(auth: FirebaseAuth, activity: Activity, email: String, password: String, loginProgressBar: ProgressBar){
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
                     // Sign in success - show log, update user value
@@ -43,18 +44,21 @@ class LoginModel:ViewModel() {
                                     } else {
                                         Toast.makeText(activity.applicationContext, "Farmer For Customer: ${email} does not exist!", Toast.LENGTH_SHORT).show()
                                     }
-
+                                    loginProgressBar.visibility = ProgressBar.GONE
+                                    user.value = auth.currentUser
                                 }).execute("/FarmerByCustomerID/${customer.customerID}")
                             } else {
                                 sessionData.setUserDataForSession(null, customer)
+                                loginProgressBar.visibility = ProgressBar.GONE
+                                user.value = auth.currentUser
                             }
                         } else {
                             Toast.makeText(activity.applicationContext, "Customer: ${email} does not exist!", Toast.LENGTH_SHORT).show()
                         }
-                        user.value = auth.currentUser
-                        activity.finish()
+
                     }).execute("/CustomerByEmail/${email}")
                 } else {
+                    loginProgressBar.visibility = ProgressBar.GONE
                     user.value = null
                     // If sign in fails show log
                     Log.d("AUTHENTICATION", "login :failure")
@@ -63,18 +67,20 @@ class LoginModel:ViewModel() {
     }
 
     //Registers the google Sign in as an authenticated user in Firebase, lasts only within a session
-    public fun firebaseAuthWithGoogle(activity: Activity, auth: FirebaseAuth, idToken: String, bundle: Bundle?) {
+    public fun firebaseAuthWithGoogle(activity: Activity, auth: FirebaseAuth, idToken: String, bundle: Bundle?, loginProgressBar: ProgressBar) {
         val cred = GoogleAuthProvider.getCredential(idToken, null)
-        signInWithCredential(activity, cred, auth, "google")
+        loginProgressBar.visibility = ProgressBar.VISIBLE
+        signInWithCredential(activity, cred, auth, "google",loginProgressBar)
     }
 
     //Registers the facebook Sign in as an authenticated user in Firebase, lasts only within a session
-    public fun firebaseAuthWithFacebook(activity: Activity, auth: FirebaseAuth, token: AccessToken){
+    public fun firebaseAuthWithFacebook(activity: Activity, auth: FirebaseAuth, token: AccessToken, loginProgressBar: ProgressBar){
         val cred =  FacebookAuthProvider.getCredential(token.token)
-        signInWithCredential(activity, cred, auth, "facebook")
+        loginProgressBar.visibility = ProgressBar.VISIBLE
+        signInWithCredential(activity, cred, auth, "facebook",loginProgressBar)
     }
 
-    private fun signInWithCredential(activity: Activity, credential: AuthCredential, auth: FirebaseAuth, platform: String){
+    private fun signInWithCredential(activity: Activity, credential: AuthCredential, auth: FirebaseAuth, platform: String,loginProgressBar: ProgressBar){
         auth.signInWithCredential(credential).addOnCompleteListener(activity){ task ->
             if(task.isSuccessful){
                 // Sign in success - show log, update user value
@@ -93,13 +99,14 @@ class LoginModel:ViewModel() {
                                         Toast.makeText(activity.applicationContext, "Farmer For Customer: ${email} does not exist!", Toast.LENGTH_SHORT).show()
                                     }
                                 }
+                                loginProgressBar.visibility = ProgressBar.GONE
+                                user.value = auth.currentUser
                             }).execute("/FarmerByCustomerID/${customer.customerID}")
                         }
                         else{
                             sessionData.setUserDataForSession(null, customer)
                         }
-                        user.value = auth.currentUser
-                        activity.finish()
+
                     }
                     else {
                         //create this user
@@ -112,8 +119,10 @@ class LoginModel:ViewModel() {
                             if(cust != null){
                                 sessionData.setUserDataForSession(null,cust)
                             }
+
+                            loginProgressBar.visibility = ProgressBar.GONE
                             user.value = auth.currentUser
-                            activity.finish()
+
                             Log.d("AUTHENTICATION", "login with $platform :success $user")
                         }).execute("/addCustomer",customer)
                     }
@@ -121,6 +130,7 @@ class LoginModel:ViewModel() {
             }
             else{
                 // If sign in fails show log
+                loginProgressBar.visibility = ProgressBar.GONE
                 user.value = null
                 Log.d("AUTHENTICATION", "login with $platform :failure")
             }

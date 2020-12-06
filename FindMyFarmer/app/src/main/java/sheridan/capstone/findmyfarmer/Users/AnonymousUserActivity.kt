@@ -10,21 +10,28 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import sheridan.capstone.findmyfarmer.Customer.View.Following
+
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
+    private lateinit var sessionData: SessionData
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anonymous_user)
-
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
-
+        sessionData = SessionData(this)
+        checkIfSignedInAccount()
         drawerLayout = findViewById(R.id.anon_drawer)
         NavigationView = findViewById(R.id.nav_anon_view)
 
@@ -66,7 +73,7 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
         when(item.itemId){
             R.id.nav_manage ->{
                 startActivity(Intent(this, LoginRegistrationController::class.java))
-                this.finish()
+                //this.finish()
             }
 
         }
@@ -74,6 +81,30 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
         return true
     }
 
+    private fun checkIfSignedInAccount() {
+
+        val user = Firebase.auth.currentUser
+        var customer = sessionData.customerData
+        if (user != null && customer != null) {
+            if(customer.isFarmer){
+                startActivity(Intent(this,
+                    FarmerActivity::class.java))
+            }
+            else{
+                startActivity(Intent(this,
+                    CustomerActivity::class.java))
+            }
+
+        }
+        else {
+            sessionData.ClearAllData()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkIfSignedInAccount()
+    }
     override fun onBackPressed() {
         super.onBackPressed()
 
