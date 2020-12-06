@@ -13,6 +13,18 @@
     android:focusableInTouchMode="true"
     tools:context=".LoginAndRegistration.View.LoginFragment">
 
+    <ProgressBar
+        android:id="@+id/loginProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/orTextViewLogin"
+        app:layout_constraintEnd_toEndOf="@+id/orTextViewLogin"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="@+id/orTextViewLogin" />
+
     <EditText
         android:id="@+id/inputEmail"
         android:layout_width="wrap_content"
@@ -114,9 +126,9 @@
         android:text="OR \n SIGN IN WITH "
         android:textAlignment="center"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="@+id/forgotPswrdLink"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="@+id/forgotPswrdLink"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgotPswrdLink" />
 
     <View
