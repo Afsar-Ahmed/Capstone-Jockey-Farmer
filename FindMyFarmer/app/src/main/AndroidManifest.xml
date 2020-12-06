@@ -29,10 +29,9 @@
         <activity android:name=".Users.AnonymousUserActivity">
         </activity>
 
-        <activity android:name=".MainActivity" />
-
-
         <activity android:name=".MainActivity"
+
+
             android:screenOrientation="portrait"/>
 
         <activity android:name=".Users.PhotoPicker" />
