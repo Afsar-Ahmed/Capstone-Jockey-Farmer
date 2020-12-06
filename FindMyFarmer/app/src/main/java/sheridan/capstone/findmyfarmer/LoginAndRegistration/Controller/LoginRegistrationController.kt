@@ -9,10 +9,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.facebook.CallbackManager
@@ -25,7 +25,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.UserInfo
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_modified_login.*
@@ -61,7 +60,6 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         val authObserver = Observer<FirebaseUser?>{ newAuth ->
             user = newAuth
             if(user != null){
-               //startActivity(Intent(this,CustomerActivity::class.java))
                 updateUI(this,user)
             }else{
                 Toast.makeText(applicationContext, "Incorrect email/password",
@@ -123,14 +121,9 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
                 try{
                     //breaking down the account object to retrieve the basic data from the account, like name, email, id etc
                     val acc = googleAcc.getResult(ApiException::class.java)!!
-                    loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!,bundle=null)
+                    loginModel.firebaseAuthWithGoogle(this,auth,acc.idToken!!,bundle=null, loginProgressBar)
                 }
                 catch (e: Exception){
-                    Toast.makeText(
-                        applicationContext,
-                        "Error Logging into google account",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     Log.w("GOOGLE SIGN IN FAILED", e)
                 }
             }
@@ -150,14 +143,16 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
 
        if(customer != null){
            if(customer.isFarmer){
-               loggedIn = Intent(context, FarmerActivity::class.java)
+               loggedIn = Intent(applicationContext, FarmerActivity::class.java)
                loggedIn.putExtras(Bundle().apply(extras))
+               loggedIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                startActivity(loggedIn)
                this.finish()
            }
            else{
-               loggedIn = Intent(context, CustomerActivity::class.java)
+               loggedIn = Intent(applicationContext, CustomerActivity::class.java)
                loggedIn.putExtras(Bundle().apply(extras))
+               loggedIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                startActivity(loggedIn)
                this.finish()
            }
@@ -167,7 +162,9 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
     //Run validation and login function with input provided by the user
     override fun OnLoginButtonClickListener(email: EditText, password: EditText) {
             if(loginModel.loginValidation(email, password)) {
-                loginModel.login( auth, this, email.text.toString(), password.text.toString())
+                loginProgressBar.visibility = ProgressBar.VISIBLE
+                loginModel.login( auth, this, email.text.toString(), password.text.toString(), loginProgressBar)
+
         }
     }
 
@@ -193,7 +190,7 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         FBSignIn.registerCallback(callBackManager,
             object : FacebookCallback<LoginResult> { override fun onSuccess(result: LoginResult?) {
                     if (result != null) {
-                        loginModel.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken)
+                        loginModel.firebaseAuthWithFacebook(this@LoginRegistrationController, auth,result.accessToken,loginProgressBar)
                     } else {
                         Toast.makeText(applicationContext, "Error getting Facebook Account",
                             Toast.LENGTH_SHORT).show()

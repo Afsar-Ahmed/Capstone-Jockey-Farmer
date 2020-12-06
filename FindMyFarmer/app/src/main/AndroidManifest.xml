@@ -26,15 +26,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Users.PhotoPicker"></activity>
+        <activity android:name=".Users.AnonymousUserActivity">
+        </activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Users.PhotoPicker" />
         <activity android:name=".Users.FarmerActivity" />
         <activity android:name=".Users.AccountSettings" />
-        <activity android:name=".Users.CustomerActivity" />
+        <activity android:name=".Users.CustomerActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true" />
         <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"
-            android:windowSoftInputMode="adjustUnspecified" />
-        <activity android:name=".MainActivity">
+            android:windowSoftInputMode="adjustUnspecified"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".SplashScreenActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,6 +60,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDH9OuGB6g7tKlesC2stXuy4yNu4JIOBUo" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name="com.facebook.FacebookActivity"

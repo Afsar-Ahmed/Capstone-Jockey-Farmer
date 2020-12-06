@@ -24,7 +24,7 @@ import sheridan.capstone.findmyfarmer.Farmer.Model.FarmDBHandler
 import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.R
 
-class FarmManager : Fragment(),FruitListToView.OnItemClickListener  {
+class FarmManager : Fragment(){
 
 
     private lateinit var Farm_Image : ImageView
@@ -79,19 +79,16 @@ class FarmManager : Fragment(),FruitListToView.OnItemClickListener  {
             VerifyData()
         }
 
+        AddProductsToFarm.setOnClickListener {
+            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+
+            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.fragment_container, ProductManagement())?.commit()
+        }
+
         return view
     }
 
-    override fun onItemClick(position: Int) {
-        val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-
-        val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container,
-            ProductManagement()
-        )
-            ?.commit()
-
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getFarmData().observe(viewLifecycleOwner, Observer {

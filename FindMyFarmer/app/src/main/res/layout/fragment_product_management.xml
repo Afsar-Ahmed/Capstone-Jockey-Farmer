@@ -6,16 +6,73 @@
     android:layout_height="match_parent"
     tools:context=".Farmer.View.ProductManagement">
 
-
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product management goes here."
+        android:layout_marginBottom="8dp"
+        android:text="Category"
+        app:layout_constraintBottom_toTopOf="@+id/ProductCategorySpinner"
+        app:layout_constraintEnd_toEndOf="@+id/ProductCategorySpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ProductCategorySpinner"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Spinner
+        android:id="@+id/productTypeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="@+id/ProductCategorySpinner"
+        app:layout_constraintStart_toStartOf="@+id/ProductCategorySpinner"
+        app:layout_constraintTop_toBottomOf="@+id/ProductCategorySpinner" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Type"
+        app:layout_constraintBottom_toTopOf="@+id/productTypeSpinner"
+        app:layout_constraintEnd_toEndOf="@+id/productTypeSpinner"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/productTypeSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/ProductCategorySpinner"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/add_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Add"
+        app:layout_constraintEnd_toEndOf="@+id/productTypeSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/productTypeSpinner"
+        app:layout_constraintTop_toBottomOf="@+id/productTypeSpinner" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/add_product"
+        app:layout_constraintVertical_bias="0.0" />
 
-    </TextView>
-
+    <Spinner
+        android:id="@+id/ProductCategorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

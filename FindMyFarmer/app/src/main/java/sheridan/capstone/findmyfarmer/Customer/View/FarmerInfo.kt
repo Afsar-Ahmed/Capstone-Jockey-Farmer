@@ -1,6 +1,7 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -16,7 +18,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.nav_header.view.*
 import sheridan.capstone.findmyfarmer.Customer.Model.*
 import sheridan.capstone.findmyfarmer.Entities.Following
 import sheridan.capstone.findmyfarmer.R
@@ -105,7 +111,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
             val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
             fragmentTransaction?.replace(R.id.fragment_container,
-                Maps()
+                FarmersMap()
             )
                 ?.commit()
         }
@@ -127,6 +133,12 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
             }
         }
 
+        if(Firebase.auth.currentUser!!.isAnonymous){
+            RateIt.visibility = View.INVISIBLE
+            RateIt.isEnabled = false
+            FarmFollow.visibility = View.INVISIBLE
+            FarmFollow.isEnabled = false
+        }
         return view
     }
 
@@ -155,6 +167,30 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     override fun onItemClick(position: Int) {
         //Click Event For FruitList
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(
+            true // default to enabled
+        ) {
+            override fun handleOnBackPressed() {
+
+                val FragmentManager: FragmentManager? = activity?.supportFragmentManager
+
+                val fragmentTransaction: FragmentTransaction? = FragmentManager?.beginTransaction()
+                fragmentTransaction?.replace(
+                    R.id.fragment_container,
+                   MarketPlace()
+                )
+                    ?.commit()
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,  // LifecycleOwner
+            callback
+        )
     }
 
 

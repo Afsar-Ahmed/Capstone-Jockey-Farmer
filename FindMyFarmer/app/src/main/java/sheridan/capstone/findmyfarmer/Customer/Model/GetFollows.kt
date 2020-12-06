@@ -11,6 +11,7 @@ import sheridan.capstone.findmyfarmer.Customer.Controller.FollowingListToView
 import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.Database.ObjectConverter
+import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmListToView
 import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
@@ -39,25 +40,47 @@ class GetFollows(val activity: Activity, val adapter: FollowingListToView){
                         override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                             if(Url != null && !(Url.get().isNullOrBlank())) {
                                 followedFarm.primaryImage = Url.get()
-                                FollowedFarms.add(followedFarm);
-                                //notifying change on list
-                                adapter.notifyDataSetChanged()
+                                farmInfoProcess(customer, followedFarm, FollowedFarms)
                             }
                             else{
-                                FollowedFarms.add(followedFarm);
-                                //notifying change on list
-                                adapter.notifyDataSetChanged()
+                                farmInfoProcess(customer, followedFarm, FollowedFarms)
                             }
                         }
                         override fun OnErrorListener(error: String?) {
-                            FollowedFarms.add(followedFarm);
-                            //notifying change on list
-                            adapter.notifyDataSetChanged()
+                            farmInfoProcess(customer, followedFarm, FollowedFarms)
                         }
                     })
                 }
             }).execute("/getFollowedFarmsByCustomerID/${customer.customerID}")
         }
+    }
 
+    private fun farmInfoProcess(customer: Customer,followedFarm: Farm,FollowedFarms: ArrayList<Farm>){
+        if(customer != null){
+            DatabaseAPIHandler(activity, AsyncResponse {resp ->
+                followedFarm.isFollowed = !(resp.isNullOrBlank())
+                DatabaseAPIHandler(activity, AsyncResponse {resp2->
+                    followedFarm.alreadyRated = !(resp2.isNullOrBlank())
+                    DatabaseAPIHandler(activity, AsyncResponse {
+                        if(it != null) {
+                            followedFarm.followers = it.toInt()
+                        }
+                        FollowedFarms.add(followedFarm);
+                        //notifying change on list
+                        adapter.notifyDataSetChanged()
+                    }).execute("/getFarmFollowers/${followedFarm.farmID}")
+                }).execute("/getRatingByCustomerIDAndFarmID/${followedFarm.farmID}/${customer.customerID}")
+            }).execute("/getFollowByCustomerIDAndFarmID/${followedFarm.farmID}/${customer.customerID}")
+        }
+        else{
+            DatabaseAPIHandler(activity, AsyncResponse {
+                if(it != null) {
+                    followedFarm.followers = it.toInt()
+                }
+                FollowedFarms.add(followedFarm);
+                //notifying change on list
+                adapter.notifyDataSetChanged()
+            }).execute("/getFarmFollowers/${followedFarm.farmID}")
+        }
     }
 }
