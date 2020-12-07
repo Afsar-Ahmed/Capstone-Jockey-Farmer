@@ -19,7 +19,8 @@
     <color name="scheme_light_green">#BEEB9F</color>
     <color name="scheme_medium_green">#79BD8F</color>
     <color name="scheme_dark_green">#00A388</color>
-
+    <color name="scheme_soft_orange">#FAB078</color>
+    <color name="scheme_soft_orange_pressed">#FA9678</color>
 
 
 

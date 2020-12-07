@@ -3,6 +3,7 @@ package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
 import android.app.Activity
 import android.util.Log
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,12 +22,11 @@ class RegistrationModel:ViewModel() {
         MutableLiveData<FirebaseUser?>()
     }
     private lateinit var sessionData: SessionData
-    public fun register(auth: FirebaseAuth, activity: Activity, email: String,name:String, password: String,IsFarmer:Boolean) {
+    public fun register(auth: FirebaseAuth, activity: Activity, email: String,name:String, password: String,IsFarmer:Boolean,progressBar: ProgressBar) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
                     //if task is successful new user is added to the Firebase
-                    user.value = auth.currentUser
                     //Creating customer to add to database
                     //Adding customer instance to database
                     sessionData = SessionData(activity)
@@ -41,24 +41,25 @@ class RegistrationModel:ViewModel() {
                                     if(FarmerAdded != null){
                                         sessionData.setUserDataForSession(FarmerAdded,CustomerAdded)
                                     }
-                                    else{
-                                        Toast.makeText(activity.applicationContext,"Couldnt add Farmer for: ${customer.customerEmail}",Toast.LENGTH_SHORT).show()
-                                    }
+                                    progressBar.visibility = ProgressBar.GONE
+                                    user.value = auth.currentUser
                                 }).execute("/addFarmer",farmer)
                             }
                             else{
                                 sessionData.setUserDataForSession(null,CustomerAdded)
+                                user.value = auth.currentUser
+                                progressBar.visibility = ProgressBar.GONE
                             }
                         }
-                        else{
-                            Toast.makeText(activity.applicationContext,"Couldnt add Customer ${customer.customerEmail}",Toast.LENGTH_SHORT).show()
-                        }
+                        progressBar.visibility = ProgressBar.GONE
                     }).execute("/addCustomer",customer)
 
                     Log.d("REGISTRATION", "registration :success $user")
                 } else {
                     // If registration fails show log
+                    progressBar.visibility = ProgressBar.GONE
                     user.value = null
+                    Toast.makeText(activity.applicationContext,"This email is in use already",Toast.LENGTH_SHORT).show()
                     Log.d("REGISTRATION", "registration :failure")
                 }
             }
