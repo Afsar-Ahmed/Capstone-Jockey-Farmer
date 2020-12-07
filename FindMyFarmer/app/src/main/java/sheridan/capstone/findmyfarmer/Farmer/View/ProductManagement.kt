@@ -26,6 +26,7 @@ import sheridan.capstone.findmyfarmer.R
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_account_settings.*
 import kotlinx.android.synthetic.main.farmer_info_card.*
 import sheridan.capstone.findmyfarmer.Database.AsyncResponse
@@ -55,9 +56,7 @@ class ProductManagement : Fragment() {
         return view
     }
 
-   @RequiresApi(Build.VERSION_CODES.O)
-   private fun storeAPIDataintoDB(view: View){
-       lateinit var byteArray:ByteArray
+   private fun storeAPIDataintoDB(view: View):ArrayList<Product>{
 
         var randomCategory: String
 
@@ -71,7 +70,7 @@ class ProductManagement : Fragment() {
         //api keys & JSON
         val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
         val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
-       var productlist= JSONArray()
+       var productlist: JSONArray
 
 
         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
@@ -84,12 +83,11 @@ class ProductManagement : Fragment() {
 
                 val id = produce.getInt("id")
 
-                val img = produce.get("image")
+                val img = produce.get("image").toString()
                 val pName = produce.getString("name")
 
                 productName.text=pName
-                file = File(img.toString())
-                byteArray= Files.readAllBytes(file.toPath())
+               Picasso.get().load(img).into(imageView)
 
                 randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
                 productCategory.text=randomCategory
@@ -127,6 +125,7 @@ class ProductManagement : Fragment() {
 
         //after setting up json object, requests call to api
        requestQueue.add(req)
+       return productList
     }
 
 

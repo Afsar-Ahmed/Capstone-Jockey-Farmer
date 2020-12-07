@@ -48,30 +48,4 @@ class ProductAPI {
 
          return req
     }
-
-
-    fun apiSearch(){
-
-        url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
-
-      var req = JsonObjectRequest(Request.Method.GET,url,null, {
-              response -> try{
-          var searchProducts = response.getJSONArray("results")
-
-          for (i in 1..searchProducts.length()){
-              var searchProduce = searchProducts.getJSONObject(i)
-
-              var img = searchProduce.getString("image")
-              var productName = searchProduce.getString("name")
-          }
-
-      }catch (e: JSONException)
-      {
-          e.printStackTrace()
-      }
-                                                               }, {  })
-
-
-
-    }
 }
