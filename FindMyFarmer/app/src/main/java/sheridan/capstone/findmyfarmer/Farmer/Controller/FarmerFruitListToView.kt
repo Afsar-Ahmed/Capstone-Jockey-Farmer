@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fruit_card.view.*
 import kotlinx.android.synthetic.main.fruit_card.view.Fruit_Category
 import kotlinx.android.synthetic.main.fruit_card.view.Fruit_img
@@ -42,7 +43,9 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
 
 
         val currentItem = FruitList[position]
-        //holder.Fruit_Image.setImageResource(currentItem.ImageResource)
+        if(!(currentItem.image.isNullOrBlank())){
+            Picasso.get().load(currentItem.image).into(holder.Fruit_Image)
+        }
         holder.Fruit_Name.text = currentItem.productName
         holder.Fruit_Cat.text = currentItem.productCategory
         holder.Fruit_quantity.setText(currentItem.quantity.toString())

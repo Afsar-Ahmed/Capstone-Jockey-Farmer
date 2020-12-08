@@ -84,6 +84,7 @@ public class  DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         params.put("Street",farm.getStreet());
         params.put("Country",farm.getCountry());
         params.put("PostalCode",farm.getPostalCode());
+        params.put("Province",farm.getProvince());
         params.put("Unit",String.valueOf(farm.getUnit()));
         params.put("FarmerID",String.valueOf(farm.getFarmerID()));
 
@@ -195,6 +196,7 @@ public class  DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
                 params.put("Street",farm.getStreet());
                 params.put("Country",farm.getCountry());
                 params.put("PostalCode",farm.getPostalCode());
+                params.put("Province",farm.getProvince());
                 params.put("Unit",String.valueOf(farm.getUnit()));
                 params.put("FarmerID",String.valueOf(farm.getFarmerID()));
 
@@ -267,6 +269,7 @@ public class  DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         params.put("Street",farm.getStreet());
         params.put("Country",farm.getCountry());
         params.put("PostalCode",farm.getPostalCode());
+        params.put("Province",farm.getProvince());
         params.put("Unit",String.valueOf(farm.getUnit()));
         params.put("FarmerID",String.valueOf(farm.getFarmerID()));
 

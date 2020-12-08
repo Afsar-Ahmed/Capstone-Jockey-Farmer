@@ -2,6 +2,9 @@ package sheridan.capstone.findmyfarmer.Entities;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Farm {
     private int FarmID;
     private String Business_Name;
@@ -10,6 +13,7 @@ public class Farm {
     private String City;
     private String Street;
     private String Country;
+    private String Province;
     private String PostalCode;
     private int Unit = 0;
     private int FarmerID;
@@ -17,10 +21,11 @@ public class Farm {
     private boolean isFollowed = false;
     private boolean alreadyRated = false;
     private int Followers = 0;
+    private List<Product> products = new ArrayList<>();
 
     public Farm(){ }
 
-    public Farm(int FarmID,String Business_Name,String Business_Description,float Business_Rating,String City,String Street,String Country,String PostalCode,int Unit,int Farmer_ID){
+    public Farm(int FarmID,String Business_Name,String Business_Description,float Business_Rating,String City,String Street,String Country,String PostalCode,String Province,int Unit,int Farmer_ID){
         this.FarmID = FarmID;
         this.Business_Name = Business_Name;
         this.Business_Description = Business_Description;
@@ -31,6 +36,7 @@ public class Farm {
         this.PostalCode = PostalCode;
         this.Unit = Unit;
         this.FarmerID = Farmer_ID;
+        this.Province = Province;
     }
 
     //Setters
@@ -43,10 +49,12 @@ public class Farm {
     public void setBusinessName(String businessName) { Business_Name = businessName; }
     public void setBusinessRating(int businessRating) { Business_Rating = businessRating; }
     public void setUnit(int unit) { Unit = unit; }
+    public void setProvince(String province) { Province = province; }
     public void setPrimaryImage(String primaryImage) { PrimaryImage = primaryImage; }
     public void setAlreadyRated(boolean alreadyRated) { this.alreadyRated = alreadyRated; }
     public void setIsFollowed(boolean isFollowed) { this.isFollowed = isFollowed; }
     public void setFollowers(int Followers) { this.Followers = Followers; }
+    public void setProducts(List<Product> products) { this.products = products; }
 
     //Getters
     public String getPostalCode() { return PostalCode; }
@@ -59,8 +67,10 @@ public class Farm {
     public String getBusinessDescription() { return Business_Description; }
     public String getBusinessName() { return Business_Name; }
     public String getStreet() { return Street; }
+    public String getProvince() { return Province; }
     public String getPrimaryImage() { return PrimaryImage; }
     public boolean getAlreadyRated(){ return alreadyRated; }
     public boolean getIsFollowed(){ return isFollowed; }
     public int getFollowers() { return Followers; }
+    public List<Product> getProducts() { return products; }
 }

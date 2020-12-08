@@ -60,6 +60,7 @@ class LoginModel:ViewModel() {
                 } else {
                     loginProgressBar.visibility = ProgressBar.GONE
                     user.value = null
+                    Toast.makeText(activity.applicationContext, "Incorrect email/password", Toast.LENGTH_SHORT).show()
                     // If sign in fails show log
                     Log.d("AUTHENTICATION", "login :failure")
                 }

@@ -34,8 +34,8 @@
         <activity android:name=".Users.FarmerActivity" />
         <activity android:name=".Users.AccountSettings" />
         <activity android:name=".Users.CustomerActivity"
-            android:excludeFromRecents="true"
-            android:noHistory="true" />
+                  android:excludeFromRecents="true"
+                  android:noHistory="true" />
         <activity android:name=".LoginAndRegistration.View.DashBoardView" />
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"

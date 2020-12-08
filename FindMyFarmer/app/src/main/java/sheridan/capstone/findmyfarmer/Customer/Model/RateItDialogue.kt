@@ -5,11 +5,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RatingBar
+import android.widget.*
 import android.widget.RatingBar.OnRatingBarChangeListener
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.ViewModelProvider
 import sheridan.capstone.findmyfarmer.Entities.Rating
@@ -22,7 +19,7 @@ private lateinit var SendFeedBack : Button
 private lateinit var RatingsScale : TextView
 
 //The custom dialog box - appearing when the user clicks the small icon near the ratings bar
-class RateItDialogue : AppCompatDialogFragment(){
+class RateItDialogue(val imageView: ImageView) : AppCompatDialogFragment(){
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -52,7 +49,7 @@ class RateItDialogue : AppCompatDialogFragment(){
             var farmid = viewModel.getFarmData().value!!.farmID
             var customerid = sessionData.customerData.customerID
             var rating = Rating(1,farmid,customerid, ratingsbar.rating, ratingsdesc.text.toString())
-            var addRating = activity?.let { it1 -> AddRating(it1,this) }
+            var addRating = activity?.let { it1 -> AddRating(it1,this,imageView) }
             if (addRating != null) {
                 addRating.addRating(rating)
             }
