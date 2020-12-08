@@ -1,32 +1,22 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.facebook.AccessToken
-import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.fragment_farm_manager.*
 import sheridan.capstone.findmyfarmer.Customer.Model.GetAllFarms
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmListToView
-import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
-import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
-import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
-import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 
 class MarketPlace : Fragment(),
@@ -45,13 +35,16 @@ class MarketPlace : Fragment(),
 
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val recycleView : RecyclerView = View.findViewById(R.id.recycleView)
+        val searchView = View.findViewById<SearchView>(R.id.searchBar)
 
-        adapter = FarmListToView(FarmList,this)
+        searchView.isEnabled = false
+
+        adapter = FarmListToView(FarmList, this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        val GetAllFarms = activity?.let { GetAllFarms(it,swipeResfreshLayout,adapter) }
+        val GetAllFarms = activity?.let { GetAllFarms(it,swipeResfreshLayout,adapter,searchView) }
         if (GetAllFarms != null) {
             GetAllFarms.GetFarms(FarmList)
         }
@@ -60,6 +53,21 @@ class MarketPlace : Fragment(),
             if (GetAllFarms != null) {
                 GetAllFarms.GetFarms(FarmList)
             }
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+        })
+
+        searchView.setOnClickListener {
+            searchView.onActionViewExpanded()
         }
 
         return View
@@ -72,7 +80,5 @@ class MarketPlace : Fragment(),
         val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container, FarmerInfo())?.commit()
     }
-
-
 
 }

@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_farmer_confirmation.*
 import kotlinx.android.synthetic.main.fragment_modified_login.*
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.RegistrationModel
@@ -62,8 +63,8 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
             if(user != null){
                 updateUI(this,user)
             }else{
-                Toast.makeText(applicationContext, "Incorrect email/password",
-                    Toast.LENGTH_SHORT).show()
+               /* Toast.makeText(applicationContext, "Incorrect email/password",
+                    Toast.LENGTH_SHORT).show()*/
             }
         }
 
@@ -170,7 +171,8 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
 
     //When sign up button is clicked - parse the information to the input validation and then signUp
     override fun OnSignUpButtonClickListener(email: String, name: String, password: String, isFarmer: Boolean) {
-            registerModel.register(auth,this,email,name,password,isFarmer)
+            progressRegistration.visibility = ProgressBar.VISIBLE
+            registerModel.register(auth,this,email,name,password,isFarmer,progressRegistration)
     }
 
     //Open registration fragment on link click

@@ -1,9 +1,13 @@
 package sheridan.capstone.findmyfarmer.Farmer.Model
 
 import android.app.Activity
+import android.graphics.Bitmap
+import android.os.Build
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import com.google.firebase.storage.StorageReference
 import org.json.JSONArray
 import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
@@ -11,6 +15,11 @@ import sheridan.capstone.findmyfarmer.Database.ObjectConverter
 import sheridan.capstone.findmyfarmer.Entities.FarmProduct
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FarmerFruitListToView
+import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
+import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
+import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProductManager(val activity: Activity) {
 
@@ -38,20 +47,60 @@ class ProductManager(val activity: Activity) {
             var AllProducts = ObjectConverter.convertStringToObject(it, Product::class.java,true) as List<*>
             for (product in AllProducts){
                 var Productlistdata = product as Product
-                DatabaseAPIHandler(activity, AsyncResponse {resp ->
-                    if(!(resp.isNullOrBlank())){
-                        var farmProduct = ObjectConverter.convertStringToObject(resp,FarmProduct::class.java,false) as FarmProduct
-                        if (farmProduct != null){
-                            Productlistdata.quantity = farmProduct.quantity
-                            FarmProducts.add(Productlistdata)
-                            //notifying change on list
-                            Fruitadapter.notifyDataSetChanged()
+                var FIH = FirebaseImagehandler(DirectoryName.Product,5180,activity)
+                FIH.GetImageURLFromFirebase(product.productName,object : StorageResponse {
+                    @RequiresApi(Build.VERSION_CODES.N)
+                    override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
+                        if(Url != null && !(Url.get().isNullOrBlank())){
+                            Productlistdata.image = Url.get()
+                            DatabaseAPIHandler(activity, AsyncResponse {resp ->
+                                if(!(resp.isNullOrBlank())){
+                                    var farmProduct = ObjectConverter.convertStringToObject(resp,FarmProduct::class.java,false) as FarmProduct
+                                    if (farmProduct != null){
+                                        Productlistdata.quantity = farmProduct.quantity
+                                        FarmProducts.add(Productlistdata)
+                                        //notifying change on list
+                                        Fruitadapter.notifyDataSetChanged()
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(activity,"No Farm Product found!",Toast.LENGTH_SHORT).show()
+                                }
+                            }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                        }
+                        else{
+                            DatabaseAPIHandler(activity, AsyncResponse {resp ->
+                                if(!(resp.isNullOrBlank())){
+                                    var farmProduct = ObjectConverter.convertStringToObject(resp,FarmProduct::class.java,false) as FarmProduct
+                                    if (farmProduct != null){
+                                        Productlistdata.quantity = farmProduct.quantity
+                                        FarmProducts.add(Productlistdata)
+                                        //notifying change on list
+                                        Fruitadapter.notifyDataSetChanged()
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(activity,"No Farm Product found!",Toast.LENGTH_SHORT).show()
+                                }
+                            }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
                         }
                     }
-                    else{
-                        Toast.makeText(activity,"No Farm Product found!",Toast.LENGTH_SHORT).show()
-                    }
-                }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                    override fun OnErrorListener(error: String?) {
+                        DatabaseAPIHandler(activity, AsyncResponse {resp ->
+                            if(!(resp.isNullOrBlank())){
+                                var farmProduct = ObjectConverter.convertStringToObject(resp,FarmProduct::class.java,false) as FarmProduct
+                                if (farmProduct != null){
+                                    Productlistdata.quantity = farmProduct.quantity
+                                    FarmProducts.add(Productlistdata)
+                                    //notifying change on list
+                                    Fruitadapter.notifyDataSetChanged()
+                                }
+                            }
+                            else{
+                                Toast.makeText(activity,"No Farm Product found!",Toast.LENGTH_SHORT).show()
+                            }
+                        }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")                    }
+                })
             }
         }).execute("/ProductsByFarmID/${id}")
     }
@@ -110,5 +159,11 @@ class ProductManager(val activity: Activity) {
                 Toast.makeText(activity,"Couldnt find this product in this farm's Inventory",Toast.LENGTH_SHORT).show()
             }
         }).execute("/FarmProductByFarmIDAndProductID/${farmid}/${productId}")
+    }
+
+    fun DeleteFarmProduct(productId: Int,farmid: Int,adapter: FarmerFruitListToView){
+        DatabaseAPIHandler(activity, AsyncResponse {
+            adapter.notifyDataSetChanged()
+        }).execute("/deleteFarmProductByFarmIDAndProductID/${farmid}/${productId}")
     }
 }

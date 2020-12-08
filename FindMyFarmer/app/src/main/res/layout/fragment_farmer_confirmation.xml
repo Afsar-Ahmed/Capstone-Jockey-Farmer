@@ -6,7 +6,7 @@
     tools:context=".LoginAndRegistration.View.FarmerConfirmationFragment">
 
     <LinearLayout
-        android:id="@+id/SecondStepLinearLayout"
+        android:id="@+id/ConfirmFarmerConstraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

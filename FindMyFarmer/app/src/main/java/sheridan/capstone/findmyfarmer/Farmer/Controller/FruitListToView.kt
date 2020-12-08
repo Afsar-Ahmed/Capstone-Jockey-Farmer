@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fruit_card.view.*
 import sheridan.capstone.findmyfarmer.Entities.Product
 
@@ -29,7 +30,9 @@ class FruitListToView (private val FruitList: List<Product>, private val listene
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val currentItem = FruitList[position]
-        //holder.Fruit_Image.setImageResource(currentItem.ImageResource)
+        if(!(currentItem.image.isNullOrBlank())){
+            Picasso.get().load(currentItem.image).into(holder.Fruit_Image)
+        }
         holder.Fruit_Name.text = currentItem.productName
         holder.Fruit_Cat.text = currentItem.productCategory
         holder.Fruit_quantity.text = currentItem.quantity.toString()

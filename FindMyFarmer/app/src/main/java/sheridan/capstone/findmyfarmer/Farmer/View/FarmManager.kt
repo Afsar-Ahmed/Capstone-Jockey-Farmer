@@ -35,6 +35,7 @@ class FarmManager : Fragment(){
     private lateinit var Farm_City: EditText
     private lateinit var Farm_Country: EditText
     private lateinit var Farm_PostalCode: EditText
+    private lateinit var Farm_Province: EditText
     private lateinit var ImageChangeIcon: ImageView
     private lateinit var viewModel: SharedViewModel
     private lateinit var progbar: ProgressBar
@@ -57,6 +58,7 @@ class FarmManager : Fragment(){
         Farm_City =  view.findViewById(R.id.Farm_City_Update)
         Farm_Country = view.findViewById(R.id.Farm_Country_Update)
         Farm_PostalCode =view.findViewById(R.id.Farm_PostalCode_Update)
+        Farm_Province =view.findViewById(R.id.Farm_Province_Update)
         ImageChangeIcon = view.findViewById(R.id.ImageChangeIcon)
         progbar = view.findViewById(R.id.updateFarmProgbar)
 
@@ -99,6 +101,7 @@ class FarmManager : Fragment(){
             Farm_Unit.setText(it.unit.toString())
             Farm_Country.setText(it.country)
             Farm_PostalCode.setText(it.postalCode)
+            Farm_Province.setText(it.province)
             Picasso.get().load(it.primaryImage).into(Farm_Image)
         })
     }
@@ -140,6 +143,10 @@ class FarmManager : Fragment(){
             Farm_Unit.setError("Cannot be Empty")
             notEmpty =false
         }
+        if(Farm_Province.text.isEmpty()){
+            Farm_Province.setError("Cannot be Empty")
+            notEmpty =false
+        }
 
         if(notEmpty){
             var PC = Farm_PostalCode.text.toString().replace(" ","")
@@ -154,8 +161,9 @@ class FarmManager : Fragment(){
                 var unit = Farm_Unit.text.toString().toInt()
                 var country = Farm_Country.text.toString()
                 var postalcode = Farm_PostalCode.text.toString()
+                var province = Farm_Province.text.toString()
                 var farmerid = viewModel.getFarmData().value!!.farmerID
-                var farm = Farm(id,business_name,business_desc,business_rating,city,street,country,postalcode,unit,farmerid)
+                var farm = Farm(id,business_name,business_desc,business_rating,city,street,country,postalcode,province,unit,farmerid)
                 val FragmentManager : FragmentManager? = activity?.supportFragmentManager
                 var updateFarm = FragmentManager?.let { FarmDBHandler(requireActivity(),progbar, it) }
                 if (updateFarm != null) {
