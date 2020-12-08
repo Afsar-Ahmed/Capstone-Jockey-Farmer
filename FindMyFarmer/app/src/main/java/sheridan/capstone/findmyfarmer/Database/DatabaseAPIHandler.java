@@ -27,7 +27,7 @@ import sheridan.capstone.findmyfarmer.Entities.Following;
 import sheridan.capstone.findmyfarmer.Entities.Product;
 import sheridan.capstone.findmyfarmer.Entities.Rating;
 
-public class  DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
+public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
     private static final String API_BASE_URL = "http://farmerapi.us-east-2.elasticbeanstalk.com";
     private Context context;

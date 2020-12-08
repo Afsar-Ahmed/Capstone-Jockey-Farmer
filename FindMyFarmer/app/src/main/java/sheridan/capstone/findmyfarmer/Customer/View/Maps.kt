@@ -48,7 +48,6 @@ class Maps : Fragment(),OnMapReadyCallback{
     private lateinit var mapview: MapView
     private lateinit var mMap: GoogleMap
 
-
     private lateinit var sessionData: SessionData
 
     private var mMarker: Marker? = null
