@@ -99,11 +99,8 @@ class RegistrationModel:ViewModel() {
                 repeatPasswordInput.setError("Password doesn't match")
                 repeatPasswordInputVerification = false
             }
-
         }
-        /*return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
-                passwordInput.text.matches(regexPattern)*/
-        //Log.d("VERIFICATION","$emailInputVerification $passwordInputVerification $repeatPasswordInputVerification")
+
         return emailInputVerification && passwordInputVerification && repeatPasswordInputVerification
     }
 }
