@@ -70,13 +70,10 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
 
         val bottomnav: BottomNavigationView = findViewById(R.id.Bottom_nav_customer)
 
-
-
         supportFragmentManager.beginTransaction().replace(
             R.id.fragment_container,
             MarketPlace()
         ).commit()
-
 
         bottomnav.setOnNavigationItemSelectedListener { item ->
 
@@ -90,8 +87,6 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
 
           .addToBackStack(null)
                 .commit()
-
-
                 true
             }
     }

@@ -339,6 +339,43 @@ public class FirebaseImagehandler {
             }
         });
     }
+    public void GetImageURLFromFirebase(String fileName,StorageResponse storageResponse){
+        GetAllFirebaseImageNames(new StorageResponse() {
+            StorageReference reference = null;
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void processFinish(List<StorageReference> response,  Optional<Bitmap> bitmap, Optional<String> Url) {
+                for (StorageReference ref : response){
+                    String refname = ref.getName().toLowerCase().replaceAll(".jpg","");
+                    refname = refname.toLowerCase().replaceAll(".jpeg","");
+                    refname = refname.toLowerCase().replaceAll(" ","");
+                    String filename = fileName.replaceAll(" ","");
+                    if(refname.toLowerCase().compareToIgnoreCase(filename.toLowerCase())==0){
+                        reference = ref;
+                    }
+                }
+
+                if(reference != null){
+                    reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        ArrayList<StorageReference> references = new ArrayList<>();
+                        references.add(reference);
+                        Optional<String> stringOptional = Optional.of(uri.toString());
+                        storageResponse.processFinish(references,null,stringOptional);
+                        return;
+                    }).addOnFailureListener(e ->
+                            storageResponse.OnErrorListener(e.toString())
+                    );
+                }
+                else{
+                    storageResponse.processFinish(null,null,null);
+                }
+            }
+            @Override
+            public void OnErrorListener(String error) {
+                storageResponse.OnErrorListener(error);
+            }
+        });
+    }
 
     public void MakeImagePrimary(String fileName,StorageResponse storageResponse){
         GetPrimaryImageFromFirebase(new StorageResponse() {

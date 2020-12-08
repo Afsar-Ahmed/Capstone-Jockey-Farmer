@@ -25,6 +25,7 @@ class FarmAddFragment(): Fragment() {
     private lateinit var Farm_City: EditText
     private lateinit var Farm_Country: EditText
     private lateinit var Farm_PostalCode: EditText
+    private lateinit var Farm_Province: EditText
     private lateinit var viewModel: SharedViewModel
     private lateinit var progbar: ProgressBar
     private lateinit var sessionData: SessionData
@@ -43,6 +44,8 @@ class FarmAddFragment(): Fragment() {
         Farm_City =  view.findViewById(R.id.farm_City_added)
         Farm_Country = view.findViewById(R.id.farm_Country_added)
         Farm_PostalCode =view.findViewById(R.id.farm_PostalCode_added)
+        Farm_Province =view.findViewById(R.id.farm_Province_added)
+
         progbar = view.findViewById(R.id.AddFarmProgbar)
 
         val AddFarmData = view.findViewById<Button>(R.id.addFarmData)
@@ -82,7 +85,11 @@ class FarmAddFragment(): Fragment() {
             notEmpty =false
         }
         if(Farm_Unit.text.isEmpty()){
-            Farm_Unit.setError("Cannot be Empty")
+            Farm_Unit.setText(0)
+            notEmpty =false
+        }
+        if(Farm_Province.text.isEmpty()){
+            Farm_Province.setError("Cannot be Empty")
             notEmpty =false
         }
 
@@ -99,9 +106,10 @@ class FarmAddFragment(): Fragment() {
                 var unit = Farm_Unit.text.toString().toInt()
                 var country = Farm_Country.text.toString()
                 var postalcode = Farm_PostalCode.text.toString()
+                var province = Farm_Province.text.toString()
                 if(farmer != null){
                     var farmerid = farmer.farmerID
-                    var farm = Farm(id,business_name,business_desc, business_rating.toFloat(),city,street,country,postalcode,unit,farmerid)
+                    var farm = Farm(id,business_name,business_desc, business_rating.toFloat(),city,street,country,postalcode,province,unit,farmerid)
                     val FragmentManager : FragmentManager? = activity?.supportFragmentManager
                     var addFarm = FragmentManager?.let { FarmDBHandler(requireActivity(),progbar, it) }
                     if (addFarm != null) {

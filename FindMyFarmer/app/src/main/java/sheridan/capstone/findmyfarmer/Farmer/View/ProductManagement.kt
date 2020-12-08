@@ -1,17 +1,23 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
+import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FarmerFruitListToView
+import sheridan.capstone.findmyfarmer.Farmer.Model.FarmDeleteConfirmDialog
 import sheridan.capstone.findmyfarmer.Farmer.Model.ProductManager
 import sheridan.capstone.findmyfarmer.R
 
@@ -81,7 +87,30 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
                 Toast.makeText(activity,"Unable to add",Toast.LENGTH_SHORT).show()
             }
         }
+
+        var touchHelper  = ItemTouchHelper(itemTouchHelper)
+        touchHelper.attachToRecyclerView(productRecyclerView)
+
         return view
+    }
+
+    private val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            return false
+        }
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            var productManager = ProductManager(requireActivity())
+            productManager.DeleteFarmProduct(productlist.get(viewHolder.adapterPosition).productID,viewModel.getFarmData().value!!.farmID,adapter)
+        }
+
+        override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+            RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(),R.color.RedApp))
+                .addSwipeLeftActionIcon(R.drawable.ic_delete_50)
+                .create()
+                .decorate();
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        }
     }
 
     override fun onItemClick(position: Int) {

@@ -29,6 +29,7 @@ import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
+import java.lang.StringBuilder
 
 class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
@@ -36,7 +37,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     private lateinit var FarmDesc:TextView
     private lateinit var FarmRating : RatingBar
-    private lateinit var FarmCity:TextView
+    private lateinit var FarmAddress:TextView
 
     private lateinit var FarmImage : ImageView
     private lateinit var To_Map: Button
@@ -57,7 +58,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sessionData = SessionData(activity)
         FarmName  = view.findViewById(R.id.Name)
-        FarmCity = view.findViewById(R.id.Address)
+        FarmAddress = view.findViewById(R.id.Address)
         FarmDesc = view.findViewById(R.id.Desc)
         FarmRating = view.findViewById(R.id.Ratings)
         FarmImage = view.findViewById(R.id.icon)
@@ -84,8 +85,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
         FarmFollow.setOnClickListener {
             if(FarmFollow.drawable.constantState == resources.getDrawable(android.R.drawable.btn_star_big_off).constantState){
-                var Following: FollowingDialog =
-                    FollowingDialog(FarmFollow)
+                var Following = FollowingDialog(FarmFollow)
 
                 val FragmentManager : FragmentManager? = activity?.supportFragmentManager
                 if (FragmentManager != null) {
@@ -144,7 +144,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     fun openDialog() {
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-        val exampleDialog = RateItDialogue()
+        val exampleDialog = RateItDialogue(RateIt)
 
         if (FragmentManager != null) {
             exampleDialog.show(FragmentManager,"Rate it")
@@ -154,14 +154,24 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var farmdata= viewModel.getFarmData().value!!
 
-        if(!(viewModel.getFarmData().value!!.primaryImage.isNullOrBlank())){
-            Picasso.get().load(viewModel.getFarmData().value!!.primaryImage).into(FarmImage)
+        if(!(farmdata.primaryImage.isNullOrBlank())){
+            Picasso.get().load(farmdata.primaryImage).into(FarmImage)
         }
-        FarmName.text = viewModel.getFarmData().value!!.businessName
-        FarmCity.text = viewModel.getFarmData().value!!.city
-        FarmDesc.text = viewModel.getFarmData().value!!.businessDescription
-        FarmRating.rating = viewModel.getFarmData().value!!.businessRating
+        FarmName.text = farmdata.businessName
+        var builder = StringBuilder()
+        if(farmdata.unit != 0){
+            builder.append(farmdata.unit.toString() + "-")
+        }
+        builder.append(farmdata.street + ", ")
+        builder.append(farmdata.city + ", ")
+        builder.append(farmdata.country + ", ")
+        builder.append(farmdata.province +", ")
+        builder.append(farmdata.postalCode)
+        FarmAddress.text = builder.toString()
+        FarmDesc.text = farmdata.businessDescription
+        FarmRating.rating = farmdata.businessRating
 
     }
 
@@ -192,6 +202,4 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
             callback
         )
     }
-
-
 }
