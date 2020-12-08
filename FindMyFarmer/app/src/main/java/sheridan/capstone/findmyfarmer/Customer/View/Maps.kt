@@ -13,12 +13,12 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,8 +29,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import sheridan.capstone.findmyfarmer.Customer.Model.MapHandler
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
-import sheridan.capstone.findmyfarmer.Customer.Model.TestAddressData
+import sheridan.capstone.findmyfarmer.Database.AsyncResponse
+import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
+import sheridan.capstone.findmyfarmer.Database.ObjectConverter
+import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import sheridan.capstone.findmyfarmer.Users.AnonymousUserActivity
@@ -77,7 +81,7 @@ class Maps : Fragment(),OnMapReadyCallback{
 
     lateinit var locationCallback: LocationCallback
 
-     var Test_Address : TestAddressData = TestAddressData()
+
 
     companion object {
         private val My_PERMESSION_CODE: Int = 1000
@@ -104,8 +108,8 @@ class Maps : Fragment(),OnMapReadyCallback{
                 mMarker = mMap.addMarker(markerOptions)
 
 
-                mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latlng))
-                mMap!!.animateCamera(CameraUpdateFactory.zoomTo(10f))
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng))
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(10f))
 
             }
         }
@@ -196,23 +200,7 @@ class Maps : Fragment(),OnMapReadyCallback{
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         Farm_List= "Mississauga"
 
-        val geo : Geocoder = Geocoder(requireActivity(), Locale.getDefault())
 
-
-
-        for(farm_address in Test_Address.getFarmData()){
-            val  addressList=geo.getFromLocationName(farm_address,1)
-
-            address = addressList[0]
-
-            Lat.add(address.latitude)
-            Long.add(address.longitude)
-
-            Address_Name_List.add(Test_Address.getFarm_Establishment_Name()[Index])
-
-            Index++
-
-        }
 
 
     }
@@ -225,7 +213,6 @@ class Maps : Fragment(),OnMapReadyCallback{
         val View: View = inflater.inflate(R.layout.fragment_maps, container, false)
 
         mapview = View.findViewById(R.id.google_map)
-
 
 
 
@@ -277,25 +264,68 @@ class Maps : Fragment(),OnMapReadyCallback{
     }
     override fun onMapReady(map:GoogleMap?) {
 
-        if (map != null) {
-            mMap = map
-            run {
-                while (SizeOfLatList < Lat.size) {
+        val geo: Geocoder = Geocoder(requireActivity(), Locale.getDefault())
+        mMap = map!!
 
-                    mMap!!.addMarker(
-                        MarkerOptions().position(
-                            LatLng(
-                                Lat[SizeOfLatList],
-                                Long[SizeOfLatList]
-                            )
-                        ).title(Address_Name_List[SizeOfLatList])
 
-                    )
-                    SizeOfLatList++
+
+//        viewModel.getFarmData().value!!.city
+
+
+            DatabaseAPIHandler(requireActivity(), AsyncResponse {
+                if (!(it.isNullOrBlank())) {
+                    val Farms = ObjectConverter.convertStringToObject(
+                        it,
+                        Farm::class.java,
+                        true
+                    ) as List<Farm>
+                    for (farm_address in Farms) {
+
+                        val Addres =
+                            ( farm_address.street + "," + farm_address.city + "," +farm_address.postalCode
+                                    +","+ farm_address.country)
+
+
+//                    val  addressList=geo.getFromLocationName(Addres,1)
+                        MapHandler(geo, object : MapResponse {
+                            override fun onProcessComplete(Obj: Any) {
+                                val addresslist = Obj as List<Address>
+
+                                if (addresslist.size != 0) {
+
+
+                                    address = addresslist[0]
+
+
+
+
+                                    mMap!!.addMarker(
+                                        MarkerOptions().position(
+                                            LatLng(
+                                                address.latitude,
+                                               address.longitude
+                                            )
+                                        ).title(farm_address.businessName)
+                                    )
+
+                                } else
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Invalid Address",
+                                        Toast.LENGTH_LONG
+                                    )
+                            }
+
+                        }).execute(Addres as Object)
+
+
+                    }
+
                 }
-            }
 
-        }
+            }).execute("/Farms")
+
+
 
             if (ContextCompat.checkSelfPermission(
                     requireView().context,
@@ -310,8 +340,8 @@ class Maps : Fragment(),OnMapReadyCallback{
             mMap.uiSettings.isZoomControlsEnabled
 
 
-        }
 
+    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(
