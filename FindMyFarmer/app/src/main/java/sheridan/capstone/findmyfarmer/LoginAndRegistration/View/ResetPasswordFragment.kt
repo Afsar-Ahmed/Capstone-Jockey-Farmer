@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_reset_password.*
 import kotlinx.android.synthetic.main.fragment_reset_password.view.*
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationInterface
@@ -29,6 +30,9 @@ class ResetPasswordFragment : Fragment() {
         loginRegistrationInterface = activity as LoginRegistrationInterface
         view.sendButton.setOnClickListener{
             loginRegistrationInterface.OnSendResetButtonClickListener(editTextTextEmailAddress)
+        }
+        view.backButton.setOnClickListener {
+            view.findNavController().navigate(R.id.action_resetPasswordFragment_to_loginFragment)
         }
         return view
     }

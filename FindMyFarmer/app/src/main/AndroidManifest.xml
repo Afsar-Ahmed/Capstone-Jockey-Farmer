@@ -31,7 +31,9 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Users.PhotoPicker" />
         <activity android:name=".Users.FarmerActivity" />
-        <activity android:name=".Users.AccountSettings" />
+        <activity android:name=".Users.AccountSettings"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".Users.CustomerActivity"
                   android:excludeFromRecents="true"
                   android:noHistory="true" />
