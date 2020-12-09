@@ -12,9 +12,7 @@ import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegis
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.ViewBehaviorInterface
 import sheridan.capstone.findmyfarmer.R
 
-/*
-*Author: Afsar Ahmed
-* */
+
 private lateinit var registration_interface: LoginRegistrationInterface
 private lateinit var viewBehaviorInterface: ViewBehaviorInterface
 lateinit var email: String
