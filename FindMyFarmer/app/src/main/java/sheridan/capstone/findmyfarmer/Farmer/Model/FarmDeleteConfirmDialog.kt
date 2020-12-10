@@ -1,22 +1,28 @@
 package sheridan.capstone.findmyfarmer.Farmer.Model
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import sheridan.capstone.findmyfarmer.Entities.Farm
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 
 private lateinit var YesDelete: Button
 private lateinit var NoDelete : Button
 
-class FarmDeleteConfirmDialog(private val farm: Farm): AppCompatDialogFragment() {
+class FarmDeleteConfirmDialog(): AppCompatDialogFragment() {
 
+    private lateinit var farm : Farm
+
+    fun FarmDelete(farm_new: Farm) {
+    farm = farm_new
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater = requireActivity().layoutInflater
@@ -26,19 +32,19 @@ class FarmDeleteConfirmDialog(private val farm: Farm): AppCompatDialogFragment()
         NoDelete = view.findViewById(R.id.NoDelete)
 
         YesDelete.setOnClickListener {
-            var farmDBHandler = FarmDBHandler(requireActivity(), null,null)
+            var farmDBHandler = FarmDBHandler(requireActivity(), null)
             farmDBHandler.deletefarm(farm)
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, FarmerHub())?.commit()
+
+            this.findNavController().navigate(R.id.action_nav_manage_hub_self)
             dismiss()
         }
 
         NoDelete.setOnClickListener {
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, FarmerHub())?.commit()
+
+            this.findNavController().navigate(R.id.action_nav_manage_hub_self)
             dismiss()
+
+
         }
 
         builder.setView(view)

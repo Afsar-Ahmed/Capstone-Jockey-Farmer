@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,9 +65,7 @@ class Following : Fragment(),
     override fun onItemClick(position: Int) {
         followsList[position]?.let { viewModel.setFarmData(it) }
 
-        val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-        val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, FarmerInfo())?.commit()
+        findNavController().navigate(R.id.action_nav_following_to_fragment_farmer_info)
     }
 
     override fun onAttach(context: Context) {

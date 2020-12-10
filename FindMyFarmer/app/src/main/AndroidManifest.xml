@@ -26,8 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginAndRegistration.View.HelpClass"></activity>
-        <activity android:name=".LoginAndRegistration.View.About" />
+        <activity android:name=".Users.CustomerToFarmerActivity"></activity>
         <activity android:name=".Users.AnonymousUserActivity" />
         <activity
             android:name=".MainActivity"

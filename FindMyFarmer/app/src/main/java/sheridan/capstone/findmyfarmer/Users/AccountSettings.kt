@@ -3,7 +3,7 @@ package sheridan.capstone.findmyfarmer.Users
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
+import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
@@ -15,18 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_account_settings.*
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmManager
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.ViewBehaviorInterface
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.AfterLoginFarmerRegistration
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
@@ -39,11 +34,15 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     private lateinit var Password : Button
     private lateinit var sessionData: SessionData
     private lateinit var constraintLayout: ConstraintLayout
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_settings)
 
         sessionData = SessionData(this)
+
+        val customer = sessionData.customerData
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
 
         drawerLayout=findViewById(R.id.drawerLayout)
@@ -54,6 +53,14 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         viewBehavior(constraintLayout)
         NavigationView.setNavigationItemSelectedListener(this)
         setSupportActionBar(toolbarView)
+
+        if(customer.isFarmer){
+            val menuNav : Menu = NavigationView.menu
+            val farmer : MenuItem = menuNav.findItem(R.id.WantToBeFarmer)
+            farmer.setEnabled(false)
+            farmer.setVisible(false)
+
+        }
 
         val toggle= ActionBarDrawerToggle(this,drawerLayout,
             toolbarView, navigation_drawer_open, navigation_drawer_close
@@ -66,11 +73,17 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
         // Saves data into data base and passes it to the CustomerView activity which displays the marketplace fragment as default.
 
-        Save.setOnClickListener {
-            val i = Intent(applicationContext, CustomerActivity::class.java)
-            startActivity(i)
-            // The view will jump to the appropriate activity - CustomerActivity for only customers. FarmerActivity for Farmers.
 
+        Save.setOnClickListener {
+            if(customer.isFarmer){
+                val i = Intent(applicationContext, FarmerActivity::class.java)
+                startActivity(i)
+            }
+            else {
+                val i = Intent(applicationContext, CustomerActivity::class.java)
+                startActivity(i)
+                // The view will jump to the appropriate activity - CustomerActivity for only customers. FarmerActivity for Farmers.
+            }
         }
         /*Password.setOnClickListener {
             // changes password in the database - Firebase
@@ -82,8 +95,12 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
                 logOut()
                 finish()
             }
+
+
             R.id.WantToBeFarmer ->{
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container,AfterLoginFarmerRegistration()).commit()
+                val intent = Intent(this, CustomerToFarmerActivity::class.java)
+                // start your next activity
+                startActivity(intent)
             }
         }
 
