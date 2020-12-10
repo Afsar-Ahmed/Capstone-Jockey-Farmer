@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -68,8 +69,7 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         }
 
         farmadd.setOnClickListener{
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, FarmAddFragment())?.commit()
+            this.findNavController().navigate(R.id.action_nav_manage_hub_to_fragment_farm_add)
         }
 
         var touchHelper  = ItemTouchHelper(itemTouchHelper)
@@ -84,7 +84,9 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         }
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             var deleteFarm: FarmDeleteConfirmDialog =
-                FarmDeleteConfirmDialog(HubList.get(viewHolder.adapterPosition))
+                FarmDeleteConfirmDialog()
+
+            deleteFarm.FarmDelete(HubList.get(viewHolder.adapterPosition))
 
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
             if (FragmentManager != null) {
@@ -104,10 +106,7 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         viewModel.setFarmData(HubList[position])
-
-        val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-        val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+        this.findNavController().navigate(R.id.action_nav_manage_hub_to_fragment_farm_manager)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

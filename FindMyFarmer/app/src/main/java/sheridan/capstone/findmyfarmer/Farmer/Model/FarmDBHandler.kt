@@ -11,14 +11,13 @@ import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub
 import sheridan.capstone.findmyfarmer.R
 
-class FarmDBHandler(val activity: Activity, val progressbar: ProgressBar?, val fragmentManager: FragmentManager?) {
+class FarmDBHandler(val activity: Activity, val progressbar: ProgressBar?) {
 
     fun updatefarm(farm: Farm){
         progressbar?.visibility = ProgressBar.VISIBLE
         DatabaseAPIHandler(activity, AsyncResponse {
             progressbar?.visibility = ProgressBar.INVISIBLE
-            val fragmentTransaction : FragmentTransaction? = fragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, FarmerHub(),)?.commit()
+
         }).execute("/UpdateFarm",farm)
     }
 
@@ -26,8 +25,7 @@ class FarmDBHandler(val activity: Activity, val progressbar: ProgressBar?, val f
         progressbar?.visibility = ProgressBar.VISIBLE
         DatabaseAPIHandler(activity, AsyncResponse {
             progressbar?.visibility = ProgressBar.INVISIBLE
-            val fragmentTransaction : FragmentTransaction? = fragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, FarmerHub(),)?.commit()
+
         }).execute("/addFarm",farm)
     }
 

@@ -2,8 +2,8 @@ package sheridan.capstone.findmyfarmer.Users
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -11,20 +11,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_farmer_info.view.*
 
 import sheridan.capstone.findmyfarmer.Customer.View.Following
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
-import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.AfterLoginFarmerRegistration
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
@@ -33,10 +37,15 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
     private lateinit var sessionData: SessionData
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_view)
+
+        val navHostFragment_ = supportFragmentManager.findFragmentById(R.id.Customer_Nav_Host)as NavHostFragment
+
+
+        val navController = navHostFragment_.navController
+
 
         sessionData = SessionData(this)
         var customer = sessionData.customerData
@@ -70,25 +79,9 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
 
         val bottomnav: BottomNavigationView = findViewById(R.id.Bottom_nav_customer)
 
-        supportFragmentManager.beginTransaction().replace(
-            R.id.fragment_container,
-            MarketPlace()
-        ).commit()
 
-        bottomnav.setOnNavigationItemSelectedListener { item ->
+        bottomnav.setupWithNavController(navController)
 
-                var selectedFragment: Fragment? = null
-                when (item.itemId) {
-                    R.id.nav_market -> selectedFragment = MarketPlace()
-                    R.id.nav_following -> selectedFragment = Following()
-                    R.id.nav_maps-> selectedFragment = Maps()
-                }
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, selectedFragment!!)
-
-          .addToBackStack(null)
-                .commit()
-                true
-            }
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -102,7 +95,9 @@ class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSele
                 startActivity(intent)
             }
             R.id.WantToBeFarmer ->{
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, AfterLoginFarmerRegistration()).commit()
+                val intent = Intent(this, CustomerToFarmerActivity::class.java)
+
+                startActivity(intent)
             }
 
 

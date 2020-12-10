@@ -26,16 +26,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_nav_farmer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.48"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarD" />
 
+        <androidx.fragment.app.FragmentContainerView
+
+            android:id="@+id/Farmer_Nav_Host"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="419dp"
+            android:layout_height="641dp"
+            android:layout_marginTop="58dp"
+            app:defaultNavHost="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbarD"
+            app:navGraph="@navigation/cusomer_nav">
+
+        </androidx.fragment.app.FragmentContainerView>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav_farmer"
@@ -45,7 +49,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_farmers_navigation">
+            app:menu="@menu/bottom_navigation">
+
         </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

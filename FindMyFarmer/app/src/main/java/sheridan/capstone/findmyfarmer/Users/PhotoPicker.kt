@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.StorageReference
@@ -59,28 +60,24 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
                             var f = viewModel.getFarmData().value
                             if (f != null) {
                                 if (Url != null) {
-                                    f.primaryImage=Url.get()
+                                    f.primaryImage = Url.get()
                                     viewModel.setFarmData(f)
                                 }
+
+                                progressbar.visibility = View.VISIBLE
+
+                                findNavController().navigate(R.id.action_fragment_photo_picker_to_fragment_farm_manager2)
                             }
-                            progressbar.visibility = View.INVISIBLE
-                            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                            fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
                         }
                         override fun OnErrorListener(error: String?) {
                             progressbar.visibility = View.INVISIBLE
-                            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                            fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+                            findNavController().navigate(R.id.action_fragment_photo_picker_to_fragment_farm_manager2)
                         }
                     })
             }
             override fun OnErrorListener(error: String?) {
                 progressbar.visibility = View.INVISIBLE
-                val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+                findNavController().navigate(R.id.action_fragment_photo_picker_to_fragment_farm_manager2)
             }
         })
     }

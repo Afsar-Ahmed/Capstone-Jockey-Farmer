@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
@@ -107,13 +108,9 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         var farm = viewModel.getFarmData().value
 
         To_Map.setOnClickListener {
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
 
-            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container,
-                FarmersMap()
-            )
-                ?.commit()
+
+            this.findNavController().navigate(R.id.action_fragment_farmer_info_to_farmersMap)
         }
         if (farm != null) {
             if(farm.isFollowed){
@@ -186,14 +183,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         ) {
             override fun handleOnBackPressed() {
 
-                val FragmentManager: FragmentManager? = activity?.supportFragmentManager
-
-                val fragmentTransaction: FragmentTransaction? = FragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(
-                    R.id.fragment_container,
-                   MarketPlace()
-                )
-                    ?.commit()
+                findNavController().navigate(R.id.action_fragment_farmer_info_to_nav_market)
 
             }
         }

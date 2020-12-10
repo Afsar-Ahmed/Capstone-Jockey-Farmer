@@ -9,6 +9,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -30,6 +32,9 @@ class MarketPlace : Fragment(),
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+
+
         val View : View = inflater.inflate(R.layout.fragment_market_place, container, false)
         swipeResfreshLayout = View.findViewById(R.id.pullToRefresh)
 
@@ -76,9 +81,8 @@ class MarketPlace : Fragment(),
     override fun onItemClick(position: Int) {
         FarmList[position]?.let { viewModel.setFarmData(it) }
 
-        val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-        val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, FarmerInfo())?.commit()
+        this.findNavController().navigate(R.id.action_nav_market_to_farmerInfo)
+
     }
 
 }

@@ -1,7 +1,10 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -9,7 +12,6 @@ import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +20,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.location.*
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -41,166 +46,36 @@ import sheridan.capstone.findmyfarmer.Users.AnonymousUserActivity
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-class Maps : Fragment(),OnMapReadyCallback{
+class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
+    GoogleApiClient.OnConnectionFailedListener,
+    LocationListener {
     private lateinit var mapview: MapView
     private lateinit var mMap: GoogleMap
 
     private lateinit var sessionData: SessionData
 
-    private var mMarker: Marker? = null
-    lateinit var fusedlocation: FusedLocationProviderClient
-
-    lateinit var locationReq: LocationRequest
-
-    lateinit var mLastLoc: Location
-
-
-    private var lattitude: Double = 0.toDouble()
-    private var longitude: Double = 0.toDouble()
-
-    var SizeOfLatList : Int = 0
-
-    var Index : Int =0
-
-    var Farm_List : String = " "
-
+    private lateinit var mGoogleApiClient: GoogleApiClient
+    private lateinit var mLastLocation: Location
+    private lateinit var mLocationRequest: LocationRequest
+     var mCurrLocationMarker: Marker? = null
 
 
 
     private lateinit var address: Address
 
-    private var Lat = ArrayList<Double>()
-    private  var Long = ArrayList<Double>()
 
-
-    private val Address_Name_List = ArrayList<String>()
     private lateinit var viewModel: SharedViewModel
 
-    lateinit var locationCallback: LocationCallback
-
-
-
-    companion object {
-        private val My_PERMESSION_CODE: Int = 1000
-    }
-
-    private fun buildLocationCallBack() {
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult?) {
-                mLastLoc = p0!!.locations.get(p0!!.locations.size - 1)
-
-                if (mMarker != null) {
-                    mMarker!!.remove()
-                }
-
-                lattitude = mLastLoc.latitude
-                longitude = mLastLoc.longitude
-
-                val latlng = LatLng(lattitude, longitude)
-
-                val markerOptions = MarkerOptions()
-                    .position(latlng)
-                    .title("Your position")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                mMarker = mMap.addMarker(markerOptions)
-
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng))
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(10f))
-
-            }
-        }
-    }
-
-    private fun buildLocationRequest() {
-        locationReq = LocationRequest()
-        locationReq.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationReq.interval = 1000
-        locationReq.fastestInterval = 3000
-        locationReq.smallestDisplacement = 10f
-
-    }
-
-    private fun checkLocationPermission(): Boolean {
-
-
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale
-                    (
-                    requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            ) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(
-                        android.Manifest.permission.ACCESS_FINE_LOCATION
-                    ), My_PERMESSION_CODE
-                )
-            } else {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(
-                        android.Manifest.permission.ACCESS_FINE_LOCATION
-                    ), My_PERMESSION_CODE)
-            }
-            return false
-
-
-        }
-        else
-            return true
-
-
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            My_PERMESSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(
-                            requireActivity(),
-                            android.Manifest.permission.ACCESS_FINE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-
-                        if (checkLocationPermission()) {
-
-                            checkLocationPermission()
-                            buildLocationRequest()
-                            buildLocationCallBack()
-
-                            fusedlocation = LocationServices.getFusedLocationProviderClient(requireActivity())
-                            fusedlocation.requestLocationUpdates(locationReq,locationCallback, Looper.myLooper())
-                            mMap!!.isMyLocationEnabled = true
-                        }
-
-
-                    }
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         sessionData = SessionData(requireActivity())
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        Farm_List= "Mississauga"
-
-
 
 
     }
@@ -216,40 +91,11 @@ class Maps : Fragment(),OnMapReadyCallback{
 
 
 
-        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
-            checkLocationPermission()
-            buildLocationRequest()
-            buildLocationCallBack()
 
-            fusedlocation = LocationServices.getFusedLocationProviderClient(View.context)
-            fusedlocation.requestLocationUpdates(locationReq,locationCallback, Looper.myLooper())
+        mapview.onCreate(savedInstanceState)
+        mapview.onResume()
 
-
-            mapview.onCreate(savedInstanceState)
-            mapview.onResume()
-
-            mapview.getMapAsync(this)
-
-        }
-        else
-        {
-            checkLocationPermission()
-            buildLocationRequest()
-            buildLocationCallBack()
-
-            fusedlocation = LocationServices.getFusedLocationProviderClient(requireActivity())
-            fusedlocation.requestLocationUpdates(locationReq,locationCallback, Looper.myLooper())
-
-
-
-            mapview.onCreate(savedInstanceState)
-            mapview.onResume()
-
-            mapview.getMapAsync(this)
-        }
-
-
-
+        mapview.getMapAsync(this)
 
 
 
@@ -257,91 +103,95 @@ class Maps : Fragment(),OnMapReadyCallback{
     }
 
 
-    override fun onStop() {
-
-        fusedlocation.removeLocationUpdates(locationCallback)
-        super.onStop()
-    }
-    override fun onMapReady(map:GoogleMap?) {
+    override fun onMapReady(map: GoogleMap?) {
 
         val geo: Geocoder = Geocoder(requireActivity(), Locale.getDefault())
         mMap = map!!
 
+        mMap.mapType == GoogleMap.MAP_TYPE_NORMAL
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                //Location Permission already granted
+                buildGoogleApiClient();
+                mMap.setMyLocationEnabled(true);
+            } else {
+                //Request Location Permission
+                checkLocationPermission();
+            }
+        } else {
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+        }
 
 
-//        viewModel.getFarmData().value!!.city
+        DatabaseAPIHandler(requireActivity(), AsyncResponse {
+            if (!(it.isNullOrBlank())) {
+                val Farms = ObjectConverter.convertStringToObject(
+                    it,
+                    Farm::class.java,
+                    true
+                ) as List<Farm>
+                for (farm_address in Farms) {
 
-
-            DatabaseAPIHandler(requireActivity(), AsyncResponse {
-                if (!(it.isNullOrBlank())) {
-                    val Farms = ObjectConverter.convertStringToObject(
-                        it,
-                        Farm::class.java,
-                        true
-                    ) as List<Farm>
-                    for (farm_address in Farms) {
-
-                        val Addres =
-                            ( farm_address.street + "," + farm_address.city + "," +farm_address.postalCode
-                                    +","+ farm_address.country)
-
-
-//                    val  addressList=geo.getFromLocationName(Addres,1)
-                        MapHandler(geo, object : MapResponse {
-                            override fun onProcessComplete(Obj: Any) {
-                                val addresslist = Obj as List<Address>
-
-                                if (addresslist.size != 0) {
-
-
-                                    address = addresslist[0]
+                    val Addres =
+                        (farm_address.street + "," + farm_address.city + "," +
+                                farm_address.province + " " +
+                                farm_address.postalCode
+                                )
 
 
 
+                    MapHandler(geo, object : MapResponse {
+                        override fun onProcessComplete(Obj: Any) {
+                            val addresslist = Obj as List<Address>
 
-                                    mMap!!.addMarker(
-                                        MarkerOptions().position(
-                                            LatLng(
-                                                address.latitude,
-                                               address.longitude
-                                            )
-                                        ).title(farm_address.businessName)
-                                    )
+                            if (addresslist.size != 0) {
 
-                                } else
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Invalid Address",
-                                        Toast.LENGTH_LONG
-                                    )
+
+                                address = addresslist[0]
+
+
+
+
+                                mMap!!.addMarker(
+                                    MarkerOptions().position(
+                                        LatLng(
+                                            address.latitude,
+                                            address.longitude
+                                        )
+                                    ).title(farm_address.businessName)
+                                )
+
                             }
+                        }
 
-                        }).execute(Addres as Object)
+                    }).execute(Addres as Object)
 
-
-                    }
 
                 }
 
-            }).execute("/Farms")
+            }
 
-
-
-            if (ContextCompat.checkSelfPermission(
-                    requireView().context,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION
-                )
-                != PackageManager.PERMISSION_GRANTED
-            ) {
-                mMap.isMyLocationEnabled
-            } else
-                !mMap.isMyLocationEnabled
-
-            mMap.uiSettings.isZoomControlsEnabled
-
+        }).execute("/Farms")
 
 
     }
+
+    @Synchronized
+    protected fun buildGoogleApiClient() {
+        mGoogleApiClient = GoogleApiClient.Builder(requireActivity())
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .addApi(LocationServices.API)
+            .build()
+        mGoogleApiClient.connect()
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(
@@ -375,5 +225,144 @@ class Maps : Fragment(),OnMapReadyCallback{
         )
     }
 
+    override fun onConnected(p0: Bundle?) {
+        mLocationRequest = LocationRequest()
+        mLocationRequest.setInterval(1000)
+        mLocationRequest.setFastestInterval(1000)
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
+        if (ContextCompat.checkSelfPermission(
+                requireActivity()
+                , Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient,
+                mLocationRequest,
+                this
+            )
+        }
+    }
+
+    override fun onConnectionSuspended(p0: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLocationChanged(location: Location?) {
+        mLastLocation = location!!
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker?.remove()
+        }
+
+        //Place current location marker
+
+        //Place current location marker
+        val latLng = LatLng(location.getLatitude(), location.getLongitude())
+        val markerOptions = MarkerOptions()
+        markerOptions.position(latLng)
+        markerOptions.title("Current Position")
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+        mCurrLocationMarker = mMap.addMarker(markerOptions)
+
+        //move map camera
+
+        //move map camera
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11f))
+    }
+
+
+    private val MY_PERMISSIONS_REQUEST_LOCATION = 99
+    private fun checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Location Permission Needed")
+                    .setMessage("This app needs the Location permission, please accept to use location functionality")
+                    .setPositiveButton("OK", object : DialogInterface.OnClickListener {
+                        override fun onClick(dialogInterface: DialogInterface?, i: Int) {
+                            //Prompt the user once explanation has been shown
+                            ActivityCompat.requestPermissions(
+                                requireActivity(),
+                                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                                MY_PERMISSIONS_REQUEST_LOCATION
+                            )
+                        }
+                    })
+                    .create()
+                    .show()
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(
+                    requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    MY_PERMISSIONS_REQUEST_LOCATION
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_LOCATION -> {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.size > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
+
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(
+                            requireActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                        == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient()
+                        }
+                        mMap.setMyLocationEnabled(true)
+                    }
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(requireContext(), "permission denied", Toast.LENGTH_LONG).show()
+                }
+                return
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        //stop location updates when Activity is no longer active
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
+        }
+    }
     }
 
