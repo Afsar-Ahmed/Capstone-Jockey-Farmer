@@ -16,6 +16,9 @@ import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
+/**
+ * @author: Afsar Ahmed
+ */
 class RegistrationModel:ViewModel() {
 
     val user : MutableLiveData<FirebaseUser?> by lazy{
@@ -76,6 +79,16 @@ class RegistrationModel:ViewModel() {
         return nameValidated
 
     }
+
+    /**
+     * @author: Afsar Ahmed
+     * validates user when registering
+     * @param emailInput user input an follows defaukt requirements of email
+     * @param passwordInput user input and must abide by regex pattern
+     * @param repeatPasswordInput user input and must match passwordInput as well as regex pattern
+     *
+     * @return true if validation of all parameters follow protocol
+     */
     public  fun registerValidation(emailInput: EditText, passwordInput: EditText, repeatPasswordInput: EditText) : Boolean{
         var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         var emailInputVerification: Boolean = false
