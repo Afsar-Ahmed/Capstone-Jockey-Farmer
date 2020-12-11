@@ -37,7 +37,7 @@
             app:defaultNavHost="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toolbarD"
-            app:navGraph="@navigation/cusomer_nav">
+            app:navGraph="@navigation/customer_nav">
 
         </androidx.fragment.app.FragmentContainerView>
 

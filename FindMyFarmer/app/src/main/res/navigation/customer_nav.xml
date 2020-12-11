@@ -2,22 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cusomer_nav"
-
-    app:startDestination="@id/nav_market"
-    >
+    android:id="@+id/customer_nav"
+    app:startDestination="@id/nav_market">
     <fragment
         android:id="@+id/nav_market"
         android:name="sheridan.capstone.findmyfarmer.Customer.View.MarketPlace"
         android:label="fragment_market"
         tools:layout="@layout/fragment_market_place" >
-
         <action
             android:id="@+id/action_nav_market_to_farmerInfo"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right"
             app:destination="@id/fragment_farmer_info" />
     </fragment>
-
-
 
 
     <fragment
@@ -27,8 +26,13 @@
         tools:layout="@layout/fragment_following" >
         <action
             android:id="@+id/action_nav_following_to_fragment_farmer_info"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right"
             app:destination="@id/fragment_farmer_info" />
     </fragment>
+
 
     <fragment
         android:id="@+id/nav_maps"
@@ -43,11 +47,20 @@
         tools:layout="@layout/fragment_farmer_info" >
         <action
             android:id="@+id/action_fragment_farmer_info_to_farmersMap"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right"
             app:destination="@id/fragment_farmers_map" />
         <action
             android:id="@+id/action_fragment_farmer_info_to_nav_market"
+            app:enterAnim="@anim/left_to_right"
+            app:exitAnim="@anim/exit_left_to_right"
+            app:popEnterAnim="@anim/right_to_left"
+            app:popExitAnim="@anim/exit_right_to_left"
             app:destination="@id/nav_market" />
     </fragment>
+
 
     <fragment
         android:id="@+id/fragment_farmers_map"
@@ -56,6 +69,10 @@
         tools:layout="@layout/fragment_farmers_map" >
         <action
             android:id="@+id/action_fragment_farmers_map_to_fragment_farmer_info"
+            app:enterAnim="@anim/left_to_right"
+            app:exitAnim="@anim/exit_left_to_right"
+            app:popEnterAnim="@anim/right_to_left"
+            app:popExitAnim="@anim/exit_right_to_left"
             app:destination="@id/fragment_farmer_info" />
     </fragment>
 
@@ -64,14 +81,23 @@
         android:id="@+id/nav_manage_hub"
         android:name="sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub"
         android:label="FarmerHub"
-
         tools:layout="@layout/fragment_farmer_hub">
         <action
             android:id="@+id/action_nav_manage_hub_to_fragment_farm_manager"
-            app:destination="@id/fragment_farm_manager" />
+            app:destination="@id/fragment_farm_manager"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right"
+            />
         <action
             android:id="@+id/action_nav_manage_hub_to_fragment_farm_add"
-            app:destination="@id/fragment_farm_add" />
+            app:destination="@id/fragment_farm_add"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right"
+            />
         <action
             android:id="@+id/action_nav_manage_hub_self"
             app:destination="@id/nav_manage_hub" />
@@ -82,17 +108,23 @@
         android:id="@+id/fragment_farm_manager"
         android:name="sheridan.capstone.findmyfarmer.Farmer.View.FarmManager"
         android:label="FarmManager"
-
         tools:layout="@layout/fragment_farm_manager">
         <action
             android:id="@+id/action_fragment_farm_manager_to_farmer_product_management2"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right"
             app:destination="@id/farmer_product_management" />
-
         <action
             android:id="@+id/action_fragment_farm_manager_to_image_dialog"
             app:destination="@id/image_dialog" />
         <action
             android:id="@+id/action_fragment_farm_manager_to_fragment_photo_picker2"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/left_to_right"
+            app:popExitAnim="@anim/exit_left_to_right"
             app:destination="@id/fragment_photo_picker" />
     </fragment>
 
@@ -101,23 +133,31 @@
         android:id="@+id/farmer_product_management"
         android:name="sheridan.capstone.findmyfarmer.Farmer.View.ProductManagement"
         android:label="fragment_product_management"
-        tools:layout="@layout/fragment_product_management"
-        />
+        tools:layout="@layout/fragment_product_management" />
+
+
     <fragment
         android:id="@+id/fragment_farm_add"
         android:name="sheridan.capstone.findmyfarmer.Farmer.View.FarmAddFragment"
         android:label="FarmAddFragment"
-
         tools:layout="@layout/fragment_farm_add"/>
+
+
     <fragment
         android:id="@+id/fragment_photo_picker"
         android:name="sheridan.capstone.findmyfarmer.Users.PhotoPicker"
         android:label="fragment_photo_picker"
         tools:layout="@layout/fragment_photo_picker" >
         <action
+            app:enterAnim="@anim/left_to_right"
+            app:exitAnim="@anim/exit_left_to_right"
+            app:popEnterAnim="@anim/right_to_left"
+            app:popExitAnim="@anim/exit_right_to_left"
             android:id="@+id/action_fragment_photo_picker_to_fragment_farm_manager2"
             app:destination="@id/fragment_farm_manager" />
     </fragment>
+
+
     <dialog
         android:id="@+id/image_dialog"
         android:name="sheridan.capstone.findmyfarmer.Customer.Model.ImageDialog"
