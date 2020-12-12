@@ -1,3 +1,7 @@
+
+
+//Author - Andrei Constantinescu
+
 package sheridan.capstone.findmyfarmer.Customer.View
 
 import android.Manifest
@@ -46,6 +50,7 @@ import sheridan.capstone.findmyfarmer.Users.AnonymousUserActivity
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 import java.util.*
+
 
 
 class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
@@ -356,13 +361,6 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
         }
     }
 
-    override fun onPause() {
-        super.onPause()
 
-        //stop location updates when Activity is no longer active
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
-        }
-    }
     }
 

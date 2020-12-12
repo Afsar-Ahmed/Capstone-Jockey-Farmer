@@ -1,3 +1,5 @@
+
+//Author - Andrei Constantinescu
 package sheridan.capstone.findmyfarmer.Customer.View
 
 import android.os.Bundle
