@@ -92,7 +92,7 @@ class FarmAddFragment(): Fragment() {
             notEmpty = false
         }
         if (Farm_Unit.text.isEmpty()) {
-            Farm_Unit.setText(0)
+            Farm_Unit.setText("0")
             notEmpty = false
         }
         if (Farm_Province.text.isEmpty()) {
