@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -153,7 +157,6 @@ class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
                             ).show()
                         }
                     }
-
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }

@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.ImageHandler;
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;

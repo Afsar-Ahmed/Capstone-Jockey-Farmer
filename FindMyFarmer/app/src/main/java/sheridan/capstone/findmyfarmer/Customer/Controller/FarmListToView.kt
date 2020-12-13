@@ -4,6 +4,7 @@
 
 package sheridan.capstone.findmyfarmer.FarmerListing.Controller
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.farmer_listing.view.*
+import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.R
 import java.lang.StringBuilder
-
 
 class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItemClickListener)
     : RecyclerView.Adapter<FarmListToView.MyViewHolder>(),Filterable {
@@ -46,8 +47,6 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
         holder.Followers.text = "Followers: ${currentItem.followers}"
     }
 
-
-
     override fun getFilter(): Filter {
         return filter
     }
@@ -55,7 +54,6 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
     private var filter = object: Filter(){
         override fun performFiltering(constraint: CharSequence?): FilterResults? {
 
-            var stringFilteredFarm = HashMap<String,Farm>()
             var filteredList = ArrayList<Farm>()
 
             if(constraint.toString().isEmpty()){
@@ -89,11 +87,8 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
                     if(farmString.toString().toLowerCase().contains(constraint.toString().toLowerCase())){
                         filteredList.add(farm)
                     }
-                    //stringFilteredFarm.put(farmString.toString(),farm)
                 }
-//                for(farmHash in stringFilteredFarm){
-//
-//                }
+
             }
 
             var filterResults = FilterResults()
@@ -129,8 +124,9 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
             }
         }
     }
-        interface OnItemClickListener{
-            fun onItemClick(position: Int)
-        }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
 }
 

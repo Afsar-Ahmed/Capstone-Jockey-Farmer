@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.graphics.Canvas
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -28,6 +32,7 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
     private var productlist = ArrayList<Product>()
     private var CategoryList = ArrayList<String>()
     private var TypeList = ArrayList<String>()
+    private var overlay = ArrayList<View>()
     private lateinit var viewModel: SharedViewModel
 
     override fun onCreateView(
@@ -41,6 +46,13 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
         val TypeSpinner = view.findViewById<Spinner>(R.id.productTypeSpinner)
         val addproduct = view.findViewById<Button>(R.id.add_product)
         val productRecyclerView = view.findViewById<RecyclerView>(R.id.productRecyclerView)
+        val PageOverlay = view.findViewById<View>(R.id.overlay)
+        val noContextText = view.findViewById<View>(R.id.NoContentText)
+        overlay.add(PageOverlay)
+        overlay.add(noContextText)
+
+        overlay[0].visibility = View.VISIBLE
+        overlay[1].visibility = View.VISIBLE
 
         adapter = FarmerFruitListToView(requireActivity(),viewModel.getFarmData().value!!.farmID,productlist, this)
         var categoryAdapter = ArrayAdapter(requireActivity(),android.R.layout.simple_spinner_item,CategoryList)
@@ -61,7 +73,7 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
 
         if (productManager != null) {
             productManager.GetProductCategoryList(CategoryList,categoryAdapter)
-            productManager.GetEditProducts(productlist,viewModel.getFarmData().value!!.farmID,adapter)
+            productManager.GetEditProducts(productlist,viewModel.getFarmData().value!!.farmID,adapter,overlay)
         }
 
         CategorySpinner?.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
@@ -81,7 +93,7 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
                 var cat = CategorySpinner.selectedItem.toString()
                 var type = TypeSpinner.selectedItem.toString()
 
-                productManager.AddFarmProduct(type,cat,viewModel.getFarmData().value!!.farmID,productlist,adapter)
+                productManager.AddFarmProduct(type,cat,viewModel.getFarmData().value!!.farmID,productlist,adapter,overlay)
             }
             else{
                 Toast.makeText(activity,"Unable to add",Toast.LENGTH_SHORT).show()
@@ -100,7 +112,7 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
         }
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             var productManager = ProductManager(requireActivity())
-            productManager.DeleteFarmProduct(productlist.get(viewHolder.adapterPosition).productID,viewModel.getFarmData().value!!.farmID,adapter)
+            productManager.DeleteFarmProduct(productlist.get(viewHolder.adapterPosition).productID,viewModel.getFarmData().value!!.farmID,adapter,viewHolder.adapterPosition,productlist,overlay)
         }
 
         override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {

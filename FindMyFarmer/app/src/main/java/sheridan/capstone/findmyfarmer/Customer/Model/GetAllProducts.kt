@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Build
@@ -33,59 +37,36 @@ class GetAllProducts(private val activity: Activity,private val adapter: FruitLi
                     override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                         if(Url != null && !(Url.get().isNullOrBlank())){
                             Productlistdata.image = Url.get()
-                            DatabaseAPIHandler(activity, AsyncResponse {resp ->
-                                if(!(resp.isNullOrBlank())){
-                                    var farmProduct = ObjectConverter.convertStringToObject(resp,
-                                        FarmProduct::class.java,false) as FarmProduct
-                                    if (farmProduct != null){
-                                        Productlistdata.quantity = farmProduct.quantity
-                                        products.add(Productlistdata)
-                                        //notifying change on list
-                                        adapter.notifyDataSetChanged()
-                                    }
-                                }
-                                else{
-                                    Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
-                                }
-                            }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                            ManageFarmProducts(Productlistdata,products, id, product)
                         }
                         else{
-                            DatabaseAPIHandler(activity, AsyncResponse {resp ->
-                                if(!(resp.isNullOrBlank())){
-                                    var farmProduct = ObjectConverter.convertStringToObject(resp,
-                                        FarmProduct::class.java,false) as FarmProduct
-                                    if (farmProduct != null){
-                                        Productlistdata.quantity = farmProduct.quantity
-                                        products.add(Productlistdata)
-                                        //notifying change on list
-                                        adapter.notifyDataSetChanged()
-                                    }
-                                }
-                                else{
-                                    Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
-                                }
-                            }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                            ManageFarmProducts(Productlistdata,products, id, product)
                         }
                     }
                     override fun OnErrorListener(error: String?) {
-                        DatabaseAPIHandler(activity, AsyncResponse {resp ->
-                            if(!(resp.isNullOrBlank())){
-                                var farmProduct = ObjectConverter.convertStringToObject(resp,
-                                    FarmProduct::class.java,false) as FarmProduct
-                                if (farmProduct != null){
-                                    Productlistdata.quantity = farmProduct.quantity
-                                    products.add(Productlistdata)
-                                    //notifying change on list
-                                    adapter.notifyDataSetChanged()
-                                }
-                            }
-                            else{
-                                Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
-                            }
-                        }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                        ManageFarmProducts(Productlistdata,products, id, product)
                     }
                 })
             }
         }).execute("/ProductsByFarmID/${id}")
+    }
+
+    private fun ManageFarmProducts(Productlistdata: Product,products: ArrayList<Product>,id: Int,product: Product){
+        DatabaseAPIHandler(activity, AsyncResponse {resp ->
+            if(!(resp.isNullOrBlank())){
+                var farmProduct = ObjectConverter.convertStringToObject(resp,
+                    FarmProduct::class.java,false) as FarmProduct
+                if (farmProduct != null){
+                    Productlistdata.quantity = farmProduct.quantity
+                    Productlistdata.unit = farmProduct.unit
+                    products.add(Productlistdata)
+                    //notifying change on list
+                    adapter.notifyDataSetChanged()
+                }
+            }
+            else{
+                Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
+            }
+        }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
     }
 }

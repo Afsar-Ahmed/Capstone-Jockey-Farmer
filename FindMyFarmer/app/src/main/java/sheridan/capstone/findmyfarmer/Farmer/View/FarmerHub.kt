@@ -50,13 +50,21 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.pullToRefresh)
         val recycleView: RecyclerView = view.findViewById(R.id.Hub_Recycle_View)
         val farmadd = view.findViewById<ImageView>(R.id.AddFarmImage)
+        val PageOverlay = view.findViewById<View>(R.id.overlay)
+        val noContextText = view.findViewById<View>(R.id.NoContentText)
+        val overlay = ArrayList<View>()
+        overlay.add(PageOverlay)
+        overlay.add(noContextText)
+
+        overlay[0].visibility = View.VISIBLE
+        overlay[1].visibility = View.INVISIBLE
 
         val adapter = HubListToView(requireActivity(), HubList, this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        var getFarmersFarms = activity?.let { GetFarmersFarms(it, swipeRefreshLayout, adapter) }
+        var getFarmersFarms = activity?.let { GetFarmersFarms(it, swipeRefreshLayout, adapter,overlay) }
 
         if (getFarmersFarms != null && farmer != null) {
             getFarmersFarms.GetHubFarms(HubList, farmer.farmerID)
@@ -64,6 +72,7 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
         swipeRefreshLayout.setOnRefreshListener {
             if (getFarmersFarms != null && farmer != null) {
+                overlay[0].visibility = View.VISIBLE
                 getFarmersFarms.GetHubFarms(HubList, farmer.farmerID)
             }
         }

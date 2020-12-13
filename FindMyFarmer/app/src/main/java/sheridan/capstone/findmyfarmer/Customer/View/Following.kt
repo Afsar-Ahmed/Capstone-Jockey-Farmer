@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -35,6 +36,9 @@ class Following : Fragment(),
     private lateinit var adapter :FollowingListToView
     var followsList = ArrayList<Farm>()
     private lateinit var sessionData: SessionData
+    private var overlay = ArrayList<View>()
+    private lateinit var PageOverlay : View
+    private lateinit var NocontextText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +52,23 @@ class Following : Fragment(),
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         val recycleView : RecyclerView = view.findViewById(R.id.followrecycleview)
+        PageOverlay = view.findViewById(R.id.overlay)
+        NocontextText = view.findViewById(R.id.NoContentText)
+
+        overlay.add(PageOverlay)
+        overlay.add(NocontextText)
+
+        overlay[0].visibility = View.VISIBLE
+        overlay[1].visibility = View.INVISIBLE
 
         adapter = FollowingListToView(followsList,this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        var getFollows = activity?.let { it1 -> GetFollows(it1,adapter) }
+        var getFollows = activity?.let { it1 -> GetFollows(it1,adapter,overlay) }
         if (getFollows != null) {
+            overlay[0].visibility = View.VISIBLE
             getFollows.GetFollowedFarms(followsList)
         }
 

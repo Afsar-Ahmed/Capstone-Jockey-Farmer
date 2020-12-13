@@ -1,5 +1,7 @@
 package sheridan.capstone.findmyfarmer.Farmer.Model
-
+/**
+ * Author:  Sohaib Hussain
+ **/
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -10,6 +12,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.navigation.fragment.findNavController
 import sheridan.capstone.findmyfarmer.Entities.Farm
+import sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 
@@ -21,7 +24,7 @@ class FarmDeleteConfirmDialog(): AppCompatDialogFragment() {
     private lateinit var farm : Farm
 
     fun FarmDelete(farm_new: Farm) {
-    farm = farm_new
+    	farm = farm_new
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -43,8 +46,6 @@ class FarmDeleteConfirmDialog(): AppCompatDialogFragment() {
 
             this.findNavController().navigate(R.id.action_nav_manage_hub_self)
             dismiss()
-
-
         }
 
         builder.setView(view)

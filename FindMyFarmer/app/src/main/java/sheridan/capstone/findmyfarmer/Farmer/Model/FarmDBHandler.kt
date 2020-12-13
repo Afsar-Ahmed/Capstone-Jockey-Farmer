@@ -11,13 +11,15 @@ import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub
 import sheridan.capstone.findmyfarmer.R
 
+/**
+ * Author:  Sohaib Hussain
+ **/
 class FarmDBHandler(val activity: Activity, val progressbar: ProgressBar?) {
 
     fun updatefarm(farm: Farm){
         progressbar?.visibility = ProgressBar.VISIBLE
         DatabaseAPIHandler(activity, AsyncResponse {
             progressbar?.visibility = ProgressBar.INVISIBLE
-
         }).execute("/UpdateFarm",farm)
     }
 
@@ -25,7 +27,6 @@ class FarmDBHandler(val activity: Activity, val progressbar: ProgressBar?) {
         progressbar?.visibility = ProgressBar.VISIBLE
         DatabaseAPIHandler(activity, AsyncResponse {
             progressbar?.visibility = ProgressBar.INVISIBLE
-
         }).execute("/addFarm",farm)
     }
 

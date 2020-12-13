@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Customer.Controller
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

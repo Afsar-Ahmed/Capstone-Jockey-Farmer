@@ -60,7 +60,7 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
                             var f = viewModel.getFarmData().value
                             if (f != null) {
                                 if (Url != null) {
-                                    f.primaryImage = Url.get()
+                                    f.primaryImage=Url.get()
                                     viewModel.setFarmData(f)
                                 }
 

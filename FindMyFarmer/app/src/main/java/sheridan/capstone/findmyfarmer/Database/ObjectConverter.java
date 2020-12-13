@@ -14,6 +14,10 @@ import sheridan.capstone.findmyfarmer.Entities.FarmProduct;
 import sheridan.capstone.findmyfarmer.Entities.Farmer;
 import sheridan.capstone.findmyfarmer.Entities.Product;
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 public class ObjectConverter {
     public static Object convertStringToObject(String response, Type cls, boolean listOrNot){
 

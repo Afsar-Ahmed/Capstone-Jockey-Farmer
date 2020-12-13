@@ -1,5 +1,4 @@
 
-
 //Author - Andrei Constantinescu
 
 package sheridan.capstone.findmyfarmer.Customer.View
@@ -51,8 +50,6 @@ import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 import java.util.*
 
-
-
 class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
     LocationListener {
@@ -67,9 +64,7 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
      var mCurrLocationMarker: Marker? = null
 
 
-
     private lateinit var address: Address
-
 
     private lateinit var viewModel: SharedViewModel
 
@@ -360,7 +355,6 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
             }
         }
     }
-
 
     }
 

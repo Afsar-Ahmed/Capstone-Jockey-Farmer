@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.ImageHandler;
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.graphics.Bitmap;
 
 import com.google.firebase.storage.StorageReference;

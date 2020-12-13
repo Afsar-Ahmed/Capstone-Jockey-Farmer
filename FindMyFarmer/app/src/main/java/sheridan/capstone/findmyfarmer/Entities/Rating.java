@@ -1,5 +1,7 @@
 package sheridan.capstone.findmyfarmer.Entities;
-
+/**
+ * Author:  Sohaib Hussain
+ **/
 public class Rating {
     private int RatingID;
     private int FarmID;

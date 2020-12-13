@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.app.Activity
 import android.widget.ImageView
 import android.widget.Toast

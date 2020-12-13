@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -29,7 +33,7 @@ import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Users.CustomerActivity
 import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 
-class FarmManager : Fragment() {
+class FarmManager : Fragment(){
 
 
     private lateinit var Farm_Image: ImageView
@@ -116,44 +120,44 @@ class FarmManager : Fragment() {
         })
     }
 
-    private fun VerifyData() {
+    private fun VerifyData(){
         var notEmpty = true
-        if (Farm_Name.text.toString().isEmpty()) {
+        if(Farm_Name.text.toString().isEmpty()){
             Farm_Name.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Desc.text.isEmpty()) {
+        if(Farm_Desc.text.isEmpty()){
             Farm_Desc.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_City.text.isEmpty()) {
+        if(Farm_City.text.isEmpty()){
             Farm_City.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Country.text.isEmpty()) {
+        if(Farm_Country.text.isEmpty()){
             Farm_Country.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Street.text.isEmpty()) {
+        if(Farm_Street.text.isEmpty()){
             Farm_Street.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_PostalCode.text.isEmpty()) {
+        if(Farm_PostalCode.text.isEmpty()){
             Farm_PostalCode.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Unit.text.isEmpty()) {
-            Farm_Unit.setError("Cannot be Empty")
-            notEmpty = false
+        if(Farm_Unit.text.isEmpty()){
+            Farm_Unit.setText("0")
+            notEmpty =false
         }
-        if (Farm_Province.text.isEmpty()) {
+        if(Farm_Province.text.isEmpty()){
             Farm_Province.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
 
-        if (notEmpty) {
-            var PC = Farm_PostalCode.text.toString().replace(" ", "")
-            if (PC.length == 6) {
+        if(notEmpty){
+            var PC = Farm_PostalCode.text.toString().replace(" ","")
+            if(PC.length == 6){
                 //insert into database
                 var id = viewModel.getFarmData().value!!.farmID
                 var business_name = Farm_Name.text.toString()
@@ -183,16 +187,12 @@ class FarmManager : Fragment() {
                 val updateFarm : FarmDBHandler = FarmDBHandler(requireActivity(),progbar)
 
 
-                    updateFarm.updatefarm(farm)
+                updateFarm.updatefarm(farm)
 
-                    val i = Intent(activity, FarmerActivity::class.java)
-                    startActivity(i)
-                    (activity as Activity?)!!.overridePendingTransition(0, 0)
-
-
-
+                val i = Intent(activity, FarmerActivity::class.java)
+                startActivity(i)
+                (activity as Activity?)!!.overridePendingTransition(0, 0)
             }
         }
-
     }
 }

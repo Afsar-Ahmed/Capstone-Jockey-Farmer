@@ -13,8 +13,9 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:id="@+id/FarmerFruitCL"
 
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
@@ -52,7 +53,6 @@
             app:layout_constraintStart_toEndOf="@id/Fruit_img"
             app:layout_constraintTop_toTopOf="@id/Fruit_img" />
 
-
         <TextView
             android:id="@+id/Fruit_Category"
 
@@ -68,9 +68,11 @@
             app:layout_constraintTop_toBottomOf="@+id/Fruit_name" />
 
         <TableLayout
+            android:id="@+id/tableLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/Fruit_Category"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/Fruit_Category"
             app:layout_constraintTop_toBottomOf="@+id/Fruit_Category">
 
@@ -104,6 +106,19 @@
             </TableRow>
 
         </TableLayout>
+
+        <Spinner
+            android:id="@+id/MeasurementType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tableLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/tableLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/Fruit_Category"
+            app:layout_constraintVertical_bias="0.444" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

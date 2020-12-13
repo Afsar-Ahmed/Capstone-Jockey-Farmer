@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.SessionDataHandler;
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;

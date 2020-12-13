@@ -42,23 +42,14 @@ class FarmersMap : Fragment(), OnMapReadyCallback {
 
     var viewModel: SharedViewModel = SharedViewModel()
 
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val View: View = inflater.inflate(R.layout.fragment_farmers_map, container, false)
 
-
-
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-
-
 
         Farmers_Address= viewModel.getFarmData().value!!.street +
                 ","+ viewModel.getFarmData().value!!.city + "," + viewModel.getFarmData().value!!.province + " "
@@ -78,8 +69,7 @@ class FarmersMap : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(mMap: GoogleMap?) {
 
-
-        val geo: Geocoder = Geocoder(requireActivity(), Locale.getDefault())
+        val geo = Geocoder(requireActivity(), Locale.getDefault())
         MapHandler(geo, object : MapResponse {
             override fun onProcessComplete(Obj: Any) {
                 addresslist = Obj as List<Address>

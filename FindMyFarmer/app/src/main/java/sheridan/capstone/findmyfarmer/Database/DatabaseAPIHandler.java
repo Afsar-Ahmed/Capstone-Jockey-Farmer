@@ -27,6 +27,10 @@ import sheridan.capstone.findmyfarmer.Entities.Following;
 import sheridan.capstone.findmyfarmer.Entities.Product;
 import sheridan.capstone.findmyfarmer.Entities.Rating;
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
     private static final String API_BASE_URL = "http://farmerapi.us-east-2.elasticbeanstalk.com";
@@ -71,6 +75,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         params.put("FarmID", String.valueOf(farmProduct.getFarmerID()));
         params.put("ProductID", String.valueOf(farmProduct.getProductID()));
         params.put("Quantity",String.valueOf(farmProduct.getQuantity()));
+        params.put("Unit",String.valueOf(farmProduct.getUnit()));
 
         return new JSONObject(params);
     }
@@ -173,6 +178,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
                 params.put("FarmID", farmProduct.getFarmerID());
                 params.put("ProductID", farmProduct.getProductID());
                 params.put("Quantity",String.valueOf(farmProduct.getQuantity()));
+                params.put("Unit",String.valueOf(farmProduct.getUnit()));
 
                 jsonArray.put(params);
             }
@@ -291,6 +297,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         params.put("FarmID", String.valueOf(farmProduct.getFarmerID()));
         params.put("ProductID", String.valueOf(farmProduct.getProductID()));
         params.put("Quantity",String.valueOf(farmProduct.getQuantity()));
+        params.put("Unit",String.valueOf(farmProduct.getUnit()));
 
         return new JSONObject(params);
     }

@@ -1,10 +1,15 @@
 package sheridan.capstone.findmyfarmer.Farmer.Controller
-
+/**
+ * Author:  Sohaib Hussain
+ **/
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
@@ -41,7 +46,6 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-
         val currentItem = FruitList[position]
         if(!(currentItem.image.isNullOrBlank())){
             Picasso.get().load(currentItem.image).into(holder.Fruit_Image)
@@ -49,9 +53,13 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
         holder.Fruit_Name.text = currentItem.productName
         holder.Fruit_Cat.text = currentItem.productCategory
         holder.Fruit_quantity.setText(currentItem.quantity.toString())
+        var measurements = activity.resources.getStringArray(R.array.Product_Measurement_Units)
+        var index = measurements.indexOf(FruitList[position].unit)
+        holder.measurements.setSelection(index)
     }
 
 
+    @SuppressLint("ResourceType")
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val Fruit_Image : RoundedImageView = itemView.Fruit_img
@@ -60,26 +68,64 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
         val Fruit_quantity :EditText = itemView.quantity
         val addOne : Button = itemView.AddOne
         val removeOne : Button = itemView.minusOne
+        val measurements: Spinner = itemView.MeasurementType
+        val FarmerCL : ConstraintLayout = itemView.FarmerFruitCL
 
 
         init {
             itemView.setOnClickListener(this)
             var productManager = ProductManager(activity)
+
+            ArrayAdapter.createFromResource(
+                activity,
+                R.array.Product_Measurement_Units,
+                android.R.layout.simple_spinner_item
+            ).also { arrayAdapter ->
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+                measurements.adapter = arrayAdapter
+            }
+
+            FarmerCL.setOnClickListener {
+                Fruit_quantity.clearFocus()
+            }
+
+            Fruit_quantity.setOnFocusChangeListener { v, hasFocus ->
+                if(!hasFocus){
+                    var updatedQuantity = (Fruit_quantity.text.toString().toInt())
+                    var unit = measurements.selectedItem.toString()
+                    if(updatedQuantity <= 999 || updatedQuantity >= 0){
+                        productManager.UpdateQuantity(updatedQuantity,unit,FruitList.get(adapterPosition).productID,farmid,Fruit_quantity)
+                    }
+                }
+            }
+
+            measurements.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?,view: View?,position: Int,id: Long) {
+                    var updatedQuantity = (Fruit_quantity.text.toString().toInt())
+                    var unit = measurements.selectedItem.toString()
+                    if(updatedQuantity <= 999 || updatedQuantity >= 0){
+                        productManager.UpdateQuantity(updatedQuantity,unit,FruitList.get(adapterPosition).productID,farmid,Fruit_quantity)
+                    }
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+
             addOne.setOnClickListener {
                 var updatedQuantity = (Fruit_quantity.text.toString().toInt()) + 1
+                var unit = measurements.selectedItem.toString()
                 if(updatedQuantity <= 999){
-                    productManager.UpdateQuantity(updatedQuantity,FruitList.get(adapterPosition).productID,farmid,Fruit_quantity)
+                    productManager.UpdateQuantity(updatedQuantity,unit,FruitList.get(adapterPosition).productID,farmid,Fruit_quantity)
                 }
             }
 
             removeOne.setOnClickListener {
                 var updatedQuantity = (Fruit_quantity.text.toString().toInt()) - 1
+                var unit = measurements.selectedItem.toString()
                 if(updatedQuantity >= 0){
-                    productManager.UpdateQuantity(updatedQuantity,FruitList.get(adapterPosition).productID,farmid,Fruit_quantity)
+                    productManager.UpdateQuantity(updatedQuantity,unit,FruitList.get(adapterPosition).productID,farmid,Fruit_quantity)
                 }
             }
         }
-
 
         override fun onClick(v: View?) {
             val position = adapterPosition
@@ -89,6 +135,7 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
 
         }
     }
+
     interface OnItemClickListener{
         fun onItemClick(position: Int)
     }

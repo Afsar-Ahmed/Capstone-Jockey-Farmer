@@ -20,4 +20,11 @@
     <string name="yes">Yes</string>
     <string name="are_you_farmer">Are you a farmer?</string>
     <string name="next">Next</string>
+
+    <string-array name="Product_Measurement_Units">
+        <item>Quantity</item>
+        <item>Kg(s)</item>
+        <item>lb(s)</item>
+        <item>Liter(s)</item>
+    </string-array>
 </resources>

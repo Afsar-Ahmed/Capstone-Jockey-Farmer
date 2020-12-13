@@ -68,7 +68,7 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
         wanttobefarmeritem.setEnabled(false)
         wanttobefarmeritem.setVisible(false)
 
-        if (customer != null) {
+        if(customer != null) {
             var usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)
             usertext.text = customer.customerName
         }
@@ -79,8 +79,7 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
 
         setSupportActionBar(toolbarView)
 
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout,
+        val toggle= ActionBarDrawerToggle(this,drawerLayout,
             toolbarView,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close

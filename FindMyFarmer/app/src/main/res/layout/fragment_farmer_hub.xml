@@ -32,6 +32,37 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.60"
+            android:background="@color/colorRatingInactive"
+            android:clickable="true"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/NoContentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawableTop="@drawable/ic_empty_recyclerview_50"
+            android:fontFamily="sans-serif-black"
+            android:text="No Farms added!"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/AddFarmImage"
         android:layout_width="80dp"
@@ -42,6 +73,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.78" />
+        app:layout_constraintVertical_bias="0.95" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

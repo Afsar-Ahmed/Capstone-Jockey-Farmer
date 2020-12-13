@@ -1,5 +1,7 @@
 package sheridan.capstone.findmyfarmer.Entities;
-
+/**
+ * Author:  Sohaib Hussain
+ **/
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;

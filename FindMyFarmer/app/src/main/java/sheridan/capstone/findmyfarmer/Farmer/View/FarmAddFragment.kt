@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
+/**
+ * Author:  Sohaib Hussain
+ **/
+
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -33,13 +37,9 @@ class FarmAddFragment(): Fragment() {
     private lateinit var progbar: ProgressBar
     private lateinit var sessionData: SessionData
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_farm_add, container, false)
+        val view = inflater.inflate(R.layout.fragment_farm_add,container,false)
 
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sessionData = SessionData(activity)
@@ -65,44 +65,44 @@ class FarmAddFragment(): Fragment() {
         return view
     }
 
-    private fun VerifyData() {
+    private fun VerifyData(){
         var notEmpty = true
-        if (Farm_Name.text.toString().isEmpty()) {
+        if(Farm_Name.text.toString().isEmpty()){
             Farm_Name.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Desc.text.isEmpty()) {
+        if(Farm_Desc.text.isEmpty()){
             Farm_Desc.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_City.text.isEmpty()) {
+        if(Farm_City.text.isEmpty()){
             Farm_City.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Country.text.isEmpty()) {
+        if(Farm_Country.text.isEmpty()){
             Farm_Country.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Street.text.isEmpty()) {
+        if(Farm_Street.text.isEmpty()){
             Farm_Street.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_PostalCode.text.isEmpty()) {
+        if(Farm_PostalCode.text.isEmpty()){
             Farm_PostalCode.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
-        if (Farm_Unit.text.isEmpty()) {
+        if(Farm_Unit.text.isEmpty()){
             Farm_Unit.setText("0")
-            notEmpty = false
+            notEmpty =true
         }
-        if (Farm_Province.text.isEmpty()) {
+        if(Farm_Province.text.isEmpty()){
             Farm_Province.setError("Cannot be Empty")
-            notEmpty = false
+            notEmpty =false
         }
 
-        if (notEmpty) {
-            var PC = Farm_PostalCode.text.toString().replace(" ", "")
-            if (PC.length == 6) {
+        if(notEmpty){
+            var PC = Farm_PostalCode.text.toString().replace(" ","")
+            if(PC.length == 6){
                 //insert into database
                 var farmer = sessionData.farmerData
                 var business_name = Farm_Name.text.toString()
@@ -114,7 +114,7 @@ class FarmAddFragment(): Fragment() {
                 var country = Farm_Country.text.toString()
                 var postalcode = Farm_PostalCode.text.toString()
                 var province = Farm_Province.text.toString()
-                if (farmer != null) {
+                if(farmer != null){
                     var farmerid = farmer.farmerID
                     var farm = Farm(
                         id,
@@ -141,6 +141,10 @@ class FarmAddFragment(): Fragment() {
 
                 }
             }
+            else{
+                Farm_PostalCode.setError("Postal code should be 6 letters and digits")
+            }
+
         }
     }
 
