@@ -2,27 +2,27 @@
 //Author - Andrei Constantinescu
 package sheridan.capstone.findmyfarmer.Customer.View
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import kotlinx.android.synthetic.main.fragment_market_place.*
 import sheridan.capstone.findmyfarmer.Customer.Model.GetAllFarms
-import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmListToView
+import sheridan.capstone.findmyfarmer.R
 
 
 class MarketPlace : Fragment(),
@@ -37,9 +37,11 @@ class MarketPlace : Fragment(),
     private lateinit var NocontextText: TextView
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val View : View = inflater.inflate(R.layout.fragment_market_place, container, false)
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onCreateView(inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
+        val View : View = inflater.inflate(R.layout.fragment_market_place,container,false)
         swipeResfreshLayout = View.findViewById(R.id.pullToRefresh)
         PageOverlay = View.findViewById(R.id.overlay)
         NocontextText = View.findViewById(R.id.NoContentText)
@@ -56,12 +58,16 @@ class MarketPlace : Fragment(),
 
         searchView.isEnabled = false
 
-        adapter = FarmListToView(FarmList, this)
+        adapter = FarmListToView(FarmList,this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        val GetAllFarms = activity?.let { GetAllFarms(it,swipeResfreshLayout,adapter,searchView,overlay) }
+        val GetAllFarms = activity?.let { GetAllFarms(it,
+            swipeResfreshLayout,
+            adapter,
+            searchView,
+            overlay) }
         if (GetAllFarms != null) {
             GetAllFarms.GetFarms(FarmList)
         }
@@ -93,9 +99,13 @@ class MarketPlace : Fragment(),
 
     override fun onItemClick(position: Int) {
         FarmList[position]?.let { viewModel.setFarmData(it) }
-
+        hideKeyboard(requireView())
         this.findNavController().navigate(R.id.action_nav_market_to_farmerInfo)
 
     }
 
+    fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken,0)
+    }
 }

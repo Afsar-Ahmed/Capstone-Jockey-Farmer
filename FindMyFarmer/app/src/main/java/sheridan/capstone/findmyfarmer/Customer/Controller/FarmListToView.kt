@@ -33,6 +33,8 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
         return MyViewHolder(itemView)
     }
 
+
+
     override fun getItemCount() = FarmList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

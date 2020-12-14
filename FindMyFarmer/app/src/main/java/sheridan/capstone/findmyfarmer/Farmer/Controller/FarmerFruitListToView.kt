@@ -74,7 +74,6 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
         init {
             itemView.setOnClickListener(this)
             var productManager = ProductManager(activity)
-
             ArrayAdapter.createFromResource(
                 activity,
                 R.array.Product_Measurement_Units,
@@ -85,8 +84,15 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
             }
 
             FarmerCL.setOnClickListener {
-                Fruit_quantity.clearFocus()
+                Fruit_quantity.isEnabled = true
+                if(Fruit_quantity.isFocused){
+                    Fruit_quantity.clearFocus()
+                }
+                else{
+                    Fruit_quantity.requestFocus()
+                }
             }
+
 
             Fruit_quantity.setOnFocusChangeListener { v, hasFocus ->
                 if(!hasFocus){
@@ -124,7 +130,10 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
                     productManager.UpdateQuantity(updatedQuantity,unit,FruitList.get(adapterPosition).productID,farmid,Fruit_quantity)
                 }
             }
+
         }
+
+
 
         override fun onClick(v: View?) {
             val position = adapterPosition
