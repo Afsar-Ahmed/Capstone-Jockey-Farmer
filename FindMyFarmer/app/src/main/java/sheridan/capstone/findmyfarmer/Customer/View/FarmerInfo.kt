@@ -1,6 +1,5 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,38 +12,31 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.nav_header.view.*
 import sheridan.capstone.findmyfarmer.Customer.Model.*
 import sheridan.capstone.findmyfarmer.Entities.Following
-import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
+import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
-import java.lang.StringBuilder
 
 class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
     private lateinit var FarmName:TextView
-
     private lateinit var FarmDesc:TextView
     private lateinit var FarmRating : RatingBar
     private lateinit var FarmAddress:TextView
-
     private lateinit var FarmImage : ImageView
     private lateinit var To_Map: Button
     private lateinit var RateIt: ImageView
-
     private lateinit var FarmFollow : ImageView
+
     private var productlist = ArrayList<Product>()
     var ImageInt : Int =0
     private lateinit var viewModel: SharedViewModel
@@ -136,7 +128,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         return view
     }
 
-    fun openDialog() {
+    private fun openDialog() {
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
         val exampleDialog = RateItDialogue(RateIt)
 

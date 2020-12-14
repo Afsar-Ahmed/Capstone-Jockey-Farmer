@@ -1,9 +1,5 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
-/**
- * Author:  Sohaib Hussain
- **/
-
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Build
@@ -22,6 +18,11 @@ import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles Retrieving all the farm products from the database. This includes images
+ * Date Modified: December 14th, 2020
+ **/
 class GetAllProducts(private val activity: Activity,private val adapter: FruitListToView) {
 
     fun farmProducts(products: ArrayList<Product>,id: Int)

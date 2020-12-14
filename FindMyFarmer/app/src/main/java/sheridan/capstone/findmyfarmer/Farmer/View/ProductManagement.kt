@@ -1,18 +1,14 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
-/**
- * Author:  Sohaib Hussain
- **/
 
 import android.graphics.Canvas
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,11 +17,15 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FarmerFruitListToView
-import sheridan.capstone.findmyfarmer.Farmer.Model.FarmDeleteConfirmDialog
 import sheridan.capstone.findmyfarmer.Farmer.Model.ProductManager
 import sheridan.capstone.findmyfarmer.R
 
-
+/**
+ * @author Sohaib Hussain
+ * Description: Fragment that handles management of products, this fragment handles adding, deleting
+ *              and updating the quantity and unit of the products
+ * Date Modified: December 14th, 2020
+ **/
 class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
 
     private lateinit var adapter: FarmerFruitListToView
@@ -106,6 +106,7 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
         return view
     }
 
+    //Helper function fo recycler view, used for swipe deleting a product
     private val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             return false
@@ -125,8 +126,5 @@ class ProductManagement : Fragment(),FarmerFruitListToView.OnItemClickListener{
         }
     }
 
-    override fun onItemClick(position: Int) {
-
-    }
-
+    override fun onItemClick(position: Int) {}
 }

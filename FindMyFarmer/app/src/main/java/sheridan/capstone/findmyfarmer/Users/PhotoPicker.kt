@@ -23,6 +23,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles listing of the farm gallery, that holds all the images that belong to the
+ *              user. If an image is picked , the image picked becomes the primary image
+ * Date Modified: December 14th, 2020
+ **/
 class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
     private lateinit var viewModel: SharedViewModel
     private var imagelist = ArrayList<Bitmap>()
@@ -47,6 +53,7 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
         return view
     }
 
+    //On image click, the image becomes a primary image
     override fun onItemClick(position: Int) {
         progressbar.visibility = View.VISIBLE
         FIH2.MakeImagePrimary(references[imagelist[position]],object : StorageResponse{
@@ -79,10 +86,7 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
         })
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
+    //downloads images to the local storage for easy and quick access
     fun refreshList(imageListToView: ImageListToView){
         FIH2.RefreshLocalStorage(object : StorageResponse {
             override fun processFinish(response: MutableList<StorageReference>?,bitmap: Optional<Bitmap>?, Url: Optional<String>?) {

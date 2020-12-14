@@ -1,9 +1,5 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
-/**
- * Author:  Sohaib Hussain
- **/
-
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Build
@@ -27,6 +23,12 @@ import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles Retrieving all the farms for public view. This includes retrieving followers
+ *              images etc.
+ * Date Modified: December 14th, 2020
+ **/
 class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLayout,val adapter: FarmListToView,val searchBar: SearchView,val overlay: ArrayList<View>) {
 
     private lateinit var sessionData: SessionData
@@ -65,7 +67,6 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
             }
         }).execute("/Farms")
     }
-
     private fun ProcessFarms(customer: Customer?,farmlistdata:Farm,Farms: ArrayList<Farm>){
         if(customer != null){
             DatabaseAPIHandler(activity, AsyncResponse {resp ->

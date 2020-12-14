@@ -1,9 +1,5 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
-/**
- * Author:  Sohaib Hussain
- **/
-
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
@@ -26,11 +22,16 @@ import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles retrieving all followed farms from database
+ * Date Modified: December 14th, 2020
+ **/
 class GetFollows(val activity: Activity, val adapter: FollowingListToView,val overlay: ArrayList<View>){
 
     private lateinit var sessionData: SessionData
 
-    public fun GetFollowedFarms(FollowedFarms: ArrayList<Farm>){
+    fun GetFollowedFarms(FollowedFarms: ArrayList<Farm>){
         sessionData = SessionData(activity)
         var customer = sessionData.customerData
         if(customer != null){

@@ -1,9 +1,5 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
-/**
- * Author:  Sohaib Hussain
- **/
-
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -26,6 +22,12 @@ import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import sheridan.capstone.findmyfarmer.Users.FarmerActivity
+
+/**
+ * @author Sohaib Hussain
+ * Description: Fragment that Handles Form for adding a new Farm
+ * Date Modified: December 14th, 2020
+ **/
 
 class FarmAddFragment(): Fragment() {
 
@@ -74,6 +76,7 @@ class FarmAddFragment(): Fragment() {
         viewBehavior(ConstraintLayoutRegisterFarm)
     }
 
+    //verifies data in the form, and inserts data
     private fun VerifyData(){
         var notEmpty = true
         if(Farm_Name.text.toString().isEmpty()){
@@ -156,13 +159,13 @@ class FarmAddFragment(): Fragment() {
 
         }
     }
-     fun hideKeyboard(view: View) {
+
+    //request focus on from all the input fields and hide a keyboard if touched outside of the current input field
+    fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
-
-    //request focus on from all the input fields and hide a keyboard if touched outside of the current input field
-     fun viewBehavior(view: View) {
+    fun viewBehavior(view: View) {
         view.requestFocus()
         view.setOnTouchListener{ view, m: MotionEvent ->
             hideKeyboard(view)

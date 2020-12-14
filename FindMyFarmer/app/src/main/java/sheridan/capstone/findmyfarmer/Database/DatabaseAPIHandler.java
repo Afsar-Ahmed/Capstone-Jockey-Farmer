@@ -28,14 +28,19 @@ import sheridan.capstone.findmyfarmer.Entities.Product;
 import sheridan.capstone.findmyfarmer.Entities.Rating;
 
 /**
- * Author:  Sohaib Hussain
+ * @author Sohaib Hussain
+ * Description: Database API handler handles the custom database api calls for
+ *              executing basic crud function on the database using springboot.
+ *              This Class handles all CRUD calls within one function
+ * Date Modified: December 14th, 2020
  **/
-
 public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
+    //Link to API
     private static final String API_BASE_URL = "http://farmerapi.us-east-2.elasticbeanstalk.com";
     private Context context;
-    public AsyncResponse del = null;
+    //Coroutine response handler, returns when a call has been completed or timed out
+    public AsyncResponse del;
 
     public DatabaseAPIHandler(Context context, AsyncResponse asyncResponse)
     {
@@ -43,7 +48,8 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         del = asyncResponse;
     }
 
-    //Adding Single instance of Farmers,Farms,Products,Customers,FarmProducts
+    //Adding Single instance of Object
+    //Converts Customer to a JSONObject
     private JSONObject AddCustomer(Customer customer){
         Map<String, String> params = new HashMap();
 
@@ -54,6 +60,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts Farmer to a JSONObject
     private JSONObject AddFarmer(Farmer farmer){
         Map<String, String> params = new HashMap();
 
@@ -61,6 +68,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts Product to a JSONObject
     private JSONObject AddProduct(Product product){
         Map<String, String> params = new HashMap();
 
@@ -69,6 +77,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts Farm Product to a JSONObject
     private JSONObject AddFarmProduct(FarmProduct farmProduct){
         Map<String, String> params = new HashMap();
 
@@ -79,6 +88,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts Farm to a JSONObject
     private JSONObject AddFarm(Farm farm){
         Map<String, String> params = new HashMap();
 
@@ -95,6 +105,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts Rating to a JSONObject
     private JSONObject AddRating(Rating rating){
         Map<String, String> params = new HashMap();
 
@@ -104,6 +115,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         params.put("Feedback",rating.getFeedback());
         return new JSONObject(params);
     }
+    //Converts Follow to a JSONObject
     private JSONObject AddFollow(Following following){
         Map<String, String> params = new HashMap();
 
@@ -113,7 +125,8 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         return new JSONObject(params);
     }
 
-    //Adding List of Farmers,Farms,Products,Customers,FarmProducts
+    //Adding List of Objects all at once
+    //Converts Customers to JSONArray
     private JSONArray AddCustomers(List<Customer> customers) {
         JSONArray jsonArray = new JSONArray();
         try {
@@ -134,6 +147,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
 
     }
+    //Converts Farmers to JSONArray
     private JSONArray AddFarmers(List<Farmer> farmers) {
         JSONArray jsonArray = new JSONArray();
         try {
@@ -151,6 +165,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
 
     }
+    //Converts Products to JSONArray
     private JSONArray AddProducts(List<Product> products) {
         JSONArray jsonArray = new JSONArray();
         try {
@@ -169,6 +184,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
 
     }
+    //Converts FarmProducts to JSONArray
     private JSONArray AddFarmProducts(List<FarmProduct> farmProducts){
         JSONArray jsonArray = new JSONArray();
         try {
@@ -189,6 +205,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
 
     }
+    //Converts Farms to JSONArray
     private JSONArray AddFarms(List<Farm> farms){
         JSONArray jsonArray = new JSONArray();
         try {
@@ -214,6 +231,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             return null;
         }
     }
+    //Converts Ratings to JSONArray
     private JSONArray AddRatings(List<Rating> ratings){
         JSONArray jsonArray = new JSONArray();
         try {
@@ -233,6 +251,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
             return null;
         }
     }
+    //Converts Follows to JSONArray
     private JSONArray AddFollows(List<Following> followings){
         JSONArray jsonArray = new JSONArray();
         try {
@@ -252,7 +271,8 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
     }
 
 
-    //Updating Farmers,Farms,Products,Customers,FarmProducts
+    //Updating Objects
+    //Converts Customer to a JSONObject
     private JSONObject UpdateCustomer(Customer customer){
         Map<String, String> params = new HashMap();
 
@@ -264,6 +284,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts Farm to a JSONObject
     private JSONObject UpdateFarm(Farm farm){
         Map<String, String> params = new HashMap();
 
@@ -281,6 +302,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts Product to a JSONObject
     private JSONObject UpdateProduct(Product product){
         Map<String, String> params = new HashMap();
 
@@ -290,6 +312,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
 
         return new JSONObject(params);
     }
+    //Converts FarmProduct to a JSONObject
     private JSONObject UpdateFarmProduct(FarmProduct farmProduct){
         Map<String, String> params = new HashMap();
 
@@ -472,6 +495,7 @@ public class DatabaseAPIHandler extends AsyncTask<Object,Object,String> {
         }
     }
 
+    //Executed when doInBackground is finished running its tasks.
     @Override
     protected void onPostExecute(String s) {
         del.processFinish(s);
