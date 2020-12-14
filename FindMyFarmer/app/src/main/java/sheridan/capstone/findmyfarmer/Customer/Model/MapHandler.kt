@@ -1,5 +1,11 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+/**
+ * @author: Andrei Constantinecu
+ * Sets up the Following dialogue view
+ * @constructor FollowingDialog
+ */
+
 import android.app.Activity
 import android.location.Geocoder
 import android.os.AsyncTask

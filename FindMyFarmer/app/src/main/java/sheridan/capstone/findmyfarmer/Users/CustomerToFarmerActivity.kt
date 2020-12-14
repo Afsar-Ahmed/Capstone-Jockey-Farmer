@@ -1,5 +1,8 @@
 package sheridan.capstone.findmyfarmer.Users
 
+/**
+ * Author:  Andrei Constantinescu
+ **/
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

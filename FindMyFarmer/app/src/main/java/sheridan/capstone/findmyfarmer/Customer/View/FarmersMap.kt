@@ -1,4 +1,8 @@
 package sheridan.capstone.findmyfarmer.Customer.View
+/**
+ * @author: Andrei Constantinecu
+ */
+
 
 import android.content.Context
 import android.content.Intent
@@ -29,6 +33,10 @@ import java.util.*
 
 
 class FarmersMap : Fragment(), OnMapReadyCallback {
+
+    /*
+    * @return Farmers Map fragment that instantiates the map view for the specific farm.
+    */
 
 
     private lateinit var address: Address

@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
+/**
+ * @author: Andrei Constantinecu
+ */
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -31,6 +35,12 @@ import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 
 class Following : Fragment(),
     FollowingListToView.OnItemClickListener {
+
+
+    /*
+    * @return Following fragment.
+    */
+
 
     private lateinit var viewModel : SharedViewModel
     private lateinit var adapter :FollowingListToView

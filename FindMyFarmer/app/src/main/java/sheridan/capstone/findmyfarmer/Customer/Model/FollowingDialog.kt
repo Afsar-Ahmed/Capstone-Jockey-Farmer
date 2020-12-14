@@ -1,5 +1,12 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+
+/**
+ * @author: Andrei Constantinecu
+ * Sets up the Following dialogue view
+ * @constructor FollowingDialog
+ */
+
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -14,6 +21,7 @@ import sheridan.capstone.findmyfarmer.Entities.Following
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
+
 private lateinit var Add_To_Following : Button
 private lateinit var FarmImage : ImageView
 private lateinit var FarmName: TextView
@@ -24,7 +32,18 @@ private var Farm_Desc_View = ""
 
 class FollowingDialog(val imageView: ImageView): AppCompatDialogFragment() {
 
+    /**
+     * Creates the following dialog to be displayed
+     * @return a dialog
+     */
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        /**
+         * This function overrides the default dialog optinos
+         * All the proper fields and events are sent to the following dialogues layout view.
+         */
+
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         val inflater = requireActivity().layoutInflater
         val view: View = inflater.inflate(R.layout.following_dialog, null)

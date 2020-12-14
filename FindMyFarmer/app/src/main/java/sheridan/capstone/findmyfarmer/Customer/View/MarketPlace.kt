@@ -1,7 +1,11 @@
 
-//Author - Andrei Constantinescu
+
 package sheridan.capstone.findmyfarmer.Customer.View
 
+/**
+ * Author:  Andrei Constantinescu
+ * Sets up the account settings
+ **/
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -28,6 +32,9 @@ import sheridan.capstone.findmyfarmer.R
 class MarketPlace : Fragment(),
     FarmListToView.OnItemClickListener {
 
+    /*
+    * @return MarketPlace fragment view
+    */
     private lateinit var viewModel : SharedViewModel
     private lateinit var adapter : FarmListToView
     private var FarmList = ArrayList<Farm>()

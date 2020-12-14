@@ -1,7 +1,11 @@
 
-//Author - Andrei Constantinescu
-
 package sheridan.capstone.findmyfarmer.Customer.View
+
+/**
+ * Author:  Andrei Constantinescu
+ * Sets up the map view
+ * @Return maps fragment view
+ **/
 
 import android.Manifest
 import android.app.Activity
@@ -53,6 +57,10 @@ import java.util.*
 class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
     LocationListener {
+
+    /*
+    * @return Farmers Map fragment that instantiates the map view for the list
+    */
     private lateinit var mapview: MapView
     private lateinit var mMap: GoogleMap
 

@@ -1,5 +1,10 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
+/**
+ * @author: Andrei Constantinecu
+ * Sets up the Farmer Fragment
+ */
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -33,6 +38,11 @@ import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import java.lang.StringBuilder
 
 class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
+
+    /*
+   Takes the farmers information from the shared view model
+   @returns fragment view
+   */
 
     private lateinit var FarmName:TextView
 

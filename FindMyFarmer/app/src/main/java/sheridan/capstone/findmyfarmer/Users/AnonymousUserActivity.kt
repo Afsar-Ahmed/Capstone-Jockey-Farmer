@@ -1,5 +1,10 @@
 package sheridan.capstone.findmyfarmer.Users
 
+/**
+ * Author:  Andrei Constantinescu
+ * Sets up the Anonymous activity.
+ **/
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

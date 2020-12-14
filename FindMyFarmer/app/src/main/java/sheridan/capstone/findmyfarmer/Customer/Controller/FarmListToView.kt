@@ -5,6 +5,11 @@
 
 package sheridan.capstone.findmyfarmer.FarmerListing.Controller
 
+/**
+ * @author: Andrei Constantinecu
+ * Sets up the farm list in the recycler view
+ */
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

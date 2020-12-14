@@ -1,5 +1,10 @@
 package sheridan.capstone.findmyfarmer.Users
 
+/**
+ * Author:  Andrei Constantinescu
+ *
+ **/
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -35,6 +40,14 @@ import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 
 class CustomerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+
+    /*
+    The customer activity. This activity holds all the fragments (Market, Following & Maps) In the
+    Fragment Container View.
+    Binds the nav controller to the bottom nav
+    Sets customer_ID in a session variable to be used throughout for this activity.
+     */
+
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
     private lateinit var sessionData: SessionData

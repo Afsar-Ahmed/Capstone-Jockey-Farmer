@@ -1,5 +1,10 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+/**
+@author Andrei Constantinescu
+ * Sets up the shared view model class
+ **/
+
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

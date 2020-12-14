@@ -1,5 +1,9 @@
 package sheridan.capstone.findmyfarmer.Users
 
+/**
+ * Author:  Sohaib Hussain, Andrei Constantinescu
+ **/
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +30,10 @@ import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
 class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener  {
+
+    /*
+    Similar to Customer Activity but the Hub option is made visible.
+     */
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView

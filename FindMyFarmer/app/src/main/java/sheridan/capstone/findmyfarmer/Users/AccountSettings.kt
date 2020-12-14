@@ -1,5 +1,10 @@
 package sheridan.capstone.findmyfarmer.Users
 
+/**
+ * Author:  Andrei Constantinescu
+ * Sets up the account settings
+ **/
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
