@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.facebook.login.LoginManager
@@ -19,7 +18,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.About
@@ -54,13 +52,13 @@ class FarmerActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelect
         drawerLayout = findViewById(R.id.drawerLayout)
         NavigationView = findViewById(R.id.nav_view)
 
-        val menu = NavigationView.menu
-        val wanttobefarmeritem = menu.findItem(R.id.WantToBeFarmer)
+        var menu = NavigationView.menu
+        var wanttobefarmeritem = menu.findItem(R.id.WantToBeFarmer)
         wanttobefarmeritem.setEnabled(false)
         wanttobefarmeritem.setVisible(false)
 
         if(customer != null) {
-            val usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)
+            var usertext = NavigationView.getHeaderView(0).findViewById<TextView>(R.id.user)
             usertext.text = customer.customerName
         }
 

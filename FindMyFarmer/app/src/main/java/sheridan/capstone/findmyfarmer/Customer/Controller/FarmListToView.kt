@@ -55,13 +55,13 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
     private var filter = object: Filter(){
         override fun performFiltering(constraint: CharSequence?): FilterResults? {
 
-            val filteredList = ArrayList<Farm>()
+            var filteredList = ArrayList<Farm>()
 
             if(constraint.toString().isEmpty()){
                 filteredList.addAll(FarmListAll)
             }else{
                 for(farm in FarmListAll){
-                    val farmString = StringBuilder()
+                    var farmString = StringBuilder()
                     if(farm.products.size > 0){
                         for(product in farm.products){
                             farmString.append(farm.businessName + " ")
@@ -85,15 +85,14 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
                         farmString.append(farm.postalCode + " ")
                     }
 
-                    if(farmString.toString().toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(
-                            Locale.ROOT))) {
+                    if(farmString.toString().toLowerCase().contains(constraint.toString().toLowerCase())){
                         filteredList.add(farm)
                     }
                 }
 
             }
 
-            val filterResults = FilterResults()
+            var filterResults = FilterResults()
             filterResults.values = filteredList
 
             return filterResults;

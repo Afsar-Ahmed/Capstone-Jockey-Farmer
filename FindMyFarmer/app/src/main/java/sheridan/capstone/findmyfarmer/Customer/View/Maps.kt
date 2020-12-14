@@ -154,10 +154,7 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
                                 address = addresslist[0]
                                 mMap!!.addMarker(
                                     MarkerOptions().position(
-                                        LatLng(
-                                            address.latitude,
-                                            address.longitude
-                                        )
+                                        LatLng(address.latitude,address.longitude)
                                     ).title(farm_address.businessName)
                                 )
                             }
@@ -244,24 +241,21 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
 
     override fun onLocationChanged(location: Location?) {
         mLastLocation = location!!
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker?.remove()
+        if (mCurrLocationMarker == null) {
+            //mCurrLocationMarker?.remove()
+            val latLng = LatLng(location.getLatitude(), location.getLongitude())
+            val markerOptions = MarkerOptions()
+            markerOptions.position(latLng)
+            markerOptions.title("Current Position")
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+            mCurrLocationMarker = mMap.addMarker(markerOptions)
+
+            //move map camera
+
+            //move map camera
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11f))
         }
 
-        //Place current location marker
-
-        //Place current location marker
-        val latLng = LatLng(location.getLatitude(), location.getLongitude())
-        val markerOptions = MarkerOptions()
-        markerOptions.position(latLng)
-        markerOptions.title("Current Position")
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-        mCurrLocationMarker = mMap.addMarker(markerOptions)
-
-        //move map camera
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11f))
     }
 
 

@@ -58,7 +58,6 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
         holder.measurements.setSelection(index)
     }
 
-
     @SuppressLint("ResourceType")
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
