@@ -1,7 +1,9 @@
 package sheridan.capstone.findmyfarmer.ImageHandler;
 
 /**
- * Author:  Sohaib Hussain
+ * @author Sohaib Hussain
+ * Description: Handles Coroutine calls for the FirebaseImageHandler.
+ * Date Modified: December 14th, 2020
  **/
 
 import android.graphics.Bitmap;

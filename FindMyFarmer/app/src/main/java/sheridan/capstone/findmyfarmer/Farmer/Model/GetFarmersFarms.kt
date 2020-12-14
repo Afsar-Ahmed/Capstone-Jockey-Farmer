@@ -1,11 +1,6 @@
 package sheridan.capstone.findmyfarmer.Farmer.Model
 
-/**
- * Author:  Sohaib Hussain
- **/
-
 import android.app.Activity
-import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import android.view.View
@@ -21,9 +16,18 @@ import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import java.util.*
-import kotlin.collections.ArrayList
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles retrieving all the farms belonging to the farmer, these farms are listed
+ *              in the hubview to be editable
+ * Date Modified: December 14th, 2020
+ **/
 class GetFarmersFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLayout, val adapter: HubListToView,val overlay: ArrayList<View>){
+
+    /*
+        Retrieves the farms of the farmers
+    */
     fun GetHubFarms(HubFarms: ArrayList<Farm>,id: Int){
         swipeRefreshLayout.isRefreshing = true
         DatabaseAPIHandler(activity, AsyncResponse{
@@ -61,6 +65,9 @@ class GetFarmersFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefre
         }).execute("/FarmsByFarmerID/$id")
     }
 
+    /*
+        Handles returning the followers of the farm, alongside the retrieve of farms
+    */
     private fun getFarmFollowers(farmlistdata: Farm, HubFarms: ArrayList<Farm>){
         DatabaseAPIHandler(activity, AsyncResponse {
             if(it != null) {

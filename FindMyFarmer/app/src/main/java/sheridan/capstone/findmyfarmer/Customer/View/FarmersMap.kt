@@ -5,7 +5,6 @@ package sheridan.capstone.findmyfarmer.Customer.View
 
 
 import android.content.Context
-import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -15,8 +14,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,7 +25,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import sheridan.capstone.findmyfarmer.Customer.Model.MapHandler
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.R
-import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import java.util.*
 
 

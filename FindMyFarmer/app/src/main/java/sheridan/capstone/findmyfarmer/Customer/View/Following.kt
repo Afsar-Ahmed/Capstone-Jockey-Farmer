@@ -14,18 +14,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import sheridan.capstone.findmyfarmer.Customer.Controller.FollowingListToView
 import sheridan.capstone.findmyfarmer.Customer.Model.GetFollows
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Farm
-import sheridan.capstone.findmyfarmer.FarmerListing.Controller.FarmListToView
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import sheridan.capstone.findmyfarmer.Users.AnonymousUserActivity
@@ -91,8 +87,7 @@ class Following : Fragment(),
         findNavController().navigate(R.id.action_nav_following_to_fragment_farmer_info)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onAttach(context: Context) { super.onAttach(context)
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(
             true // default to enabled
         ) {

@@ -1,6 +1,11 @@
 package sheridan.capstone.findmyfarmer.Entities;
+
 /**
- * Author:  Sohaib Hussain
+ * @author Sohaib Hussain
+ * Description: Entity Representing the Farm product. This Object handles the individual product
+ *              in the farm, and information regarding the product like quantiy and unit of the
+ *              quantity
+ * Date Modified: December 14th, 2020
  **/
 public class FarmProduct {
     private int FarmProductID;
@@ -9,8 +14,10 @@ public class FarmProduct {
     private int Quantity;
     private String Unit;
 
+    //Empty constructor
     public FarmProduct(){ }
 
+    //Main constructor
     public FarmProduct(int FarmProductID, int FarmID, int ProductID,int Quantity,String Unit){
         this.FarmProductID = FarmProductID;
         this.FarmID = FarmID;

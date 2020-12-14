@@ -1,9 +1,5 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
-/**
- * Author:  Sohaib Hussain
- **/
-
 import android.R
 import android.app.Activity
 import android.widget.ImageView
@@ -12,6 +8,11 @@ import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
 import sheridan.capstone.findmyfarmer.Entities.Following
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles deleting a Follow from the database, when the user unfollows
+ * Date Modified: December 14th, 2020
+ **/
 class DeleteFollow(private val activity: Activity, private val imageView: ImageView) {
 
     fun removefollow(following: Following){

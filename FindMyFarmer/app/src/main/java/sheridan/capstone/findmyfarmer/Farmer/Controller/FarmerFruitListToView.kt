@@ -1,7 +1,5 @@
 package sheridan.capstone.findmyfarmer.Farmer.Controller
-/**
- * Author:  Sohaib Hussain
- **/
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.Resources
@@ -29,8 +27,19 @@ import sheridan.capstone.findmyfarmer.Farmer.Model.ProductManager
 
 import sheridan.capstone.findmyfarmer.R
 
+/**
+ * @author Sohaib Hussain
+ * Description: Adapter for RecyclerView.Takes the List of Products and displays the product data
+ *              on the recyclerview. This adapter specifically handles farmer edit products,
+ *              products that are editable by the farmer
+ * Date Modified: December 14th, 2020
+ **/
 class FarmerFruitListToView (private val activity: Activity, var farmid : Int, val FruitList: List<Product>, private val listener: FarmerFruitListToView.OnItemClickListener)
     : RecyclerView.Adapter<FarmerFruitListToView.MyViewHolder>() {
+
+    /*
+        creates the base layout of each row in the recyclerview
+    */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -41,9 +50,15 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
             itemView
         )
     }
-
+    /*
+        Decides the number of rows, based on the number of items in the Image list
+    */
     override fun getItemCount() = FruitList.size
 
+    /*
+        Assign each row with information to be displayed on each component,
+        after the row has been initialised
+    */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val currentItem = FruitList[position]
@@ -58,6 +73,10 @@ class FarmerFruitListToView (private val activity: Activity, var farmid : Int, v
         holder.measurements.setSelection(index)
     }
 
+    /*
+        Individually instantiates each row, with relative components like buttons, textviews etc and
+        any listeners required
+    */
     @SuppressLint("ResourceType")
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 

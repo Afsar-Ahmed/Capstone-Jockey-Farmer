@@ -1,8 +1,6 @@
 package sheridan.capstone.findmyfarmer.Farmer.Model
 
-/**
- * Author:  Sohaib Hussain
- **/
+
 
 import android.app.Activity
 import android.graphics.Bitmap
@@ -26,8 +24,16 @@ import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles all the database functionalities relating products
+ * Date Modified: December 14th, 2020
+ **/
 class ProductManager(val activity: Activity) {
 
+    /*
+        Retrieves the list of products Unique categories from the database
+    */
     fun GetProductCategoryList(categoryList: ArrayList<String>, adapter: ArrayAdapter<String>) {
         DatabaseAPIHandler(activity, AsyncResponse {
             if(!(it.isNullOrBlank())){
@@ -46,6 +52,9 @@ class ProductManager(val activity: Activity) {
         }).execute("/getProductList")
     }
 
+    /*
+        Retrieves all the editable products a farm has listed
+    */
     fun GetEditProducts(FarmProducts: ArrayList<Product> ,id: Int,Fruitadapter: FarmerFruitListToView, overlay: ArrayList<View>){
         DatabaseAPIHandler(activity, AsyncResponse{
             FarmProducts.clear()
@@ -80,6 +89,9 @@ class ProductManager(val activity: Activity) {
         }).execute("/ProductsByFarmID/${id}")
     }
 
+    /*
+        Retrieves the Types of products based on the category of the products
+    */
     fun GetTypeOfCategory(TypeList: ArrayList<String>, category: String,adapter: ArrayAdapter<String>){
         DatabaseAPIHandler(activity, AsyncResponse {
             if(!(it.isNullOrBlank())){
@@ -99,6 +111,9 @@ class ProductManager(val activity: Activity) {
 
     }
 
+    /*
+        Adds Farm Product when a farmer adds a product to their specific farm
+    */
     fun AddFarmProduct(name: String,category: String,Farmid: Int,FarmProducts: ArrayList<Product>,Fruitadapter: FarmerFruitListToView,overlay: ArrayList<View>){
         DatabaseAPIHandler(activity, AsyncResponse {
             if(!(it.isNullOrBlank())){
@@ -118,6 +133,9 @@ class ProductManager(val activity: Activity) {
         }).execute("/ProductIDByNameAndCategory/${name}/${category}")
     }
 
+    /*
+        Updates the Quantity and the Unit of the Quantity
+    */
     fun UpdateQuantity(quantity: Int,unit:String,productId: Int,farmid: Int,editText: EditText){
         DatabaseAPIHandler(activity, AsyncResponse {
             if(!(it.isNullOrBlank())){
@@ -137,6 +155,9 @@ class ProductManager(val activity: Activity) {
         }).execute("/FarmProductByFarmIDAndProductID/${farmid}/${productId}")
     }
 
+    /*
+        Deletes a Farm Product when a farmer removes a product from their farm
+    */
     fun DeleteFarmProduct(productId: Int,farmid: Int,adapter: FarmerFruitListToView,position: Int,FarmProducts: ArrayList<Product>,overlay: ArrayList<View>){
         DatabaseAPIHandler(activity, AsyncResponse {
             if(!it.isNullOrBlank()){
@@ -155,6 +176,9 @@ class ProductManager(val activity: Activity) {
         }).execute("/deleteFarmProductByFarmIDAndProductID/${farmid}/${productId}")
     }
 
+    /*
+        Retrieves Farms products, used in GetEditproducts function of this class
+     */
     private fun getFarmersProducts(Productlistdata: Product, FarmProducts: ArrayList<Product>, Fruitadapter: FarmerFruitListToView, id: Int, product: Product,overlay: ArrayList<View>){
         DatabaseAPIHandler(activity, AsyncResponse {resp ->
             if(!(resp.isNullOrBlank())){

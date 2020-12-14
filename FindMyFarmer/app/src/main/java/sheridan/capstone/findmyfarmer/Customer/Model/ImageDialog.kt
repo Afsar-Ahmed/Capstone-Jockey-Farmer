@@ -1,9 +1,5 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
-/**
- * Author:  Sohaib Hussain
- **/
-
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -36,6 +32,14 @@ import sheridan.capstone.findmyfarmer.Users.PhotoPicker
 import java.io.InputStream
 import java.util.*
 
+/**
+ * @author Sohaib Hussain
+ * Description: Image dialog fragment that display 3 items camera, Farm gallery and phone gallery.
+ *              The customer can add an image from phone gallery or camera and once they add an
+ *              image, the image is saved in the farm gallery, where the user can pick their primary
+ *              image.
+ * Date Modified: December 14th, 2020
+ **/
 class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
 
     private var bitmap: Bitmap? = null
