@@ -1,6 +1,8 @@
+/**
+ * @author: Afsar Ahmed
+ */
 package sheridan.capstone.findmyfarmer.Customer.View
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
@@ -8,24 +10,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.google.firebase.storage.StorageReference
 import org.json.JSONArray
 import org.json.JSONException
-import org.w3c.dom.Text
 import sheridan.capstone.findmyfarmer.Database.AsyncResponse
 import sheridan.capstone.findmyfarmer.Database.DatabaseAPIHandler
-import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
-import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import sheridan.capstone.findmyfarmer.R
 import java.util.*
 import kotlin.collections.ArrayList
@@ -56,29 +53,34 @@ class FarmerProducts : Fragment() {
         // Inflate the layout for this fragment
         return view
     }
+
+    /**
+     * loads data into database and outputs json data into layout: fragment_produclist
+     */
     private fun loadData(){
         fh = FirebaseImagehandler(DirectoryName.Customer,1,activity?.applicationContext)
 
         //Lists and objects
+        var productlist: JSONArray
         val productList = ArrayList<Product>()
         val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
 
         //api keys & JSON
         val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"
         val url = "https://api.spoonacular.com/food/ingredients/search?apiKey=$apiKey&query=apple"
-        var productlist: JSONArray
+
 
         var randomCategory: String
         val req = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
                 response -> try{
             productlist = response.getJSONArray("results")
 
+//this is the handler that sends the data to the database
    DatabaseAPIHandler(activity?.applicationContext, AsyncResponse {
     for (i in 0..productlist.length()) {
+        //intialiszes json data into serpate variables
         val produce = productlist.getJSONObject(i)
-
         val id = produce.getInt("id")
-
         val img = produce.get("image")
         println(img)
 
@@ -89,25 +91,11 @@ class FarmerProducts : Fragment() {
         Pid.append("$id\n")
         name.append("$pName\n")
 
-       fh.UploadImageToFirebase(image,object:StorageResponse{
-           override fun processFinish(
-               response: MutableList<StorageReference>?,
-               bitmap: Optional<Bitmap>?,
-               Url: Optional<String>?
-           ) {
 
-           }
-
-           override fun OnErrorListener(error: String?) {
-               print(error)
-           }
-       })
-        //productImage.setImageBitmap(image)
-
+        //randomly selects a category from the categories list
         randomCategory = categories[Math.random().toInt() * (categories.size - 0) + 1]
         category.append("$randomCategory\n")
 
-        //   convertStringIntoLoad(img)
 
         //uploads certain values to db
         productList += Product(id, pName, randomCategory)

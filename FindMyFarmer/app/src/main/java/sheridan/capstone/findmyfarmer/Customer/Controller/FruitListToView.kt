@@ -1,3 +1,6 @@
+/**
+ * @author: Afsar Ahmed
+ */
 package sheridan.capstone.findmyfarmer.Customer.Controller
 
 import android.view.LayoutInflater
@@ -10,6 +13,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.farmer_listing.view.*
 import sheridan.capstone.findmyfarmer.Customer.Model.FruitData
 import sheridan.capstone.findmyfarmer.R
+
 
 class FruitListToView(val FruitList: ArrayList<FruitData>, private val listener:OnItemClickListener)
     : RecyclerView.Adapter<FruitListToView.MyViewHolder>() {
