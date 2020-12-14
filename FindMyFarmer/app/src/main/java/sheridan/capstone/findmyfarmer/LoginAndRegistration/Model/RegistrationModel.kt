@@ -83,7 +83,7 @@ class RegistrationModel:ViewModel() {
     /**
      * @author: Afsar Ahmed
      * validates user when registering
-     * @param emailInput user input an follows defaukt requirements of email
+     * @param emailInput user input an follows default requirements of email
      * @param passwordInput user input and must abide by regex pattern
      * @param repeatPasswordInput user input and must match passwordInput as well as regex pattern
      *

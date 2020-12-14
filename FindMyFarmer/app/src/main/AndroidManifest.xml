@@ -42,6 +42,8 @@
             android:excludeFromRecents="true"
             android:noHistory="true" />
         <activity android:name=".LoginAndRegistration.View.DashBoardView" />
+        <activity android:name=".LoginAndRegistration.View.About"/>
+        <activity android:name=".LoginAndRegistration.View.HelpClass"/>
         <activity
             android:name=".LoginAndRegistration.Controller.LoginRegistrationController"
             android:screenOrientation="portrait"

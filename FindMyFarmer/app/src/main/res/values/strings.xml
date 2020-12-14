@@ -20,6 +20,15 @@
     <string name="yes">Yes</string>
     <string name="are_you_farmer">Are you a farmer?</string>
     <string name="next">Next</string>
+    <string name="in_the_farm_page_look_for_a_the_add_button_add_the_current_information_of_said_product_with_quantities">In the farm page, look for a the add button. Add thecurrent infomration of said product with quantities</string>
+    <string name="how_to_add_items">How to add items?</string>
+    <string name="help">Help</string>
+    <string name="go_to_hub_tab_press_the_plus_button_and_the_information_of_farm">Go to Hub tab, press the plus button and the information of farm?</string>
+    <string name="how_to_manage_farms">How to manage farms?</string>
+    <string name="faq">FAQ</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="_905_768_7654">(905)-768-7654</string>
+    <string name="support_findmyfarmer_org">support@findmyfarmer.org</string>
 
     <string-array name="Product_Measurement_Units">
         <item>Quantity</item>

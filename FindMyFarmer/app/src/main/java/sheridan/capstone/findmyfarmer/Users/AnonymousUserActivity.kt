@@ -79,6 +79,9 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
 
     }
 
+    /**
+     * @param item user clicks an item from the Navigation sidebar
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_manage ->{
@@ -86,6 +89,8 @@ class AnonymousUserActivity : AppCompatActivity(),NavigationView.OnNavigationIte
                 //this.finish()
             }
 
+            //author: Afsar AHmed
+            //both are just to activate when item is pressed
             R.id.About ->{
                 startActivity(Intent(this, About::class.java))
             }
