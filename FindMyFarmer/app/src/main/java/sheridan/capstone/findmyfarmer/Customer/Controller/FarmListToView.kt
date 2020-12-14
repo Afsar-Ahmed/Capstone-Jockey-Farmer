@@ -1,10 +1,10 @@
-
-//Author - Andrei Constantinecu
+/**
+ * @author: Andrei Constantinecu
+ */
 
 
 package sheridan.capstone.findmyfarmer.FarmerListing.Controller
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.makeramen.roundedimageview.RoundedImageView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.farmer_listing.view.*
-import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.R
 import java.lang.StringBuilder
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItemClickListener)
     : RecyclerView.Adapter<FarmListToView.MyViewHolder>(),Filterable {
@@ -54,13 +55,13 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
     private var filter = object: Filter(){
         override fun performFiltering(constraint: CharSequence?): FilterResults? {
 
-            var filteredList = ArrayList<Farm>()
+            val filteredList = ArrayList<Farm>()
 
             if(constraint.toString().isEmpty()){
                 filteredList.addAll(FarmListAll)
             }else{
                 for(farm in FarmListAll){
-                    var farmString = StringBuilder()
+                    val farmString = StringBuilder()
                     if(farm.products.size > 0){
                         for(product in farm.products){
                             farmString.append(farm.businessName + " ")
@@ -84,14 +85,15 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
                         farmString.append(farm.postalCode + " ")
                     }
 
-                    if(farmString.toString().toLowerCase().contains(constraint.toString().toLowerCase())){
+                    if(farmString.toString().toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(
+                            Locale.ROOT))) {
                         filteredList.add(farm)
                     }
                 }
 
             }
 
-            var filterResults = FilterResults()
+            val filterResults = FilterResults()
             filterResults.values = filteredList
 
             return filterResults;

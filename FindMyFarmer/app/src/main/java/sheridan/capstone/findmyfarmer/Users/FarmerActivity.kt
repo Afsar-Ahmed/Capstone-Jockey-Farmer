@@ -1,7 +1,6 @@
 package sheridan.capstone.findmyfarmer.Users
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -11,28 +10,18 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.NavGraph
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
+
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.internal.NavigationMenu
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub
-import sheridan.capstone.findmyfarmer.Customer.View.MarketPlace
+
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
-import sheridan.capstone.findmyfarmer.Customer.View.Following
-import sheridan.capstone.findmyfarmer.Customer.View.Maps
-import sheridan.capstone.findmyfarmer.Entities.Farm
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmAddFragment
+
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.About
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.View.HelpClass
 import sheridan.capstone.findmyfarmer.R

@@ -16,9 +16,7 @@ import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
-/**
- * @author: Afsar Ahmed
- */
+
 class RegistrationModel:ViewModel() {
 
     val user : MutableLiveData<FirebaseUser?> by lazy{

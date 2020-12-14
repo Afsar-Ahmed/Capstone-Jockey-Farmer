@@ -9,8 +9,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.StorageReference
 import sheridan.capstone.findmyfarmer.Customer.Controller.ImageListToView
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmManager
 import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import sheridan.capstone.findmyfarmer.R
