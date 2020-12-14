@@ -70,7 +70,7 @@ class FarmersMap : Fragment(), OnMapReadyCallback {
     override fun onMapReady(mMap: GoogleMap?) {
 
         val geo = Geocoder(requireActivity(), Locale.getDefault())
-        MapHandler(geo, object : MapResponse {
+        MapHandler(requireActivity(), object : MapResponse {
             override fun onProcessComplete(Obj: Any) {
                 addresslist = Obj as List<Address>
                 if (addresslist.size != 0) {

@@ -146,7 +146,7 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
 
 
 
-                    MapHandler(geo, object : MapResponse {
+                    MapHandler(requireActivity(), object : MapResponse {
                         override fun onProcessComplete(Obj: Any) {
                             val addresslist = Obj as List<Address>
 
