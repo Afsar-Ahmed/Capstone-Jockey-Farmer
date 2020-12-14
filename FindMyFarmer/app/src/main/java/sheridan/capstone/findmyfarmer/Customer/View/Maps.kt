@@ -151,13 +151,7 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
                             val addresslist = Obj as List<Address>
 
                             if (addresslist.size != 0) {
-
-
                                 address = addresslist[0]
-
-
-
-
                                 mMap!!.addMarker(
                                     MarkerOptions().position(
                                         LatLng(
@@ -166,15 +160,11 @@ class Maps : Fragment(),OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
                                         )
                                     ).title(farm_address.businessName)
                                 )
-
                             }
                         }
 
                     }).execute(Addres as Object)
-
-
                 }
-
             }
 
         }).execute("/Farms")
