@@ -5,16 +5,18 @@ package sheridan.capstone.findmyfarmer.Farmer.View
  **/
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -48,16 +50,16 @@ class FarmManager : Fragment(){
     private lateinit var ImageChangeIcon: ImageView
     private lateinit var viewModel: SharedViewModel
     private lateinit var progbar: ProgressBar
+    private lateinit var cstupdate : ConstraintLayout
 
     private var ProductList = ArrayList<Product>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_farm_manager, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        cstupdate = view.findViewById(R.id.cstUpdate)
 
         Farm_Image = view.findViewById(R.id.Farm_Image_Updated)
         Farm_Name = view.findViewById(R.id.Farm_Name_Update)
@@ -111,6 +113,7 @@ class FarmManager : Fragment(){
             Farm_Province.setText(it.province)
             Picasso.get().load(it.primaryImage).into(Farm_Image)
         })
+        viewBehavior(cstupdate)
     }
 
     override fun onResume() {
@@ -194,5 +197,19 @@ class FarmManager : Fragment(){
                 (activity as Activity?)!!.overridePendingTransition(0, 0)
             }
         }
+    }
+
+    fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    //request focus on from all the input fields and hide a keyboard if touched outside of the current input field
+    fun viewBehavior(view: View) {
+        view.requestFocus()
+        view.setOnTouchListener{ view, m: MotionEvent ->
+            hideKeyboard(view)
+            view.requestFocus()
+            true}
     }
 }
