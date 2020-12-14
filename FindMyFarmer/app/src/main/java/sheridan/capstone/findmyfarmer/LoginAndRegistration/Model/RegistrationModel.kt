@@ -76,10 +76,12 @@ class RegistrationModel:ViewModel() {
 
     }
     public  fun registerValidation(emailInput: EditText, passwordInput: EditText, repeatPasswordInput: EditText) : Boolean{
+
         var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         var emailInputVerification: Boolean = false
         var passwordInputVerification: Boolean = false
         var repeatPasswordInputVerification: Boolean = false
+
 
         if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
             emailInput.setError("Wrong email")

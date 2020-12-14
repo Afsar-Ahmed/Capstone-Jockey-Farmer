@@ -1,3 +1,6 @@
+/**
+ * @author:Afsar Ahmed
+ */
 package sheridan.capstone.findmyfarmer.Farmer.View
 
 import android.content.Context
@@ -57,15 +60,15 @@ class ProductManagement : Fragment() {
     }
 
    private fun storeAPIDataintoDB(view: View):ArrayList<Product>{
-
+       //Lists and objects
+       val productList = ArrayList<Product>()
+       val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
         var randomCategory: String
 
         val productName = view.findViewById<TextView>(R.id.nME)
         val productCategory= view.findViewById<TextView>(R.id.produce_cate)
 
-        //Lists and objects
-       val productList = ArrayList<Product>()
-        val categories = listOf<String>("Fruits","Vegetables","Rice","Grain","Meat","Fish","Kosher","Halal","Vegan")
+
 
         //api keys & JSON
         val apiKey ="87cbc6eb7d3548bd9b95d1f715621c20"

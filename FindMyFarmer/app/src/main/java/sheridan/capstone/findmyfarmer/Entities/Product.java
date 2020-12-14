@@ -1,5 +1,6 @@
 package sheridan.capstone.findmyfarmer.Entities;
 
+
 public class Product {
 
     private int ProductID;

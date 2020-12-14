@@ -1,3 +1,8 @@
+/**
+ * @author: Afsar Ahmed
+ */
+
+
 package sheridan.capstone.findmyfarmer.Farmer.Controller
 
 import android.view.LayoutInflater
@@ -11,8 +16,12 @@ import sheridan.capstone.findmyfarmer.Entities.Product
 
 import sheridan.capstone.findmyfarmer.R
 
+
 class FruitListToView (private val FruitList: List<Product>, private val listener: FruitListToView.OnItemClickListener)
     : RecyclerView.Adapter<FruitListToView.MyViewHolder>() {
+    /**
+     * adds every new generated item into the layout of the product_display_card
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -25,12 +34,16 @@ class FruitListToView (private val FruitList: List<Product>, private val listene
     }
 
     override fun getItemCount() = FruitList.size
-
+    /**
+     * @param holder
+     * @param position
+     *
+     * bounded elements of Fruitlsit to certain fields in the layout
+     */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
 
         val currentItem = FruitList[position]
-        //holder.Fruit_Image.setImageResource(currentItem.ImageResource)
         holder.Fruit_Name.text = currentItem.productName
         holder.Fruit_Cat.text = currentItem.productCategory
     }
