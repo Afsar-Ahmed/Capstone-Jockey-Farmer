@@ -43,7 +43,6 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     private lateinit var updatedPassword: EditText
     private lateinit var updatedName: EditText
     private lateinit var updatedEmail: EditText
-    private lateinit var loginModel: LoginModel
     private lateinit var sessionData: SessionData
     private lateinit var constraintLayout: ConstraintLayout
 
@@ -59,7 +58,6 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         updatedEmail = findViewById(R.id.UpdatedCustomerEmail)
         updatedName = findViewById(R.id.UpdatedCustomerName)
         updatedPassword = findViewById(R.id.UpdatedCustomerPassword)
-        loginModel = LoginModel()
 
         drawerLayout=findViewById(R.id.drawerLayout)
         NavigationView = findViewById(R.id.nav_view)
@@ -91,17 +89,8 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
             var updatedemail = updatedEmail.text.toString()
             var updatedname = updatedName.text.toString()
             var updatedpassword = updatedPassword.text.toString()
-            var providerInfo = Firebase.auth.currentUser?.providerData
             var customerDBHandler = CustomerDBHandler(this)
             //checks if the user has been logged in with facebook or google
-            if(providerInfo != null){
-                for(userInfo in providerInfo){
-                    if(userInfo.providerId.equals("facebook.com") || userInfo.providerId.equals("google.com")){
-                        Toast.makeText(this,"You are Logged in with a 3rd Party Account",Toast.LENGTH_SHORT).show()
-                        break
-                    }
-                }
-            }
 
             if(!updatedemail.isNullOrEmpty()){
                 if(!android.util.Patterns.EMAIL_ADDRESS.matcher(updatedemail).matches()){
@@ -135,7 +124,6 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
                 customer.customerName = updatedname
                 customerDBHandler.updateCustomer(customer)
             }
-
         }
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
