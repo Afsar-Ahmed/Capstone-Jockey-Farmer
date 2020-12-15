@@ -38,7 +38,7 @@ class GetAllFarms(val activity: Activity, val swipeRefreshLayout: SwipeRefreshLa
         swipeRefreshLayout.isRefreshing = true
         DatabaseAPIHandler(activity,AsyncResponse{
             Farms.clear()
-            if(it.count() > 2){
+            if(it.count() > 2 || !it.isNullOrEmpty()){
                 overlay[1].visibility = View.INVISIBLE
                 var AllFarms = ObjectConverter.convertStringToObject(it, Farm::class.java,true) as List<*>
                 for (farm in AllFarms){

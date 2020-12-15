@@ -147,7 +147,7 @@ class LoginModel:ViewModel() {
     }
 
     //validates the input in Email and Password fields according to the regex provided
-    public  fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
+    fun loginValidation(emailInput: EditText, passwordInput: EditText) : Boolean{
         var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches()){
             emailInput.setError("Wrong email")

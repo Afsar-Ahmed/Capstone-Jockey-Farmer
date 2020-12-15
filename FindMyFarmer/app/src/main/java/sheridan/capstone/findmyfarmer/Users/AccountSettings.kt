@@ -14,19 +14,23 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import sheridan.capstone.findmyfarmer.Customer.Model.CustomerDBHandler
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationController
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.ViewBehaviorInterface
+import sheridan.capstone.findmyfarmer.LoginAndRegistration.Model.LoginModel
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_close
 import sheridan.capstone.findmyfarmer.R.string.navigation_drawer_open
@@ -36,7 +40,10 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var NavigationView: NavigationView
     private lateinit var Save : Button
-    private lateinit var Password : Button
+    private lateinit var updatedPassword: EditText
+    private lateinit var updatedName: EditText
+    private lateinit var updatedEmail: EditText
+    private lateinit var loginModel: LoginModel
     private lateinit var sessionData: SessionData
     private lateinit var constraintLayout: ConstraintLayout
 
@@ -49,12 +56,15 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
 
         val customer = sessionData.customerData
         val toolbarView: Toolbar = findViewById(R.id.toolbarD)
+        updatedEmail = findViewById(R.id.UpdatedCustomerEmail)
+        updatedName = findViewById(R.id.UpdatedCustomerName)
+        updatedPassword = findViewById(R.id.UpdatedCustomerPassword)
+        loginModel = LoginModel()
 
         drawerLayout=findViewById(R.id.drawerLayout)
         NavigationView = findViewById(R.id.nav_view)
         Save = findViewById(R.id.Save)
         constraintLayout = findViewById(R.id.AccountSettingsConstraint)
-        //Password = findViewById(R.id.UpdatePassword)
         viewBehavior(constraintLayout)
         NavigationView.setNavigationItemSelectedListener(this)
         setSupportActionBar(toolbarView)
@@ -76,23 +86,57 @@ class AccountSettings : AppCompatActivity(),NavigationView.OnNavigationItemSelec
         toggle.syncState()
 
 
-        // Saves data into data base and passes it to the CustomerView activity which displays the marketplace fragment as default.
-
-
+        // Saves data into database and passes it to the CustomerView activity which displays the marketplace fragment as default.
         Save.setOnClickListener {
-            if(customer.isFarmer){
-                val i = Intent(applicationContext, FarmerActivity::class.java)
-                startActivity(i)
+            var updatedemail = updatedEmail.text.toString()
+            var updatedname = updatedName.text.toString()
+            var updatedpassword = updatedPassword.text.toString()
+            var providerInfo = Firebase.auth.currentUser?.providerData
+            var customerDBHandler = CustomerDBHandler(this)
+            //checks if the user has been logged in with facebook or google
+            if(providerInfo != null){
+                for(userInfo in providerInfo){
+                    if(userInfo.providerId.equals("facebook.com") || userInfo.providerId.equals("google.com")){
+                        Toast.makeText(this,"You are Logged in with a 3rd Party Account",Toast.LENGTH_SHORT).show()
+                        break
+                    }
+                }
             }
-            else {
-                val i = Intent(applicationContext, CustomerActivity::class.java)
-                startActivity(i)
-                // The view will jump to the appropriate activity - CustomerActivity for only customers. FarmerActivity for Farmers.
+
+            if(!updatedemail.isNullOrEmpty()){
+                if(!android.util.Patterns.EMAIL_ADDRESS.matcher(updatedemail).matches()){
+                    updatedEmail.setError("Wrong email")
+                }
+                else{
+                    Firebase.auth.currentUser?.updateEmail(updatedemail)?.addOnSuccessListener {
+                        customer.customerEmail = updatedemail
+                        customerDBHandler.updateCustomer(customer)
+                    }
+                }
             }
+
+            if(!updatedpassword.isNullOrEmpty()){
+                var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
+                if(!updatedpassword.matches(regexPattern)){
+                    updatedPassword.setError(
+                        "Password must be 6 to 20 characters." +
+                                " Password must include letters and numbers"
+                    )
+                }
+                else{
+                    Firebase.auth.currentUser?.updatePassword(updatedpassword)?.addOnSuccessListener {
+                        customer.customerPassword = updatedpassword
+                        customerDBHandler.updateCustomer(customer)
+                    }
+                }
+            }
+
+            if(!updatedname.isNullOrEmpty()){
+                customer.customerName = updatedname
+                customerDBHandler.updateCustomer(customer)
+            }
+
         }
-        /*Password.setOnClickListener {
-            // changes password in the database - Firebase
-        }*/
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){

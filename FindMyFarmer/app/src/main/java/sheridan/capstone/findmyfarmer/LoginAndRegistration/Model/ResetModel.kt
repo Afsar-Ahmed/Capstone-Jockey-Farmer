@@ -14,14 +14,13 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-
-
 class ResetModel: ViewModel() {
 
 
     val registeredEmail : MutableLiveData<Boolean> by lazy{
         MutableLiveData<Boolean>()
     }
+
     //takes email as the input parameter and passes it to the firebase to send the reset password
     //after the user clicks on the link on their email - the get a browser input field for new password
     public fun sendResetPasswordEmail(emailInput: EditText){

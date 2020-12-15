@@ -21,7 +21,6 @@ import sheridan.capstone.findmyfarmer.Entities.Following
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
-
 private lateinit var Add_To_Following : Button
 private lateinit var FarmImage : ImageView
 private lateinit var FarmName: TextView

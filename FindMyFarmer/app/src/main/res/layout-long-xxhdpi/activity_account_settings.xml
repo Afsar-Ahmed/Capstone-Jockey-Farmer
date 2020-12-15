@@ -17,7 +17,7 @@
         android:focusableInTouchMode="true">
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/UpdatedCustomerName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbarD" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
+            android:id="@+id/UpdatedCustomerPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -64,10 +64,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />
+            app:layout_constraintTop_toBottomOf="@+id/UpdatedCustomerEmail" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName6"
+            android:id="@+id/UpdatedCustomerEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -89,7 +89,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toBottomOf="@+id/UpdatedCustomerName" />
 
         <Button
             android:id="@+id/Save"
@@ -117,10 +117,10 @@
             android:text="Name"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/UpdatedCustomerName"
+            app:layout_constraintEnd_toEndOf="@+id/UpdatedCustomerName"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName" />
+            app:layout_constraintStart_toStartOf="@+id/UpdatedCustomerName" />
 
         <TextView
             android:id="@+id/emailLabel"
@@ -130,10 +130,10 @@
             android:text="Email"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName6"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName6"
+            app:layout_constraintBottom_toTopOf="@+id/UpdatedCustomerEmail"
+            app:layout_constraintEnd_toEndOf="@+id/UpdatedCustomerEmail"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName6" />
+            app:layout_constraintStart_toStartOf="@+id/UpdatedCustomerEmail" />
 
         <TextView
             android:id="@+id/passwordLabel"
@@ -143,10 +143,10 @@
             android:text="Password"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName4"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
+            app:layout_constraintBottom_toTopOf="@+id/UpdatedCustomerPassword"
+            app:layout_constraintEnd_toEndOf="@+id/UpdatedCustomerPassword"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4" />
+            app:layout_constraintStart_toStartOf="@+id/UpdatedCustomerPassword" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarD"

@@ -1,6 +1,4 @@
-/**
- * @author: Andrei Constantinecu
- */
+
 
 
 package sheridan.capstone.findmyfarmer.FarmerListing.Controller
