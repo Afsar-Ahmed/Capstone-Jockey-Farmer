@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.storage.StorageReference
@@ -21,36 +22,49 @@ import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import java.util.*
 import kotlin.collections.ArrayList
 
-class GetFollows(val activity: Activity, val adapter: FollowingListToView){
+/**
+ * @author Sohaib Hussain
+ * Description: Handles retrieving all followed farms from database
+ * Date Modified: December 14th, 2020
+ **/
+class GetFollows(val activity: Activity, val adapter: FollowingListToView,val overlay: ArrayList<View>){
 
     private lateinit var sessionData: SessionData
 
-    public fun GetFollowedFarms(FollowedFarms: ArrayList<Farm>){
+    fun GetFollowedFarms(FollowedFarms: ArrayList<Farm>){
         sessionData = SessionData(activity)
         var customer = sessionData.customerData
         if(customer != null){
             DatabaseAPIHandler(activity, AsyncResponse {
                 FollowedFarms.clear()
-                var AllFollowedFarms = ObjectConverter.convertStringToObject(it, Farm::class.java,true) as List<*>
-                for (farm in AllFollowedFarms){
-                    var followedFarm = farm as Farm
-                    var FIH = FirebaseImagehandler(DirectoryName.Farm,followedFarm.farmID,activity)
-                    FIH.GetPrimaryImageFromFirebaseURL(object: StorageResponse {
-                        @RequiresApi(Build.VERSION_CODES.N)
-                        override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
-                            if(Url != null && !(Url.get().isNullOrBlank())) {
-                                followedFarm.primaryImage = Url.get()
+                if(it.count() > 2){
+                    overlay[1].visibility = View.INVISIBLE
+                    var AllFollowedFarms = ObjectConverter.convertStringToObject(it, Farm::class.java,true) as List<*>
+                    for (farm in AllFollowedFarms){
+                        var followedFarm = farm as Farm
+                        var FIH = FirebaseImagehandler(DirectoryName.Farm,followedFarm.farmID,activity)
+                        FIH.GetPrimaryImageFromFirebaseURL(object: StorageResponse {
+                            @RequiresApi(Build.VERSION_CODES.N)
+                            override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
+                                if(Url != null && !(Url.get().isNullOrBlank())) {
+                                    followedFarm.primaryImage = Url.get()
+                                    farmInfoProcess(customer, followedFarm, FollowedFarms)
+                                }
+                                else{
+                                    farmInfoProcess(customer, followedFarm, FollowedFarms)
+                                }
+                            }
+                            override fun OnErrorListener(error: String?) {
                                 farmInfoProcess(customer, followedFarm, FollowedFarms)
                             }
-                            else{
-                                farmInfoProcess(customer, followedFarm, FollowedFarms)
-                            }
-                        }
-                        override fun OnErrorListener(error: String?) {
-                            farmInfoProcess(customer, followedFarm, FollowedFarms)
-                        }
-                    })
+                        })
+                    }
                 }
+                else{
+                    overlay[0].visibility = View.VISIBLE
+                    overlay[1].visibility = View.VISIBLE
+                }
+
             }).execute("/getFollowedFarmsByCustomerID/${customer.customerID}")
         }
     }
@@ -65,7 +79,9 @@ class GetFollows(val activity: Activity, val adapter: FollowingListToView){
                         if(it != null) {
                             followedFarm.followers = it.toInt()
                         }
-                        FollowedFarms.add(followedFarm);
+                        FollowedFarms.add(followedFarm)
+                        overlay[0].visibility = View.INVISIBLE
+                        overlay[1].visibility = View.INVISIBLE
                         //notifying change on list
                         adapter.notifyDataSetChanged()
                     }).execute("/getFarmFollowers/${followedFarm.farmID}")
@@ -77,7 +93,9 @@ class GetFollows(val activity: Activity, val adapter: FollowingListToView){
                 if(it != null) {
                     followedFarm.followers = it.toInt()
                 }
-                FollowedFarms.add(followedFarm);
+                FollowedFarms.add(followedFarm)
+                overlay[0].visibility = View.INVISIBLE
+                overlay[1].visibility = View.INVISIBLE
                 //notifying change on list
                 adapter.notifyDataSetChanged()
             }).execute("/getFarmFollowers/${followedFarm.farmID}")

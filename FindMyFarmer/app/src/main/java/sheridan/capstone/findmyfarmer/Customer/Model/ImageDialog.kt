@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.storage.StorageReference
 import sheridan.capstone.findmyfarmer.Customer.View.Maps
 import sheridan.capstone.findmyfarmer.Entities.Farm
@@ -31,6 +32,14 @@ import sheridan.capstone.findmyfarmer.Users.PhotoPicker
 import java.io.InputStream
 import java.util.*
 
+/**
+ * @author Sohaib Hussain
+ * Description: Image dialog fragment that display 3 items camera, Farm gallery and phone gallery.
+ *              The customer can add an image from phone gallery or camera and once they add an
+ *              image, the image is saved in the farm gallery, where the user can pick their primary
+ *              image.
+ * Date Modified: December 14th, 2020
+ **/
 class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
 
     private var bitmap: Bitmap? = null
@@ -86,9 +95,7 @@ class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
                             override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                                 viewModel.setFirebaseImageHandler(FIH2);
                                 dismiss()
-                                val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                                val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                                fragmentTransaction?.replace(R.id.fragment_container, PhotoPicker())?.commit()
+                              findNavController().navigate(R.id.action_fragment_farm_manager_to_fragment_photo_picker2)
                             }
                             override fun OnErrorListener(error: String?) { System.out.println(error) }
                         })
@@ -119,9 +126,7 @@ class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
                                 override fun processFinish(response: MutableList<StorageReference>?,bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                                     viewModel.setFirebaseImageHandler(FIH2)
                                     dismiss()
-                                    val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                                    val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                                    fragmentTransaction?.replace(R.id.fragment_container, PhotoPicker())?.commit()
+                                  findNavController().navigate(R.id.action_fragment_farm_manager_to_fragment_photo_picker2)
                                 }
                                 override fun OnErrorListener(error: String?) { System.out.println(error) }
                             })
@@ -156,7 +161,6 @@ class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
                             ).show()
                         }
                     }
-
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
@@ -172,9 +176,7 @@ class ImageDialog(directoryName: DirectoryName): AppCompatDialogFragment(){
         FarmgalleryButton.setOnClickListener {
             viewModel.setFirebaseImageHandler(FIH2)
             dismiss()
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, PhotoPicker())?.commit()
+            this.findNavController().navigate(R.id.action_fragment_farm_manager_to_fragment_photo_picker2)
         }
 
         builder.setView(view)

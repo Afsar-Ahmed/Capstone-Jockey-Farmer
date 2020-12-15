@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,13 +50,21 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.pullToRefresh)
         val recycleView: RecyclerView = view.findViewById(R.id.Hub_Recycle_View)
         val farmadd = view.findViewById<ImageView>(R.id.AddFarmImage)
+        val PageOverlay = view.findViewById<View>(R.id.overlay)
+        val noContextText = view.findViewById<View>(R.id.NoContentText)
+        val overlay = ArrayList<View>()
+        overlay.add(PageOverlay)
+        overlay.add(noContextText)
+
+        overlay[0].visibility = View.VISIBLE
+        overlay[1].visibility = View.INVISIBLE
 
         val adapter = HubListToView(requireActivity(), HubList, this)
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.setHasFixedSize(true)
 
-        var getFarmersFarms = activity?.let { GetFarmersFarms(it, swipeRefreshLayout, adapter) }
+        var getFarmersFarms = activity?.let { GetFarmersFarms(it, swipeRefreshLayout, adapter,overlay) }
 
         if (getFarmersFarms != null && farmer != null) {
             getFarmersFarms.GetHubFarms(HubList, farmer.farmerID)
@@ -63,13 +72,13 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
         swipeRefreshLayout.setOnRefreshListener {
             if (getFarmersFarms != null && farmer != null) {
+                overlay[0].visibility = View.VISIBLE
                 getFarmersFarms.GetHubFarms(HubList, farmer.farmerID)
             }
         }
 
         farmadd.setOnClickListener{
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container, FarmAddFragment())?.commit()
+            this.findNavController().navigate(R.id.action_nav_manage_hub_to_fragment_farm_add)
         }
 
         var touchHelper  = ItemTouchHelper(itemTouchHelper)
@@ -84,7 +93,9 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
         }
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             var deleteFarm: FarmDeleteConfirmDialog =
-                FarmDeleteConfirmDialog(HubList.get(viewHolder.adapterPosition))
+                FarmDeleteConfirmDialog()
+
+            deleteFarm.FarmDelete(HubList.get(viewHolder.adapterPosition))
 
             val FragmentManager : FragmentManager? = activity?.supportFragmentManager
             if (FragmentManager != null) {
@@ -104,10 +115,7 @@ class FarmerHub : Fragment(),HubListToView.OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         viewModel.setFarmData(HubList[position])
-
-        val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-        val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+        this.findNavController().navigate(R.id.action_nav_manage_hub_to_fragment_farm_manager)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

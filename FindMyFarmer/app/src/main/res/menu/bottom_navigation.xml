@@ -4,7 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
    >
 
+    <item
+        android:id="@+id/nav_manage_hub"
+        android:icon="@drawable/hub_selector"
+        android:title="Hub"
+        android:visible="false"
+        >
 
+    </item>
     <item
         android:id="@+id/nav_market"
         android:icon="@drawable/market_selector"

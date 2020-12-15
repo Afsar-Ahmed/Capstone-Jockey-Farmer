@@ -12,10 +12,20 @@ import kotlinx.android.synthetic.main.farmer_listing.view.*
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.R
 
+/**
+ * @author Sohaib Hussain
+ * Description: Adapter for RecyclerView.Takes the Followed Farms and displays them on the
+ *              recyclerview.
+ * Date Modified: December 14th, 2020
+ **/
+
 class FollowingListToView (private val FavouriteList: ArrayList<Farm>, private val listener: OnItemClickListener)
     : RecyclerView.Adapter<FollowingListToView.MyViewHolder>() {
 
 
+    /*
+      creates the base layout of each row in the recyclerview
+    */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.farmer_listing,
@@ -26,8 +36,15 @@ class FollowingListToView (private val FavouriteList: ArrayList<Farm>, private v
         )
     }
 
+    /*
+        Decides the number of rows, based on the number of items in the Followed list
+    */
     override fun getItemCount() = FavouriteList.size
 
+    /*
+        Assign each row with information to be displayed on each component,
+        after the row has been initialised
+    */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val currentItem = FavouriteList[position]
@@ -42,6 +59,10 @@ class FollowingListToView (private val FavouriteList: ArrayList<Farm>, private v
 
     }
 
+    /*
+        Individually instantiates each row, with relative components like buttons, textviews etc and
+        any listeners required
+    */
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
 
 

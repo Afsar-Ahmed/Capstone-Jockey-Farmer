@@ -1,15 +1,21 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/updateScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".Customer.View.FarmerInfo"
     tools:layout_editor_absoluteX="-4dp"
     tools:layout_editor_absoluteY="-168dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cstUpdate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <EditText
             android:id="@+id/Farm_PostalCode_Update"

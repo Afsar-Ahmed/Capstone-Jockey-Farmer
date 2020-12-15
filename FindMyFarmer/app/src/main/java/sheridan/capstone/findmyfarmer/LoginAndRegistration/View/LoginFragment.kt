@@ -1,5 +1,14 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.View
 
+
+/**
+ * @author Kartavyi Nikita
+ * Description: This fragment is responsible for getting the login input for the classic
+ * authentication, or provide the user with options of Google/Facebook sign in. On top of that -
+ * the customer can access registration and reset password pages
+ * Date Modified: December 14th, 2020
+ **/
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -23,6 +32,8 @@ class LoginFragment : Fragment() {
     private lateinit var loginInterface: LoginRegistrationInterface
     private lateinit var viewBehaviorInterface: ViewBehaviorInterface
 
+
+    //References for views and function calls when the specific elements are being clicked
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_modified_login, container, false)
@@ -65,19 +76,14 @@ class LoginFragment : Fragment() {
             true // default to enabled
         ) {
             override fun handleOnBackPressed() {
-
                 val i = Intent(activity,  SplashScreenActivity::class.java)
                 startActivity(i)
                 (activity as Activity?)!!.overridePendingTransition(0, 0)
-
-
             }
-
         }
         requireActivity().onBackPressedDispatcher.addCallback(
             this,  // LifecycleOwner
             callback
         )
     }
-
 }

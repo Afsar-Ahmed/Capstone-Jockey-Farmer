@@ -1,5 +1,11 @@
 package sheridan.capstone.findmyfarmer.Entities;
-
+/**
+ * @author Sohaib Hussain
+ * Description: Entity Representing the Customer of the application. This class holds information
+ *              personal information about the customer as well as if the customer is a farmer or
+ *              not
+ * Date Modified: December 14th, 2020
+ **/
 public class Customer {
 
     private int CustomerID;
@@ -8,8 +14,10 @@ public class Customer {
     private String CustomerPassword;
     private boolean IsFarmer;
 
+    //Empty constructor
     public Customer() { }
 
+    //Basic constructor
     public Customer(int CustomerID,String CustomerName,String CustomerEmail, String CustomerPassword,Boolean IsFarmer){
         this.CustomerID = CustomerID;
         this.CustomerName = CustomerName;

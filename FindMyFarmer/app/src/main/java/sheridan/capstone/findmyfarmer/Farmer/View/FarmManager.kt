@@ -1,37 +1,49 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
-import android.graphics.Bitmap
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
 import sheridan.capstone.findmyfarmer.Customer.Model.ImageDialog
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Entities.Product
-import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
 import sheridan.capstone.findmyfarmer.Farmer.Model.FarmDBHandler
 import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.R
+import sheridan.capstone.findmyfarmer.Users.FarmerActivity
 
+/**
+ * @author Sohaib Hussain
+ * Description: Fragment for handling data of existing farms, this fragment is used to add an image,
+ *              update farm data and also has access to product fragment for udpating, adding
+ *              products etc
+ * Date Modified: December 14th, 2020
+ **/
 class FarmManager : Fragment(){
 
 
-    private lateinit var Farm_Image : ImageView
-    private lateinit var Farm_Name : EditText
-    private lateinit var Farm_Desc : EditText
+    private lateinit var Farm_Image: ImageView
+    private lateinit var Farm_Name: EditText
+    private lateinit var Farm_Desc: EditText
     private lateinit var Farm_Unit: EditText
-    private lateinit var Farm_Street : EditText
+    private lateinit var Farm_Street: EditText
     private lateinit var Farm_City: EditText
     private lateinit var Farm_Country: EditText
     private lateinit var Farm_PostalCode: EditText
@@ -39,26 +51,26 @@ class FarmManager : Fragment(){
     private lateinit var ImageChangeIcon: ImageView
     private lateinit var viewModel: SharedViewModel
     private lateinit var progbar: ProgressBar
+    private lateinit var cstupdate : ConstraintLayout
 
     private var ProductList = ArrayList<Product>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view:View=  inflater.inflate(R.layout.fragment_farm_manager, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_farm_manager, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
+        cstupdate = view.findViewById(R.id.cstUpdate)
+
         Farm_Image = view.findViewById(R.id.Farm_Image_Updated)
-        Farm_Name  = view.findViewById(R.id.Farm_Name_Update)
+        Farm_Name = view.findViewById(R.id.Farm_Name_Update)
         Farm_Desc = view.findViewById(R.id.Farm_Desc_Update)
         Farm_Unit = view.findViewById(R.id.Farm_Unit_Update)
         Farm_Street = view.findViewById(R.id.Farm_Street_Update)
-        Farm_City =  view.findViewById(R.id.Farm_City_Update)
+        Farm_City = view.findViewById(R.id.Farm_City_Update)
         Farm_Country = view.findViewById(R.id.Farm_Country_Update)
-        Farm_PostalCode =view.findViewById(R.id.Farm_PostalCode_Update)
-        Farm_Province =view.findViewById(R.id.Farm_Province_Update)
+        Farm_PostalCode = view.findViewById(R.id.Farm_PostalCode_Update)
+        Farm_Province = view.findViewById(R.id.Farm_Province_Update)
         ImageChangeIcon = view.findViewById(R.id.ImageChangeIcon)
         progbar = view.findViewById(R.id.updateFarmProgbar)
 
@@ -68,12 +80,12 @@ class FarmManager : Fragment(){
 
         ImageChangeIcon.setOnClickListener {
             //Start image dialog here
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
+            val FragmentManager: FragmentManager? = activity?.supportFragmentManager
             val imageDialog =
                 ImageDialog(DirectoryName.Farm)
 
             if (FragmentManager != null) {
-                imageDialog.show(FragmentManager,"image")
+                imageDialog.show(FragmentManager, "image")
             }
         }
 
@@ -82,10 +94,8 @@ class FarmManager : Fragment(){
         }
 
         AddProductsToFarm.setOnClickListener {
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-
-            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, ProductManagement())?.commit()
+            this.findNavController()
+                .navigate(R.id.action_fragment_farm_manager_to_farmer_product_management2)
         }
 
         return view
@@ -104,6 +114,7 @@ class FarmManager : Fragment(){
             Farm_Province.setText(it.province)
             Picasso.get().load(it.primaryImage).into(Farm_Image)
         })
+        viewBehavior(cstupdate)
     }
 
     override fun onResume() {
@@ -113,6 +124,7 @@ class FarmManager : Fragment(){
         })
     }
 
+    //verifies data and updates the farm information
     private fun VerifyData(){
         var notEmpty = true
         if(Farm_Name.text.toString().isEmpty()){
@@ -140,7 +152,7 @@ class FarmManager : Fragment(){
             notEmpty =false
         }
         if(Farm_Unit.text.isEmpty()){
-            Farm_Unit.setError("Cannot be Empty")
+            Farm_Unit.setText("0")
             notEmpty =false
         }
         if(Farm_Province.text.isEmpty()){
@@ -163,17 +175,42 @@ class FarmManager : Fragment(){
                 var postalcode = Farm_PostalCode.text.toString()
                 var province = Farm_Province.text.toString()
                 var farmerid = viewModel.getFarmData().value!!.farmerID
-                var farm = Farm(id,business_name,business_desc,business_rating,city,street,country,postalcode,province,unit,farmerid)
-                val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                var updateFarm = FragmentManager?.let { FarmDBHandler(requireActivity(),progbar, it) }
-                if (updateFarm != null) {
-                    updateFarm.updatefarm(farm)
-                }
-            }
-            else{
-                Farm_PostalCode.setError("PostalCode has to be 6 letters only")
+                var farm = Farm(
+                    id,
+                    business_name,
+                    business_desc,
+                    business_rating,
+                    city,
+                    street,
+                    country,
+                    postalcode,
+                    province,
+                    unit,
+                    farmerid
+                )
+
+                val updateFarm : FarmDBHandler = FarmDBHandler(requireActivity(),progbar)
+
+
+                updateFarm.updatefarm(farm)
+
+                val i = Intent(activity, FarmerActivity::class.java)
+                startActivity(i)
+                (activity as Activity?)!!.overridePendingTransition(0, 0)
             }
         }
     }
 
+    //request focus on from all the input fields and hide a keyboard if touched outside of the current input field
+    fun viewBehavior(view: View) {
+        view.requestFocus()
+        view.setOnTouchListener{ view, m: MotionEvent ->
+            hideKeyboard(view)
+            view.requestFocus()
+            true}
+    }
+    fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

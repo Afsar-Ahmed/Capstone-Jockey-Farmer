@@ -12,6 +12,13 @@ import kotlinx.android.synthetic.main.fragment_registration.*
 import sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller.LoginRegistrationInterface
 import sheridan.capstone.findmyfarmer.R
 
+/**
+ * @author Kartavyi Nikita
+ * Description: This fragment is responsible for getting the confirmation from user if he/she is a
+ * farmer or not. The que is sent to the database to specify what type of the account to create and
+ * all the input from registration fragment is passed to the dedicated registration function
+ * Date Modified: December 14th, 2020
+ **/
 
 class FarmerConfirmationFragment : Fragment() {
 

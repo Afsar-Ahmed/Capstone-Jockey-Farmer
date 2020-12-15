@@ -13,6 +13,11 @@ import sheridan.capstone.findmyfarmer.Entities.Rating
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
+/**
+ * @author Andrei Constantinescu
+ * sets up the layout view for the RateItDialogue
+ */
+
 private lateinit var ratingsbar : RatingBar
 private lateinit var ratingsdesc : EditText
 private lateinit var SendFeedBack : Button
@@ -20,6 +25,12 @@ private lateinit var RatingsScale : TextView
 
 //The custom dialog box - appearing when the user clicks the small icon near the ratings bar
 class RateItDialogue(val imageView: ImageView) : AppCompatDialogFragment(){
+
+    /**
+     * This function overrides the default dialog options
+     * All the proper fields and events are sent to the following dialogues layout view.
+     */
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)

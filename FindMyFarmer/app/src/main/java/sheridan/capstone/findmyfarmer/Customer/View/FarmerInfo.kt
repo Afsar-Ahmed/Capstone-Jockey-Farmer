@@ -1,6 +1,13 @@
 package sheridan.capstone.findmyfarmer.Customer.View
 
+
+/**
+ * @author: Andrei Constantinecu
+ * Sets up the Farmer Fragment
+ */
+
 import android.annotation.SuppressLint
+
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,46 +20,42 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.appevents.codeless.internal.ViewHierarchy.setOnClickListener
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.nav_header.view.*
 import sheridan.capstone.findmyfarmer.Customer.Model.*
 import sheridan.capstone.findmyfarmer.Entities.Following
-import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.Entities.Product
 import sheridan.capstone.findmyfarmer.Farmer.Controller.FruitListToView
+import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
-import java.lang.StringBuilder
 
 class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
 
-    private lateinit var FarmName:TextView
+    /*
+   Takes the farmers information from the shared view model
+   @returns fragment view
+   */
 
+    private lateinit var FarmName:TextView
     private lateinit var FarmDesc:TextView
     private lateinit var FarmRating : RatingBar
     private lateinit var FarmAddress:TextView
-
     private lateinit var FarmImage : ImageView
     private lateinit var To_Map: Button
     private lateinit var RateIt: ImageView
-
     private lateinit var FarmFollow : ImageView
+
     private var productlist = ArrayList<Product>()
     var ImageInt : Int =0
     private lateinit var viewModel: SharedViewModel
     private lateinit var sessionData: SessionData
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view:View=  inflater.inflate(R.layout.fragment_farmer_info, container, false)
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -107,13 +110,9 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         var farm = viewModel.getFarmData().value
 
         To_Map.setOnClickListener {
-            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
 
-            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container,
-                FarmersMap()
-            )
-                ?.commit()
+
+            this.findNavController().navigate(R.id.action_fragment_farmer_info_to_farmersMap)
         }
         if (farm != null) {
             if(farm.isFollowed){
@@ -142,7 +141,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         return view
     }
 
-    fun openDialog() {
+    private fun openDialog() {
         val FragmentManager : FragmentManager? = activity?.supportFragmentManager
         val exampleDialog = RateItDialogue(RateIt)
 
@@ -186,14 +185,7 @@ class FarmerInfo : Fragment(),FruitListToView.OnItemClickListener{
         ) {
             override fun handleOnBackPressed() {
 
-                val FragmentManager: FragmentManager? = activity?.supportFragmentManager
-
-                val fragmentTransaction: FragmentTransaction? = FragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(
-                    R.id.fragment_container,
-                   MarketPlace()
-                )
-                    ?.commit()
+                findNavController().navigate(R.id.action_fragment_farmer_info_to_nav_market)
 
             }
         }

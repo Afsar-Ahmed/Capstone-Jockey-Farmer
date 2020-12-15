@@ -18,6 +18,11 @@ import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles Retrieving all the farm products from the database. This includes images
+ * Date Modified: December 14th, 2020
+ **/
 class GetAllProducts(private val activity: Activity,private val adapter: FruitListToView) {
 
     fun farmProducts(products: ArrayList<Product>,id: Int)
@@ -33,59 +38,36 @@ class GetAllProducts(private val activity: Activity,private val adapter: FruitLi
                     override fun processFinish(response: MutableList<StorageReference>?, bitmap: Optional<Bitmap>?, Url: Optional<String>?) {
                         if(Url != null && !(Url.get().isNullOrBlank())){
                             Productlistdata.image = Url.get()
-                            DatabaseAPIHandler(activity, AsyncResponse {resp ->
-                                if(!(resp.isNullOrBlank())){
-                                    var farmProduct = ObjectConverter.convertStringToObject(resp,
-                                        FarmProduct::class.java,false) as FarmProduct
-                                    if (farmProduct != null){
-                                        Productlistdata.quantity = farmProduct.quantity
-                                        products.add(Productlistdata)
-                                        //notifying change on list
-                                        adapter.notifyDataSetChanged()
-                                    }
-                                }
-                                else{
-                                    Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
-                                }
-                            }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                            ManageFarmProducts(Productlistdata,products, id, product)
                         }
                         else{
-                            DatabaseAPIHandler(activity, AsyncResponse {resp ->
-                                if(!(resp.isNullOrBlank())){
-                                    var farmProduct = ObjectConverter.convertStringToObject(resp,
-                                        FarmProduct::class.java,false) as FarmProduct
-                                    if (farmProduct != null){
-                                        Productlistdata.quantity = farmProduct.quantity
-                                        products.add(Productlistdata)
-                                        //notifying change on list
-                                        adapter.notifyDataSetChanged()
-                                    }
-                                }
-                                else{
-                                    Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
-                                }
-                            }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                            ManageFarmProducts(Productlistdata,products, id, product)
                         }
                     }
                     override fun OnErrorListener(error: String?) {
-                        DatabaseAPIHandler(activity, AsyncResponse {resp ->
-                            if(!(resp.isNullOrBlank())){
-                                var farmProduct = ObjectConverter.convertStringToObject(resp,
-                                    FarmProduct::class.java,false) as FarmProduct
-                                if (farmProduct != null){
-                                    Productlistdata.quantity = farmProduct.quantity
-                                    products.add(Productlistdata)
-                                    //notifying change on list
-                                    adapter.notifyDataSetChanged()
-                                }
-                            }
-                            else{
-                                Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
-                            }
-                        }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
+                        ManageFarmProducts(Productlistdata,products, id, product)
                     }
                 })
             }
         }).execute("/ProductsByFarmID/${id}")
+    }
+
+    private fun ManageFarmProducts(Productlistdata: Product,products: ArrayList<Product>,id: Int,product: Product){
+        DatabaseAPIHandler(activity, AsyncResponse {resp ->
+            if(!(resp.isNullOrBlank())){
+                var farmProduct = ObjectConverter.convertStringToObject(resp,
+                    FarmProduct::class.java,false) as FarmProduct
+                if (farmProduct != null){
+                    Productlistdata.quantity = farmProduct.quantity
+                    Productlistdata.unit = farmProduct.unit
+                    products.add(Productlistdata)
+                    //notifying change on list
+                    adapter.notifyDataSetChanged()
+                }
+            }
+            else{
+                Toast.makeText(activity,"No Farm Product found!", Toast.LENGTH_SHORT).show()
+            }
+        }).execute("/FarmProductByFarmIDAndProductID/${id}/${product.productID}")
     }
 }

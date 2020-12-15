@@ -1,5 +1,13 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
 
+/**
+ * @author Kartavyi Nikita
+ * Description: This activity is a model of the registration part of the application.
+ * The firebase registration logic is stored here, as well as the custom validation for the input.
+ * On top of that, Database calls for retrieving customer data is based in this activity
+ * Date Modified: December 14th, 2020
+ **/
+
 import android.app.Activity
 import android.util.Log
 import android.widget.EditText
@@ -16,12 +24,15 @@ import sheridan.capstone.findmyfarmer.Entities.Customer
 import sheridan.capstone.findmyfarmer.Entities.Farmer
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 
+
 class RegistrationModel:ViewModel() {
 
     val user : MutableLiveData<FirebaseUser?> by lazy{
         MutableLiveData<FirebaseUser?>()
     }
     private lateinit var sessionData: SessionData
+
+    //registration of the user in the firebase and database with the validated user input
     public fun register(auth: FirebaseAuth, activity: Activity, email: String,name:String, password: String,IsFarmer:Boolean,progressBar: ProgressBar) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
@@ -65,6 +76,8 @@ class RegistrationModel:ViewModel() {
             }
     }
 
+
+    //email validation using the custom regex pattern
     public fun registerNameValidation(name: EditText):Boolean{
         var regexPattern= Regex("\\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+")
         var nameValidated = false
@@ -76,6 +89,16 @@ class RegistrationModel:ViewModel() {
         return nameValidated
 
     }
+
+    /**
+     * @author: Afsar Ahmed & Nikita Kartavyi
+     * validates user when registering
+     * @param emailInput user input an follows default requirements of email
+     * @param passwordInput user input and must abide by regex pattern
+     * @param repeatPasswordInput user input and must match passwordInput as well as regex pattern
+     *
+     * @return true if validation of all parameters follow protocol
+     */
     public  fun registerValidation(emailInput: EditText, passwordInput: EditText, repeatPasswordInput: EditText) : Boolean{
         var regexPattern= Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,20}$")
         var emailInputVerification: Boolean = false
@@ -99,11 +122,8 @@ class RegistrationModel:ViewModel() {
                 repeatPasswordInput.setError("Password doesn't match")
                 repeatPasswordInputVerification = false
             }
-
         }
-        /*return android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput.text).matches() &&
-                passwordInput.text.matches(regexPattern)*/
-        //Log.d("VERIFICATION","$emailInputVerification $passwordInputVerification $repeatPasswordInputVerification")
+
         return emailInputVerification && passwordInputVerification && repeatPasswordInputVerification
     }
 }

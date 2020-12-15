@@ -1,5 +1,10 @@
 package sheridan.capstone.findmyfarmer
 
+/**
+ * Author:  Andrei Constantinescu
+ * Sets up the splash screen
+ **/
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

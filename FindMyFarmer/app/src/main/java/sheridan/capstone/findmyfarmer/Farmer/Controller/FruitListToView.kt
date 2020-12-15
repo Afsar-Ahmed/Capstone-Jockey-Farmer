@@ -35,7 +35,7 @@ class FruitListToView (private val FruitList: List<Product>, private val listene
         }
         holder.Fruit_Name.text = currentItem.productName
         holder.Fruit_Cat.text = currentItem.productCategory
-        holder.Fruit_quantity.text = currentItem.quantity.toString()
+        holder.Fruit_quantity.text = currentItem.quantity.toString() + " " + currentItem.unit.toString()
     }
 
 

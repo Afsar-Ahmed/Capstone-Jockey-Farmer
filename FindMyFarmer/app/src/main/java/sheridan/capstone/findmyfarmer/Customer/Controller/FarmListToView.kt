@@ -1,4 +1,12 @@
+
+
+
 package sheridan.capstone.findmyfarmer.FarmerListing.Controller
+
+/**
+ * @author: Andrei Constantinecu
+ * Sets up the farm list in the recycler view
+ */
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +22,8 @@ import kotlinx.android.synthetic.main.farmer_listing.view.*
 import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.R
 import java.lang.StringBuilder
-
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItemClickListener)
     : RecyclerView.Adapter<FarmListToView.MyViewHolder>(),Filterable {
@@ -26,6 +35,8 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
         FarmListAll = ArrayList(FarmList)
         return MyViewHolder(itemView)
     }
+
+
 
     override fun getItemCount() = FarmList.size
 
@@ -42,8 +53,6 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
         holder.Followers.text = "Followers: ${currentItem.followers}"
     }
 
-
-
     override fun getFilter(): Filter {
         return filter
     }
@@ -51,7 +60,6 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
     private var filter = object: Filter(){
         override fun performFiltering(constraint: CharSequence?): FilterResults? {
 
-            var stringFilteredFarm = HashMap<String,Farm>()
             var filteredList = ArrayList<Farm>()
 
             if(constraint.toString().isEmpty()){
@@ -85,11 +93,8 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
                     if(farmString.toString().toLowerCase().contains(constraint.toString().toLowerCase())){
                         filteredList.add(farm)
                     }
-                    //stringFilteredFarm.put(farmString.toString(),farm)
                 }
-//                for(farmHash in stringFilteredFarm){
-//
-//                }
+
             }
 
             var filterResults = FilterResults()
@@ -125,8 +130,9 @@ class FarmListToView(val FarmList: ArrayList<Farm>, private val listener: OnItem
             }
         }
     }
-        interface OnItemClickListener{
-            fun onItemClick(position: Int)
-        }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
 }
 

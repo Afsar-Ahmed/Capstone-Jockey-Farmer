@@ -33,6 +33,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles Images being stored in the firebase storage. Used to mark images as primary
+ *              and also retrieving images from the storage according to the farm or customer or
+ *              product. This class automatically creates a folder in Firebase for individual
+ *              farm and customer.
+ * Date Modified: December 14th, 2020
+ **/
 public class FirebaseImagehandler {
 
     private FirebaseStorage storage;
@@ -55,7 +63,7 @@ public class FirebaseImagehandler {
         String date = dateFormat.format(new Date());
         return FolderName + "_" + date + ".jpg";
     }
-    //gets the list of images from firebase based on directoryname and id given
+    //gets the list of images from Firebase based on directoryname and id given
     public void GetAllFirebaseImageNames(StorageResponse storageResponse) {
         StorageReference listRef = storage.getReference().child(FolderName);
         listRef.listAll().addOnSuccessListener(listResult -> {
@@ -65,7 +73,7 @@ public class FirebaseImagehandler {
             System.out.println(e);
         });
     }
-    //downloads all images from firebase to internal storage
+    //downloads all images from Firebase to internal storage
     private void DownloadImagesFromFirebaseToLocalStorage(List<String> filenames, int index,StorageResponse response){
         final long TEN_MEGABYTE = 1024 * 1024 * 10;
 
@@ -89,9 +97,10 @@ public class FirebaseImagehandler {
             return;
         }
     }
-
-    //Checks if the images in cloud have been downloaded, if there are any new files from cloud
-    //then they are downloaded into local storage
+    /*
+        Checks if the images in cloud have been downloaded, if there are any new files from cloud
+        then they are downloaded into local storage
+    */
     private void InitializeImages(StorageResponse storageResponse){
             GetAllFirebaseImageNames(new StorageResponse() {
                 @Override
@@ -113,8 +122,10 @@ public class FirebaseImagehandler {
                 }
             });
     }
-    //checks if there are any extra images that have been deleted from the cloud,
-    // and are then removed from the local storage as well
+    /*
+        checks if there are any extra images that have been deleted from the cloud,
+        and are then removed from the local storage as well
+    */
     public void RefreshLocalStorage(StorageResponse response){
         List<String> localStorageImages = GetNamesOfImagesInLocalStorage();
         if(!(localStorageImages.isEmpty())){
@@ -185,6 +196,7 @@ public class FirebaseImagehandler {
             response.OnErrorListener(ex.toString());
         }
     }
+    //Retrieves an Image from Firebase using filename
     private void GetImageFromFirebase(String fileName,StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -210,7 +222,7 @@ public class FirebaseImagehandler {
             }
         });
     }
-
+    //Deletes an image from the Firebase using filename
     public void DeleteImageFromFirebase(String fileName, StorageResponse storageResponse){
         StorageReference ref = storageReference.child(FolderName + "/" + fileName);
 
@@ -220,7 +232,7 @@ public class FirebaseImagehandler {
         }).addOnFailureListener(e ->
                 storageResponse.OnErrorListener(e.toString()));
     }
-
+    //Renames images in Firebase
     private void RenameFileFirebase(String fileName,String newName, StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
             @Override
@@ -267,7 +279,7 @@ public class FirebaseImagehandler {
             }
         });
     }
-
+    //Retrieves the bitmap of the Primary Image
     public void GetPrimaryImageFromFirebase(StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
             StorageReference reference = null;
@@ -303,6 +315,7 @@ public class FirebaseImagehandler {
             }
         });
     }
+    //Retrieves the URL of the Primary Image
     public void GetPrimaryImageFromFirebaseURL(StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
             boolean NoPrimaryImageExists = true;
@@ -339,6 +352,7 @@ public class FirebaseImagehandler {
             }
         });
     }
+    //Retrieves the URL of any image in the Firebase
     public void GetImageURLFromFirebase(String fileName,StorageResponse storageResponse){
         GetAllFirebaseImageNames(new StorageResponse() {
             StorageReference reference = null;
@@ -376,7 +390,7 @@ public class FirebaseImagehandler {
             }
         });
     }
-
+    //Makes an Image Primary Image in Firebase
     public void MakeImagePrimary(String fileName,StorageResponse storageResponse){
         GetPrimaryImageFromFirebase(new StorageResponse() {
             @Override
@@ -491,7 +505,6 @@ public class FirebaseImagehandler {
             }
         });
     }
-
     //saves the image to internal storage, using the given filename
     private String saveToInternalStorage(Bitmap bitmapImage,String fileName){
         ContextWrapper cw = new ContextWrapper(context);

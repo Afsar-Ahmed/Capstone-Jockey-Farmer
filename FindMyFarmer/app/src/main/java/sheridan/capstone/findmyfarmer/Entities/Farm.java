@@ -1,11 +1,21 @@
 package sheridan.capstone.findmyfarmer.Entities;
 
+
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Sohaib Hussain
+ * Description: Entity Representing the Farm of the Farmer. This class holds information
+ *              about the Farm created. As well as some helper properties to hold information about
+ *              the farm while the application is active.
+ * Date Modified: December 14th, 2020
+ **/
 public class Farm {
+
+    //Primary Properties
     private int FarmID;
     private String Business_Name;
     private String Business_Description;
@@ -17,14 +27,18 @@ public class Farm {
     private String PostalCode;
     private int Unit = 0;
     private int FarmerID;
+
+    //Helper Properties
     private String PrimaryImage;
     private boolean isFollowed = false;
     private boolean alreadyRated = false;
     private int Followers = 0;
     private List<Product> products = new ArrayList<>();
 
+    //Empty constructor
     public Farm(){ }
 
+    //Main constructor
     public Farm(int FarmID,String Business_Name,String Business_Description,float Business_Rating,String City,String Street,String Country,String PostalCode,String Province,int Unit,int Farmer_ID){
         this.FarmID = FarmID;
         this.Business_Name = Business_Name;
@@ -50,6 +64,8 @@ public class Farm {
     public void setBusinessRating(int businessRating) { Business_Rating = businessRating; }
     public void setUnit(int unit) { Unit = unit; }
     public void setProvince(String province) { Province = province; }
+
+    //Helper properties setters
     public void setPrimaryImage(String primaryImage) { PrimaryImage = primaryImage; }
     public void setAlreadyRated(boolean alreadyRated) { this.alreadyRated = alreadyRated; }
     public void setIsFollowed(boolean isFollowed) { this.isFollowed = isFollowed; }
@@ -68,6 +84,8 @@ public class Farm {
     public String getBusinessName() { return Business_Name; }
     public String getStreet() { return Street; }
     public String getProvince() { return Province; }
+
+    //Helper properties getters
     public String getPrimaryImage() { return PrimaryImage; }
     public boolean getAlreadyRated(){ return alreadyRated; }
     public boolean getIsFollowed(){ return isFollowed; }

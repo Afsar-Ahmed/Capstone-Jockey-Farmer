@@ -1,5 +1,15 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller
 
+
+/**
+ * @author Kartavyi Nikita
+ * Description: This interface is designed in order to offload the code from the view
+ * to the controller. The reason for that is to separate the functionality, so the view
+ * is just calling the functions on press of a dedicated element and all of the functionality is
+ * in the LoginRegistrationController which implements this interface. This particular interface is
+ * used for the logical functionality of Login and registration segment of the application
+ * Date Modified: December 14th, 2020
+ **/
 import android.text.Editable
 import android.view.View
 import android.widget.EditText

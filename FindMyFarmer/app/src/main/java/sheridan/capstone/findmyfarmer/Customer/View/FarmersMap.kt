@@ -1,7 +1,10 @@
 package sheridan.capstone.findmyfarmer.Customer.View
+/**
+ * @author: Andrei Constantinecu
+ */
+
 
 import android.content.Context
-import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -11,54 +14,50 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import sheridan.capstone.findmyfarmer.Customer.Model.MapHandler
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.R
-import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
 import java.util.*
 
 
 class FarmersMap : Fragment(), OnMapReadyCallback {
 
+    /*
+    * @return Farmers Map fragment that instantiates the map view for the specific farm.
+    */
+
 
     private lateinit var address: Address
 
     private lateinit var mapview : MapView
-    private lateinit var viewModel: SharedViewModel
+
 
     private lateinit var addresslist : List<Address>
 
     var Farmers_Address : String = ""
 
+    var viewModel: SharedViewModel = SharedViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        Farmers_Address= viewModel.getFarmData().value!!.city
-
-        val geo : Geocoder = Geocoder(requireActivity(), Locale.getDefault())
-
-         addresslist =geo.getFromLocationName(Farmers_Address,1)
-
-        if(addresslist.size!=0){
-            address = addresslist.get(0)
-        }
-
-    }
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val View: View = inflater.inflate(R.layout.fragment_farmers_map, container, false)
 
+        viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        Farmers_Address= viewModel.getFarmData().value!!.street +
+                ","+ viewModel.getFarmData().value!!.city + "," + viewModel.getFarmData().value!!.province + " "
+        viewModel.getFarmData().value!!.postalCode
 
         mapview = View.findViewById(R.id.farmers_map)
 
@@ -74,23 +73,34 @@ class FarmersMap : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(mMap: GoogleMap?) {
 
+        val geo = Geocoder(requireActivity(), Locale.getDefault())
+        MapHandler(requireActivity(), object : MapResponse {
+            override fun onProcessComplete(Obj: Any) {
+                addresslist = Obj as List<Address>
+                if (addresslist.size != 0) {
+                    address = addresslist.get(0)
+
+                    mMap!!.addMarker(MarkerOptions().position(LatLng(address.latitude, address.longitude)).title(viewModel.getFarmData().value!!.businessName))
+
+                    mMap!!.moveCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(
+                                address.latitude,
+                                address.longitude
+                            ), 15f
+
+                        )
+                    )
+                }
+                else
+                    Toast.makeText(requireActivity(),"No Address Found",Toast.LENGTH_LONG)
+
+            }
+        }).execute(Farmers_Address)
 
 
 
-        if(addresslist.isEmpty()){
-            Toast.makeText(requireActivity(),"No Address Found",Toast.LENGTH_LONG).show()
-        }
-else {
-            mMap!!.addMarker(MarkerOptions().position(LatLng(address.latitude, address.longitude)))
-            mMap!!.moveCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(
-                        address.latitude,
-                        address.longitude
-                    ), 15f
-                )
-            )
-        }
+
     }
 
 
@@ -101,14 +111,7 @@ else {
         ) {
             override fun handleOnBackPressed() {
 
-                val FragmentManager: FragmentManager? = activity?.supportFragmentManager
-
-                val fragmentTransaction: FragmentTransaction? = FragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(
-                    R.id.fragment_container,
-                    FarmerInfo()
-                )
-                    ?.commit()
+            findNavController().navigate(R.id.action_fragment_farmers_map_to_fragment_farmer_info)
 
             }
         }

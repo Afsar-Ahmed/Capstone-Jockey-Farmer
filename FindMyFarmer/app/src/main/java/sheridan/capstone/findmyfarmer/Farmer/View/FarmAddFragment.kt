@@ -1,13 +1,19 @@
 package sheridan.capstone.findmyfarmer.Farmer.View
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.fragment_farm_add.*
 import sheridan.capstone.findmyfarmer.Customer.Model.ImageDialog
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
 import sheridan.capstone.findmyfarmer.Entities.Farm
@@ -15,13 +21,20 @@ import sheridan.capstone.findmyfarmer.Farmer.Model.FarmDBHandler
 import sheridan.capstone.findmyfarmer.ImageHandler.DirectoryName
 import sheridan.capstone.findmyfarmer.R
 import sheridan.capstone.findmyfarmer.SessionDataHandler.SessionData
+import sheridan.capstone.findmyfarmer.Users.FarmerActivity
+
+/**
+ * @author Sohaib Hussain
+ * Description: Fragment that Handles Form for adding a new Farm
+ * Date Modified: December 14th, 2020
+ **/
 
 class FarmAddFragment(): Fragment() {
 
-    private lateinit var Farm_Name : EditText
-    private lateinit var Farm_Desc : EditText
+    private lateinit var Farm_Name: EditText
+    private lateinit var Farm_Desc: EditText
     private lateinit var Farm_Unit: EditText
-    private lateinit var Farm_Street : EditText
+    private lateinit var Farm_Street: EditText
     private lateinit var Farm_City: EditText
     private lateinit var Farm_Country: EditText
     private lateinit var Farm_PostalCode: EditText
@@ -37,14 +50,14 @@ class FarmAddFragment(): Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sessionData = SessionData(activity)
 
-        Farm_Name  = view.findViewById(R.id.farm_Name_added)
+        Farm_Name = view.findViewById(R.id.farm_Name_added)
         Farm_Desc = view.findViewById(R.id.farm_Desc_added)
         Farm_Unit = view.findViewById(R.id.farm_Unit_added)
         Farm_Street = view.findViewById(R.id.farm_Street_added)
-        Farm_City =  view.findViewById(R.id.farm_City_added)
+        Farm_City = view.findViewById(R.id.farm_City_added)
         Farm_Country = view.findViewById(R.id.farm_Country_added)
-        Farm_PostalCode =view.findViewById(R.id.farm_PostalCode_added)
-        Farm_Province =view.findViewById(R.id.farm_Province_added)
+        Farm_PostalCode = view.findViewById(R.id.farm_PostalCode_added)
+        Farm_Province = view.findViewById(R.id.farm_Province_added)
 
         progbar = view.findViewById(R.id.AddFarmProgbar)
 
@@ -58,6 +71,12 @@ class FarmAddFragment(): Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
+        super.onViewCreated(view,savedInstanceState)
+        viewBehavior(ConstraintLayoutRegisterFarm)
+    }
+
+    //verifies data in the form, and inserts data
     private fun VerifyData(){
         var notEmpty = true
         if(Farm_Name.text.toString().isEmpty()){
@@ -85,8 +104,8 @@ class FarmAddFragment(): Fragment() {
             notEmpty =false
         }
         if(Farm_Unit.text.isEmpty()){
-            Farm_Unit.setText(0)
-            notEmpty =false
+            Farm_Unit.setText("0")
+            notEmpty =true
         }
         if(Farm_Province.text.isEmpty()){
             Farm_Province.setError("Cannot be Empty")
@@ -109,20 +128,49 @@ class FarmAddFragment(): Fragment() {
                 var province = Farm_Province.text.toString()
                 if(farmer != null){
                     var farmerid = farmer.farmerID
-                    var farm = Farm(id,business_name,business_desc, business_rating.toFloat(),city,street,country,postalcode,province,unit,farmerid)
-                    val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                    var addFarm = FragmentManager?.let { FarmDBHandler(requireActivity(),progbar, it) }
-                    if (addFarm != null) {
-                        addFarm.addfarm(farm)
-                    }
-                }
-                else{
-                    Toast.makeText(context,"cant find farmer for this farm",Toast.LENGTH_SHORT).show()
+                    var farm = Farm(
+                        id,
+                        business_name,
+                        business_desc,
+                        business_rating.toFloat(),
+                        city,
+                        street,
+                        country,
+                        postalcode,
+                        province,
+                        unit,
+                        farmerid
+                    )
+
+
+                    val AddFarm: FarmDBHandler = FarmDBHandler(requireActivity(), progbar)
+                    AddFarm.addfarm(farm)
+
+
+                    val i = Intent(activity, FarmerActivity::class.java)
+                    startActivity(i)
+                    (activity as Activity?)!!.overridePendingTransition(0, 0)
+
                 }
             }
             else{
-                Farm_PostalCode.setError("PostalCode has to be 6 letters only")
+                Farm_PostalCode.setError("Postal code should be 6 letters and digits")
             }
+
         }
     }
+
+    //request focus on from all the input fields and hide a keyboard if touched outside of the current input field
+    fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+    fun viewBehavior(view: View) {
+        view.requestFocus()
+        view.setOnTouchListener{ view, m: MotionEvent ->
+            hideKeyboard(view)
+            view.requestFocus()
+            true}
+    }
+
 }

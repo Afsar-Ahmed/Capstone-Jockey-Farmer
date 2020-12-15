@@ -1,27 +1,29 @@
 package sheridan.capstone.findmyfarmer.Customer.Model
 
+/**
+ * @author: Andrei Constantinecu
+ * Sets up the Following dialogue view
+ * @constructor FollowingDialog
+ */
+
+import android.app.Activity
 import android.location.Geocoder
 import android.os.AsyncTask
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import sheridan.capstone.findmyfarmer.Customer.View.MapResponse
+import java.util.*
 
-class MapHandler(var Geocoder : Geocoder,var mapResponse : MapResponse) : AsyncTask<Any, Any, Any>() {
+class MapHandler(val activity: Activity,var mapResponse : MapResponse) : AsyncTask<Any, Any, Any>() {
 
-
-    var mapResponse_ = mapResponse
 
     override fun doInBackground(vararg params: Any?): Any {
-
-
-        return Geocoder.getFromLocationName(params[0].toString(), 1) as Object
-
+        var geo = Geocoder(activity, Locale.getDefault())
+        return geo.getFromLocationName(params[0].toString(), 1) as Object
     }
 
     override fun onPostExecute(result: Any) {
-
-        mapResponse_.onProcessComplete(result)
-
+        mapResponse.onProcessComplete(result)
     }
 
 

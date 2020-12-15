@@ -11,26 +11,36 @@ import sheridan.capstone.findmyfarmer.Entities.Farm
 import sheridan.capstone.findmyfarmer.Farmer.View.FarmerHub
 import sheridan.capstone.findmyfarmer.R
 
-class FarmDBHandler(val activity: Activity, val progressbar: ProgressBar?, val fragmentManager: FragmentManager?) {
+/**
+ * @author Sohaib Hussain
+ * Description: Handles Farms to be added, deleted or updated using the API Handler
+ * Date Modified: December 14th, 2020
+ **/
+class FarmDBHandler(val activity: Activity, val progressbar: ProgressBar?) {
 
+    /*
+      Updates the farm in the database
+     */
     fun updatefarm(farm: Farm){
         progressbar?.visibility = ProgressBar.VISIBLE
         DatabaseAPIHandler(activity, AsyncResponse {
             progressbar?.visibility = ProgressBar.INVISIBLE
-            val fragmentTransaction : FragmentTransaction? = fragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, FarmerHub(),)?.commit()
         }).execute("/UpdateFarm",farm)
     }
 
+    /*
+        Adds a new farm in the database
+    */
     fun addfarm(farm: Farm){
         progressbar?.visibility = ProgressBar.VISIBLE
         DatabaseAPIHandler(activity, AsyncResponse {
             progressbar?.visibility = ProgressBar.INVISIBLE
-            val fragmentTransaction : FragmentTransaction? = fragmentManager?.beginTransaction()
-            fragmentTransaction?.replace(R.id.fragment_container, FarmerHub(),)?.commit()
         }).execute("/addFarm",farm)
     }
 
+    /*
+        Delete the farm from the database
+     */
     fun deletefarm(farm: Farm){
         DatabaseAPIHandler(activity, AsyncResponse {
             if (!(it.isNullOrBlank())){

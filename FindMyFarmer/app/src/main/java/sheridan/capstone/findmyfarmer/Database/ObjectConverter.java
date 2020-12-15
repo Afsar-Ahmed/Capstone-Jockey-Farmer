@@ -14,6 +14,12 @@ import sheridan.capstone.findmyfarmer.Entities.FarmProduct;
 import sheridan.capstone.findmyfarmer.Entities.Farmer;
 import sheridan.capstone.findmyfarmer.Entities.Product;
 
+/**
+ * @author Sohaib Hussain
+ * Description: Converts the JSONObject or JSONArray returned by the API from the database into an
+ *              appropriate Object(s)
+ * Date Modified: December 14th, 2020
+ **/
 public class ObjectConverter {
     public static Object convertStringToObject(String response, Type cls, boolean listOrNot){
 

@@ -8,118 +8,159 @@
     tools:context=".Users.AccountSettings">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/AccountSettingsConstraint"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/account_bg"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <androidx.appcompat.widget.Toolbar
-
             android:id="@+id/toolbarD"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        <Button
-            android:id="@+id/UpdatePassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="120dp"
-            android:layout_marginEnd="105dp"
-            android:text="Update Password"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.845"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName5" />
+            app:subtitleTextColor="@color/WhiteColor"
+            app:titleTextColor="#FFFFFF" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
+            android:id="@+id/UpdatedCustomerName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/custom_input_registration"
+            android:drawableStart="@drawable/custom_name_icon"
+            android:drawablePadding="8dp"
             android:ems="10"
-            android:hint="Edit First Name"
+            android:fontFamily="@font/roboto_light"
+            android:hint="Enter name"
             android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName6"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:padding="8dp"
+            android:textColor="@color/scheme_dark_green"
+            android:textColorHint="@color/scheme_medium_green"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarD" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName6"
-            android:layout_width="wrap_content"
+            android:id="@+id/UpdatedCustomerEmail"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="178dp"
-            android:layout_marginTop="165dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/custom_input_registration"
+            android:drawableStart="@drawable/custom_email_icon"
+            android:drawablePadding="8dp"
             android:ems="10"
-            android:hint="Edit First Name"
-            android:inputType="textPersonName"
-            android:text="Name"
+            android:fontFamily="@font/roboto_light"
+            android:hint="Enter email"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:textColor="@color/scheme_dark_green"
+            android:textColorHint="@color/scheme_medium_green"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/toolbarD" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="156dp"
-            android:layout_height="142dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="4dp"
-            android:layout_marginBottom="104dp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName4"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toBottomOf="@+id/UpdatedCustomerName" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
-            android:layout_width="wrap_content"
+            android:id="@+id/UpdatedCustomerPassword"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="154dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/custom_input_registration"
+            android:drawableStart="@drawable/custom_password_icon"
+            android:drawablePadding="8dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
+            android:fontFamily="@font/roboto_light"
+            android:hint="Enter password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColor="@color/scheme_dark_green"
+            android:textColorHint="@color/scheme_medium_green"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName6" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="86dp"
-            android:layout_marginEnd="14dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName4" />
+            app:layout_constraintTop_toBottomOf="@+id/UpdatedCustomerEmail" />
 
         <Button
             android:id="@+id/Save"
-            android:layout_width="159dp"
-            android:layout_height="43dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="69dp"
+            android:layout_marginTop="68dp"
+            android:background="@drawable/custom_round_button_save"
+            android:fontFamily="@font/roboto"
             android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/UpdatePassword" />
+            app:layout_constraintTop_toBottomOf="@+id/UpdatedCustomerPassword" />
+
+        <TextView
+            android:id="@+id/nameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/roboto"
+            android:text="Name"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/UpdatedCustomerName"
+            app:layout_constraintEnd_toEndOf="@+id/UpdatedCustomerName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/UpdatedCustomerName" />
+
+        <TextView
+            android:id="@+id/emailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="Email"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/UpdatedCustomerEmail"
+            app:layout_constraintEnd_toEndOf="@+id/UpdatedCustomerEmail"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/UpdatedCustomerEmail" />
+
+        <TextView
+            android:id="@+id/passwordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="Password"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/UpdatedCustomerPassword"
+            app:layout_constraintEnd_toEndOf="@+id/UpdatedCustomerPassword"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/UpdatedCustomerPassword" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

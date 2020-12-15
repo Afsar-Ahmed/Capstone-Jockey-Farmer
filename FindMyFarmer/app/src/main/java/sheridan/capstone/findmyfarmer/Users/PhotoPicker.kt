@@ -9,15 +9,13 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.StorageReference
 import sheridan.capstone.findmyfarmer.Customer.Controller.ImageListToView
 import sheridan.capstone.findmyfarmer.Customer.Model.SharedViewModel
-import sheridan.capstone.findmyfarmer.Farmer.View.FarmManager
 import sheridan.capstone.findmyfarmer.ImageHandler.FirebaseImagehandler
 import sheridan.capstone.findmyfarmer.ImageHandler.StorageResponse
 import sheridan.capstone.findmyfarmer.R
@@ -25,6 +23,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+/**
+ * @author Sohaib Hussain
+ * Description: Handles listing of the farm gallery, that holds all the images that belong to the
+ *              user. If an image is picked , the image picked becomes the primary image
+ * Date Modified: December 14th, 2020
+ **/
 class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
     private lateinit var viewModel: SharedViewModel
     private var imagelist = ArrayList<Bitmap>()
@@ -49,6 +53,7 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
         return view
     }
 
+    //On image click, the image becomes a primary image
     override fun onItemClick(position: Int) {
         progressbar.visibility = View.VISIBLE
         FIH2.MakeImagePrimary(references[imagelist[position]],object : StorageResponse{
@@ -62,33 +67,26 @@ class PhotoPicker() : Fragment(), ImageListToView.OnItemClickListener  {
                                     f.primaryImage=Url.get()
                                     viewModel.setFarmData(f)
                                 }
+
+                                progressbar.visibility = View.VISIBLE
+
+                                findNavController().navigate(R.id.action_fragment_photo_picker_to_fragment_farm_manager2)
                             }
-                            progressbar.visibility = View.INVISIBLE
-                            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                            fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
                         }
                         override fun OnErrorListener(error: String?) {
                             progressbar.visibility = View.INVISIBLE
-                            val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                            val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                            fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+                            findNavController().navigate(R.id.action_fragment_photo_picker_to_fragment_farm_manager2)
                         }
                     })
             }
             override fun OnErrorListener(error: String?) {
                 progressbar.visibility = View.INVISIBLE
-                val FragmentManager : FragmentManager? = activity?.supportFragmentManager
-                val fragmentTransaction : FragmentTransaction? = FragmentManager?.beginTransaction()
-                fragmentTransaction?.replace(R.id.fragment_container, FarmManager())?.commit()
+                findNavController().navigate(R.id.action_fragment_photo_picker_to_fragment_farm_manager2)
             }
         })
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
+    //downloads images to the local storage for easy and quick access
     fun refreshList(imageListToView: ImageListToView){
         FIH2.RefreshLocalStorage(object : StorageResponse {
             override fun processFinish(response: MutableList<StorageReference>?,bitmap: Optional<Bitmap>?, Url: Optional<String>?) {

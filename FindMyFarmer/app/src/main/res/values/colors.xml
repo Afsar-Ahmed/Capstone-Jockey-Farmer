@@ -21,6 +21,8 @@
     <color name="scheme_dark_green">#00A388</color>
     <color name="scheme_soft_orange">#FAB078</color>
     <color name="scheme_soft_orange_pressed">#FA9678</color>
+    <color name="scheme_semisoft_orange">#F7925F</color>
+    <color name="scheme_semisoft_orange_pressed">#D97F52</color>
 
 
 
