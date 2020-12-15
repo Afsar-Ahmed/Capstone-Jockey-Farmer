@@ -1,5 +1,12 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.View
 
+/**
+ * @author Kartavyi Nikita
+ * Description: This fragment is responsible for getting the email input for the password reset
+ * Date Modified: December 14th, 2020
+ **/
+
+
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment

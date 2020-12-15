@@ -1,5 +1,13 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.Model
 
+/**
+ * @author Kartavyi Nikita
+ * Description: This activity is a model of the login part of the application.
+ * The firebase authentication logic is stored here, as well as the custom validation for the input.
+ * On top of that, Database calls for retrieving customer data is based in this activity
+ * Date Modified: December 14th, 2020
+ **/
+
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log

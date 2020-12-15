@@ -1,6 +1,12 @@
 package sheridan.capstone.findmyfarmer.LoginAndRegistration.Controller
 
-
+/**
+ * @author Kartavyi Nikita
+ * Description: This activity is acting as a controller for the whole registration/login segment
+ * of the application. It decides what functions have to be called, passes data from View to Model
+ * It implements two interfaces in order to offload some logic from the view
+ * Date Modified: December 14th, 2020
+ **/
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -212,18 +218,21 @@ class LoginRegistrationController : AppCompatActivity(), LoginRegistrationInterf
         navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
     }
 
+    //send the reset password link to the email
     override fun OnSendResetButtonClickListener(email: EditText) {
         if(resetModel.loginValidation(email)){
             resetModel.sendResetPasswordEmail(email)
         }
     }
 
+    //validation of the input for registration
     override fun Validation(email: EditText, name: EditText, password: EditText, repeatPassword: EditText):Boolean {
          val validatedSensitive = registerModel.registerValidation(email,password,repeatPassword)
          val validatedName = registerModel.registerNameValidation(name)
         return validatedSensitive && validatedName
     }
 
+    //navigation to the fragment via fragment navigation
     override fun Navigate(FragmentId: Int) {
         var navController = Navigation.findNavController(this,R.id.fragment_host)
         navController.navigate(FragmentId)
